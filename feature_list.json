@@ -1,0 +1,78 @@
+[
+  {
+    "id": "F001",
+    "category": "setup",
+    "description": "Define project requirements",
+    "steps": [
+      "Gather requirements from stakeholder",
+      "Document functional requirements",
+      "Document non-functional requirements",
+      "Define acceptance criteria",
+      "Document project requirements"
+    ],
+    "priority": "critical",
+    "passes": false,
+    "notes": "Blocking task - must complete before other features"
+  },
+  {
+    "id": "F002",
+    "category": "setup",
+    "description": "Create Software Design Document (SDD)",
+    "steps": [
+      "Define system architecture",
+      "Design component structure",
+      "Define data models",
+      "Define API interfaces",
+      "Document technology decisions",
+      "Create SDD markdown file"
+    ],
+    "priority": "critical",
+    "passes": false,
+    "notes": "Depends on F001"
+  },
+  {
+    "id": "F003",
+    "category": "setup",
+    "description": "Expand feature_list.json with all project features",
+    "steps": [
+      "Break down SDD into implementable features",
+      "Create feature entries for each component",
+      "Add testing features",
+      "Add documentation features",
+      "Prioritize all features"
+    ],
+    "priority": "high",
+    "passes": false,
+    "notes": "Depends on F002"
+  },
+  {
+    "id": "F004",
+    "category": "setup",
+    "description": "Initialize project codebase structure",
+    "steps": [
+      "Create directory structure based on SDD",
+      "Initialize package management (package.json/pyproject.toml/etc)",
+      "Configure linting and formatting",
+      "Setup git ignore patterns",
+      "Create initial commit"
+    ],
+    "priority": "high",
+    "passes": false,
+    "notes": "Depends on F002"
+  },
+  {
+    "id": "F005",
+    "category": "setup",
+    "description": "Update init.sh with project-specific commands",
+    "steps": [
+      "Add dependency installation",
+      "Add development server startup",
+      "Add test execution",
+      "Add build commands if needed",
+      "Test the script"
+    ],
+    "priority": "medium",
+    "passes": false,
+    "notes": "Depends on F004"
+  }
+]
