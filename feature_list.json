@@ -34,15 +34,15 @@
     "category": "phase1",
     "description": "GLM5 cluster channel configuration",
     "steps": [
-      "Add custom channel type for GLM5",
-      "Configure load balancer endpoint",
-      "Set up model mapping (glm-4 → vLLM model)",
-      "Configure API key authentication",
+      "Login to Admin UI (root/123456)",
+      "Navigate to Channel Management",
+      "Add custom channel for GLM5",
+      "Configure base URL, API key, models",
       "Test channel connectivity"
     ],
     "priority": "critical",
     "passes": false,
-    "notes": "Requires GLM5 cluster access"
+    "notes": "Configuration task - requires GLM5 cluster endpoint"
   },
   {
     "id": "F104",
@@ -64,14 +64,14 @@
     "category": "phase1",
     "description": "Database initialization and verification",
     "steps": [
-      "Run database migrations",
-      "Verify default admin user creation",
-      "Configure system settings",
+      "Verify database migrations ran",
+      "Confirm default admin user exists",
+      "Review system settings",
       "Test database connectivity"
     ],
     "priority": "high",
     "passes": false,
-    "notes": "Depends on F102"
+    "notes": "Verification task"
   },
   {
     "id": "F201",
@@ -136,148 +136,133 @@
   {
     "id": "F301",
     "category": "phase3",
-    "description": "WeChat Pay configuration",
+    "description": "Epay merchant configuration",
     "steps": [
-      "Configure WeChat Pay gateway",
-      "Set up payment callbacks",
-      "Configure signature verification",
-      "Test sandbox payment",
-      "Test production payment"
+      "Configure Epay gateway settings",
+      "Set up WeChat Pay parameters",
+      "Set up Alipay parameters",
+      "Configure payment callbacks",
+      "Test gateway connectivity"
     ],
     "priority": "high",
     "passes": false,
-    "notes": "Requires WeChat Pay merchant account"
+    "notes": "Requires Epay merchant account - supports WeChat & Alipay"
   },
   {
     "id": "F302",
     "category": "phase3",
-    "description": "Alipay configuration",
+    "description": "WeChat Pay testing",
     "steps": [
-      "Configure Alipay gateway",
-      "Set up payment callbacks",
-      "Configure signature verification",
-      "Test sandbox payment",
-      "Test production payment"
+      "Test sandbox payment initiation",
+      "Verify callback handling",
+      "Test balance updates",
+      "Test transaction history",
+      "End-to-end WeChat payment test"
     ],
     "priority": "high",
     "passes": false,
-    "notes": "Requires Alipay merchant account"
+    "notes": "Depends on F301"
   },
   {
     "id": "F303",
     "category": "phase3",
-    "description": "Recharge flow testing",
+    "description": "Alipay testing",
     "steps": [
-      "Test payment initiation",
-      "Verify balance updates",
+      "Test sandbox payment initiation",
+      "Verify callback handling",
+      "Test balance updates",
       "Test transaction history",
-      "Test refund flow",
-      "End-to-end testing"
+      "End-to-end Alipay test"
     ],
     "priority": "high",
     "passes": false,
-    "notes": "Depends on F301, F302"
+    "notes": "Depends on F301"
   },
   {
     "id": "F304",
     "category": "phase3",
-    "description": "Billing and invoice functionality",
+    "description": "Recharge flow end-to-end testing",
     "steps": [
-      "Review invoice generation",
-      "Customize invoice template",
-      "Test invoice download",
-      "Set up billing reminders",
-      "Test subscription billing"
+      "Test complete recharge flow",
+      "Verify invoice generation",
+      "Test refund scenarios",
+      "Validate quota updates",
+      "Test edge cases"
     ],
-    "priority": "medium",
+    "priority": "high",
     "passes": false,
-    "notes": "Depends on F303"
+    "notes": "Depends on F302, F303"
   },
   {
     "id": "F401",
     "category": "phase4",
-    "description": "Organization management enhancement",
+    "description": "User group configuration (price ratios)",
     "steps": [
-      "Review existing org features",
-      "Enhance multi-tenant support",
-      "Add department hierarchy",
-      "Implement role-based access",
-      "Test organization flows"
+      "Configure user groups in Admin UI",
+      "Set price multipliers per group",
+      "Define group upgrade rules",
+      "Test group-based pricing",
+      "Document group structure"
     ],
-    "priority": "high",
+    "priority": "medium",
     "passes": false,
-    "notes": "Enhancement task"
+    "notes": "Configuration task - using existing user group system"
   },
   {
     "id": "F402",
     "category": "phase4",
-    "description": "Department API key distribution",
+    "description": "Model pricing configuration",
     "steps": [
-      "Design key management UI",
-      "Implement per-department keys",
-      "Add usage tracking per key",
-      "Add key expiration management",
-      "Test key workflows"
+      "Define model price ratios",
+      "Configure GLM5 internal pricing",
+      "Configure external model pricing",
+      "Test quota calculations",
+      "Document pricing structure"
     ],
-    "priority": "high",
+    "priority": "medium",
     "passes": false,
-    "notes": "Depends on F401"
+    "notes": "Configuration task - using existing ratio system"
   },
   {
     "id": "F403",
     "category": "phase4",
-    "description": "Enhanced usage analytics",
+    "description": "Rate limiting strategy configuration",
     "steps": [
-      "Review existing analytics",
-      "Add detailed usage reports",
-      "Add cost breakdown by model",
-      "Add export capabilities",
-      "Test report generation"
+      "Configure global rate limits",
+      "Configure per-user rate limits",
+      "Configure per-model rate limits",
+      "Test rate limit enforcement",
+      "Document rate limit policies"
     ],
     "priority": "medium",
     "passes": false,
-    "notes": "Enhancement task"
+    "notes": "Configuration task - using existing rate limit system"
   },
   {
     "id": "F404",
     "category": "phase4",
-    "description": "Model permission management",
+    "description": "Token template configuration",
     "steps": [
-      "Design permission system",
-      "Implement per-user model access",
-      "Add model whitelist/blacklist",
-      "Add usage quotas per model",
-      "Test permission enforcement"
-    ],
-    "priority": "high",
-    "passes": false,
-    "notes": "New feature development"
-  },
-  {
-    "id": "F405",
-    "category": "phase4",
-    "description": "Granular rate limiting",
-    "steps": [
-      "Review existing rate limits",
-      "Add request rate limits",
-      "Add token rate limits",
-      "Add custom rate limit policies",
-      "Test rate limit enforcement"
+      "Create token templates for common use cases",
+      "Configure model restrictions per template",
+      "Set up quota limits per template",
+      "Test token creation from templates",
+      "Document template usage"
     ],
     "priority": "medium",
     "passes": false,
-    "notes": "Enhancement task"
+    "notes": "Configuration task - using existing token system"
   },
   {
     "id": "F501",
     "category": "phase5",
     "description": "Functional testing",
     "steps": [
-      "Write API endpoint tests",
-      "Write user flow tests",
-      "Write payment flow tests",
-      "Write admin operation tests",
-      "All tests passing"
+      "Test all API endpoints",
+      "Test user registration/login flows",
+      "Test payment flows",
+      "Test admin operations",
+      "Test model routing"
     ],
     "priority": "critical",
     "passes": false,
