@@ -147,6 +147,20 @@ docker run --name new-api -d --restart always \
 
 📖 For more deployment methods, please refer to [Deployment Guide](https://docs.newapi.pro/en/docs/installation)
 
+### SeaRouter Local Build
+
+For local development and customization:
+
+```bash
+# Build with proxy support (auto-cleanup old images)
+./build.sh
+
+# Start services
+docker-compose up -d
+```
+
+> **📋 See [BUILD.md](./BUILD.md) for detailed build instructions, proxy configuration, and CI/CD integration.**
+
 ---
 
 ## 📚 Documentation
