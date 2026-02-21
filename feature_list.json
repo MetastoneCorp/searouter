@@ -1,78 +1,331 @@
 [
   {
-    "id": "F001",
-    "category": "setup",
-    "description": "Define project requirements",
+    "id": "F101",
+    "category": "phase1",
+    "description": "Clone and integrate new-api base codebase",
     "steps": [
-      "Gather requirements from stakeholder",
-      "Document functional requirements",
-      "Document non-functional requirements",
-      "Define acceptance criteria",
-      "Document project requirements"
+      "Clone new-api repository",
+      "Update module path to github.com/searouter/searouter",
+      "Update all Go imports",
+      "Update Docker Compose for SeaRouter branding",
+      "Verify build capability"
+    ],
+    "priority": "critical",
+    "passes": true,
+    "notes": "Foundation task - completed"
+  },
+  {
+    "id": "F102",
+    "category": "phase1",
+    "description": "Docker deployment configuration",
+    "steps": [
+      "Review Dockerfile configuration",
+      "Test docker-compose build",
+      "Test docker-compose up",
+      "Verify all services start correctly",
+      "Document deployment process"
+    ],
+    "priority": "critical",
+    "passes": true,
+    "notes": "Completed - using pre-built image, services healthy"
+  },
+  {
+    "id": "F103",
+    "category": "phase1",
+    "description": "GLM5 cluster channel configuration",
+    "steps": [
+      "Add custom channel type for GLM5",
+      "Configure load balancer endpoint",
+      "Set up model mapping (glm-4 → vLLM model)",
+      "Configure API key authentication",
+      "Test channel connectivity"
     ],
     "priority": "critical",
     "passes": false,
-    "notes": "Blocking task - must complete before other features"
+    "notes": "Requires GLM5 cluster access"
   },
   {
-    "id": "F002",
-    "category": "setup",
-    "description": "Create Software Design Document (SDD)",
+    "id": "F104",
+    "category": "phase1",
+    "description": "Basic model routing test",
     "steps": [
-      "Define system architecture",
-      "Design component structure",
-      "Define data models",
-      "Define API interfaces",
-      "Document technology decisions",
-      "Create SDD markdown file"
-    ],
-    "priority": "critical",
-    "passes": false,
-    "notes": "Depends on F001"
-  },
-  {
-    "id": "F003",
-    "category": "setup",
-    "description": "Expand feature_list.json with all project features",
-    "steps": [
-      "Break down SDD into implementable features",
-      "Create feature entries for each component",
-      "Add testing features",
-      "Add documentation features",
-      "Prioritize all features"
+      "Test GLM5 cluster connectivity through SeaRouter",
+      "Verify request transformation",
+      "Test streaming mode",
+      "Test non-streaming mode",
+      "Validate token counting"
     ],
     "priority": "high",
     "passes": false,
-    "notes": "Depends on F002"
+    "notes": "Depends on F103"
   },
   {
-    "id": "F004",
-    "category": "setup",
-    "description": "Initialize project codebase structure",
+    "id": "F105",
+    "category": "phase1",
+    "description": "Database initialization and verification",
     "steps": [
-      "Create directory structure based on SDD",
-      "Initialize package management (package.json/pyproject.toml/etc)",
-      "Configure linting and formatting",
-      "Setup git ignore patterns",
-      "Create initial commit"
+      "Run database migrations",
+      "Verify default admin user creation",
+      "Configure system settings",
+      "Test database connectivity"
     ],
     "priority": "high",
     "passes": false,
-    "notes": "Depends on F002"
+    "notes": "Depends on F102"
   },
   {
-    "id": "F005",
-    "category": "setup",
-    "description": "Update init.sh with project-specific commands",
+    "id": "F201",
+    "category": "phase2",
+    "description": "Logo and brand replacement",
     "steps": [
-      "Add dependency installation",
-      "Add development server startup",
-      "Add test execution",
-      "Add build commands if needed",
-      "Test the script"
+      "Replace logo files in web/",
+      "Update favicon",
+      "Update page titles",
+      "Update meta tags",
+      "Test all UI pages"
     ],
     "priority": "medium",
     "passes": false,
-    "notes": "Depends on F004"
+    "notes": "Requires brand assets"
+  },
+  {
+    "id": "F202",
+    "category": "phase2",
+    "description": "Frontend theme customization",
+    "steps": [
+      "Define SeaRouter color palette",
+      "Update CSS/styling",
+      "Customize UI components",
+      "Update default homepage",
+      "Test responsive design"
+    ],
+    "priority": "medium",
+    "passes": false,
+    "notes": "Depends on F201"
+  },
+  {
+    "id": "F203",
+    "category": "phase2",
+    "description": "Domain and copy adjustments",
+    "steps": [
+      "Replace new-api references with SeaRouter",
+      "Update email templates",
+      "Update documentation links",
+      "Update error messages",
+      "Review all user-facing text"
+    ],
+    "priority": "medium",
+    "passes": false,
+    "notes": "Depends on F202"
+  },
+  {
+    "id": "F204",
+    "category": "phase2",
+    "description": "Homepage customization",
+    "steps": [
+      "Design custom homepage layout",
+      "Add SeaRouter value proposition",
+      "Add feature highlights",
+      "Add GLM5 showcase section",
+      "Test on multiple devices"
+    ],
+    "priority": "medium",
+    "passes": false,
+    "notes": "Depends on F202"
+  },
+  {
+    "id": "F301",
+    "category": "phase3",
+    "description": "WeChat Pay configuration",
+    "steps": [
+      "Configure WeChat Pay gateway",
+      "Set up payment callbacks",
+      "Configure signature verification",
+      "Test sandbox payment",
+      "Test production payment"
+    ],
+    "priority": "high",
+    "passes": false,
+    "notes": "Requires WeChat Pay merchant account"
+  },
+  {
+    "id": "F302",
+    "category": "phase3",
+    "description": "Alipay configuration",
+    "steps": [
+      "Configure Alipay gateway",
+      "Set up payment callbacks",
+      "Configure signature verification",
+      "Test sandbox payment",
+      "Test production payment"
+    ],
+    "priority": "high",
+    "passes": false,
+    "notes": "Requires Alipay merchant account"
+  },
+  {
+    "id": "F303",
+    "category": "phase3",
+    "description": "Recharge flow testing",
+    "steps": [
+      "Test payment initiation",
+      "Verify balance updates",
+      "Test transaction history",
+      "Test refund flow",
+      "End-to-end testing"
+    ],
+    "priority": "high",
+    "passes": false,
+    "notes": "Depends on F301, F302"
+  },
+  {
+    "id": "F304",
+    "category": "phase3",
+    "description": "Billing and invoice functionality",
+    "steps": [
+      "Review invoice generation",
+      "Customize invoice template",
+      "Test invoice download",
+      "Set up billing reminders",
+      "Test subscription billing"
+    ],
+    "priority": "medium",
+    "passes": false,
+    "notes": "Depends on F303"
+  },
+  {
+    "id": "F401",
+    "category": "phase4",
+    "description": "Organization management enhancement",
+    "steps": [
+      "Review existing org features",
+      "Enhance multi-tenant support",
+      "Add department hierarchy",
+      "Implement role-based access",
+      "Test organization flows"
+    ],
+    "priority": "high",
+    "passes": false,
+    "notes": "Enhancement task"
+  },
+  {
+    "id": "F402",
+    "category": "phase4",
+    "description": "Department API key distribution",
+    "steps": [
+      "Design key management UI",
+      "Implement per-department keys",
+      "Add usage tracking per key",
+      "Add key expiration management",
+      "Test key workflows"
+    ],
+    "priority": "high",
+    "passes": false,
+    "notes": "Depends on F401"
+  },
+  {
+    "id": "F403",
+    "category": "phase4",
+    "description": "Enhanced usage analytics",
+    "steps": [
+      "Review existing analytics",
+      "Add detailed usage reports",
+      "Add cost breakdown by model",
+      "Add export capabilities",
+      "Test report generation"
+    ],
+    "priority": "medium",
+    "passes": false,
+    "notes": "Enhancement task"
+  },
+  {
+    "id": "F404",
+    "category": "phase4",
+    "description": "Model permission management",
+    "steps": [
+      "Design permission system",
+      "Implement per-user model access",
+      "Add model whitelist/blacklist",
+      "Add usage quotas per model",
+      "Test permission enforcement"
+    ],
+    "priority": "high",
+    "passes": false,
+    "notes": "New feature development"
+  },
+  {
+    "id": "F405",
+    "category": "phase4",
+    "description": "Granular rate limiting",
+    "steps": [
+      "Review existing rate limits",
+      "Add request rate limits",
+      "Add token rate limits",
+      "Add custom rate limit policies",
+      "Test rate limit enforcement"
+    ],
+    "priority": "medium",
+    "passes": false,
+    "notes": "Enhancement task"
+  },
+  {
+    "id": "F501",
+    "category": "phase5",
+    "description": "Functional testing",
+    "steps": [
+      "Write API endpoint tests",
+      "Write user flow tests",
+      "Write payment flow tests",
+      "Write admin operation tests",
+      "All tests passing"
+    ],
+    "priority": "critical",
+    "passes": false,
+    "notes": "Quality assurance"
+  },
+  {
+    "id": "F502",
+    "category": "phase5",
+    "description": "Performance testing",
+    "steps": [
+      "Set up load testing environment",
+      "Run load tests",
+      "Run stress tests",
+      "Memory profiling",
+      "Latency benchmarking"
+    ],
+    "priority": "high",
+    "passes": false,
+    "notes": "Depends on F501"
+  },
+  {
+    "id": "F503",
+    "category": "phase5",
+    "description": "Production deployment",
+    "steps": [
+      "Prepare production Docker config",
+      "Set up SSL/TLS",
+      "Configure backups",
+      "Deploy to production",
+      "Verify production health"
+    ],
+    "priority": "critical",
+    "passes": false,
+    "notes": "Depends on F502"
+  },
+  {
+    "id": "F504",
+    "category": "phase5",
+    "description": "Monitoring and alerting",
+    "steps": [
+      "Set up Prometheus metrics",
+      "Create Grafana dashboards",
+      "Configure alert rules",
+      "Set up log aggregation",
+      "Test alerting"
+    ],
+    "priority": "high",
+    "passes": false,
+    "notes": "Depends on F503"
   }
 ]

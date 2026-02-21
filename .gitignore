@@ -1,50 +1,29 @@
-# SeaRouter .gitignore
-
-# Dependencies
-node_modules/
-__pycache__/
-*.pyc
-.pyo
-.pyd
-venv/
-.venv/
-env/
-
-# Build outputs
-dist/
-build/
-*.egg-info/
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Environment
+.idea
+.vscode
+.zed
+upload
+*.exe
+*.db
+build
+*.db-journal
+logs
+web/dist
 .env
-.env.local
-.env.*.local
+one-api
+new-api
+/__debug_bin*
+.DS_Store
+tiktoken_cache
+.eslintcache
+.gocache
+.gomodcache/
+.cache
+web/bun.lock
+plans
 
-# Logs
-*.log
-logs/
-
-# Test coverage
-coverage/
-.coverage
-htmlcov/
-.nyc_output/
-
-# Temporary files
-*.tmp
-*.temp
-.cache/
-
-# Claude Agent workspace (local only)
-.claude-agent/
+electron/node_modules
+electron/dist
+data/
+.gomodcache/
+.gocache-temp
+.gopath
