@@ -1,5 +1,11 @@
 FROM oven/bun:latest AS builder
 
+# Proxy support for bun install
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ENV http_proxy=${HTTP_PROXY}
+ENV https_proxy=${HTTPS_PROXY}
+
 WORKDIR /build
 COPY web/package.json .
 COPY web/bun.lock .
@@ -10,6 +16,13 @@ RUN DISABLE_ESLINT_PLUGIN='true' VITE_REACT_APP_VERSION=$(cat VERSION) bun run b
 
 FROM golang:alpine AS builder2
 ENV GO111MODULE=on CGO_ENABLED=0
+
+# Proxy support for go mod download
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ENV http_proxy=${HTTP_PROXY}
+ENV https_proxy=${HTTPS_PROXY}
+ENV GOPROXY=https://goproxy.cn,direct
 
 ARG TARGETOS
 ARG TARGETARCH
