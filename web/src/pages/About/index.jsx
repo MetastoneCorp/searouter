@@ -26,6 +26,16 @@ import {
   IllustrationConstructionDark,
 } from '@douyinfe/semi-illustrations';
 import { useTranslation } from 'react-i18next';
+import AboutContent from './AboutContent';
+
+// 判断是否为 URL 链接（支持 http://, https://, 和 / 开头的相对路径）
+const isUrl = (str) => {
+  return (
+    str.startsWith('http://') ||
+    str.startsWith('https://') ||
+    str.startsWith('/')
+  );
+};
 
 const About = () => {
   const { t } = useTranslation();
@@ -39,7 +49,7 @@ const About = () => {
     const { success, message, data } = res.data;
     if (success) {
       let aboutContent = data;
-      if (!data.startsWith('https://')) {
+      if (!isUrl(data)) {
         aboutContent = marked.parse(data);
       }
       setAbout(aboutContent);
@@ -132,9 +142,38 @@ const About = () => {
     </div>
   );
 
-  return (
-    <div className='mt-[60px] px-2'>
-      {aboutLoaded && about === '' ? (
+  // 如果管理员设置了自定义内容或 URL
+  if (aboutLoaded && about !== '') {
+    return (
+      <div className='mt-[60px] px-2'>
+        {isUrl(about) ? (
+          <iframe
+            src={about}
+            style={{ width: '100%', height: '100vh', border: 'none' }}
+            title='About'
+          />
+        ) : (
+          <div
+            style={{ fontSize: 'larger' }}
+            dangerouslySetInnerHTML={{ __html: about }}
+          />
+        )}
+      </div>
+    );
+  }
+
+  // 如果正在加载
+  if (!aboutLoaded) {
+    return <div className='mt-[60px] px-2'>{t('加载中...')}</div>;
+  }
+
+  // 如果管理员没有设置内容，显示多语言默认内容
+  // 检查是否在 iframe 中（被嵌入时显示简洁版本）
+  const isInIframe = window.self !== window.top;
+
+  if (isInIframe) {
+    return (
+      <div className='mt-[60px] px-2'>
         <div className='flex justify-center items-center h-screen p-8'>
           <Empty
             image={
@@ -151,23 +190,12 @@ const About = () => {
             {customDescription}
           </Empty>
         </div>
-      ) : (
-        <>
-          {about.startsWith('https://') ? (
-            <iframe
-              src={about}
-              style={{ width: '100%', height: '100vh', border: 'none' }}
-            />
-          ) : (
-            <div
-              style={{ fontSize: 'larger' }}
-              dangerouslySetInnerHTML={{ __html: about }}
-            ></div>
-          )}
-        </>
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
+
+  // 显示多语言默认 About 页面
+  return <AboutContent />;
 };
 
 export default About;
