@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeaRouter - The Hybrid AI Gateway</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           SeaRouter Landing Page - Dark Mode Style
+           Design System: AI/Developer Tools Theme
+           ============================================ */
+
+        :root {
+            /* Background Layers */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --bg-card: #1E293B;
+            --bg-card-hover: #273548;
+
+            /* Brand Colors */
+            --accent-primary: #6366F1;
+            --accent-secondary: #818CF8;
+            --accent-glow: rgba(99, 102, 241, 0.4);
+
+            /* Functional Colors */
+            --color-success: #22C55E;
+            --color-warning: #F59E0B;
+            --color-error: #EF4444;
+            --color-info: #3B82F6;
+
+            /* Text Colors */
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+
+            /* Border */
+            --border-color: #334155;
+            --border-color-light: #475569;
+
+            /* Gradients */
+            --gradient-hero: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #0F172A 100%);
+            --gradient-card: linear-gradient(180deg, rgba(99, 102, 241, 0.05) 0%, transparent 100%);
+            --gradient-text: linear-gradient(90deg, #6366F1, #818CF8, #A5B4FC);
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.15);
+
+            /* Transitions */
+            --transition-fast: 150ms ease;
+            --transition-normal: 200ms ease;
+            --transition-slow: 300ms ease;
+
+            /* Spacing */
+            --container-max: 1280px;
+            --section-padding: 80px;
+        }
+
+        /* Reset & Base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        code, pre {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Container */
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .navbar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color var(--transition-fast);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .lang-switch {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .lang-switch:hover {
+            border-color: var(--border-color-light);
+            color: var(--text-primary);
+        }
+
+        .lang-switch.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: none;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-secondary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-success {
+            background: var(--color-success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #16A34A;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent-primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 64px;
+            background: var(--gradient-hero);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(129, 140, 248, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 100px;
+            font-size: 0.875rem;
+            color: var(--accent-secondary);
+            margin-bottom: 24px;
+        }
+
+        .hero-tagline-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--color-success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .hero-title-gradient {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+        }
+
+        .hero-stat {
+            text-align: left;
+        }
+
+        .hero-stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .hero-stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Code Preview */
+        .hero-code {
+            position: relative;
+        }
+
+        .code-window {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-dot-red { background: #EF4444; }
+        .code-dot-yellow { background: #F59E0B; }
+        .code-dot-green { background: #22C55E; }
+
+        .code-title {
+            margin-left: 12px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .code-body {
+            padding: 20px;
+            font-size: 0.875rem;
+            line-height: 1.7;
+            overflow-x: auto;
+        }
+
+        .code-line {
+            white-space: pre;
+        }
+
+        .code-keyword { color: #C084FC; }
+        .code-string { color: #34D399; }
+        .code-comment { color: var(--text-muted); }
+        .code-method { color: #60A5FA; }
+        .code-param { color: #FBBF24; }
+        .code-url { color: #38BDF8; }
+
+        /* ============================================
+           HIGHLIGHTS SECTION (4 Cards like OpenRouter)
+           ============================================ */
+        .highlights {
+            padding: 80px 0;
+            background: var(--bg-primary);
+        }
+
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .highlight-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .highlight-card:hover {
+            border-color: var(--border-color-light);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .highlight-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(129, 140, 248, 0.1));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .highlight-card:nth-child(2) .highlight-icon {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.1));
+        }
+
+        .highlight-card:nth-child(3) .highlight-icon {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(96, 165, 250, 0.1));
+        }
+
+        .highlight-card:nth-child(4) .highlight-icon {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.1));
+        }
+
+        .highlight-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .highlight-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            flex-grow: 1;
+            margin-bottom: 16px;
+        }
+
+        .highlight-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.875rem;
+            color: var(--accent-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+        }
+
+        .highlight-link:hover {
+            color: var(--text-primary);
+            gap: 10px;
+        }
+
+        .highlight-link-arrow {
+            transition: transform var(--transition-fast);
+        }
+
+        .highlight-link:hover .highlight-link-arrow {
+            transform: translateX(2px);
+        }
+
+        /* Supported Models Badge Row */
+        .supported-models {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .model-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .model-badge img {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+        }
+
+        /* Graph placeholder */
+        .graph-placeholder {
+            margin-top: 16px;
+            height: 60px;
+            background: linear-gradient(90deg, var(--bg-tertiary) 0%, transparent 100%);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .graph-placeholder::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 50'%3E%3Cpath d='M0,40 Q20,35 40,38 T80,30 T120,35 T160,25 T200,32' fill='none' stroke='%236366F1' stroke-width='2' opacity='0.5'/%3E%3Cpath d='M0,45 Q20,42 40,44 T80,38 T120,40 T160,32 T200,38' fill='none' stroke='%2322C55E' stroke-width='2' opacity='0.5'/%3E%3C/svg%3E");
+            background-size: cover;
+        }
+
+        /* ============================================
+           FEATURES SECTION (4 Cards Horizontal)
+           ============================================ */
+        .features {
+            padding: var(--section-padding) 0;
+            background: var(--bg-secondary);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-label {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 100px;
+            font-size: 0.875rem;
+            color: var(--accent-secondary);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Features Grid - 4 Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        .feature-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-color-light);
+            transform: translateY(-2px);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card:nth-child(1) .feature-icon {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(129, 140, 248, 0.1));
+        }
+
+        .feature-card:nth-child(2) .feature-icon {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.1));
+        }
+
+        .feature-card:nth-child(3) .feature-icon {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(96, 165, 250, 0.1));
+        }
+
+        .feature-card:nth-child(4) .feature-icon {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.1));
+        }
+
+        .feature-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .feature-list-icon {
+            color: var(--color-success);
+            flex-shrink: 0;
+            margin-top: 2px;
+            font-size: 0.75rem;
+        }
+
+        /* ============================================
+           COMPARISON SECTION
+           ============================================ */
+        .comparison {
+            padding: var(--section-padding) 0;
+            background: var(--bg-secondary);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 20px 24px;
+            text-align: left;
+        }
+
+        .comparison-table thead {
+            background: var(--bg-tertiary);
+        }
+
+        .comparison-table th {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .comparison-table tbody tr {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .highlight-col {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .check-icon {
+            color: var(--color-success);
+            font-weight: bold;
+        }
+
+        .cross-icon {
+            color: var(--text-muted);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--color-success);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        /* ============================================
+           MISSION SECTION
+           ============================================ */
+        .mission {
+            padding: var(--section-padding) 0;
+        }
+
+        .mission-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .mission-quote {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-style: italic;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+
+        .mission-quote::before {
+            content: '"';
+            color: var(--accent-primary);
+        }
+
+        .mission-quote::after {
+            content: '"';
+            color: var(--accent-primary);
+        }
+
+        .mission-desc {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ============================================
+           CTA SECTION
+           ============================================ */
+        .cta {
+            padding: var(--section-padding) 0;
+            background: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+        }
+
+        .cta-box {
+            background: var(--gradient-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-title {
+            font-size: 2.25rem;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .cta-desc {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .cta-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .cta-actions .btn {
+            padding: 14px 28px;
+            font-size: 1rem;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text {
+                max-width: 100%;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-code {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .highlights-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .highlights-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+
+        /* Hidden content for language switching */
+        [data-lang="zh"] { display: none; }
+        [data-lang="en"] { display: block; }
+        html[lang="zh"] [data-lang="zh"] { display: block; }
+        html[lang="zh"] [data-lang="en"] { display: none; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container navbar-inner">
+            <a href="/" class="logo">
+                <span class="logo-icon">🌊</span>
+                <span>SeaRouter</span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#features" data-i18n="nav.features">Features</a></li>
+                <li><a href="#comparison" data-i18n="nav.comparison">Comparison</a></li>
+                <li><a href="#" data-i18n="nav.pricing">Pricing</a></li>
+                <li><a href="#" data-i18n="nav.docs">Docs</a></li>
+                <li><a href="#" data-i18n="nav.api">API</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="lang-switch active" data-lang="en" onclick="setLanguage('en')">EN</button>
+                <button class="lang-switch" data-lang="zh" onclick="setLanguage('zh')">中文</button>
+                <a href="/login" class="btn btn-ghost" data-i18n="nav.login">Login</a>
+                <a href="/register" class="btn btn-primary" data-i18n="nav.getStarted">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="container hero-content">
+            <div class="hero-text">
+                <div class="hero-tagline">
+                    <span class="hero-tagline-dot"></span>
+                    <span data-i18n="hero.tagline">The Hybrid AI Gateway</span>
+                </div>
+
+                <h1 class="hero-title">
+                    <span data-i18n="hero.title1">Unify the Cloud.</span><br>
+                    <span class="hero-title-gradient" data-i18n="hero.title2">Secure the Edge.</span>
+                </h1>
+
+                <p class="hero-subtitle" data-i18n="hero.subtitle">
+                    One standard interface for all AI models. Access GPT-4, Claude, Gemini, DeepSeek, and your own private models through a single OpenAI-compatible API.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="/register" class="btn btn-success" data-i18n="hero.cta1">
+                        🚀 Start Free
+                    </a>
+                    <a href="#features" class="btn btn-outline" data-i18n="hero.cta2">
+                        Learn More
+                    </a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">50+</div>
+                        <div class="hero-stat-label" data-i18n="hero.stat1">AI Models</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">99.9%</div>
+                        <div class="hero-stat-label" data-i18n="hero.stat2">Uptime SLA</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">&lt;50ms</div>
+                        <div class="hero-stat-label" data-i18n="hero.stat3">Latency</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-code">
+                <div class="code-window">
+                    <div class="code-header">
+                        <span class="code-dot code-dot-red"></span>
+                        <span class="code-dot code-dot-yellow"></span>
+                        <span class="code-dot code-dot-green"></span>
+                        <span class="code-title">api-request.sh</span>
+                    </div>
+                    <div class="code-body">
+<div class="code-line"><span class="code-comment"># One API for all models</span></div>
+<div class="code-line"><span class="code-keyword">curl</span> <span class="code-url">https://api.searouter.com/v1/chat/completions</span> \</div>
+<div class="code-line">  -H <span class="code-string">"Authorization: Bearer $API_KEY"</span> \</div>
+<div class="code-line">  -H <span class="code-string">"Content-Type: application/json"</span> \</div>
+<div class="code-line">  -d <span class="code-string">'{</span></div>
+<div class="code-line"><span class="code-string">    "model": "gpt-4o",</span></div>
+<div class="code-line"><span class="code-string">    "messages": [</span></div>
+<div class="code-line"><span class="code-string">      {"role": "user", "content": "Hello!"}</span></div>
+<div class="code-line"><span class="code-string">    ]</span></div>
+<div class="code-line"><span class="code-string">  }'</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlights Section (4 Cards) -->
+    <section class="highlights">
+        <div class="container">
+            <div class="highlights-grid">
+                <!-- Card 1: One API for All Models -->
+                <div class="highlight-card">
+                    <div class="highlight-icon">🔌</div>
+                    <h3 class="highlight-title" data-i18n="highlights.card1.title">One API for All Models</h3>
+                    <p class="highlight-desc" data-i18n="highlights.card1.desc">Access all major AI models through a single, unified interface. OpenAI SDK works out of the box.</p>
+                    <div class="supported-models">
+                        <span class="model-badge">🤖 OpenAI</span>
+                        <span class="model-badge">🧠 Claude</span>
+                        <span class="model-badge">💎 Gemini</span>
+                        <span class="model-badge">🔮 DeepSeek</span>
+                        <span class="model-badge">⭐ GLM</span>
+                        <span class="model-badge">+50</span>
+                    </div>
+                    <a href="#features" class="highlight-link" data-i18n="highlights.card1.link">
+                        Browse models <span class="highlight-link-arrow">→</span>
+                    </a>
+                </div>
+
+                <!-- Card 2: Hybrid Cloud Architecture (SeaRouter's Unique Feature) -->
+                <div class="highlight-card">
+                    <div class="highlight-icon">🏠</div>
+                    <h3 class="highlight-title" data-i18n="highlights.card2.title">Hybrid Cloud + On-Prem</h3>
+                    <p class="highlight-desc" data-i18n="highlights.card2.desc">Uniquely bridge public AI services with your private models. Your local vLLM, Ollama, or GPU cluster - all in one gateway.</p>
+                    <a href="#features" class="highlight-link" data-i18n="highlights.card2.link">
+                        Learn more <span class="highlight-link-arrow">→</span>
+                    </a>
+                </div>
+
+                <!-- Card 3: High Availability -->
+                <div class="highlight-card">
+                    <div class="highlight-icon">📊</div>
+                    <h3 class="highlight-title" data-i18n="highlights.card3.title">High Availability</h3>
+                    <p class="highlight-desc" data-i18n="highlights.card3.desc">Reliable AI access via our distributed infrastructure. Automatic failover when providers go down.</p>
+                    <div class="graph-placeholder"></div>
+                    <a href="#comparison" class="highlight-link" data-i18n="highlights.card3.link">
+                        Learn more <span class="highlight-link-arrow">→</span>
+                    </a>
+                </div>
+
+                <!-- Card 4: Data Privacy & Sovereignty -->
+                <div class="highlight-card">
+                    <div class="highlight-icon">🔒</div>
+                    <h3 class="highlight-title" data-i18n="highlights.card4.title">Data Sovereignty</h3>
+                    <p class="highlight-desc" data-i18n="highlights.card4.desc">Define fine-grained routing policies. Ensure sensitive prompts only go to trusted providers or your local models.</p>
+                    <a href="#features" class="highlight-link" data-i18n="highlights.card4.link">
+                        View docs <span class="highlight-link-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label" data-i18n="features.label">Core Features</span>
+                <h2 class="section-title" data-i18n="features.title">Why Choose SeaRouter?</h2>
+                <p class="section-desc" data-i18n="features.desc">The next-generation unified AI model access infrastructure that bridges cloud and edge computing.</p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Feature 1: Global Model Relay -->
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title" data-i18n="features.relay.title">Global Model Relay</h3>
+                    <p class="feature-desc" data-i18n="features.relay.desc">One API Key to access all major AI models with enterprise-grade reliability.</p>
+                    <ul class="feature-list">
+                        <li><span class="feature-list-icon">✓</span> <span data-i18n="features.relay.item1">GPT-4o, Claude, Gemini, DeepSeek, GLM</span></li>
+                        <li><span class="feature-list-icon">✓</span> <span data-i18n="features.relay.item2">99.9% uptime SLA</span></li>
+                        <li><span class="feature-list-icon">✓</span> <span data-i18n="features.relay.item3">Transparent pay-per-use</span></li>
+                    </ul>
+                </div>
+
+                <!-- Feature 2: On-Premise Integration -->
+                <div class="feature-card">
+                    <div class="feature-icon">🏠</div>
+                    <h3 class="feature-title" data-i18n="features.onprem.title">On-Premise Integration</h3>
+                    <p class="feature-desc" data-i18n="features.onprem.desc">Seamlessly integrate your private GPU clusters and local models.</p>
+                    <ul class="feature-list">
+                        <li><span class="feature-list-icon">✓</span> <span data-i18n="features.onprem.item1">BYOC - Bring Your Own Compute</span></li>
+                        <li><span class="feature-list-icon">✓</span> <span data-i18n="features.onprem.item2">vLLM, Ollama, TGI support</span></li>
+                        <li><span class="feature-list-icon">✓</span> <span data-i18n="features.onprem.item3">Zero-code adaptation</span></li>
+                    </ul>
+                </div>
+
+                <!-- Feature 3: Smart Routing -->
+                <div class="feature-card">
+                    <div class="feature-icon">🔀</div>
+                    <h3 class="feature-title" data-i18n="features.routing.title">Smart Flex Routing</h3>
+                    <p class="feature-desc" data-i18n="features.routing.desc">Intelligent traffic orchestration between cloud and local models.</p>
+                    <ul class="feature-list">
+                        <li><span class="feature-list-icon">✓</span> <span data-i18n="features.routing.item1">Auto failover to cloud</span></li>
+                        <li><span class="feature-list-icon">✓</span> <span data-i18n="features.routing.item2">Load balancing</span></li>
+                        <li><span class="feature-list-icon">✓</span> <span data-i18n="features.routing.item3">Cost optimization rules</span></li>
+                    </ul>
+                </div>
+
+                <!-- Feature 4: Compute Sovereignty (NEW) -->
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title" data-i18n="features.sovereignty.title">Compute Sovereignty</h3>
+                    <p class="feature-desc" data-i18n="features.sovereignty.desc">True model neutrality - your AI, your rules, your infrastructure.</p>
+                    <ul class="feature-list">
+                        <li><span class="feature-list-icon">✓</span> <span data-i18n="features.sovereignty.item1">No vendor lock-in</span></li>
+                        <li><span class="feature-list-icon">✓</span> <span data-i18n="features.sovereignty.item2">Data stays where you want</span></li>
+                        <li><span class="feature-list-icon">✓</span> <span data-i18n="features.sovereignty.item3">Full infrastructure control</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="comparison" class="comparison">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label" data-i18n="comparison.label">Comparison</span>
+                <h2 class="section-title" data-i18n="comparison.title">SeaRouter vs Others</h2>
+                <p class="section-desc" data-i18n="comparison.desc">See how SeaRouter stands out from other AI gateway solutions.</p>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th data-i18n="comparison.feature">Feature</th>
+                        <th data-i18n="comparison.others">OpenRouter / Others</th>
+                        <th class="highlight-col">SeaRouter</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-i18n="comparison.row1">Standard OpenAI Interface</td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td class="highlight-col"><span class="check-icon">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="comparison.row2">Public Model Aggregation</td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td class="highlight-col"><span class="check-icon">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="comparison.row3">Private/Local Model Integration</td>
+                        <td><span class="cross-icon">✗</span></td>
+                        <td class="highlight-col"><span class="check-icon">✓</span> <span class="badge" data-i18n="comparison.badge1">Hybrid</span></td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="comparison.row4">Data Privacy Routing</td>
+                        <td data-i18n="comparison.weak">Weak (vendor promises)</td>
+                        <td class="highlight-col"><span class="check-icon">✓</span> <span class="badge" data-i18n="comparison.badge2">Strong Isolation</span></td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="comparison.row5">Hybrid Compute Scheduling</td>
+                        <td><span class="cross-icon">✗</span></td>
+                        <td class="highlight-col"><span class="check-icon">✓</span> <span class="badge" data-i18n="comparison.badge3">Cloud+Edge</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission">
+        <div class="container">
+            <div class="mission-content">
+                <blockquote class="mission-quote" data-i18n="mission.quote">
+                    Democratizing access to intelligence, whether it lives in the cloud or on your desk.
+                </blockquote>
+                <p class="mission-desc" data-i18n="mission.desc">
+                    Our mission is to break the physical boundaries of computing power. Whether AI runs in a cloud data center thousands of miles away or in a workstation under your desk, SeaRouter abstracts them into unified intellectual resources for you to deploy at any time.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-box">
+                <h2 class="cta-title" data-i18n="cta.title">Ready to Start?</h2>
+                <p class="cta-desc" data-i18n="cta.desc">Start building your hybrid AI application today.</p>
+                <div class="cta-actions">
+                    <a href="/register" class="btn btn-success" data-i18n="cta.btn1">🔑 Get API Key</a>
+                    <a href="/console/channel" class="btn btn-outline" data-i18n="cta.btn2">⚙️ Configure Channels</a>
+                    <a href="/console/token" class="btn btn-outline" data-i18n="cta.btn3">🎫 Manage Tokens</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <p class="footer-text">© 2026 SeaRouter. <span data-i18n="footer.tagline">The Hybrid AI Interface.</span></p>
+            <div class="footer-links">
+                <a href="/" data-i18n="footer.home">Home</a>
+                <a href="/console" data-i18n="footer.console">Console</a>
+                <a href="/pricing" data-i18n="footer.pricing">Pricing</a>
+                <a href="https://github.com/searouter" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                // Navigation
+                'nav.features': 'Features',
+                'nav.comparison': 'Comparison',
+                'nav.pricing': 'Pricing',
+                'nav.docs': 'Docs',
+                'nav.api': 'API',
+                'nav.login': 'Login',
+                'nav.getStarted': 'Get Started',
+
+                // Hero
+                'hero.tagline': 'The Hybrid AI Gateway',
+                'hero.title1': 'Unify the Cloud.',
+                'hero.title2': 'Secure the Edge.',
+                'hero.subtitle': 'One standard interface for all AI models. Access GPT-4, Claude, Gemini, DeepSeek, and your own private models through a single OpenAI-compatible API.',
+                'hero.cta1': '🚀 Start Free',
+                'hero.cta2': 'Learn More',
+                'hero.stat1': 'AI Models',
+                'hero.stat2': 'Uptime SLA',
+                'hero.stat3': 'Latency',
+
+                // Providers
+                'providers.title': 'Supported Model Providers',
+
+                // Highlights (4 Cards)
+                'highlights.card1.title': 'One API for All Models',
+                'highlights.card1.desc': 'Access all major AI models through a single, unified interface. OpenAI SDK works out of the box.',
+                'highlights.card1.link': 'Browse models →',
+                'highlights.card2.title': 'Hybrid Cloud + On-Prem',
+                'highlights.card2.desc': 'Uniquely bridge public AI services with your private models. Your local vLLM, Ollama, or GPU cluster - all in one gateway.',
+                'highlights.card2.link': 'Learn more →',
+                'highlights.card3.title': 'High Availability',
+                'highlights.card3.desc': 'Reliable AI access via our distributed infrastructure. Automatic failover when providers go down.',
+                'highlights.card3.link': 'Learn more →',
+                'highlights.card4.title': 'Data Sovereignty',
+                'highlights.card4.desc': 'Define fine-grained routing policies. Ensure sensitive prompts only go to trusted providers or your local models.',
+                'highlights.card4.link': 'View docs →',
+
+                // Features
+                'features.label': 'Core Features',
+                'features.title': 'Why Choose SeaRouter?',
+                'features.desc': 'The next-generation unified AI model access infrastructure that bridges cloud and edge computing.',
+                'features.relay.title': 'Global Model Relay',
+                'features.relay.desc': 'One API Key to access all major AI models with enterprise-grade reliability.',
+                'features.relay.item1': 'GPT-4o, Claude, Gemini, DeepSeek, GLM',
+                'features.relay.item2': '99.9% uptime SLA',
+                'features.relay.item3': 'Transparent pay-per-use',
+                'features.onprem.title': 'On-Premise Integration',
+                'features.onprem.desc': 'Seamlessly integrate your private GPU clusters and local models.',
+                'features.onprem.item1': 'BYOC - Bring Your Own Compute',
+                'features.onprem.item2': 'vLLM, Ollama, TGI support',
+                'features.onprem.item3': 'Zero-code adaptation',
+                'features.routing.title': 'Smart Flex Routing',
+                'features.routing.desc': 'Intelligent traffic orchestration between cloud and local models.',
+                'features.routing.item1': 'Auto failover to cloud',
+                'features.routing.item2': 'Load balancing',
+                'features.routing.item3': 'Cost optimization rules',
+                'features.sovereignty.title': 'Compute Sovereignty',
+                'features.sovereignty.desc': 'True model neutrality - your AI, your rules, your infrastructure.',
+                'features.sovereignty.item1': 'No vendor lock-in',
+                'features.sovereignty.item2': 'Data stays where you want',
+                'features.sovereignty.item3': 'Full infrastructure control',
+
+                // Comparison
+                'comparison.label': 'Comparison',
+                'comparison.title': 'SeaRouter vs Others',
+                'comparison.desc': 'See how SeaRouter stands out from other AI gateway solutions.',
+                'comparison.feature': 'Feature',
+                'comparison.others': 'OpenRouter / Others',
+                'comparison.row1': 'Standard OpenAI Interface',
+                'comparison.row2': 'Public Model Aggregation',
+                'comparison.row3': 'Private/Local Model Integration',
+                'comparison.row4': 'Data Privacy Routing',
+                'comparison.row5': 'Hybrid Compute Scheduling',
+                'comparison.weak': 'Weak (vendor promises)',
+                'comparison.badge1': 'Hybrid',
+                'comparison.badge2': 'Strong Isolation',
+                'comparison.badge3': 'Cloud+Edge',
+
+                // Mission
+                'mission.quote': 'Democratizing access to intelligence, whether it lives in the cloud or on your desk.',
+                'mission.desc': 'Our mission is to break the physical boundaries of computing power. Whether AI runs in a cloud data center thousands of miles away or in a workstation under your desk, SeaRouter abstracts them into unified intellectual resources for you to deploy at any time.',
+
+                // CTA
+                'cta.title': 'Ready to Start?',
+                'cta.desc': 'Start building your hybrid AI application today.',
+                'cta.btn1': '🔑 Get API Key',
+                'cta.btn2': '⚙️ Configure Channels',
+                'cta.btn3': '🎫 Manage Tokens',
+
+                // Footer
+                'footer.tagline': 'The Hybrid AI Interface.',
+                'footer.home': 'Home',
+                'footer.console': 'Console',
+                'footer.pricing': 'Pricing'
+            },
+            zh: {
+                // Navigation
+                'nav.features': '功能特性',
+                'nav.comparison': '功能对比',
+                'nav.pricing': '定价',
+                'nav.docs': '文档',
+                'nav.api': 'API',
+                'nav.login': '登录',
+                'nav.getStarted': '开始使用',
+
+                // Hero
+                'hero.tagline': '混合智能网关',
+                'hero.title1': '统一云端，',
+                'hero.title2': '守护边缘。',
+                'hero.subtitle': '一个标准接口，连接所有 AI 模型。通过统一的 OpenAI 兼容 API，访问 GPT-4、Claude、Gemini、DeepSeek 以及您自己的私有模型。',
+                'hero.cta1': '🚀 免费开始',
+                'hero.cta2': '了解更多',
+                'hero.stat1': 'AI 模型',
+                'hero.stat2': '可用性 SLA',
+                'hero.stat3': '延迟',
+
+                // Providers
+                'providers.title': '支持的模型提供商',
+
+                // Highlights (4 Cards)
+                'highlights.card1.title': '统一 API 接口',
+                'highlights.card1.desc': '通过单一统一接口访问所有主流 AI 模型，OpenAI SDK 开箱即用。',
+                'highlights.card1.link': '浏览模型 →',
+                'highlights.card2.title': '混合云 + 本地部署',
+                'highlights.card2.desc': '独特连接公有 AI 服务与您的私有模型。本地 vLLM、Ollama 或 GPU 集群，统一接入。',
+                'highlights.card2.link': '了解更多 →',
+                'highlights.card3.title': '高可用性',
+                'highlights.card3.desc': '通过分布式基础设施确保可靠的 AI 访问。服务商故障时自动切换。',
+                'highlights.card3.link': '了解更多 →',
+                'highlights.card4.title': '数据主权',
+                'highlights.card4.desc': '定义精细化路由策略，确保敏感提示仅发送到受信任的服务商或本地模型。',
+                'highlights.card4.link': '查看文档 →',
+
+                // Features
+                'features.label': '核心功能',
+                'features.title': '为什么选择 SeaRouter？',
+                'features.desc': '下一代大模型统一接入基础设施，连接公有云智能与私有化算力的弹性桥梁。',
+                'features.relay.title': '全球模型中转',
+                'features.relay.desc': '一个 API Key 接入所有主流 AI 模型，企业级可靠性保障。',
+                'features.relay.item1': 'GPT-4o, Claude, Gemini, DeepSeek, GLM',
+                'features.relay.item2': '99.9% 可用性 SLA',
+                'features.relay.item3': '透明按量计费',
+                'features.onprem.title': '本地算力融合',
+                'features.onprem.desc': '无缝接入您的私有 GPU 集群和本地模型。',
+                'features.onprem.item1': 'BYOC - 自带算力',
+                'features.onprem.item2': '支持 vLLM, Ollama, TGI',
+                'features.onprem.item3': '零代码适配',
+                'features.routing.title': '智能弹性路由',
+                'features.routing.desc': '云端与本地模型之间的智能流量编排。',
+                'features.routing.item1': '自动故障转移',
+                'features.routing.item2': '负载均衡',
+                'features.routing.item3': '成本优化规则',
+                'features.sovereignty.title': '算力主权',
+                'features.sovereignty.desc': '真正的模型中立 - 您的 AI，您的规则，您的基础设施。',
+                'features.sovereignty.item1': '无厂商锁定',
+                'features.sovereignty.item2': '数据留在您想要的地方',
+                'features.sovereignty.item3': '完整的基础设施控制权',
+
+                // Comparison
+                'comparison.label': '功能对比',
+                'comparison.title': 'SeaRouter 与其他方案对比',
+                'comparison.desc': '看看 SeaRouter 如何从众多 AI 网关方案中脱颖而出。',
+                'comparison.feature': '特性',
+                'comparison.others': 'OpenRouter / 其他方案',
+                'comparison.row1': '标准 OpenAI 接口',
+                'comparison.row2': '公网模型聚合',
+                'comparison.row3': '私有/本地模型接入',
+                'comparison.row4': '数据隐私路由',
+                'comparison.row5': '混合算力调度',
+                'comparison.weak': '弱 (仅依赖厂商承诺)',
+                'comparison.badge1': '混合架构',
+                'comparison.badge2': '强隔离',
+                'comparison.badge3': '云+端切换',
+
+                // Mission
+                'mission.quote': '让智能触手可及，无论它存在于云端还是您的桌面。',
+                'mission.desc': '我们的使命是打破算力的物理边界。无论 AI 运行在万里的云端数据中心，还是您桌下的工作站里，SeaRouter 都将它们抽象为统一的智力资源，供您随时调遣。',
+
+                // CTA
+                'cta.title': '准备好了吗？',
+                'cta.desc': '立即开始构建您的混合 AI 应用。',
+                'cta.btn1': '🔑 获取 API Key',
+                'cta.btn2': '⚙️ 配置渠道',
+                'cta.btn3': '🎫 管理令牌',
+
+                // Footer
+                'footer.tagline': '混合智能接口。',
+                'footer.home': '首页',
+                'footer.console': '控制台',
+                'footer.pricing': '定价'
+            }
+        };
+
+        let currentLang = 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+
+            // Update lang switch buttons
+            document.querySelectorAll('.lang-switch').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update all translatable elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (translations[lang] && translations[lang][key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = translations[lang][key];
+                    } else {
+                        el.innerHTML = translations[lang][key];
+                    }
+                }
+            });
+
+            // Save preference
+            localStorage.setItem('searouter-lang', lang);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('searouter-lang') || 'en';
+            setLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>
