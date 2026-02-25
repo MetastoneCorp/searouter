@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import SkeletonWrapper from '../components/SkeletonWrapper';
 
 const Navigation = ({
@@ -28,16 +28,40 @@ const Navigation = ({
   userState,
   pricingRequireAuth,
 }) => {
+  const location = useLocation();
+
+  const isActive = (link) => {
+    const currentPath = location.pathname;
+
+    // 首页精确匹配
+    if (link.itemKey === 'home') {
+      return currentPath === '/';
+    }
+
+    // 控制台：匹配 /console 路径
+    if (link.itemKey === 'console') {
+      return currentPath.startsWith('/console');
+    }
+
+    // 其他路径精确匹配
+    return currentPath === link.to;
+  };
+
   const renderNavLinks = () => {
     const baseClasses =
       'flex-shrink-0 flex items-center gap-1 font-semibold rounded-md transition-all duration-200 ease-in-out';
-    const hoverClasses = 'hover:text-semi-color-primary';
     const spacingClasses = isMobile ? 'p-1' : 'p-2';
-
-    const commonLinkClasses = `${baseClasses} ${spacingClasses} ${hoverClasses}`;
 
     return mainNavLinks.map((link) => {
       const linkContent = <span>{link.text}</span>;
+      const active = isActive(link);
+
+      // 选中状态样式
+      const activeClasses = active
+        ? 'text-semi-color-primary bg-semi-color-primary-light-default'
+        : 'hover:text-semi-color-primary';
+
+      const commonLinkClasses = `${baseClasses} ${spacingClasses} ${activeClasses}`;
 
       if (link.isExternal) {
         return (

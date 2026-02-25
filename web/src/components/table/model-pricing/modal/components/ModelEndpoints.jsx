@@ -50,11 +50,21 @@ const ModelEndpoints = ({ modelData, endpointMap = {}, t }) => {
             {type}
             {path && '：'}
             {path && (
-              <span className='text-gray-500 md:ml-1 break-all'>{path}</span>
+              <span
+                className='md:ml-1 break-all'
+                style={{ color: 'var(--semi-color-text-2)' }}
+              >
+                {path}
+              </span>
             )}
           </span>
           {path && (
-            <span className='text-gray-500 text-xs md:ml-1'>{method}</span>
+            <span
+              className='text-xs md:ml-1'
+              style={{ color: 'var(--semi-color-text-2)' }}
+            >
+              {method}
+            </span>
           )}
         </div>
       );
@@ -68,8 +78,13 @@ const ModelEndpoints = ({ modelData, endpointMap = {}, t }) => {
           <IconLink size={16} />
         </Avatar>
         <div>
-          <Text className='text-lg font-medium'>{t('API端点')}</Text>
-          <div className='text-xs text-gray-600'>
+          <Text className='font-medium' style={{ fontSize: '14px' }}>
+            {t('API端点')}
+          </Text>
+          <div
+            className='text-xs'
+            style={{ color: 'var(--semi-color-text-2)' }}
+          >
             {t('模型支持的接口端点信息')}
           </div>
         </div>

@@ -229,10 +229,10 @@ const SelectableButtonGroup = ({
           <Col span={getColSpan()} key={item.value}>
             <Button
               onClick={() => onChange(item.value)}
-              theme={isActive ? 'light' : 'outline'}
-              type={isActive ? 'primary' : 'tertiary'}
+              theme='outline'
+              type='tertiary'
               disabled={isDisabled}
-              className='sbg-button'
+              className={`sbg-button ${isActive ? 'sbg-button-active' : ''}`}
               style={{ width: '100%' }}
             >
               <div className='sbg-content'>

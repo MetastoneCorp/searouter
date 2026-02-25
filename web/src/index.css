@@ -159,6 +159,14 @@ code {
   font-weight: 500;
 }
 
+/* 模型广场筛选按钮选中样式 */
+.sbg-button-active {
+  background-color: rgba(var(--semi-blue-0), 0.12) !important;
+  color: var(--semi-color-primary) !important;
+  border-color: var(--semi-color-primary) !important;
+  font-weight: 500;
+}
+
 /* 图标容器样式 */
 .sidebar-icon-container {
   width: 22px;

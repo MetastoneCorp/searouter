@@ -64,13 +64,18 @@ const ModelBasicInfo = ({ modelData, vendorsMap = {}, t }) => {
           <IconInfoCircle size={16} />
         </Avatar>
         <div>
-          <Text className='text-lg font-medium'>{t('基本信息')}</Text>
-          <div className='text-xs text-gray-600'>
+          <Text className='font-medium' style={{ fontSize: '14px' }}>
+            {t('基本信息')}
+          </Text>
+          <div
+            className='text-xs'
+            style={{ color: 'var(--semi-color-text-2)' }}
+          >
             {t('模型的详细描述和基本特性')}
           </div>
         </div>
       </div>
-      <div className='text-gray-600'>
+      <div style={{ color: 'var(--semi-color-text-2)' }}>
         <p className='mb-4'>{getModelDescription()}</p>
         {getModelTags().length > 0 && (
           <Space wrap>
