@@ -30,3 +30,25 @@ data/
 
 .qwen/
 gha-creds-*.json
+
+# Environment files with secrets
+.env.*
+!.env.example
+
+# Compiled binaries
+searouter
+bin/
+
+# Screenshots and test images
+*.png
+!web/public/*.png
+
+# Playwright test logs
+.playwright-mcp/
+
+# Downloaded scripts
+get-docker.sh
+
+# pnpm files
+web/pnpm-lock.yaml
+web/.pnpm-approvals

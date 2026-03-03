@@ -1,0 +1,370 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-02-24T11:39:50+08:00",
+  "project": {
+    "name": "new-api",
+    "module": "github.com/QuantumNous/new-api",
+    "description": "Next-Generation LLM Gateway and AI Asset Management System",
+    "languages": ["Go", "JavaScript", "JSX"],
+    "frameworks": ["Gin", "React", "Electron"]
+  },
+  "root_documentation": "CLAUDE.md",
+  "modules": [
+    {
+      "name": "controller",
+      "path": "controller",
+      "documentation": "controller/CLAUDE.md",
+      "language": "Go",
+      "description": "HTTP request handlers for API endpoints",
+      "entry_files": [],
+      "key_files": [
+        "controller/relay.go",
+        "controller/channel.go",
+        "controller/token.go",
+        "controller/user.go (via service)",
+        "controller/log.go",
+        "controller/option.go",
+        "controller/subscription.go"
+      ],
+      "has_tests": false,
+      "interfaces": [
+        "Admin API (/api/*)",
+        "Relay API (/v1/*)",
+        "OAuth callbacks"
+      ]
+    },
+    {
+      "name": "model",
+      "path": "model",
+      "documentation": "model/CLAUDE.md",
+      "language": "Go",
+      "description": "GORM database models and migrations",
+      "entry_files": ["model/main.go"],
+      "key_files": [
+        "model/main.go",
+        "model/channel.go",
+        "model/user.go",
+        "model/token.go",
+        "model/log.go",
+        "model/task.go",
+        "model/pricing.go"
+      ],
+      "has_tests": true,
+      "test_files": ["model/task_cas_test.go"],
+      "data_models": [
+        "User",
+        "Token",
+        "Channel",
+        "Log",
+        "Task",
+        "Subscription",
+        "Pricing"
+      ],
+      "databases": ["SQLite", "MySQL", "PostgreSQL"]
+    },
+    {
+      "name": "router",
+      "path": "router",
+      "documentation": "router/CLAUDE.md",
+      "language": "Go",
+      "description": "API route definitions and middleware binding",
+      "entry_files": ["router/main.go"],
+      "key_files": [
+        "router/main.go",
+        "router/api-router.go",
+        "router/relay-router.go",
+        "router/dashboard.go",
+        "router/web-router.go"
+      ],
+      "has_tests": false,
+      "interfaces": [
+        "SetRouter()",
+        "SetApiRouter()",
+        "SetRelayRouter()",
+        "SetDashboardRouter()"
+      ]
+    },
+    {
+      "name": "middleware",
+      "path": "middleware",
+      "documentation": "middleware/CLAUDE.md",
+      "language": "Go",
+      "description": "Auth, CORS, rate limiting, request processing",
+      "entry_files": [],
+      "key_files": [
+        "middleware/auth.go",
+        "middleware/rate-limit.go",
+        "middleware/distributor.go",
+        "middleware/cors.go"
+      ],
+      "has_tests": false,
+      "interfaces": [
+        "TokenAuth",
+        "UserAuth",
+        "AdminAuth",
+        "RootAuth",
+        "GlobalAPIRateLimit",
+        "Distribute"
+      ]
+    },
+    {
+      "name": "relay",
+      "path": "relay",
+      "documentation": "relay/CLAUDE.md",
+      "language": "Go",
+      "description": "AI provider adapters (OpenAI, Claude, Gemini, etc.)",
+      "entry_files": ["relay/channel/adapter.go"],
+      "key_files": [
+        "relay/channel/adapter.go",
+        "relay/common/relay_info.go",
+        "relay/common/billing.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/claude/adaptor.go",
+        "relay/channel/gemini/adaptor.go"
+      ],
+      "has_tests": true,
+      "test_files": [
+        "relay/channel/api_request_test.go",
+        "relay/channel/claude/relay_claude_test.go",
+        "relay/channel/gemini/relay_gemini_usage_test.go",
+        "relay/common/override_test.go",
+        "relay/common/relay_info_test.go"
+      ],
+      "providers": [
+        "openai",
+        "claude",
+        "gemini",
+        "aws",
+        "azure",
+        "ali",
+        "baidu",
+        "cohere",
+        "deepseek",
+        "ollama",
+        "mistral",
+        "minimax",
+        "moonshot",
+        "dify",
+        "jina",
+        "perplexity",
+        "replicate",
+        "siliconflow",
+        "cloudflare",
+        "codex",
+        "coze",
+        "jimeng",
+        "lingyiwanwu",
+        "mokaai",
+        "openrouter",
+        "palm"
+      ]
+    },
+    {
+      "name": "service",
+      "path": "service",
+      "documentation": "service/CLAUDE.md",
+      "language": "Go",
+      "description": "Business logic layer (billing, quota, tasks)",
+      "entry_files": [],
+      "key_files": [
+        "service/billing.go",
+        "service/quota.go",
+        "service/task.go",
+        "service/channel_select.go",
+        "service/token_counter.go"
+      ],
+      "has_tests": true,
+      "test_files": [
+        "service/error_test.go",
+        "service/task_billing_test.go",
+        "service/channel_affinity_usage_cache_test.go"
+      ],
+      "submodules": ["passkey", "openaicompat"]
+    },
+    {
+      "name": "dto",
+      "path": "dto",
+      "documentation": null,
+      "language": "Go",
+      "description": "Data Transfer Objects for request/response",
+      "entry_files": [],
+      "key_files": [
+        "dto/openai_request.go",
+        "dto/openai_response.go",
+        "dto/claude.go",
+        "dto/gemini.go",
+        "dto/task.go"
+      ],
+      "has_tests": false
+    },
+    {
+      "name": "types",
+      "path": "types",
+      "documentation": null,
+      "language": "Go",
+      "description": "Type definitions and error types",
+      "entry_files": [],
+      "key_files": [
+        "types/error.go",
+        "types/relay_format.go",
+        "types/request_meta.go"
+      ],
+      "has_tests": false
+    },
+    {
+      "name": "setting",
+      "path": "setting",
+      "documentation": null,
+      "language": "Go",
+      "description": "Configuration management",
+      "entry_files": ["setting/config/config.go"],
+      "key_files": [
+        "setting/operation_setting/operation_setting.go",
+        "setting/ratio_setting/model_ratio.go",
+        "setting/model_setting/global.go"
+      ],
+      "has_tests": true,
+      "test_files": ["setting/operation_setting/status_code_ranges_test.go"],
+      "submodules": ["config", "console_setting", "model_setting", "operation_setting", "performance_setting", "ratio_setting", "system_setting", "reasoning"]
+    },
+    {
+      "name": "oauth",
+      "path": "oauth",
+      "documentation": null,
+      "language": "Go",
+      "description": "OAuth provider implementations",
+      "entry_files": ["oauth/registry.go"],
+      "key_files": [
+        "oauth/provider.go",
+        "oauth/github.go",
+        "oauth/discord.go",
+        "oauth/oidc.go",
+        "oauth/linuxdo.go"
+      ],
+      "has_tests": false,
+      "providers": ["GitHub", "Discord", "OIDC", "LinuxDO", "Generic"]
+    },
+    {
+      "name": "constant",
+      "path": "constant",
+      "documentation": null,
+      "language": "Go",
+      "description": "Application constants",
+      "entry_files": [],
+      "key_files": [
+        "constant/channel.go",
+        "constant/api_type.go",
+        "constant/env.go"
+      ],
+      "has_tests": false
+    },
+    {
+      "name": "common",
+      "path": "common",
+      "documentation": null,
+      "language": "Go",
+      "description": "Shared utilities (crypto, email, Redis, etc.)",
+      "entry_files": ["common/init.go"],
+      "key_files": [
+        "common/json.go",
+        "common/crypto.go",
+        "common/redis.go",
+        "common/database.go",
+        "common/rate-limit.go"
+      ],
+      "has_tests": true,
+      "test_files": ["common/url_validator_test.go"],
+      "submodules": ["limiter"]
+    },
+    {
+      "name": "web",
+      "path": "web",
+      "documentation": "web/CLAUDE.md",
+      "language": "JavaScript/JSX",
+      "description": "React frontend application",
+      "entry_files": ["web/src/App.jsx"],
+      "key_files": [
+        "web/src/App.jsx",
+        "web/src/helpers/api.js",
+        "web/src/context/User/index.jsx",
+        "web/src/i18n/i18n.js",
+        "web/package.json"
+      ],
+      "has_tests": false,
+      "framework": "React 18 + Vite",
+      "ui_library": "Semi Design",
+      "i18n_languages": ["zh-CN", "zh-TW", "en", "ja", "fr", "ru", "vi"]
+    },
+    {
+      "name": "electron",
+      "path": "electron",
+      "documentation": "electron/CLAUDE.md",
+      "language": "JavaScript",
+      "description": "Desktop application wrapper",
+      "entry_files": ["electron/main.js"],
+      "key_files": [
+        "electron/main.js",
+        "electron/preload.js",
+        "electron/package.json"
+      ],
+      "has_tests": false,
+      "platforms": ["Windows", "macOS", "Linux"]
+    }
+  ],
+  "coverage": {
+    "total_files_estimated": 500,
+    "files_scanned": 200,
+    "coverage_percentage": 40,
+    "modules_documented": 10,
+    "modules_total": 14,
+    "modules_with_tests": 7
+  },
+  "gaps": {
+    "missing_documentation": ["dto", "types", "setting", "oauth", "constant", "common"],
+    "missing_tests": ["controller", "router", "middleware", "oauth", "constant", "web", "electron"],
+    "deep_scan_recommended": [
+      "relay/channel/* (40+ provider adapters)",
+      "setting/* (configuration subsystems)",
+      "web/src/pages/* (page components)"
+    ]
+  },
+  "ignored_patterns": [
+    ".git/**",
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    ".next/**",
+    "__pycache__/**",
+    "*.lock",
+    "*.log",
+    "*.bin",
+    "*.pdf",
+    "*.png",
+    "*.jpg",
+    "*.jpeg",
+    "*.gif",
+    "*.mp4",
+    "*.zip",
+    "*.tar",
+    "*.gz",
+    ".idea",
+    ".vscode",
+    ".zed",
+    "upload",
+    "*.exe",
+    "*.db",
+    "logs",
+    "data/",
+    ".cache",
+    ".gomodcache/",
+    ".gocache",
+    "tiktoken_cache"
+  ],
+  "next_steps": [
+    "Deep scan relay/channel/* for all provider adapters",
+    "Add documentation for dto, types, setting modules",
+    "Review setting/* configuration subsystems",
+    "Scan web/src/pages/* for page component details",
+    "Review common/* utility functions in detail"
+  ]
+}
