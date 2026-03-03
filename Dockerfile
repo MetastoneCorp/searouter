@@ -1,3 +1,4 @@
+# 前端构建阶段
 FROM oven/bun:latest AS builder
 
 # Proxy support for bun install
@@ -8,7 +9,6 @@ ENV https_proxy=${HTTPS_PROXY}
 
 WORKDIR /build
 COPY web/package.json .
-COPY web/bun.lock .
 RUN bun install
 COPY ./web .
 COPY ./VERSION .

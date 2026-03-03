@@ -144,6 +144,294 @@ html.dark .landing-page {
   color: var(--landing-text-muted);
 }
 
+/* ==================== Model Logo Wall ==================== */
+.landing-models {
+  padding: 60px 0;
+  background: var(--semi-color-bg-0);
+  border-bottom: 1px solid var(--landing-card-border);
+}
+
+.landing-models-title {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--landing-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+}
+
+.landing-models-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.landing-model-item {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--landing-card-bg);
+  border: 1px solid var(--landing-card-border);
+  transition: all 0.2s ease;
+  color: var(--landing-text-secondary);
+}
+
+.landing-model-item:hover {
+  border-color: var(--semi-color-primary);
+  transform: translateY(-2px);
+  color: var(--semi-color-primary);
+}
+
+/* ==================== Quick Start Section ==================== */
+.landing-quickstart {
+  padding: 80px 0;
+  background: var(--semi-color-bg-1);
+}
+
+.landing-quickstart-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.landing-quickstart-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--landing-text-primary);
+}
+
+.landing-quickstart-subtitle {
+  font-size: 1.125rem;
+  color: var(--landing-text-secondary);
+}
+
+.landing-quickstart-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.landing-quickstart-step {
+  background: var(--landing-card-bg);
+  border: 1px solid var(--landing-card-border);
+  border-radius: var(--landing-border-radius);
+  padding: 32px 24px;
+  text-align: center;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.landing-quickstart-step:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  transform: translateY(-4px);
+  box-shadow: var(--semi-shadow-elevated);
+}
+
+html.dark .landing-quickstart-step:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+.landing-quickstart-step-number {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, var(--semi-color-primary), #818CF8);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.landing-quickstart-step-icon {
+  width: 56px;
+  height: 56px;
+  margin: 12px auto 16px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--semi-color-primary);
+}
+
+.landing-quickstart-step:nth-child(1) .landing-quickstart-step-icon {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(129, 140, 248, 0.1));
+}
+
+.landing-quickstart-step:nth-child(2) .landing-quickstart-step-icon {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.1));
+}
+
+.landing-quickstart-step:nth-child(3) .landing-quickstart-step-icon {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(96, 165, 250, 0.1));
+}
+
+.landing-quickstart-step-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--landing-text-primary);
+}
+
+.landing-quickstart-step-desc {
+  font-size: 0.9rem;
+  color: var(--landing-text-secondary);
+  margin-bottom: 16px;
+}
+
+.landing-quickstart-endpoint-box {
+  background: var(--landing-card-hover-bg);
+  border: 1px solid var(--landing-card-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.landing-quickstart-endpoint-url {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: var(--landing-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.landing-quickstart-copy-btn {
+  flex-shrink: 0;
+  cursor: pointer;
+  color: var(--landing-text-secondary);
+  transition: color 0.15s ease;
+  padding: 4px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-quickstart-copy-btn:hover {
+  color: var(--semi-color-primary);
+}
+
+.landing-quickstart-copy-btn.copied {
+  color: var(--landing-success);
+}
+
+/* Step Arrow */
+.landing-quickstart-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--landing-text-muted);
+  font-size: 1.5rem;
+}
+
+/* Clients Section */
+.landing-quickstart-clients {
+  background: var(--landing-card-bg);
+  border: 1px solid var(--landing-card-border);
+  border-radius: var(--landing-border-radius);
+  overflow: hidden;
+}
+
+.landing-quickstart-clients-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--landing-card-border);
+  font-size: 0.9rem;
+  color: var(--landing-text-secondary);
+}
+
+.landing-quickstart-clients-content {
+  padding: 0;
+}
+
+/* Code Block Styles */
+.landing-quickstart-code-block {
+  background: var(--landing-card-hover-bg);
+  padding: 20px 24px;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  min-height: 160px;
+}
+
+html.dark .landing-quickstart-code-block {
+  background: #0D1117;
+}
+
+.landing-quickstart-code-line {
+  white-space: pre;
+  display: block;
+}
+
+.landing-quickstart-code-comment {
+  color: var(--landing-text-muted);
+}
+
+.landing-quickstart-code-key {
+  color: #C084FC;
+}
+
+.landing-quickstart-code-string {
+  color: #34D399;
+}
+
+.landing-quickstart-code-value {
+  color: #38BDF8;
+}
+
+.landing-quickstart-code-label {
+  color: var(--landing-text-secondary);
+}
+
+/* Client Config Text */
+.landing-quickstart-client-config {
+  padding: 20px 24px;
+  min-height: 160px;
+}
+
+.landing-quickstart-config-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.landing-quickstart-config-label {
+  min-width: 80px;
+  font-size: 0.875rem;
+  color: var(--landing-text-secondary);
+}
+
+.landing-quickstart-config-value {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: var(--landing-text-primary);
+  word-break: break-all;
+}
+
 /* Code Window */
 .landing-code-window {
   background: var(--landing-card-bg);
@@ -248,6 +536,7 @@ html.dark .landing-highlight-card:hover {
   font-size: 24px;
   margin-bottom: 20px;
   flex-shrink: 0;
+  color: var(--semi-color-primary);
 }
 
 .landing-highlight-card:nth-child(1) .landing-highlight-icon {
@@ -416,6 +705,7 @@ html.dark .landing-highlight-card:hover {
   justify-content: center;
   font-size: 24px;
   margin-bottom: 20px;
+  color: var(--semi-color-primary);
 }
 
 .landing-feature-card:nth-child(1) .landing-feature-icon {
@@ -464,10 +754,10 @@ html.dark .landing-highlight-card:hover {
 }
 
 .landing-feature-list-icon {
-  color: var(--landing-success);
   flex-shrink: 0;
   margin-top: 2px;
-  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
 }
 
 /* ==================== Comparison Section ==================== */
@@ -518,8 +808,9 @@ html.dark .landing-highlight-card:hover {
 }
 
 .landing-check-icon {
-  color: var(--landing-success);
-  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
 }
 
 .landing-cross-icon {
@@ -692,6 +983,15 @@ html.dark .landing-cta-box {
   .landing-features-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .landing-quickstart-steps {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .landing-quickstart-arrow {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -731,5 +1031,17 @@ html.dark .landing-cta-box {
   .landing-comparison-table th,
   .landing-comparison-table td {
     padding: 12px 16px;
+  }
+
+  .landing-quickstart-title {
+    font-size: 1.5rem;
+  }
+
+  .landing-quickstart-step {
+    padding: 28px 20px;
+  }
+
+  .landing-quickstart-endpoint-box {
+    max-width: 100%;
   }
 }

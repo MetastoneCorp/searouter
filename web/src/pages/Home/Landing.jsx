@@ -18,10 +18,27 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useContext, useState, useEffect } from 'react';
-import { Button, Typography, Input, ScrollList, ScrollItem } from '@douyinfe/semi-ui';
+import { Button, Typography, Input, ScrollList, ScrollItem, Tabs, TabPane } from '@douyinfe/semi-ui';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { IconCopy, IconArrowRight } from '@douyinfe/semi-icons';
+import {
+  IconCopy,
+  IconArrowRight,
+  IconTickCircle,
+} from '@douyinfe/semi-icons';
+import {
+  IconApiPlug,
+  IconHybridCloud,
+  IconHighAvailability,
+  IconDataSovereignty,
+  IconGlobalRelay,
+  IconOnPremise,
+  IconSmartRouting,
+  IconComputeSovereignty,
+  IconStepRegister,
+  IconStepConfig,
+  IconStepUse,
+} from '../../components/icons/LandingIcons';
 import { StatusContext } from '../../context/Status';
 import { useActualTheme } from '../../context/Theme';
 import { useIsMobile } from '../../hooks/common/useIsMobile';
@@ -50,6 +67,7 @@ const Landing = () => {
   const actualTheme = useActualTheme();
   const isMobile = useIsMobile();
   const [noticeVisible, setNoticeVisible] = useState(false);
+  const [endpointCopied, setEndpointCopied] = useState(false);
 
   const serverAddress = statusState?.status?.server_address || `${window.location.origin}`;
   const endpointItems = API_ENDPOINTS.map((e) => ({ value: e }));
@@ -61,6 +79,38 @@ const Landing = () => {
       showSuccess(t('已复制到剪切板'));
     }
   };
+
+  const handleCopyEndpoint = async () => {
+    const ok = await copy(`${serverAddress}/v1`);
+    if (ok) {
+      setEndpointCopied(true);
+      showSuccess(t('已复制到剪切板'));
+      setTimeout(() => setEndpointCopied(false), 2000);
+    }
+  };
+
+  // Code example content for tabs
+  const claudeCodeExample = `# ${t('landing.quickstart.clients.env_hint')}
+export ANTHROPIC_BASE_URL=${serverAddress}/v1
+export ANTHROPIC_API_KEY=sk-your-api-key
+
+# ${t('landing.quickstart.clients.config_file')} ~/.claude/config.json
+{
+  "baseURL": "${serverAddress}/v1",
+  "apiKey": "sk-your-api-key"
+}`;
+
+  const openCodeExample = `# ${t('landing.quickstart.clients.env_hint')}
+export OPENAI_BASE_URL=${serverAddress}/v1
+export OPENAI_API_KEY=sk-your-api-key`;
+
+  const sdkCodeExample = `# Python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="${serverAddress}/v1",
+    api_key="sk-your-api-key"
+)`;
 
   // Check and show notice
   useEffect(() => {
@@ -191,13 +241,156 @@ const Landing = () => {
         </div>
       </section>
 
+      {/* Quick Start Section */}
+      <section className='landing-quickstart'>
+        <div className='landing-section-container'>
+          <div className='landing-quickstart-header'>
+            <h2 className='landing-quickstart-title'>{t('landing.quickstart.title')}</h2>
+            <p className='landing-quickstart-subtitle'>{t('landing.quickstart.subtitle')}</p>
+          </div>
+
+          <div className='landing-quickstart-steps'>
+            {/* Step 1: Register */}
+            <div className='landing-quickstart-step'>
+              <div className='landing-quickstart-step-number'>1</div>
+              <div className='landing-quickstart-step-icon'>
+                <IconStepRegister size={28} />
+              </div>
+              <h3 className='landing-quickstart-step-title'>{t('landing.quickstart.step1.title')}</h3>
+              <p className='landing-quickstart-step-desc'>{t('landing.quickstart.step1.desc')}</p>
+              <Link to='/register'>
+                <Button type='primary' size='default'>
+                  {t('landing.quickstart.step1.action')}
+                </Button>
+              </Link>
+            </div>
+
+            {/* Step 2: Configure Endpoint */}
+            <div className='landing-quickstart-step'>
+              <div className='landing-quickstart-step-number'>2</div>
+              <div className='landing-quickstart-step-icon'>
+                <IconStepConfig size={28} />
+              </div>
+              <h3 className='landing-quickstart-step-title'>{t('landing.quickstart.step2.title')}</h3>
+              <p className='landing-quickstart-step-desc'>{t('landing.quickstart.step2.desc')}</p>
+              <div className='landing-quickstart-endpoint-box'>
+                <span className='landing-quickstart-endpoint-url'>{serverAddress}/v1</span>
+                <button
+                  className={`landing-quickstart-copy-btn ${endpointCopied ? 'copied' : ''}`}
+                  onClick={handleCopyEndpoint}
+                  title={t('复制端点地址')}
+                >
+                  {endpointCopied ? (
+                    <IconTickCircle size={16} />
+                  ) : (
+                    <IconCopy size={16} />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Step 3: Start Using */}
+            <div className='landing-quickstart-step'>
+              <div className='landing-quickstart-step-number'>3</div>
+              <div className='landing-quickstart-step-icon'>
+                <IconStepUse size={28} />
+              </div>
+              <h3 className='landing-quickstart-step-title'>{t('landing.quickstart.step3.title')}</h3>
+              <p className='landing-quickstart-step-desc'>{t('landing.quickstart.step3.desc')}</p>
+              <Link to='/console'>
+                <Button type='primary' size='default'>
+                  {t('landing.quickstart.step3.action')}
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          {/* Client Configuration Examples */}
+          <div className='landing-quickstart-clients'>
+            <div className='landing-quickstart-clients-header'>
+              {t('landing.quickstart.clients.title')}
+            </div>
+            <Tabs type='line' size='large'>
+              <TabPane tab={t('landing.quickstart.clients.claude')} itemKey='claude'>
+                <pre className='landing-quickstart-code-block'>{claudeCodeExample}</pre>
+              </TabPane>
+              <TabPane tab={t('landing.quickstart.clients.opencode')} itemKey='opencode'>
+                <pre className='landing-quickstart-code-block'>{openCodeExample}</pre>
+              </TabPane>
+              <TabPane tab={t('landing.quickstart.clients.cherry')} itemKey='cherry'>
+                <div className='landing-quickstart-client-config'>
+                  <div className='landing-quickstart-config-item'>
+                    <span className='landing-quickstart-config-label'>{t('landing.quickstart.clients.api_address')}:</span>
+                    <span className='landing-quickstart-config-value'>{serverAddress}/v1</span>
+                  </div>
+                  <div className='landing-quickstart-config-item'>
+                    <span className='landing-quickstart-config-label'>API Key:</span>
+                    <span className='landing-quickstart-config-value'>sk-your-api-key</span>
+                  </div>
+                  <div className='landing-quickstart-config-item'>
+                    <span className='landing-quickstart-config-label'>{t('模型')}:</span>
+                    <span className='landing-quickstart-config-value'>{t('landing.quickstart.clients.model_select')}</span>
+                  </div>
+                </div>
+              </TabPane>
+              <TabPane tab={t('landing.quickstart.clients.sdk')} itemKey='sdk'>
+                <pre className='landing-quickstart-code-block'>{sdkCodeExample}</pre>
+              </TabPane>
+            </Tabs>
+          </div>
+        </div>
+      </section>
+
+      {/* Model Logo Wall */}
+      <section className='landing-models'>
+        <div className='landing-section-container'>
+          <div className='landing-models-title'>
+            {t('landing.models.title')}
+          </div>
+          <div className='landing-models-grid'>
+            <div className='landing-model-item' title='OpenAI'>
+              <OpenAI size={32} />
+            </div>
+            <div className='landing-model-item' title='Claude'>
+              <Claude size={32} />
+            </div>
+            <div className='landing-model-item' title='Gemini'>
+              <Gemini size={32} />
+            </div>
+            <div className='landing-model-item' title='DeepSeek'>
+              <DeepSeek size={32} />
+            </div>
+            <div className='landing-model-item' title='GLM'>
+              <Zhipu size={32} />
+            </div>
+            <div className='landing-model-item' title='Qwen'>
+              <Qwen size={32} />
+            </div>
+            <div className='landing-model-item' title='Moonshot'>
+              <Moonshot size={32} />
+            </div>
+            <div className='landing-model-item' title='xAI'>
+              <XAI size={32} />
+            </div>
+            <div className='landing-model-item' title='Minimax'>
+              <Minimax size={32} />
+            </div>
+            <div className='landing-model-item' title='Cohere'>
+              <Cohere size={32} />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Highlights Section - 4 Cards */}
       <section className='landing-highlights'>
         <div className='landing-section-container'>
           <div className='landing-highlights-grid'>
             {/* Card 1: One API for All Models */}
             <div className='landing-highlight-card'>
-              <div className='landing-highlight-icon'>🔌</div>
+              <div className='landing-highlight-icon'>
+                <IconApiPlug size={24} />
+              </div>
               <h3 className='landing-highlight-title'>{t('landing.highlights.card1.title')}</h3>
               <p className='landing-highlight-desc'>{t('landing.highlights.card1.desc')}</p>
               <div className='landing-model-badges'>
@@ -215,7 +408,9 @@ const Landing = () => {
 
             {/* Card 2: Hybrid Cloud + On-Prem */}
             <div className='landing-highlight-card'>
-              <div className='landing-highlight-icon'>🏠</div>
+              <div className='landing-highlight-icon'>
+                <IconHybridCloud size={24} />
+              </div>
               <h3 className='landing-highlight-title'>{t('landing.highlights.card2.title')}</h3>
               <p className='landing-highlight-desc'>{t('landing.highlights.card2.desc')}</p>
               <Link to='#features' className='landing-highlight-link'>
@@ -225,7 +420,9 @@ const Landing = () => {
 
             {/* Card 3: High Availability */}
             <div className='landing-highlight-card'>
-              <div className='landing-highlight-icon'>📊</div>
+              <div className='landing-highlight-icon'>
+                <IconHighAvailability size={24} />
+              </div>
               <h3 className='landing-highlight-title'>{t('landing.highlights.card3.title')}</h3>
               <p className='landing-highlight-desc'>{t('landing.highlights.card3.desc')}</p>
               <div className='landing-graph-placeholder'></div>
@@ -236,7 +433,9 @@ const Landing = () => {
 
             {/* Card 4: Data Sovereignty */}
             <div className='landing-highlight-card'>
-              <div className='landing-highlight-icon'>🔒</div>
+              <div className='landing-highlight-icon'>
+                <IconDataSovereignty size={24} />
+              </div>
               <h3 className='landing-highlight-title'>{t('landing.highlights.card4.title')}</h3>
               <p className='landing-highlight-desc'>{t('landing.highlights.card4.desc')}</p>
               <Link to='#features' className='landing-highlight-link'>
@@ -259,20 +458,28 @@ const Landing = () => {
           <div className='landing-features-grid'>
             {/* Feature 1: Global Model Relay */}
             <div className='landing-feature-card'>
-              <div className='landing-feature-icon'>🌐</div>
+              <div className='landing-feature-icon'>
+                <IconGlobalRelay size={24} />
+              </div>
               <h3 className='landing-feature-title'>{t('landing.features.relay.title')}</h3>
               <p className='landing-feature-desc'>{t('landing.features.relay.desc')}</p>
               <ul className='landing-feature-list'>
                 <li>
-                  <span className='landing-feature-list-icon'>✓</span>
+                  <span className='landing-feature-list-icon'>
+                    <IconTickCircle size={12} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   {t('landing.features.relay.item1')}
                 </li>
                 <li>
-                  <span className='landing-feature-list-icon'>✓</span>
+                  <span className='landing-feature-list-icon'>
+                    <IconTickCircle size={12} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   {t('landing.features.relay.item2')}
                 </li>
                 <li>
-                  <span className='landing-feature-list-icon'>✓</span>
+                  <span className='landing-feature-list-icon'>
+                    <IconTickCircle size={12} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   {t('landing.features.relay.item3')}
                 </li>
               </ul>
@@ -280,20 +487,28 @@ const Landing = () => {
 
             {/* Feature 2: On-Premise Integration */}
             <div className='landing-feature-card'>
-              <div className='landing-feature-icon'>🏠</div>
+              <div className='landing-feature-icon'>
+                <IconOnPremise size={24} />
+              </div>
               <h3 className='landing-feature-title'>{t('landing.features.onprem.title')}</h3>
               <p className='landing-feature-desc'>{t('landing.features.onprem.desc')}</p>
               <ul className='landing-feature-list'>
                 <li>
-                  <span className='landing-feature-list-icon'>✓</span>
+                  <span className='landing-feature-list-icon'>
+                    <IconTickCircle size={12} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   {t('landing.features.onprem.item1')}
                 </li>
                 <li>
-                  <span className='landing-feature-list-icon'>✓</span>
+                  <span className='landing-feature-list-icon'>
+                    <IconTickCircle size={12} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   {t('landing.features.onprem.item2')}
                 </li>
                 <li>
-                  <span className='landing-feature-list-icon'>✓</span>
+                  <span className='landing-feature-list-icon'>
+                    <IconTickCircle size={12} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   {t('landing.features.onprem.item3')}
                 </li>
               </ul>
@@ -301,20 +516,28 @@ const Landing = () => {
 
             {/* Feature 3: Smart Routing */}
             <div className='landing-feature-card'>
-              <div className='landing-feature-icon'>🔀</div>
+              <div className='landing-feature-icon'>
+                <IconSmartRouting size={24} />
+              </div>
               <h3 className='landing-feature-title'>{t('landing.features.routing.title')}</h3>
               <p className='landing-feature-desc'>{t('landing.features.routing.desc')}</p>
               <ul className='landing-feature-list'>
                 <li>
-                  <span className='landing-feature-list-icon'>✓</span>
+                  <span className='landing-feature-list-icon'>
+                    <IconTickCircle size={12} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   {t('landing.features.routing.item1')}
                 </li>
                 <li>
-                  <span className='landing-feature-list-icon'>✓</span>
+                  <span className='landing-feature-list-icon'>
+                    <IconTickCircle size={12} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   {t('landing.features.routing.item2')}
                 </li>
                 <li>
-                  <span className='landing-feature-list-icon'>✓</span>
+                  <span className='landing-feature-list-icon'>
+                    <IconTickCircle size={12} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   {t('landing.features.routing.item3')}
                 </li>
               </ul>
@@ -322,20 +545,28 @@ const Landing = () => {
 
             {/* Feature 4: Compute Sovereignty */}
             <div className='landing-feature-card'>
-              <div className='landing-feature-icon'>⚡</div>
+              <div className='landing-feature-icon'>
+                <IconComputeSovereignty size={24} />
+              </div>
               <h3 className='landing-feature-title'>{t('landing.features.sovereignty.title')}</h3>
               <p className='landing-feature-desc'>{t('landing.features.sovereignty.desc')}</p>
               <ul className='landing-feature-list'>
                 <li>
-                  <span className='landing-feature-list-icon'>✓</span>
+                  <span className='landing-feature-list-icon'>
+                    <IconTickCircle size={12} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   {t('landing.features.sovereignty.item1')}
                 </li>
                 <li>
-                  <span className='landing-feature-list-icon'>✓</span>
+                  <span className='landing-feature-list-icon'>
+                    <IconTickCircle size={12} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   {t('landing.features.sovereignty.item2')}
                 </li>
                 <li>
-                  <span className='landing-feature-list-icon'>✓</span>
+                  <span className='landing-feature-list-icon'>
+                    <IconTickCircle size={12} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   {t('landing.features.sovereignty.item3')}
                 </li>
               </ul>
@@ -365,19 +596,27 @@ const Landing = () => {
               <tr>
                 <td>{t('landing.comparison.row1')}</td>
                 <td>
-                  <span className='landing-check-icon'>✓</span>
+                  <span className='landing-check-icon'>
+                    <IconTickCircle size={16} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                 </td>
                 <td className='landing-highlight-col'>
-                  <span className='landing-check-icon'>✓</span>
+                  <span className='landing-check-icon'>
+                    <IconTickCircle size={16} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                 </td>
               </tr>
               <tr>
                 <td>{t('landing.comparison.row2')}</td>
                 <td>
-                  <span className='landing-check-icon'>✓</span>
+                  <span className='landing-check-icon'>
+                    <IconTickCircle size={16} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                 </td>
                 <td className='landing-highlight-col'>
-                  <span className='landing-check-icon'>✓</span>
+                  <span className='landing-check-icon'>
+                    <IconTickCircle size={16} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                 </td>
               </tr>
               <tr>
@@ -386,7 +625,9 @@ const Landing = () => {
                   <span className='landing-cross-icon'>✗</span>
                 </td>
                 <td className='landing-highlight-col'>
-                  <span className='landing-check-icon'>✓</span>
+                  <span className='landing-check-icon'>
+                    <IconTickCircle size={16} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   <span className='landing-badge'>{t('landing.comparison.badge1')}</span>
                 </td>
               </tr>
@@ -394,7 +635,9 @@ const Landing = () => {
                 <td>{t('landing.comparison.row4')}</td>
                 <td>{t('landing.comparison.weak')}</td>
                 <td className='landing-highlight-col'>
-                  <span className='landing-check-icon'>✓</span>
+                  <span className='landing-check-icon'>
+                    <IconTickCircle size={16} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   <span className='landing-badge'>{t('landing.comparison.badge2')}</span>
                 </td>
               </tr>
@@ -404,7 +647,9 @@ const Landing = () => {
                   <span className='landing-cross-icon'>✗</span>
                 </td>
                 <td className='landing-highlight-col'>
-                  <span className='landing-check-icon'>✓</span>
+                  <span className='landing-check-icon'>
+                    <IconTickCircle size={16} style={{ color: 'var(--semi-color-success)' }} />
+                  </span>
                   <span className='landing-badge'>{t('landing.comparison.badge3')}</span>
                 </td>
               </tr>

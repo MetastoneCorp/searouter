@@ -19,6 +19,13 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { IconTickCircle, IconGithubLogo, IconMail } from '@douyinfe/semi-icons';
+import {
+  IconSeaRouterLogo,
+  IconHybridCloud,
+  IconDataSovereignty,
+  IconHighAvailability,
+} from '../../components/icons/LandingIcons';
 import './AboutContent.css';
 
 const AboutContent = () => {
@@ -28,7 +35,9 @@ const AboutContent = () => {
     <div className='about-container'>
       {/* Hero */}
       <header className='about-hero'>
-        <div className='about-logo'>🌊</div>
+        <div className='about-logo'>
+          <IconSeaRouterLogo size={48} />
+        </div>
         <span className='about-tagline'>{t('about.tagline')}</span>
         <h1 className='about-title'>SeaRouter</h1>
         <p className='about-subtitle'>
@@ -36,149 +45,99 @@ const AboutContent = () => {
         </p>
       </header>
 
-      {/* What is SeaRouter */}
+      {/* Our Story - 关于页独有 */}
       <section className='about-section'>
         <h2 className='about-section-title'>
-          <span className='about-icon'>🌐</span> {t('about.what_is.title')}
+          <span className='about-icon'>
+            <IconHybridCloud size={24} />
+          </span>{' '}
+          {t('about.story.title')}
         </h2>
-        <p>{t('about.what_is.desc1')}</p>
-        <p>{t('about.what_is.desc2')}</p>
-        <p className='about-highlight'>{t('about.what_is.desc3')}</p>
-      </section>
-
-      {/* Core Features */}
-      <section className='about-section'>
-        <h2 className='about-section-title'>
-          <span className='about-icon'>⚡</span> {t('about.features.title')}
-        </h2>
-        <div className='about-features'>
-          <div className='about-feature-card'>
-            <h3>
-              <span className='about-feature-icon'>☁️</span>{' '}
-              {t('about.features.relay.title')}
-            </h3>
-            <p>{t('about.features.relay.desc')}</p>
-            <ul>
-              <li>
-                <strong>{t('about.features.relay.item1_title')}</strong>{' '}
-                {t('about.features.relay.item1_desc')}
-              </li>
-              <li>
-                <strong>{t('about.features.relay.item2_title')}</strong>{' '}
-                {t('about.features.relay.item2_desc')}
-              </li>
-              <li>
-                <strong>{t('about.features.relay.item3_title')}</strong>{' '}
-                {t('about.features.relay.item3_desc')}
-              </li>
-            </ul>
+        <div className='about-story-content'>
+          <p>{t('about.story.p1')}</p>
+          <p>{t('about.story.p2')}</p>
+          <p>{t('about.story.p3')}</p>
+        </div>
+        {/* Timeline */}
+        <div className='about-timeline'>
+          <div className='about-timeline-item'>
+            <div className='about-timeline-dot'></div>
+            <div className='about-timeline-content'>
+              <span className='about-timeline-year'>2025</span>
+              <span className='about-timeline-text'>{t('about.story.founded')}</span>
+            </div>
           </div>
-
-          <div className='about-feature-card'>
-            <h3>
-              <span className='about-feature-icon'>🔒</span>{' '}
-              {t('about.features.onprem.title')}
-            </h3>
-            <p>{t('about.features.onprem.desc')}</p>
-            <ul>
-              <li>
-                <strong>{t('about.features.onprem.item1_title')}</strong>{' '}
-                {t('about.features.onprem.item1_desc')}
-              </li>
-              <li>
-                <strong>{t('about.features.onprem.item2_title')}</strong>{' '}
-                {t('about.features.onprem.item2_desc')}
-              </li>
-              <li>
-                <strong>{t('about.features.onprem.item3_title')}</strong>{' '}
-                {t('about.features.onprem.item3_desc')}
-              </li>
-            </ul>
+          <div className='about-timeline-item'>
+            <div className='about-timeline-dot'></div>
+            <div className='about-timeline-content'>
+              <span className='about-timeline-year'>2025</span>
+              <span className='about-timeline-text'>{t('about.story.v1')}</span>
+            </div>
           </div>
-
-          <div className='about-feature-card'>
-            <h3>
-              <span className='about-feature-icon'>🔀</span>{' '}
-              {t('about.features.routing.title')}
-            </h3>
-            <p>{t('about.features.routing.desc')}</p>
-            <ul>
-              <li>
-                <strong>{t('about.features.routing.item1_title')}</strong>{' '}
-                {t('about.features.routing.item1_desc')}
-              </li>
-              <li>
-                <strong>{t('about.features.routing.item2_title')}</strong>{' '}
-                {t('about.features.routing.item2_desc')}
-              </li>
-              <li>
-                <strong>{t('about.features.routing.item3_title')}</strong>{' '}
-                {t('about.features.routing.item3_desc')}
-              </li>
-            </ul>
+          <div className='about-timeline-item'>
+            <div className='about-timeline-dot active'></div>
+            <div className='about-timeline-content'>
+              <span className='about-timeline-year'>2026</span>
+              <span className='about-timeline-text'>{t('about.story.now')}</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Comparison Table */}
+      {/* Our Values - 关于页独有 */}
       <section className='about-section'>
         <h2 className='about-section-title'>
-          <span className='about-icon'>📊</span> {t('about.comparison.title')}
+          <span className='about-icon'>
+            <IconDataSovereignty size={24} />
+          </span>{' '}
+          {t('about.values.title')}
         </h2>
-        <div className='about-table-wrapper'>
-          <table className='about-table'>
-            <thead>
-              <tr>
-                <th>{t('about.comparison.feature')}</th>
-                <th>{t('about.comparison.others')}</th>
-                <th className='about-highlight-col'>SeaRouter</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{t('about.comparison.row1_feature')}</td>
-                <td>
-                  <span className='about-check'>✓</span>
-                </td>
-                <td className='about-highlight-col'>
-                  <span className='about-check'>✓</span>
-                </td>
-              </tr>
-              <tr>
-                <td>{t('about.comparison.row2_feature')}</td>
-                <td>
-                  <span className='about-check'>✓</span>
-                </td>
-                <td className='about-highlight-col'>
-                  <span className='about-check'>✓</span>
-                </td>
-              </tr>
-              <tr>
-                <td>{t('about.comparison.row3_feature')}</td>
-                <td>✗</td>
-                <td className='about-highlight-col'>
-                  <span className='about-check'>✓</span>{' '}
-                  {t('about.comparison.hybrid')}
-                </td>
-              </tr>
-              <tr>
-                <td>{t('about.comparison.row4_feature')}</td>
-                <td>{t('about.comparison.weak')}</td>
-                <td className='about-highlight-col'>
-                  <span className='about-check'>✓</span>{' '}
-                  {t('about.comparison.strong')}
-                </td>
-              </tr>
-              <tr>
-                <td>{t('about.comparison.row5_feature')}</td>
-                <td>✗</td>
-                <td className='about-highlight-col'>
-                  <span className='about-check'>✓</span>{' '}
-                  {t('about.comparison.auto_switch')}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div className='about-values-grid'>
+          <div className='about-value-card'>
+            <div className='about-value-icon'>
+              <IconTickCircle size={28} style={{ color: 'var(--semi-color-success)' }} />
+            </div>
+            <h3>{t('about.values.open.title')}</h3>
+            <p>{t('about.values.open.desc')}</p>
+          </div>
+          <div className='about-value-card'>
+            <div className='about-value-icon'>
+              <IconDataSovereignty size={28} />
+            </div>
+            <h3>{t('about.values.security.title')}</h3>
+            <p>{t('about.values.security.desc')}</p>
+          </div>
+          <div className='about-value-card'>
+            <div className='about-value-icon'>
+              <IconHighAvailability size={28} />
+            </div>
+            <h3>{t('about.values.developer.title')}</h3>
+            <p>{t('about.values.developer.desc')}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* By The Numbers - 从首页移来 */}
+      <section className='about-section'>
+        <h2 className='about-section-title about-center'>
+          <span className='about-icon'>
+            <IconHighAvailability size={24} />
+          </span>{' '}
+          {t('about.numbers.title')}
+        </h2>
+        <div className='about-stats-grid'>
+          <div className='about-stat-card'>
+            <div className='about-stat-value'>50+</div>
+            <div className='about-stat-label'>{t('about.numbers.models')}</div>
+          </div>
+          <div className='about-stat-card'>
+            <div className='about-stat-value'>99.9%</div>
+            <div className='about-stat-label'>{t('about.numbers.uptime')}</div>
+          </div>
+          <div className='about-stat-card'>
+            <div className='about-stat-value'>&lt;50ms</div>
+            <div className='about-stat-label'>{t('about.numbers.latency')}</div>
+          </div>
         </div>
       </section>
 
@@ -190,28 +149,34 @@ const AboutContent = () => {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Contact / Connect */}
       <section className='about-section'>
         <h2 className='about-section-title about-center'>
-          <span className='about-icon'>🚀</span> {t('about.cta.title')}
+          <span className='about-icon'>
+            <IconMail size={24} />
+          </span>{' '}
+          {t('about.connect.title')}
         </h2>
-        <p className='about-center'>{t('about.cta.desc')}</p>
-        <div className='about-cta'>
-          <a href='/login' className='about-btn about-btn-primary'>
-            <span>🔑</span> {t('about.cta.btn1')}
+        <div className='about-connect'>
+          <a
+            href='https://github.com/searouter'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='about-connect-link'
+          >
+            <IconGithubLogo size={20} />
+            <span>GitHub</span>
           </a>
-          <a href='/console/channel' className='about-btn about-btn-secondary'>
-            <span>⚙️</span> {t('about.cta.btn2')}
-          </a>
-          <a href='/console/token' className='about-btn about-btn-secondary'>
-            <span>🎫</span> {t('about.cta.btn3')}
+          <a href='mailto:support@searouter.com' className='about-connect-link'>
+            <IconMail size={20} />
+            <span>Email</span>
           </a>
         </div>
       </section>
 
       {/* Footer */}
       <footer className='about-footer'>
-        <p>© 2026 SeaRouter. {t('about.footer.tagline')}</p>
+        <p>&copy; 2026 SeaRouter. {t('about.footer.tagline')}</p>
         <div className='about-footer-links'>
           <a href='/'>{t('about.footer.home')}</a>
           <a href='/console'>{t('about.footer.console')}</a>
