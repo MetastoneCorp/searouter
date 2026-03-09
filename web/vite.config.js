@@ -51,9 +51,7 @@ export default defineConfig({
       },
     },
     react(),
-    vitePluginSemi({
-      cssLayer: true,
-    }),
+    // vitePluginSemi(), // 禁用：pnpm symlink 问题
   ],
   optimizeDeps: {
     force: true,
