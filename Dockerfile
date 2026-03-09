@@ -1,5 +1,5 @@
 # 前端构建阶段
-FROM oven/bun:latest AS builder
+FROM docker.io/library/oven/bun:1 AS builder
 
 # Proxy support for bun install
 ARG HTTP_PROXY
@@ -14,7 +14,7 @@ COPY ./web .
 COPY ./VERSION .
 RUN DISABLE_ESLINT_PLUGIN='true' VITE_REACT_APP_VERSION=$(cat VERSION) bun run build
 
-FROM golang:alpine AS builder2
+FROM docker.io/library/golang:alpine AS builder2
 ENV GO111MODULE=on CGO_ENABLED=0
 
 # Proxy support for go mod download
@@ -38,7 +38,7 @@ COPY . .
 COPY --from=builder /build/dist ./web/dist
 RUN go build -ldflags "-s -w -X 'github.com/searouter/searouter/common.Version=$(cat VERSION)'" -o searouter
 
-FROM debian:bookworm-slim
+FROM docker.io/library/debian:bookworm-slim
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates tzdata libasan8 wget \
