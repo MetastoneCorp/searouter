@@ -16,6 +16,9 @@
   --landing-accent-light: rgba(var(--semi-blue-5), 0.15);
   --landing-success: var(--semi-color-success);
   --landing-border-radius: 16px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: contain;
 }
 
 html.dark .landing-page {
@@ -93,6 +96,12 @@ html.dark .landing-page {
   animation: landing-pulse 2s infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .landing-hero-tagline-dot {
+    animation: none;
+  }
+}
+
 @keyframes landing-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
@@ -125,6 +134,12 @@ html.dark .landing-page {
   gap: 16px;
   margin-bottom: 48px;
   flex-wrap: wrap;
+}
+
+.landing-hero-actions a:focus-visible {
+  outline: 2px solid var(--semi-color-primary);
+  outline-offset: 2px;
+  border-radius: 8px;
 }
 
 .landing-hero-stats {
@@ -332,6 +347,11 @@ html.dark .landing-quickstart-step:hover {
 
 .landing-quickstart-copy-btn:hover {
   color: var(--semi-color-primary);
+}
+
+.landing-quickstart-copy-btn:focus-visible {
+  outline: 2px solid var(--semi-color-primary);
+  outline-offset: 2px;
 }
 
 .landing-quickstart-copy-btn.copied {
@@ -584,6 +604,12 @@ html.dark .landing-highlight-card:hover {
 
 .landing-highlight-link:hover {
   gap: 10px;
+}
+
+.landing-highlight-link:focus-visible {
+  outline: 2px solid var(--semi-color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .landing-model-badges {
@@ -918,6 +944,12 @@ html.dark .landing-cta-box {
   position: relative;
 }
 
+.landing-cta-actions a:focus-visible {
+  outline: 2px solid var(--semi-color-primary);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
 /* ==================== Footer ==================== */
 .landing-footer {
   padding: 40px 0;
@@ -953,6 +985,12 @@ html.dark .landing-cta-box {
 
 .landing-footer-links a:hover {
   color: var(--landing-text-primary);
+}
+
+.landing-footer-links a:focus-visible {
+  outline: 2px solid var(--semi-color-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* ==================== Responsive ==================== */

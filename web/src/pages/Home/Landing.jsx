@@ -278,6 +278,13 @@ client = OpenAI(
                 <button
                   className={`landing-quickstart-copy-btn ${endpointCopied ? 'copied' : ''}`}
                   onClick={handleCopyEndpoint}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleCopyEndpoint();
+                    }
+                  }}
+                  aria-label={endpointCopied ? t('已复制') : t('复制端点地址')}
                   title={t('复制端点地址')}
                 >
                   {endpointCopied ? (
@@ -704,7 +711,7 @@ client = OpenAI(
               <Link to='/'>{t('landing.footer.home')}</Link>
               <Link to='/console'>{t('landing.footer.console')}</Link>
               <Link to='/pricing'>{t('landing.footer.pricing')}</Link>
-              <a href='https://github.com/searouter' target='_blank' rel='noopener noreferrer'>
+              <a href='https://github.com/searouter' target='_blank' rel='noopener noreferrer' aria-label='GitHub (opens in new tab)'>
                 GitHub
               </a>
             </div>
