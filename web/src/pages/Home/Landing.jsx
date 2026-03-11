@@ -112,6 +112,64 @@ client = OpenAI(
     api_key="sk-your-api-key"
 )`;
 
+  const cherryConfigItems = [
+    { label: t('landing.quickstart.clients.api_address'), value: `${serverAddress}/v1` },
+    { label: 'API Key', value: 'sk-your-api-key' },
+    { label: t('模型'), value: t('landing.quickstart.clients.model_select') },
+  ];
+
+  // Copy states for each tab
+  const [copiedTab, setCopiedTab] = useState(null);
+
+  const handleCopyCode = async (code, tabKey) => {
+    const ok = await copy(code);
+    if (ok) {
+      setCopiedTab(tabKey);
+      showSuccess(t('已复制到剪切板'));
+      setTimeout(() => setCopiedTab(null), 2000);
+    }
+  };
+
+  const handleCopyKeyDown = (e, code, tabKey) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleCopyCode(code, tabKey);
+    }
+  };
+
+  // Client tabs configuration
+  const clientTabs = [
+    {
+      key: 'claude',
+      label: t('landing.quickstart.clients.claude'),
+      icon: <Claude size={20} />,
+      code: claudeCodeExample,
+      type: 'code',
+    },
+    {
+      key: 'opencode',
+      label: t('landing.quickstart.clients.opencode'),
+      icon: <OpenAI size={20} />,
+      code: openCodeExample,
+      type: 'code',
+    },
+    {
+      key: 'cherry',
+      label: t('landing.quickstart.clients.cherry'),
+      icon: <span className="landing-client-icon-text">🍒</span>,
+      code: null,
+      type: 'config',
+      items: cherryConfigItems,
+    },
+    {
+      key: 'sdk',
+      label: t('landing.quickstart.clients.sdk'),
+      icon: <span className="landing-client-icon-text">{'</>'}</span>,
+      code: sdkCodeExample,
+      type: 'code',
+    },
+  ];
+
   // Check and show notice
   useEffect(() => {
     const checkNoticeAndShow = async () => {
@@ -278,6 +336,13 @@ client = OpenAI(
                 <button
                   className={`landing-quickstart-copy-btn ${endpointCopied ? 'copied' : ''}`}
                   onClick={handleCopyEndpoint}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleCopyEndpoint();
+                    }
+                  }}
+                  aria-label={endpointCopied ? t('已复制') : t('复制端点地址')}
                   title={t('复制端点地址')}
                 >
                   {endpointCopied ? (
@@ -308,35 +373,65 @@ client = OpenAI(
           {/* Client Configuration Examples */}
           <div className='landing-quickstart-clients'>
             <div className='landing-quickstart-clients-header'>
-              {t('landing.quickstart.clients.title')}
+              <div className='landing-quickstart-clients-header-inner'>
+                <span className='landing-quickstart-clients-icon'>
+                  <IconApiPlug size={18} />
+                </span>
+                <span>{t('landing.quickstart.clients.title')}</span>
+              </div>
             </div>
-            <Tabs type='line' size='large'>
-              <TabPane tab={t('landing.quickstart.clients.claude')} itemKey='claude'>
-                <pre className='landing-quickstart-code-block'>{claudeCodeExample}</pre>
-              </TabPane>
-              <TabPane tab={t('landing.quickstart.clients.opencode')} itemKey='opencode'>
-                <pre className='landing-quickstart-code-block'>{openCodeExample}</pre>
-              </TabPane>
-              <TabPane tab={t('landing.quickstart.clients.cherry')} itemKey='cherry'>
-                <div className='landing-quickstart-client-config'>
-                  <div className='landing-quickstart-config-item'>
-                    <span className='landing-quickstart-config-label'>{t('landing.quickstart.clients.api_address')}:</span>
-                    <span className='landing-quickstart-config-value'>{serverAddress}/v1</span>
-                  </div>
-                  <div className='landing-quickstart-config-item'>
-                    <span className='landing-quickstart-config-label'>API Key:</span>
-                    <span className='landing-quickstart-config-value'>sk-your-api-key</span>
-                  </div>
-                  <div className='landing-quickstart-config-item'>
-                    <span className='landing-quickstart-config-label'>{t('模型')}:</span>
-                    <span className='landing-quickstart-config-value'>{t('landing.quickstart.clients.model_select')}</span>
-                  </div>
-                </div>
-              </TabPane>
-              <TabPane tab={t('landing.quickstart.clients.sdk')} itemKey='sdk'>
-                <pre className='landing-quickstart-code-block'>{sdkCodeExample}</pre>
-              </TabPane>
-            </Tabs>
+            <div className='landing-quickstart-clients-body'>
+              <Tabs type='line' size='large' className='landing-client-tabs'>
+                {clientTabs.map((tab) => (
+                  <TabPane
+                    tab={
+                      <span className='landing-client-tab'>
+                        <span className='landing-client-tab-icon'>{tab.icon}</span>
+                        <span className='landing-client-tab-label'>{tab.label}</span>
+                      </span>
+                    }
+                    itemKey={tab.key}
+                    key={tab.key}
+                  >
+                    {tab.type === 'code' ? (
+                      <div className='landing-code-block-wrapper'>
+                        <pre className='landing-quickstart-code-block' aria-label={`${tab.label} ${t('配置示例')}`}>
+                          <code>{tab.code}</code>
+                        </pre>
+                        <button
+                          className={`landing-code-copy-btn ${copiedTab === tab.key ? 'copied' : ''}`}
+                          onClick={() => handleCopyCode(tab.code, tab.key)}
+                          onKeyDown={(e) => handleCopyKeyDown(e, tab.code, tab.key)}
+                          aria-label={copiedTab === tab.key ? t('已复制') : t('复制代码')}
+                          title={t('复制代码')}
+                        >
+                          {copiedTab === tab.key ? (
+                            <>
+                              <IconTickCircle size={16} />
+                              <span className='landing-code-copy-text'>{t('已复制')}</span>
+                            </>
+                          ) : (
+                            <>
+                              <IconCopy size={16} />
+                              <span className='landing-code-copy-text'>{t('复制')}</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    ) : (
+                      <div className='landing-quickstart-client-config' role='list' aria-label={`${tab.label} ${t('配置项')}`}>
+                        {tab.items.map((item, index) => (
+                          <div className='landing-quickstart-config-item' key={index} role='listitem'>
+                            <span className='landing-quickstart-config-label'>{item.label}:</span>
+                            <code className='landing-quickstart-config-value'>{item.value}</code>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </TabPane>
+                ))}
+              </Tabs>
+            </div>
           </div>
         </div>
       </section>
@@ -704,7 +799,7 @@ client = OpenAI(
               <Link to='/'>{t('landing.footer.home')}</Link>
               <Link to='/console'>{t('landing.footer.console')}</Link>
               <Link to='/pricing'>{t('landing.footer.pricing')}</Link>
-              <a href='https://github.com/searouter' target='_blank' rel='noopener noreferrer'>
+              <a href='https://github.com/searouter' target='_blank' rel='noopener noreferrer' aria-label='GitHub (opens in new tab)'>
                 GitHub
               </a>
             </div>
