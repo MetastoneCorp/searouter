@@ -51,3 +51,7 @@ get-docker.sh
 
 # pnpm files
 web/.pnpm-approvals
+
+#node—modules
+node_modules/
+*/node_modules/
