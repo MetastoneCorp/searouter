@@ -40,7 +40,6 @@ searouter
 bin/
 
 # Screenshots and test images
-*.png
 !web/public/*.png
 
 # Playwright test logs
