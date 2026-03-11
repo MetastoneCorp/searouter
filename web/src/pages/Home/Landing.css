@@ -373,83 +373,215 @@ html.dark .landing-quickstart-step:hover {
   border: 1px solid var(--landing-card-border);
   border-radius: var(--landing-border-radius);
   overflow: hidden;
+  box-shadow: var(--semi-shadow);
+}
+
+html.dark .landing-quickstart-clients {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
 }
 
 .landing-quickstart-clients-header {
   padding: 16px 24px;
   border-bottom: 1px solid var(--landing-card-border);
-  font-size: 0.9rem;
-  color: var(--landing-text-secondary);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, transparent 100%);
 }
 
-.landing-quickstart-clients-content {
+.landing-quickstart-clients-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--landing-text-primary);
+}
+
+.landing-quickstart-clients-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(129, 140, 248, 0.1));
+  color: var(--semi-color-primary);
+}
+
+.landing-quickstart-clients-body {
   padding: 0;
+}
+
+/* Client Tabs Styling */
+.landing-client-tabs .semi-tabs-tab {
+  padding: 12px 20px;
+  font-weight: 500;
+}
+
+.landing-client-tabs .semi-tabs-tab:hover {
+  color: var(--semi-color-primary);
+}
+
+.landing-client-tabs .semi-tabs-tab-active {
+  color: var(--semi-color-primary);
+}
+
+.landing-client-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.landing-client-tab-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--landing-card-hover-bg);
+  transition: all 0.15s ease;
+}
+
+.landing-client-tabs .semi-tabs-tab-active .landing-client-tab-icon {
+  background: var(--landing-accent-light);
+  color: var(--semi-color-primary);
+}
+
+.landing-client-tab-label {
+  font-size: 0.9rem;
+}
+
+.landing-client-icon-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Code Block with Copy Button */
+.landing-code-block-wrapper {
+  position: relative;
+}
+
+.landing-code-block-wrapper:hover .landing-code-copy-btn {
+  opacity: 1;
 }
 
 /* Code Block Styles */
 .landing-quickstart-code-block {
   background: var(--landing-card-hover-bg);
-  padding: 20px 24px;
+  padding: 24px 28px;
+  padding-right: 80px;
   font-size: 0.875rem;
-  line-height: 1.7;
+  line-height: 1.8;
   overflow-x: auto;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
   min-height: 160px;
 }
 
 html.dark .landing-quickstart-code-block {
   background: #0D1117;
+  border-top: 1px solid rgba(99, 102, 241, 0.1);
 }
 
-.landing-quickstart-code-line {
-  white-space: pre;
-  display: block;
+.landing-quickstart-code-block code {
+  font-family: inherit;
 }
 
-.landing-quickstart-code-comment {
-  color: var(--landing-text-muted);
-}
-
-.landing-quickstart-code-key {
-  color: #C084FC;
-}
-
-.landing-quickstart-code-string {
-  color: #34D399;
-}
-
-.landing-quickstart-code-value {
-  color: #38BDF8;
-}
-
-.landing-quickstart-code-label {
+/* Copy Button */
+.landing-code-copy-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--landing-card-bg);
+  border: 1px solid var(--landing-card-border);
   color: var(--landing-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  opacity: 0.7;
+}
+
+.landing-code-copy-btn:hover {
+  background: var(--semi-color-primary);
+  border-color: var(--semi-color-primary);
+  color: white;
+  opacity: 1;
+}
+
+.landing-code-copy-btn:focus-visible {
+  outline: 2px solid var(--semi-color-primary);
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+.landing-code-copy-btn.copied {
+  background: var(--landing-success);
+  border-color: var(--landing-success);
+  color: white;
+  opacity: 1;
+}
+
+.landing-code-copy-text {
+  font-family: inherit;
+}
+
+@media (max-width: 768px) {
+  .landing-code-copy-btn {
+    opacity: 1;
+  }
+
+  .landing-code-copy-text {
+    display: none;
+  }
+
+  .landing-quickstart-code-block {
+    padding-right: 24px;
+  }
 }
 
 /* Client Config Text */
 .landing-quickstart-client-config {
-  padding: 20px 24px;
+  padding: 24px 28px;
   min-height: 160px;
+  background: var(--landing-card-hover-bg);
+}
+
+html.dark .landing-quickstart-client-config {
+  background: #0D1117;
+  border-top: 1px solid rgba(99, 102, 241, 0.1);
 }
 
 .landing-quickstart-config-item {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--landing-card-border);
+}
+
+.landing-quickstart-config-item:last-child {
+  border-bottom: none;
 }
 
 .landing-quickstart-config-label {
-  min-width: 80px;
-  font-size: 0.875rem;
+  min-width: 100px;
+  font-size: 0.9rem;
+  font-weight: 500;
   color: var(--landing-text-secondary);
 }
 
 .landing-quickstart-config-value {
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 0.85rem;
-  color: var(--landing-text-primary);
+  color: var(--semi-color-primary);
   word-break: break-all;
+  padding: 4px 10px;
+  background: var(--landing-accent-light);
+  border-radius: 6px;
 }
 
 /* Code Window */
