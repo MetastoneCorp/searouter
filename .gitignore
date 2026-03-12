@@ -40,7 +40,6 @@ searouter
 bin/
 
 # Screenshots and test images
-*.png
 !web/public/*.png
 
 # Playwright test logs
@@ -51,3 +50,8 @@ get-docker.sh
 
 # pnpm files
 web/.pnpm-approvals
+
+#node—modules
+node_modules/
+*/node_modules/
+*.vitepress
