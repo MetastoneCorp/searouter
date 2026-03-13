@@ -7,3 +7,9 @@ Makefile
 .eslintcache
 .gocache
 /web/node_modules
+pg_data
+redis_data
+data
+logs
+backup_*.sql
+*.sql
