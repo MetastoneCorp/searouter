@@ -17,6 +17,9 @@ importers:
       '@douyinfe/semi-ui':
         specifier: 2.69.1
         version: 2.69.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@fontsource/plus-jakarta-sans':
+        specifier: ^5.2.8
+        version: 5.2.8
       '@lobehub/icons':
         specifier: ^2.0.0
         version: 2.48.0(@babel/core@7.29.0)(@types/mdast@4.0.4)(@types/react@19.2.14)(antd@6.3.2(date-fns@2.30.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(framer-motion@12.35.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(micromark-util-types@2.0.2)(micromark@4.0.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -664,6 +667,9 @@ packages:
 
   '@floating-ui/utils@0.2.11':
     resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
+
+  '@fontsource/plus-jakarta-sans@5.2.8':
+    resolution: {integrity: sha512-P5qE49fqdeD+7DXH1KBxmMPlB17LTz1zvBhFH0tFzfnYTKVJVyb0pR6plh0ZGXxcB+Oayb54FZZw3V42/DawTw==}
 
   '@giscus/react@3.1.0':
     resolution: {integrity: sha512-0TCO2TvL43+oOdyVVGHDItwxD1UMKP2ZYpT6gXmhFOqfAJtZxTzJ9hkn34iAF/b6YzyJ4Um89QIt9z/ajmAEeg==}
@@ -5495,6 +5501,8 @@ snapshots:
       tabbable: 6.4.0
 
   '@floating-ui/utils@0.2.11': {}
+
+  '@fontsource/plus-jakarta-sans@5.2.8': {}
 
   '@giscus/react@3.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
