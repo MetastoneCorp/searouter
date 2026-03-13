@@ -2800,7 +2800,7 @@
     "landing.hero.tagline": "混合智能网关",
     "landing.hero.title1": "统一云端，",
     "landing.hero.title2": "守护边缘。",
-    "landing.hero.subtitle": "一个标准接口，连接所有 AI 模型。通过统一的 OpenAI 兼容 API，访问 GPT-4、Claude、Gemini、DeepSeek 以及您自己的私有模型。",
+    "landing.hero.subtitle": "企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率。",
     "landing.hero.cta1": "免费开始",
     "landing.hero.cta2": "了解更多",
     "landing.hero.stat1": "AI 模型",

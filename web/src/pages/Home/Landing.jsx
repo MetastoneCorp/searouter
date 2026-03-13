@@ -496,9 +496,6 @@ client = OpenAI(
                 <span className='landing-model-badge'>GLM</span>
                 <span className='landing-model-badge'>+50</span>
               </div>
-              <Link to='#features' className='landing-highlight-link'>
-                {t('landing.highlights.card1.link')} <IconArrowRight />
-              </Link>
             </div>
 
             {/* Card 2: Hybrid Cloud + On-Prem */}
@@ -508,9 +505,6 @@ client = OpenAI(
               </div>
               <h3 className='landing-highlight-title'>{t('landing.highlights.card2.title')}</h3>
               <p className='landing-highlight-desc'>{t('landing.highlights.card2.desc')}</p>
-              <Link to='#features' className='landing-highlight-link'>
-                {t('landing.highlights.card2.link')} <IconArrowRight />
-              </Link>
             </div>
 
             {/* Card 3: High Availability */}
@@ -521,9 +515,6 @@ client = OpenAI(
               <h3 className='landing-highlight-title'>{t('landing.highlights.card3.title')}</h3>
               <p className='landing-highlight-desc'>{t('landing.highlights.card3.desc')}</p>
               <div className='landing-graph-placeholder'></div>
-              <Link to='#comparison' className='landing-highlight-link'>
-                {t('landing.highlights.card3.link')} <IconArrowRight />
-              </Link>
             </div>
 
             {/* Card 4: Data Sovereignty */}
@@ -533,9 +524,6 @@ client = OpenAI(
               </div>
               <h3 className='landing-highlight-title'>{t('landing.highlights.card4.title')}</h3>
               <p className='landing-highlight-desc'>{t('landing.highlights.card4.desc')}</p>
-              <Link to='#features' className='landing-highlight-link'>
-                {t('landing.highlights.card4.link')} <IconArrowRight />
-              </Link>
             </div>
           </div>
         </div>
@@ -793,13 +781,13 @@ client = OpenAI(
         <div className='landing-section-container'>
           <div className='landing-footer-inner'>
             <p className='landing-footer-text'>
-              © 2026 SeaRouter. {t('landing.footer.tagline')}
+              © 2026 MetaStone. {t('landing.footer.tagline')}
             </p>
             <div className='landing-footer-links'>
               <Link to='/'>{t('landing.footer.home')}</Link>
               <Link to='/console'>{t('landing.footer.console')}</Link>
               <Link to='/pricing'>{t('landing.footer.pricing')}</Link>
-              <a href='https://github.com/searouter' target='_blank' rel='noopener noreferrer' aria-label='GitHub (opens in new tab)'>
+              <a href='https://github.com/metastone-ai' target='_blank' rel='noopener noreferrer' aria-label='GitHub (opens in new tab)'>
                 GitHub
               </a>
             </div>
