@@ -54,4 +54,5 @@ web/.pnpm-approvals
 #node—modules
 node_modules/
 */node_modules/
-*.vitepress
+
+# vitepress files
