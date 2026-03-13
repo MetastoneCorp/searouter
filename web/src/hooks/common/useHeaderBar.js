@@ -50,6 +50,7 @@ export const useHeaderBar = ({ onMobileMenuToggle, drawerOpen }) => {
   const isSelfUseMode = statusState?.status?.self_use_mode_enabled || false;
   const docsLink = statusState?.status?.docs_link || '';
   const adminDocsLink = statusState?.status?.admin_docs_link || '';
+  const isAdminUser = userState?.user?.role >= 10;
   const isDemoSiteMode = statusState?.status?.demo_site_enabled || false;
 
   // 获取顶栏模块配置
@@ -221,6 +222,7 @@ export const useHeaderBar = ({ onMobileMenuToggle, drawerOpen }) => {
     isSelfUseMode,
     docsLink,
     adminDocsLink,
+    isAdminUser,
     isDemoSiteMode,
     isConsoleRoute,
     theme,
