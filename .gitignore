@@ -27,7 +27,7 @@ data/
 .gomodcache/
 .gocache-temp
 .gopath
-
+.opencode
 .qwen/
 gha-creds-*.json
 
@@ -38,6 +38,8 @@ gha-creds-*.json
 # Compiled binaries
 searouter
 bin/
+
+redis_data
 
 # Screenshots and test images
 !web/public/*.png
@@ -56,3 +58,5 @@ node_modules/
 */node_modules/
 
 # vitepress files
+
+backup_*.sql
