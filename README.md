@@ -159,7 +159,6 @@ For local development and customization:
 docker-compose up -d
 ```
 
-> **📋 See [BUILD.md](./BUILD.md) for detailed build instructions, proxy configuration, and CI/CD integration.**
 
 ---
 
