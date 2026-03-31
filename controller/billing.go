@@ -2,11 +2,10 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com
 	"github.com/searouter/searouter/common"
 	"github.com/searouter/searouter/model"
 	"github.com/searouter/searouter/setting/operation_setting"
-	"github.com/gin-gonic/gin"
+	"github.com/searouter/searouter/types"
 )
 
 func GetSubscription(c *gin.Context) {

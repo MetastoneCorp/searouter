@@ -4,10 +4,9 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com
 	"github.com/searouter/searouter/common"
 	"github.com/searouter/searouter/logger"
-	"github.com/gin-gonic/gin"
+	"github.com/searouter/searouter/types"
 )
 
 func abortWithOpenAiMessage(c *gin.Context, statusCode int, message string, code ...types.ErrorCode) {
