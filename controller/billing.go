@@ -1,11 +1,11 @@
 package controller
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/searouter/searouter/common"
 	"github.com/searouter/searouter/model"
 	"github.com/searouter/searouter/setting/operation_setting"
 	"github.com/searouter/searouter/types"
-	"github.com/gin-gonic/gin"
 )
 
 func GetSubscription(c *gin.Context) {
@@ -83,7 +83,7 @@ func GetUsage(c *gin.Context) {
 	if err != nil {
 		openAIError := types.OpenAIError{
 			Message: err.Error(),
-			Type:    "new_api_error",
+			Type:    "api_error",
 		}
 		c.JSON(200, gin.H{
 			"error": openAIError,

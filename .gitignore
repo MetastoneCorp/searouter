@@ -60,3 +60,4 @@ node_modules/
 # vitepress files
 
 backup_*.sql
+/CLAUDE.md
