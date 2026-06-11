@@ -2303,6 +2303,7 @@
     "管理员账号已经初始化过，请继续设置其他参数": "The admin account has already been initialized, please continue to set other parameters",
     "管理服务器运行日志文件。日志文件会随运行时间不断累积，建议定期清理以释放磁盘空间。": "Manage server log files. Log files accumulate over time; regular cleanup is recommended to free disk space.",
     "管理模型、标签、端点等预填组": "Manage model, tag, endpoint, etc. pre-filled groups",
+    "管理用于调用模型 API 的访问令牌，控制每个令牌的额度与权限": "Manage access tokens for calling model APIs, and control each token's quota and permissions",
     "管理用户已绑定的第三方账户，支持筛选与解绑": "Manage users' linked third-party accounts, with filtering and unbinding support",
     "管理绑定": "Manage Bindings",
     "类型": "Type",

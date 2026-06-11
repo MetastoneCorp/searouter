@@ -23,7 +23,6 @@ import {
   Button,
   Space,
   Toast,
-  Typography,
   Select,
 } from '@douyinfe/semi-ui';
 import {
@@ -32,11 +31,12 @@ import {
   getModelCategories,
   selectFilter,
 } from '../../../helpers';
+import { Plus } from 'lucide-react';
 import CardPro from '../../common/ui/CardPro';
 import TokensTable from './TokensTable';
 import TokensActions from './TokensActions';
 import TokensFilters from './TokensFilters';
-import TokensDescription from './TokensDescription';
+import CompactModeToggle from '../../common/ui/CompactModeToggle';
 import EditTokenModal from './modals/EditTokenModal';
 import { useTokensData } from '../../../hooks/tokens/useTokensData';
 import { useIsMobile } from '../../../hooks/common/useIsMobile';
@@ -363,34 +363,50 @@ function TokensPage() {
         handleClose={closeEdit}
       />
 
+      <div className='page-head flex-wrap'>
+        <div>
+          <div className='page-title'>{t('令牌管理')}</div>
+          <div className='page-sub'>
+            {t('管理用于调用模型 API 的访问令牌，控制每个令牌的额度与权限')}
+          </div>
+        </div>
+        <Button
+          theme='solid'
+          type='primary'
+          icon={<Plus size={16} />}
+          onClick={() => {
+            setEditingToken({ id: undefined });
+            setShowEdit(true);
+          }}
+        >
+          {t('添加令牌')}
+        </Button>
+      </div>
+
       <CardPro
         type='type1'
-        descriptionArea={
-          <TokensDescription
-            compactMode={compactMode}
-            setCompactMode={setCompactMode}
-            t={t}
-          />
-        }
         actionsArea={
-          <div className='flex flex-col md:flex-row justify-between items-center gap-2 w-full'>
+          <div className='flex flex-col md:flex-row justify-between items-center gap-3 w-full'>
             <TokensActions
               selectedKeys={selectedKeys}
-              setEditingToken={setEditingToken}
-              setShowEdit={setShowEdit}
               batchCopyTokens={batchCopyTokens}
               batchDeleteTokens={batchDeleteTokens}
               copyText={copyText}
               t={t}
             />
 
-            <div className='w-full md:w-full lg:w-auto order-1 md:order-2'>
+            <div className='flex flex-col md:flex-row items-center gap-3 w-full md:w-full lg:w-auto order-1 md:order-2'>
               <TokensFilters
                 formInitValues={formInitValues}
                 setFormApi={setFormApi}
                 searchTokens={searchTokens}
                 loading={loading}
                 searching={searching}
+                t={t}
+              />
+              <CompactModeToggle
+                compactMode={compactMode}
+                setCompactMode={setCompactMode}
                 t={t}
               />
             </div>

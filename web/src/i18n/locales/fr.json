@@ -1838,6 +1838,7 @@
     "管理员账号": "Compte administrateur",
     "管理员账号已经初始化过，请继续设置其他参数": "Le compte administrateur a déjà été initialisé, veuillez continuer à définir d'autres paramètres",
     "管理模型、标签、端点等预填组": "Gérer les groupes pré-remplis de modèles, d'étiquettes, de points de terminaison, etc.",
+    "管理用于调用模型 API 的访问令牌，控制每个令牌的额度与权限": "Gérez les jetons d'accès pour appeler les API de modèles et contrôlez le quota et les permissions de chaque jeton",
     "类型": "Type",
     "粘贴图片失败": "Échec du collage de l'image",
     "精确": "Exact",

@@ -23,14 +23,11 @@ import {
   Dropdown,
   Space,
   SplitButtonGroup,
-  Tag,
   AvatarGroup,
   Avatar,
   Tooltip,
-  Progress,
   Popover,
   Typography,
-  Input,
   Modal,
 } from '@douyinfe/semi-ui';
 import {
@@ -57,34 +54,28 @@ const getProgressColor = (pct) => {
 
 // Render functions
 function renderTimestamp(timestamp) {
-  return <>{timestamp2string(timestamp)}</>;
+  return <span className='tnum text-ink-2'>{timestamp2string(timestamp)}</span>;
 }
 
 // Render status column only (no usage)
 const renderStatus = (text, record, t) => {
-  const enabled = text === 1;
-
-  let tagColor = 'black';
-  let tagText = t('未知状态');
-  if (enabled) {
-    tagColor = 'green';
-    tagText = t('已启用');
+  let pillClass = 'pill bg-surface-2 text-ink-2';
+  let pillText = t('未知状态');
+  if (text === 1) {
+    pillClass = 'pill ok';
+    pillText = t('已启用');
   } else if (text === 2) {
-    tagColor = 'red';
-    tagText = t('已禁用');
+    pillClass = 'pill err';
+    pillText = t('已禁用');
   } else if (text === 3) {
-    tagColor = 'yellow';
-    tagText = t('已过期');
+    pillClass = 'pill warn';
+    pillText = t('已过期');
   } else if (text === 4) {
-    tagColor = 'grey';
-    tagText = t('已耗尽');
+    pillClass = 'pill warn';
+    pillText = t('已耗尽');
   }
 
-  return (
-    <Tag color={tagColor} shape='circle' size='small'>
-      {tagText}
-    </Tag>
-  );
+  return <span className={pillClass}>{pillText}</span>;
 };
 
 // Render group column
@@ -97,10 +88,10 @@ const renderGroupColumn = (text, record, t) => {
         )}
         position='top'
       >
-        <Tag color='white' shape='circle'>
+        <span className='tag'>
           {t('智能熔断')}
           {record && record.cross_group_retry ? `(${t('跨分组')})` : ''}
-        </Tag>
+        </span>
       </Tooltip>
     );
   }
@@ -115,37 +106,33 @@ const renderTokenKey = (text, record, showKeys, setShowKeys, copyText) => {
   const revealed = !!showKeys[record.id];
 
   return (
-    <div className='w-[200px]'>
-      <Input
-        readOnly
-        value={revealed ? fullKey : maskedKey}
+    <div className='flex items-center gap-2'>
+      <span className='mono text-[13px] text-ink-2 whitespace-nowrap'>
+        {revealed ? fullKey : maskedKey}
+      </span>
+      <Button
+        theme='borderless'
         size='small'
-        suffix={
-          <div className='flex items-center'>
-            <Button
-              theme='borderless'
-              size='small'
-              type='tertiary'
-              icon={revealed ? <IconEyeClosed /> : <IconEyeOpened />}
-              aria-label='toggle token visibility'
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowKeys((prev) => ({ ...prev, [record.id]: !revealed }));
-              }}
-            />
-            <Button
-              theme='borderless'
-              size='small'
-              type='tertiary'
-              icon={<IconCopy />}
-              aria-label='copy token key'
-              onClick={async (e) => {
-                e.stopPropagation();
-                await copyText(fullKey);
-              }}
-            />
-          </div>
-        }
+        type='tertiary'
+        icon={revealed ? <IconEyeClosed /> : <IconEyeOpened />}
+        aria-label='toggle token visibility'
+        className='!text-ink-3 hover:!text-brand-600'
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowKeys((prev) => ({ ...prev, [record.id]: !revealed }));
+        }}
+      />
+      <Button
+        theme='borderless'
+        size='small'
+        type='tertiary'
+        icon={<IconCopy />}
+        aria-label='copy token key'
+        className='!text-ink-3 hover:!text-brand-600'
+        onClick={async (e) => {
+          e.stopPropagation();
+          await copyText(fullKey);
+        }}
       />
     </div>
   );
@@ -204,22 +191,14 @@ const renderModelLimits = (text, record, t) => {
 
     return <AvatarGroup size='extra-extra-small'>{vendorAvatars}</AvatarGroup>;
   } else {
-    return (
-      <Tag color='white' shape='circle'>
-        {t('无限制')}
-      </Tag>
-    );
+    return <span className='tag gray'>{t('无限制')}</span>;
   }
 };
 
 // Render IP restrictions column
 const renderAllowIps = (text, t) => {
   if (!text || text.trim() === '') {
-    return (
-      <Tag color='white' shape='circle'>
-        {t('无限制')}
-      </Tag>
-    );
+    return <span className='tag gray'>{t('无限制')}</span>;
   }
 
   const ips = text
@@ -231,9 +210,9 @@ const renderAllowIps = (text, t) => {
   const extraCount = ips.length - displayIps.length;
 
   const ipTags = displayIps.map((ip, idx) => (
-    <Tag key={idx} shape='circle'>
+    <span key={idx} className='tag gray mono'>
       {ip}
-    </Tag>
+    </span>
   ));
 
   if (extraCount > 0) {
@@ -244,7 +223,7 @@ const renderAllowIps = (text, t) => {
         position='top'
         showArrow
       >
-        <Tag shape='circle'>{'+' + extraCount}</Tag>
+        <span className='tag gray'>{'+' + extraCount}</span>
       </Tooltip>,
     );
   }
@@ -268,13 +247,12 @@ const renderQuotaUsage = (text, record, t) => {
     );
     return (
       <Popover content={popoverContent} position='top'>
-        <Tag color='white' shape='circle'>
-          {t('无限额度')}
-        </Tag>
+        <span className='tag gray'>{t('无限额度')}</span>
       </Popover>
     );
   }
   const percent = total > 0 ? (remain / total) * 100 : 0;
+  const barColor = getProgressColor(percent) || 'var(--brand-600)';
   const popoverContent = (
     <div className='text-xs p-2'>
       <Paragraph copyable={{ content: renderQuota(used) }}>
@@ -290,18 +268,25 @@ const renderQuotaUsage = (text, record, t) => {
   );
   return (
     <Popover content={popoverContent} position='top'>
-      <Tag color='white' shape='circle'>
-        <div className='flex flex-col items-end'>
-          <span className='text-xs leading-none'>{`${renderQuota(remain)} / ${renderQuota(total)}`}</span>
-          <Progress
-            percent={percent}
-            stroke={getProgressColor(percent)}
-            aria-label='quota usage'
-            format={() => `${percent.toFixed(0)}%`}
-            style={{ width: '100%', marginTop: '1px', marginBottom: 0 }}
+      <div className='min-w-[140px]'>
+        <div className='flex justify-between gap-2 text-xs text-ink-2 tnum mb-[5px]'>
+          <span>{renderQuota(remain)}</span>
+          <span>/ {renderQuota(total)}</span>
+        </div>
+        <div
+          className='h-1.5 rounded-[3px] bg-surface-2 overflow-hidden'
+          role='progressbar'
+          aria-label='quota usage'
+          aria-valuenow={Number(percent.toFixed(0))}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
+          <i
+            className='block h-full rounded-[3px]'
+            style={{ width: `${percent}%`, background: barColor }}
           />
         </div>
-      </Tag>
+      </div>
     </Popover>
   );
 };
@@ -439,6 +424,7 @@ export const getTokensColumns = ({
     {
       title: t('名称'),
       dataIndex: 'name',
+      render: (text) => <span className='font-medium text-ink'>{text}</span>,
     },
     {
       title: t('状态'),

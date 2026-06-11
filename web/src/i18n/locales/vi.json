@@ -2093,6 +2093,7 @@
     "管理您的账户": "Quản lý tài khoản của bạn",
     "管理控制台": "Bảng điều khiển quản lý",
     "管理模型、标签、端点等预填组": "Quản lý các nhóm điền sẵn như mô hình, thẻ, điểm cuối, v.v.",
+    "管理用于调用模型 API 的访问令牌，控制每个令牌的额度与权限": "Quản lý token truy cập để gọi API mô hình, kiểm soát hạn mức và quyền của từng token",
     "管理用户": "Quản lý người dùng",
     "管理面板": "Bảng quản lý",
     "类": "Lớp",
