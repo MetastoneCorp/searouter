@@ -1,5 +1,6 @@
 /* ==================== Tailwind CSS 配置 ==================== */
-@layer tailwind-base, semi, tailwind-components, tailwind-utils;
+@layer tailwind-base, semi, design-system, tailwind-components, tailwind-utils;
+@import './styles/design-tokens.css' layer(design-system);
 
 @layer tailwind-base {
   @tailwind base;
