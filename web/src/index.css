@@ -45,9 +45,11 @@ body.sidebar-collapsed {
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+  font-family:
+    'PingFang SC', 'HarmonyOS Sans', 'Microsoft YaHei', -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   color: var(--semi-color-text-0);
-  background-color: var(--semi-color-bg-0);
+  background-color: var(--page);
 }
 
 .app-layout {
