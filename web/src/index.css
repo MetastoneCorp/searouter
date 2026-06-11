@@ -58,8 +58,8 @@ body {
 }
 
 .app-sider {
-  height: calc(100vh - 64px);
-  height: calc(100dvh - 64px);
+  height: calc(100vh - 56px);
+  height: calc(100dvh - 56px);
 }
 
 code {
