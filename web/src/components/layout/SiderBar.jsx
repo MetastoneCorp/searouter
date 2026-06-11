@@ -304,7 +304,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   }, [collapsed]);
 
   // 选中高亮颜色（统一）
-  const SELECTED_COLOR = 'var(--semi-color-primary)';
+  const SELECTED_COLOR = 'var(--brand-600)';
 
   // 渲染自定义菜单项
   const renderNavItem = (item) => {
@@ -312,7 +312,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
     if (item.className === 'tableHiddle') return null;
 
     const isSelected = selectedKeys.includes(item.itemKey);
-    const textColor = isSelected ? SELECTED_COLOR : 'inherit';
+    const textColor = isSelected ? SELECTED_COLOR : 'rgba(255,255,255,.88)';
 
     return (
       <Nav.Item
@@ -340,7 +340,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   const renderSubItem = (item) => {
     if (item.items && item.items.length > 0) {
       const isSelected = selectedKeys.includes(item.itemKey);
-      const textColor = isSelected ? SELECTED_COLOR : 'inherit';
+      const textColor = isSelected ? SELECTED_COLOR : 'rgba(255,255,255,.88)';
 
       return (
         <Nav.Sub
@@ -362,6 +362,8 @@ const SiderBar = ({ onNavigate = () => {} }) => {
         >
           {item.items.map((subItem) => {
             const isSubSelected = selectedKeys.includes(subItem.itemKey);
+            // 未选中时不内联白色：折叠态子项渲染在白色 Dropdown 弹层（portal）中，
+            // 需继承 Semi 默认深色；展开态在侧栏内由 CSS 设为白色
             const subTextColor = isSubSelected ? SELECTED_COLOR : 'inherit';
 
             return (
@@ -406,9 +408,6 @@ const SiderBar = ({ onNavigate = () => {} }) => {
           isCollapsed={collapsed}
           onCollapseChange={toggleCollapsed}
           selectedKeys={selectedKeys}
-          itemStyle='sidebar-nav-item'
-          hoverStyle='sidebar-nav-item:hover'
-          selectedStyle='sidebar-nav-item-selected'
           renderWrapper={({ itemElement, props }) => {
             const to =
               routerMapState[props.itemKey] || routerMap[props.itemKey];
@@ -481,7 +480,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
               <Divider className='sidebar-divider' />
               <div>
                 {!collapsed && (
-                  <div className='sidebar-group-label'>{t('管理员')}</div>
+                  <div className='sidebar-group-label'>{t('系统管理')}</div>
                 )}
                 {adminItems.map((item) => renderNavItem(item))}
               </div>
@@ -507,7 +506,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
               <ChevronLeft
                 size={16}
                 strokeWidth={2.5}
-                color='var(--semi-color-text-2)'
+                color='rgba(255,255,255,.85)'
                 style={{
                   transform: collapsed ? 'rotate(180deg)' : 'rotate(0deg)',
                 }}
@@ -517,8 +516,8 @@ const SiderBar = ({ onNavigate = () => {} }) => {
             icononly={collapsed}
             style={
               collapsed
-                ? { width: 36, height: 24, padding: 0 }
-                : { padding: '4px 12px', width: '100%' }
+                ? { width: 36, height: 24, padding: 0, color: 'rgba(255,255,255,.85)', background: 'rgba(255,255,255,.1)', border: 'none' }
+                : { padding: '4px 12px', width: '100%', color: 'rgba(255,255,255,.85)', background: 'rgba(255,255,255,.1)', border: 'none' }
             }
           >
             {!collapsed ? t('收起侧边栏') : null}

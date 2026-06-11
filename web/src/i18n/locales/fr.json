@@ -1862,6 +1862,7 @@
     "系统文档和帮助信息": "Documentation système et informations d'aide",
     "系统消息": "Messages système",
     "系统管理功能": "Fonctions de gestion du système",
+    "系统管理": "Administration",
     "系统性能监控": "Surveillance des performances du système",
     "启用性能监控后，当系统资源使用率超过设定阈值时，将拒绝新的 Relay 请求 (/v1, /v1beta 等)，以保护系统稳定性。": "Lorsque la surveillance des performances est activée et que l'utilisation des ressources système dépasse le seuil défini, les nouvelles requêtes Relay (/v1, /v1beta, etc.) seront rejetées pour protéger la stabilité du système.",
     "启用性能监控": "Activer la surveillance des performances",
