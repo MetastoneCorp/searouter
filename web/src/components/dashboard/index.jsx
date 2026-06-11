@@ -37,8 +37,6 @@ import { useDashboardCharts } from '../../hooks/dashboard/useDashboardCharts';
 
 import {
   CHART_CONFIG,
-  CARD_PROPS,
-  FLEX_CENTER_GAP2,
   ILLUSTRATION_SIZE,
   ANNOUNCEMENT_LEGEND_DATA,
   UPTIME_STATUS_MAP,
@@ -146,6 +144,7 @@ const Dashboard = () => {
         showSearchModal={dashboardData.showSearchModal}
         refresh={handleRefresh}
         loading={dashboardData.loading}
+        inputs={dashboardData.inputs}
         t={dashboardData.t}
       />
 
@@ -166,7 +165,6 @@ const Dashboard = () => {
         groupedStatsData={groupedStatsData}
         loading={dashboardData.loading}
         getTrendSpec={getTrendSpec}
-        CARD_PROPS={CARD_PROPS}
         CHART_CONFIG={CHART_CONFIG}
       />
 
@@ -182,9 +180,7 @@ const Dashboard = () => {
             spec_model_line={dashboardCharts.spec_model_line}
             spec_pie={dashboardCharts.spec_pie}
             spec_rank_bar={dashboardCharts.spec_rank_bar}
-            CARD_PROPS={CARD_PROPS}
             CHART_CONFIG={CHART_CONFIG}
-            FLEX_CENTER_GAP2={FLEX_CENTER_GAP2}
             hasApiInfoPanel={dashboardData.hasApiInfoPanel}
             t={dashboardData.t}
           />
@@ -194,8 +190,6 @@ const Dashboard = () => {
               apiInfoData={apiInfoData}
               handleCopyUrl={(url) => handleCopyUrl(url, dashboardData.t)}
               handleSpeedTest={handleSpeedTest}
-              CARD_PROPS={CARD_PROPS}
-              FLEX_CENTER_GAP2={FLEX_CENTER_GAP2}
               ILLUSTRATION_SIZE={ILLUSTRATION_SIZE}
               t={dashboardData.t}
             />
@@ -217,7 +211,6 @@ const Dashboard = () => {
                     label: dashboardData.t(item.label),
                   }),
                 )}
-                CARD_PROPS={CARD_PROPS}
                 ILLUSTRATION_SIZE={ILLUSTRATION_SIZE}
                 t={dashboardData.t}
               />
@@ -227,8 +220,6 @@ const Dashboard = () => {
             {dashboardData.faqEnabled && (
               <FaqPanel
                 faqData={faqData}
-                CARD_PROPS={CARD_PROPS}
-                FLEX_CENTER_GAP2={FLEX_CENTER_GAP2}
                 ILLUSTRATION_SIZE={ILLUSTRATION_SIZE}
                 t={dashboardData.t}
               />
@@ -256,7 +247,6 @@ const Dashboard = () => {
                     dashboardData.t,
                   )
                 }
-                CARD_PROPS={CARD_PROPS}
                 ILLUSTRATION_SIZE={ILLUSTRATION_SIZE}
                 t={dashboardData.t}
               />

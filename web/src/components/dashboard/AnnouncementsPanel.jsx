@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Card, Tag, Timeline, Empty } from '@douyinfe/semi-ui';
+import { Tag, Timeline, Empty } from '@douyinfe/semi-ui';
 import { Bell } from 'lucide-react';
 import { marked } from 'marked';
 import {
@@ -27,85 +27,80 @@ import {
 } from '@douyinfe/semi-illustrations';
 import ScrollableContainer from '../common/ui/ScrollableContainer';
 
+const ANNOUNCEMENT_LEGEND_COLORS = {
+  grey: '#8b9aa7',
+  blue: '#3b82f6',
+  green: '#10b981',
+  orange: '#f59e0b',
+  red: '#ef4444',
+};
+
 const AnnouncementsPanel = ({
   announcementData,
   announcementLegendData,
-  CARD_PROPS,
   ILLUSTRATION_SIZE,
   t,
 }) => {
   return (
-    <Card
-      {...CARD_PROPS}
-      className='shadow-sm !rounded-2xl lg:col-span-2'
-      title={
-        <div className='flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 w-full'>
-          <div className='flex items-center gap-2'>
+    <div className='card lg:col-span-2'>
+      <div className='card-head flex-wrap'>
+        <h3>
+          <span className='ico'>
             <Bell size={16} />
-            {t('系统公告')}
-            <Tag color='white' shape='circle'>
-              {t('显示最新20条')}
-            </Tag>
-          </div>
-          {/* 图例 */}
-          <div className='flex flex-wrap gap-3 text-xs'>
-            {announcementLegendData.map((legend, index) => (
-              <div key={index} className='flex items-center gap-1'>
-                <div
-                  className='w-2 h-2 rounded-full'
-                  style={{
-                    backgroundColor:
-                      legend.color === 'grey'
-                        ? '#8b9aa7'
-                        : legend.color === 'blue'
-                          ? '#3b82f6'
-                          : legend.color === 'green'
-                            ? '#10b981'
-                            : legend.color === 'orange'
-                              ? '#f59e0b'
-                              : legend.color === 'red'
-                                ? '#ef4444'
-                                : '#8b9aa7',
-                  }}
-                />
-                <span className='text-gray-600'>{legend.label}</span>
-              </div>
-            ))}
-          </div>
+          </span>
+          {t('系统公告')}
+          <Tag color='white' shape='circle'>
+            {t('显示最新20条')}
+          </Tag>
+        </h3>
+        {/* 图例 */}
+        <div className='flex flex-wrap gap-3 text-xs'>
+          {announcementLegendData.map((legend, index) => (
+            <div key={index} className='flex items-center gap-1'>
+              <div
+                className='w-2 h-2 rounded-full'
+                style={{
+                  backgroundColor:
+                    ANNOUNCEMENT_LEGEND_COLORS[legend.color] || '#8b9aa7',
+                }}
+              />
+              <span className='text-ink-2'>{legend.label}</span>
+            </div>
+          ))}
         </div>
-      }
-      bodyStyle={{ padding: 0 }}
-    >
+      </div>
       <ScrollableContainer maxHeight='24rem'>
         {announcementData.length > 0 ? (
-          <Timeline mode='left'>
-            {announcementData.map((item, idx) => {
-              const htmlExtra = item.extra ? marked.parse(item.extra) : '';
-              return (
-                <Timeline.Item
-                  key={idx}
-                  type={item.type || 'default'}
-                  time={`${item.relative ? item.relative + ' ' : ''}${item.time}`}
-                  extra={
-                    item.extra ? (
+          <div className='card-pad'>
+            <Timeline mode='left'>
+              {announcementData.map((item, idx) => {
+                const htmlExtra = item.extra ? marked.parse(item.extra) : '';
+                return (
+                  <Timeline.Item
+                    key={idx}
+                    type={item.type || 'default'}
+                    time={`${item.relative ? item.relative + ' ' : ''}${item.time}`}
+                    extra={
+                      item.extra ? (
+                        <div
+                          className='text-xs text-ink-3'
+                          dangerouslySetInnerHTML={{ __html: htmlExtra }}
+                        />
+                      ) : null
+                    }
+                  >
+                    <div>
                       <div
-                        className='text-xs text-gray-500'
-                        dangerouslySetInnerHTML={{ __html: htmlExtra }}
+                        dangerouslySetInnerHTML={{
+                          __html: marked.parse(item.content || ''),
+                        }}
                       />
-                    ) : null
-                  }
-                >
-                  <div>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: marked.parse(item.content || ''),
-                      }}
-                    />
-                  </div>
-                </Timeline.Item>
-              );
-            })}
-          </Timeline>
+                    </div>
+                  </Timeline.Item>
+                );
+              })}
+            </Timeline>
+          </div>
         ) : (
           <div className='flex justify-center items-center py-8'>
             <Empty
@@ -119,7 +114,7 @@ const AnnouncementsPanel = ({
           </div>
         )}
       </ScrollableContainer>
-    </Card>
+    </div>
   );
 };
 

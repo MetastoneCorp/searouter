@@ -19,7 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { Button } from '@douyinfe/semi-ui';
-import { RefreshCw, Search } from 'lucide-react';
+import { RefreshCw, Clock } from 'lucide-react';
 
 const DashboardHeader = ({
   getGreeting,
@@ -27,31 +27,39 @@ const DashboardHeader = ({
   showSearchModal,
   refresh,
   loading,
+  inputs,
   t,
 }) => {
-  const ICON_BUTTON_CLASS = 'text-white hover:bg-opacity-80 !rounded-full';
-
   return (
-    <div className='flex items-center justify-between mb-4'>
-      <h2
-        className='text-2xl font-semibold text-gray-800 transition-opacity duration-1000 ease-in-out'
-        style={{ opacity: greetingVisible ? 1 : 0 }}
-      >
-        {getGreeting}
-      </h2>
-      <div className='flex gap-3'>
-        <Button
-          type='tertiary'
-          icon={<Search size={16} />}
+    <div className='page-head flex-wrap'>
+      <div>
+        <div className='page-title'>{t('数据看板')}</div>
+        <div
+          className='page-sub transition-opacity duration-1000 ease-in-out'
+          style={{ opacity: greetingVisible ? 1 : 0 }}
+        >
+          {getGreeting}
+        </div>
+      </div>
+      <div className='flex items-center gap-2.5 flex-wrap'>
+        <button
+          type='button'
           onClick={showSearchModal}
-          className={`bg-green-500 hover:bg-green-600 ${ICON_BUTTON_CLASS}`}
-        />
+          className='flex items-center gap-2 h-[38px] px-3.5 bg-surface border border-line rounded-md text-[13px] text-ink-2 tnum transition-colors hover:border-[#CBD2DE] hover:bg-surface-2'
+        >
+          <span>{inputs?.start_timestamp}</span>
+          <span className='text-ink-3'>→</span>
+          <span>{inputs?.end_timestamp}</span>
+          <Clock size={15} className='text-ink-3' />
+        </button>
         <Button
+          theme='light'
           type='tertiary'
           icon={<RefreshCw size={16} />}
           onClick={refresh}
           loading={loading}
-          className={`bg-blue-500 hover:bg-blue-600 ${ICON_BUTTON_CLASS}`}
+          aria-label={t('刷新')}
+          className='!h-[38px] !w-[38px] !rounded-md !border !border-solid !border-line !bg-surface'
         />
       </div>
     </div>
