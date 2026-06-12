@@ -254,6 +254,16 @@ const ModelDetailPage = () => {
           <div className='detail-actions'>
             <button
               className='btn btn-ghost'
+              onClick={() =>
+                navigate(
+                  '/pricing/model/' + encodeURIComponent(decodedName) + '/api',
+                )
+              }
+            >
+              {t('API 调用说明')}
+            </button>
+            <button
+              className='btn btn-ghost'
               onClick={() => navigate('/console/playground')}
             >
               {t('立即体验')}

@@ -41,6 +41,7 @@ import Chat2Link from './pages/Chat2Link';
 import Midjourney from './pages/Midjourney';
 import Pricing from './pages/Pricing';
 import ModelDetailPage from './pages/ModelDetail';
+import ModelApiPage from './pages/ModelApi';
 import Task from './pages/Task';
 import ModelPage from './pages/Model';
 import ModelDeploymentPage from './pages/ModelDeployment';
@@ -350,6 +351,25 @@ function App() {
             ) : (
               <Suspense fallback={<Loading></Loading>} key={location.pathname}>
                 <ModelDetailPage />
+              </Suspense>
+            )
+          }
+        />
+        <Route
+          path='/pricing/model/:modelName/api'
+          element={
+            pricingRequireAuth ? (
+              <PrivateRoute>
+                <Suspense
+                  fallback={<Loading></Loading>}
+                  key={location.pathname}
+                >
+                  <ModelApiPage />
+                </Suspense>
+              </PrivateRoute>
+            ) : (
+              <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+                <ModelApiPage />
               </Suspense>
             )
           }
