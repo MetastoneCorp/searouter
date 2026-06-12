@@ -20,7 +20,7 @@ For commercial licensing, please contact support@quantumnous.com
 import React, { useContext, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Layout, Toast, Modal } from '@douyinfe/semi-ui';
+import { Toast } from '@douyinfe/semi-ui';
 
 // Context
 import { UserContext } from '../../context/User';
@@ -459,104 +459,143 @@ const Playground = () => {
 
   return (
     <PlaygroundProvider value={playgroundContextValue}>
-      <div className='h-full'>
-        <Layout className='h-full bg-transparent flex flex-col md:flex-row'>
-          {(showSettings || !isMobile) && (
-            <Layout.Sider
-              className={`
-              bg-transparent border-r-0 flex-shrink-0 overflow-auto mt-[60px]
-              ${
-                isMobile
-                  ? 'fixed top-0 left-0 right-0 bottom-0 z-[1000] w-full h-auto bg-white shadow-lg'
-                  : 'relative z-[1] w-80 h-[calc(100vh-66px)]'
-              }
-            `}
-              width={isMobile ? '100%' : 320}
-            >
-              <OptimizedSettingsPanel
-                inputs={inputs}
-                parameterEnabled={parameterEnabled}
-                models={models}
-                groups={groups}
-                styleState={styleState}
-                showSettings={showSettings}
-                showDebugPanel={showDebugPanel}
-                customRequestMode={customRequestMode}
-                customRequestBody={customRequestBody}
-                onInputChange={handleInputChange}
-                onParameterToggle={handleParameterToggle}
-                onCloseSettings={() => setShowSettings(false)}
-                onConfigImport={handleConfigImport}
-                onConfigReset={handleConfigReset}
-                onCustomRequestModeChange={setCustomRequestMode}
-                onCustomRequestBodyChange={setCustomRequestBody}
-                previewPayload={previewPayload}
-                messages={message}
-              />
-            </Layout.Sider>
-          )}
-
-          <Layout.Content className='relative flex-1 overflow-hidden'>
-            <div className='overflow-hidden flex flex-col lg:flex-row h-[calc(100vh-66px)] mt-[60px]'>
-              <div className='flex-1 flex flex-col'>
-                <ChatArea
-                  chatRef={chatRef}
-                  message={message}
-                  inputs={inputs}
-                  styleState={styleState}
-                  showDebugPanel={showDebugPanel}
-                  roleInfo={roleInfo}
-                  onMessageSend={onMessageSend}
-                  onMessageCopy={messageActions.handleMessageCopy}
-                  onMessageReset={messageActions.handleMessageReset}
-                  onMessageDelete={messageActions.handleMessageDelete}
-                  onStopGenerator={onStopGenerator}
-                  onClearMessages={handleClearMessages}
-                  onToggleDebugPanel={() => setShowDebugPanel(!showDebugPanel)}
-                  renderCustomChatContent={renderCustomChatContent}
-                  renderChatBoxAction={renderChatBoxAction}
-                />
-              </div>
-
-              {/* 调试面板 - 桌面端 */}
-              {showDebugPanel && !isMobile && (
-                <div className='w-96 flex-shrink-0 h-full'>
-                  <OptimizedDebugPanel
-                    debugData={debugData}
-                    activeDebugTab={activeDebugTab}
-                    onActiveDebugTabChange={setActiveDebugTab}
-                    styleState={styleState}
-                    customRequestMode={customRequestMode}
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* 调试面板 - 移动端覆盖层 */}
-            {showDebugPanel && isMobile && (
-              <div className='fixed top-0 left-0 right-0 bottom-0 z-[1000] bg-white overflow-auto shadow-lg'>
-                <OptimizedDebugPanel
-                  debugData={debugData}
-                  activeDebugTab={activeDebugTab}
-                  onActiveDebugTabChange={setActiveDebugTab}
-                  styleState={styleState}
-                  showDebugPanel={showDebugPanel}
-                  onCloseDebugPanel={() => setShowDebugPanel(false)}
-                  customRequestMode={customRequestMode}
-                />
-              </div>
-            )}
-
-            {/* 浮动按钮 */}
-            <FloatingButtons
+      <div
+        style={{
+          display: 'flex',
+          height: 'calc(100vh - 56px)',
+          background: 'var(--page)',
+          overflow: 'hidden',
+        }}
+      >
+        {/* 左侧配置面板 */}
+        {(showSettings || !isMobile) && (
+          <div
+            style={{
+              flex: '0 0 320px',
+              width: isMobile ? '100%' : 320,
+              background: 'var(--surface)',
+              borderRight: '1px solid var(--border)',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              ...(isMobile
+                ? {
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 1000,
+                    width: '100%',
+                    boxShadow: 'var(--sh-pop)',
+                  }
+                : {}),
+            }}
+          >
+            <OptimizedSettingsPanel
+              inputs={inputs}
+              parameterEnabled={parameterEnabled}
+              models={models}
+              groups={groups}
               styleState={styleState}
               showSettings={showSettings}
               showDebugPanel={showDebugPanel}
-              onToggleSettings={() => setShowSettings(!showSettings)}
-              onToggleDebugPanel={() => setShowDebugPanel(!showDebugPanel)}
+              customRequestMode={customRequestMode}
+              customRequestBody={customRequestBody}
+              onInputChange={handleInputChange}
+              onParameterToggle={handleParameterToggle}
+              onCloseSettings={() => setShowSettings(false)}
+              onConfigImport={handleConfigImport}
+              onConfigReset={handleConfigReset}
+              onCustomRequestModeChange={setCustomRequestMode}
+              onCustomRequestBodyChange={setCustomRequestBody}
+              previewPayload={previewPayload}
+              messages={message}
             />
-          </Layout.Content>
-        </Layout>
+          </div>
+        )}
+
+        {/* 中部对话区 + 右侧调试面板 */}
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+          <ChatArea
+            chatRef={chatRef}
+            message={message}
+            inputs={inputs}
+            styleState={styleState}
+            showDebugPanel={showDebugPanel}
+            showSettings={showSettings}
+            roleInfo={roleInfo}
+            onMessageSend={onMessageSend}
+            onMessageCopy={messageActions.handleMessageCopy}
+            onMessageReset={messageActions.handleMessageReset}
+            onMessageDelete={messageActions.handleMessageDelete}
+            onStopGenerator={onStopGenerator}
+            onClearMessages={handleClearMessages}
+            onToggleDebugPanel={() => setShowDebugPanel(!showDebugPanel)}
+            onToggleSettings={() => setShowSettings(!showSettings)}
+            renderCustomChatContent={renderCustomChatContent}
+            renderChatBoxAction={renderChatBoxAction}
+          />
+        </div>
+
+        {/* 调试面板 - 桌面端右侧 */}
+        {showDebugPanel && !isMobile && (
+          <div
+            style={{
+              flex: '0 0 380px',
+              width: 380,
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              borderLeft: '1px solid var(--border)',
+              background: 'var(--surface)',
+            }}
+          >
+            <OptimizedDebugPanel
+              debugData={debugData}
+              activeDebugTab={activeDebugTab}
+              onActiveDebugTabChange={setActiveDebugTab}
+              styleState={styleState}
+              customRequestMode={customRequestMode}
+            />
+          </div>
+        )}
+
+        {/* 调试面板 - 移动端覆盖层 */}
+        {showDebugPanel && isMobile && (
+          <div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              zIndex: 1000,
+              background: 'var(--surface)',
+              overflow: 'auto',
+              boxShadow: 'var(--sh-pop)',
+            }}
+          >
+            <OptimizedDebugPanel
+              debugData={debugData}
+              activeDebugTab={activeDebugTab}
+              onActiveDebugTabChange={setActiveDebugTab}
+              styleState={styleState}
+              showDebugPanel={showDebugPanel}
+              onCloseDebugPanel={() => setShowDebugPanel(false)}
+              customRequestMode={customRequestMode}
+            />
+          </div>
+        )}
+
+        {/* 浮动按钮 - 仅移动端 */}
+        <FloatingButtons
+          styleState={styleState}
+          showSettings={showSettings}
+          showDebugPanel={showDebugPanel}
+          onToggleSettings={() => setShowSettings(!showSettings)}
+          onToggleDebugPanel={() => setShowDebugPanel(!showDebugPanel)}
+        />
       </div>
     </PlaygroundProvider>
   );
