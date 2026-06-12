@@ -18,6 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Empty, Pagination, Tooltip } from '@douyinfe/semi-ui';
 import { IconHelpCircle } from '@douyinfe/semi-icons';
 import { Copy } from 'lucide-react';
@@ -98,6 +99,7 @@ const PricingCardView = ({
   setSelectedRowKeys,
   openModelDetail,
 }) => {
+  const navigate = useNavigate();
   const showSkeleton = useMinimumLoadingTime(loading);
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedModels = filteredModels.slice(startIndex, startIndex + pageSize);
@@ -196,7 +198,13 @@ const PricingCardView = ({
             <div
               key={modelKey || index}
               className='mcard'
-              onClick={() => openModelDetail && openModelDetail(model)}
+              onClick={() =>
+                navigate(
+                  '/pricing/model/' +
+                    encodeURIComponent(model.model_name),
+                  { state: { modelData: model } },
+                )
+              }
               style={
                 isSelected
                   ? {
