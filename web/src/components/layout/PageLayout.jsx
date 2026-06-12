@@ -60,7 +60,9 @@ const PageLayout = () => {
     '/pricing',
   ];
 
-  const shouldHideFooter = cardProPages.includes(location.pathname);
+  // 首页(Landing)自带新设计的页脚，隐藏全局 FooterBar 避免重复
+  const shouldHideFooter =
+    cardProPages.includes(location.pathname) || location.pathname === '/';
 
   const shouldInnerPadding =
     location.pathname.includes('/console') &&
