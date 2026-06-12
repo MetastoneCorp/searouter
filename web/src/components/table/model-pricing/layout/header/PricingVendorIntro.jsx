@@ -18,56 +18,22 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
-import {
-  Card,
-  Tag,
-  Avatar,
-  Typography,
-  Tooltip,
-  Modal,
-} from '@douyinfe/semi-ui';
+import { Modal } from '@douyinfe/semi-ui';
 import { getLobeHubIcon } from '../../../../../helpers';
 import SearchActions from './SearchActions';
 
-const { Paragraph } = Typography;
-
 const CONFIG = {
-  CAROUSEL_INTERVAL: 2000,
+  CAROUSEL_INTERVAL: 2500,
   ICON_SIZE: 40,
   UNKNOWN_VENDOR: 'unknown',
 };
 
-const THEME_COLORS = {
-  allVendors: {
-    primary: '37 99 235',
-    background: 'rgba(59, 130, 246, 0.08)',
-  },
-  specific: {
-    primary: '16 185 129',
-    background: 'rgba(16, 185, 129, 0.1)',
-  },
-};
-
-const COMPONENT_STYLES = {
-  tag: {
-    backgroundColor: 'rgba(255,255,255,0.95)',
-    color: '#1f2937',
-    border: '1px solid rgba(255,255,255,0.8)',
-    fontWeight: '500',
-  },
-  avatarContainer:
-    'w-16 h-16 rounded-2xl bg-white/90 shadow-md backdrop-blur-sm flex items-center justify-center',
-  titleText: { color: 'white' },
-  descriptionText: { color: 'rgba(255,255,255,0.9)' },
-};
-
+/* ---- 描述文本 ---- */
 const CONTENT_TEXTS = {
   unknown: {
     displayName: (t) => t('未知供应商'),
     description: (t) =>
-      t(
-        '包含来自未知或未标明供应商的AI模型，这些模型可能来自小型供应商或开源项目。',
-      ),
+      t('包含来自未知或未标明供应商的AI模型，这些模型可能来自小型供应商或开源项目。'),
   },
   all: {
     description: (t) =>
@@ -78,57 +44,67 @@ const CONTENT_TEXTS = {
   },
 };
 
-const getVendorDisplayName = (vendorName, t) => {
-  return vendorName === CONFIG.UNKNOWN_VENDOR
-    ? CONTENT_TEXTS.unknown.displayName(t)
-    : vendorName;
-};
-
-const createDefaultAvatar = () => (
-  <div className={COMPONENT_STYLES.avatarContainer}>
-    <Avatar size='large' color='transparent'>
-      AI
-    </Avatar>
+/* ---- spark 图标（右侧装饰） ---- */
+const SparkIcon = () => (
+  <div className='spark'>
+    <svg
+      width='40'
+      height='40'
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke='currentColor'
+      strokeWidth='1.6'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    >
+      <path d='M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z' />
+      <path d='M19 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z' />
+    </svg>
   </div>
 );
 
-const getAvatarBackgroundColor = (isAllVendors) =>
-  isAllVendors
-    ? THEME_COLORS.allVendors.background
-    : THEME_COLORS.specific.background;
-
-const getAvatarText = (vendorName) =>
-  vendorName === CONFIG.UNKNOWN_VENDOR
-    ? '?'
-    : vendorName.charAt(0).toUpperCase();
-
-const createAvatarContent = (vendor, isAllVendors) => {
+/* ---- 供应商图标 avatar ---- */
+const VendorBadge = ({ vendor, t }) => {
+  if (!vendor) return null;
   if (vendor.icon) {
-    return getLobeHubIcon(vendor.icon, CONFIG.ICON_SIZE);
+    return (
+      <div
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: 12,
+          background: 'rgba(255,255,255,.9)',
+          display: 'grid',
+          placeItems: 'center',
+          flexShrink: 0,
+        }}
+      >
+        {getLobeHubIcon(vendor.icon, CONFIG.ICON_SIZE)}
+      </div>
+    );
   }
-
+  const letter =
+    vendor.name === CONFIG.UNKNOWN_VENDOR
+      ? '?'
+      : vendor.name.charAt(0).toUpperCase();
   return (
-    <Avatar
-      size='large'
-      style={{ backgroundColor: getAvatarBackgroundColor(isAllVendors) }}
+    <div
+      style={{
+        width: 48,
+        height: 48,
+        borderRadius: 12,
+        background: 'rgba(255,255,255,.2)',
+        border: '1px solid rgba(255,255,255,.35)',
+        display: 'grid',
+        placeItems: 'center',
+        color: '#fff',
+        fontWeight: 700,
+        fontSize: 18,
+        flexShrink: 0,
+      }}
     >
-      {getAvatarText(vendor.name)}
-    </Avatar>
-  );
-};
-
-const renderVendorAvatar = (vendor, t, isAllVendors = false) => {
-  if (!vendor) {
-    return createDefaultAvatar();
-  }
-
-  const displayName = getVendorDisplayName(vendor.name, t);
-  const avatarContent = createAvatarContent(vendor, isAllVendors);
-
-  return (
-    <Tooltip content={displayName} position='top'>
-      <div className={COMPONENT_STYLES.avatarContainer}>{avatarContent}</div>
-    </Tooltip>
+      {letter}
+    </div>
   );
 };
 
@@ -170,29 +146,10 @@ const PricingVendorIntro = memo(
       setDescModalVisible(false);
     }, []);
 
-    const renderDescriptionModal = useCallback(
-      () => (
-        <Modal
-          title={t('供应商介绍')}
-          visible={descModalVisible}
-          onCancel={handleCloseDescModal}
-          footer={null}
-          width={isMobile ? '95%' : 600}
-          bodyStyle={{
-            maxHeight: isMobile ? '70vh' : '60vh',
-            overflowY: 'auto',
-          }}
-        >
-          <div className='text-sm mb-4'>{descModalContent}</div>
-        </Modal>
-      ),
-      [descModalVisible, descModalContent, handleCloseDescModal, isMobile, t],
-    );
-
+    /* ---- 供应商信息 ---- */
     const vendorInfo = useMemo(() => {
       const vendors = new Map();
       let unknownCount = 0;
-
       const sourceModels =
         Array.isArray(allModels) && allModels.length > 0 ? allModels : models;
 
@@ -230,185 +187,119 @@ const PricingVendorIntro = memo(
       return vendorList;
     }, [allModels, models, t]);
 
-    const currentModelCount = models.length;
-
+    /* ---- 当前展示的供应商 (全部模式下轮播) ---- */
     useEffect(() => {
       if (filterVendor !== 'all' || vendorInfo.length <= 1) {
         setCurrentOffset(0);
         return;
       }
-
       const interval = setInterval(() => {
         setCurrentOffset((prev) => (prev + 1) % vendorInfo.length);
       }, CONFIG.CAROUSEL_INTERVAL);
-
       return () => clearInterval(interval);
     }, [filterVendor, vendorInfo.length]);
 
     const getVendorDescription = useCallback(
       (vendorKey) => {
-        if (vendorKey === 'all') {
-          return CONTENT_TEXTS.all.description(t);
-        }
-        if (vendorKey === CONFIG.UNKNOWN_VENDOR) {
+        if (vendorKey === 'all') return CONTENT_TEXTS.all.description(t);
+        if (vendorKey === CONFIG.UNKNOWN_VENDOR)
           return CONTENT_TEXTS.unknown.description(t);
-        }
         const vendor = vendorInfo.find((v) => v.name === vendorKey);
         return vendor?.description || CONTENT_TEXTS.fallback.description(t);
       },
       [vendorInfo, t],
     );
 
-    const createCoverStyle = useCallback(
-      (primaryColor) => ({
-        '--palette-primary-darkerChannel': primaryColor,
-        backgroundImage: `linear-gradient(0deg, rgba(var(--palette-primary-darkerChannel) / 80%), rgba(var(--palette-primary-darkerChannel) / 80%)), url('/cover-4.webp')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }),
-      [],
-    );
+    const currentModelCount = models.length;
 
-    const renderSearchActions = useCallback(
-      () => (
-        <SearchActions
-          selectedRowKeys={selectedRowKeys}
-          copyText={copyText}
-          handleChange={handleChange}
-          handleCompositionStart={handleCompositionStart}
-          handleCompositionEnd={handleCompositionEnd}
-          isMobile={isMobile}
-          searchValue={searchValue}
-          setShowFilterModal={setShowFilterModal}
-          showWithRecharge={showWithRecharge}
-          setShowWithRecharge={setShowWithRecharge}
-          currency={currency}
-          setCurrency={setCurrency}
-          showRatio={showRatio}
-          setShowRatio={setShowRatio}
-          viewMode={viewMode}
-          setViewMode={setViewMode}
-          tokenUnit={tokenUnit}
-          setTokenUnit={setTokenUnit}
-          t={t}
-        />
-      ),
-      [
-        selectedRowKeys,
-        copyText,
-        handleChange,
-        handleCompositionStart,
-        handleCompositionEnd,
-        isMobile,
-        searchValue,
-        setShowFilterModal,
-        showWithRecharge,
-        setShowWithRecharge,
-        currency,
-        setCurrency,
-        showRatio,
-        setShowRatio,
-        viewMode,
-        setViewMode,
-        tokenUnit,
-        setTokenUnit,
-        t,
-      ],
-    );
+    /* ---- 确定 hero 标题 & 描述 ---- */
+    let heroTitle, heroDesc, heroVendor;
 
-    const renderHeaderCard = useCallback(
-      ({ title, count, description, rightContent, primaryDarkerChannel }) => (
-        <Card
-          className='!rounded-2xl shadow-sm border-0'
-          cover={
-            <div
-              className='relative h-full'
-              style={createCoverStyle(primaryDarkerChannel)}
-            >
-              <div className='relative z-10 h-full flex items-center justify-between p-4'>
-                <div className='flex-1 min-w-0 mr-4'>
-                  <div className='flex flex-row flex-wrap items-center gap-2 sm:gap-3 mb-2'>
-                    <h2
-                      className='text-lg sm:text-xl font-bold truncate'
-                      style={COMPONENT_STYLES.titleText}
-                    >
-                      {title}
-                    </h2>
-                    <Tag
-                      style={COMPONENT_STYLES.tag}
-                      shape='circle'
-                      size='small'
-                      className='self-center'
-                    >
-                      {t('共 {{count}} 个模型', { count })}
-                    </Tag>
-                  </div>
-                  <Paragraph
-                    className='text-xs sm:text-sm leading-relaxed !mb-0 cursor-pointer'
-                    style={COMPONENT_STYLES.descriptionText}
-                    ellipsis={{ rows: 2 }}
-                    onClick={() => handleOpenDescModal(description)}
-                  >
-                    {description}
-                  </Paragraph>
-                </div>
-
-                <div className='flex-shrink-0'>{rightContent}</div>
-              </div>
-            </div>
-          }
-        >
-          {renderSearchActions()}
-        </Card>
-      ),
-      [renderSearchActions, createCoverStyle, handleOpenDescModal, t],
-    );
-
-    const renderAllVendorsAvatar = useCallback(() => {
-      const currentVendor =
+    if (filterVendor === 'all') {
+      heroTitle = t('全部供应商');
+      heroDesc = getVendorDescription('all');
+      heroVendor =
         vendorInfo.length > 0
           ? vendorInfo[currentOffset % vendorInfo.length]
           : null;
-      return renderVendorAvatar(currentVendor, t, true);
-    }, [vendorInfo, currentOffset, t]);
-
-    if (filterVendor === 'all') {
-      const headerCard = renderHeaderCard({
-        title: t('全部供应商'),
-        count: currentModelCount,
-        description: getVendorDescription('all'),
-        rightContent: renderAllVendorsAvatar(),
-        primaryDarkerChannel: THEME_COLORS.allVendors.primary,
-      });
-      return (
-        <>
-          {headerCard}
-          {renderDescriptionModal()}
-        </>
-      );
+    } else {
+      const currentVendor = vendorInfo.find((v) => v.name === filterVendor);
+      if (!currentVendor) return null;
+      heroTitle =
+        currentVendor.name === CONFIG.UNKNOWN_VENDOR
+          ? CONTENT_TEXTS.unknown.displayName(t)
+          : currentVendor.name;
+      heroDesc =
+        currentVendor.description || getVendorDescription(currentVendor.name);
+      heroVendor = currentVendor;
     }
-
-    const currentVendor = vendorInfo.find((v) => v.name === filterVendor);
-    if (!currentVendor) {
-      return null;
-    }
-
-    const vendorDisplayName = getVendorDisplayName(currentVendor.name, t);
-
-    const headerCard = renderHeaderCard({
-      title: vendorDisplayName,
-      count: currentModelCount,
-      description:
-        currentVendor.description || getVendorDescription(currentVendor.name),
-      rightContent: renderVendorAvatar(currentVendor, t, false),
-      primaryDarkerChannel: THEME_COLORS.specific.primary,
-    });
 
     return (
       <>
-        {headerCard}
-        {renderDescriptionModal()}
+        {/* Hero 区块 */}
+        <div
+          className='plaza-hero'
+          style={{ cursor: heroDesc ? 'pointer' : 'default' }}
+          onClick={() => heroDesc && handleOpenDescModal(heroDesc)}
+        >
+          <h1 style={{ fontSize: 32, fontWeight: 800 }}>{heroTitle}</h1>
+          <div className='sub'>
+            <span>
+              {t('共 {{count}} 个模型', { count: currentModelCount })}
+            </span>
+            <span className='hpill'>{heroDesc}</span>
+          </div>
+          {heroVendor ? (
+            <div
+              className='spark'
+              style={{
+                background: 'rgba(255,255,255,.12)',
+                border: '1px solid rgba(255,255,255,.25)',
+              }}
+            >
+              <VendorBadge vendor={heroVendor} t={t} />
+            </div>
+          ) : (
+            <SparkIcon />
+          )}
+        </div>
+
+        {/* 工具栏 */}
+        <div className='plaza-tools'>
+          <SearchActions
+            selectedRowKeys={selectedRowKeys}
+            copyText={copyText}
+            handleChange={handleChange}
+            handleCompositionStart={handleCompositionStart}
+            handleCompositionEnd={handleCompositionEnd}
+            isMobile={isMobile}
+            searchValue={searchValue}
+            setShowFilterModal={setShowFilterModal}
+            showWithRecharge={showWithRecharge}
+            setShowWithRecharge={setShowWithRecharge}
+            currency={currency}
+            setCurrency={setCurrency}
+            showRatio={showRatio}
+            setShowRatio={setShowRatio}
+            viewMode={viewMode}
+            setViewMode={setViewMode}
+            tokenUnit={tokenUnit}
+            setTokenUnit={setTokenUnit}
+            t={t}
+          />
+        </div>
+
+        {/* 描述 modal */}
+        <Modal
+          title={t('供应商介绍')}
+          visible={descModalVisible}
+          onCancel={handleCloseDescModal}
+          footer={null}
+          width={isMobile ? '95%' : 560}
+          bodyStyle={{ maxHeight: '60vh', overflowY: 'auto' }}
+        >
+          <div style={{ fontSize: 14, lineHeight: 1.75 }}>{descModalContent}</div>
+        </Modal>
       </>
     );
   },
