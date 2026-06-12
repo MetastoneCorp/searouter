@@ -3344,6 +3344,7 @@
     "输出价格 {{symbol}}{{price}} / 1M tokens": "Output Price {{symbol}}{{price}} / 1M tokens",
     "输出价格：{{symbol}}{{price}} / 1M tokens": "Output Price: {{symbol}}{{price}} / 1M tokens",
     "输出价格：{{symbol}}{{total}} / 1M tokens": "Output Price: {{symbol}}{{total}} / 1M tokens",
-    "查看批量推理、文件处理与异步任务的运行状态与产出": "View the run status and output of batch inference, file processing, and async tasks"
+    "查看批量推理、文件处理与异步任务的运行状态与产出": "View the run status and output of batch inference, file processing, and async tasks",
+    "设置为默认": "Reset to Default"
   }
 }
