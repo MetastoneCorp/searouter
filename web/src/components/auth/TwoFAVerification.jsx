@@ -16,30 +16,27 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { API, showError, showSuccess } from '../../helpers';
-import {
-  Button,
-  Card,
-  Divider,
-  Form,
-  Input,
-  Typography,
-} from '@douyinfe/semi-ui';
+import { API, showError, showSuccess, getSystemName } from '../../helpers';
+import { Divider, Typography } from '@douyinfe/semi-ui';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-const { Title, Text, Paragraph } = Typography;
+const { Text } = Typography;
 
 const TwoFAVerification = ({ onSuccess, onBack, isModal = false }) => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [useBackupCode, setUseBackupCode] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
 
-  const handleSubmit = async () => {
+  const systemName = getSystemName();
+
+  const handleSubmit = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
     if (!verificationCode) {
       showError('请输入验证码');
       return;
     }
-    // Validate code format
     if (useBackupCode && verificationCode.length !== 8) {
       showError('备用码必须是8位');
       return;
@@ -56,7 +53,6 @@ const TwoFAVerification = ({ onSuccess, onBack, isModal = false }) => {
 
       if (res.data.success) {
         showSuccess('登录成功');
-        // 保存用户信息到本地存储
         localStorage.setItem('user', JSON.stringify(res.data.data));
         if (onSuccess) {
           onSuccess(res.data.data);
@@ -72,171 +68,157 @@ const TwoFAVerification = ({ onSuccess, onBack, isModal = false }) => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSubmit();
-    }
+    if (e.key === 'Enter') handleSubmit();
   };
 
+  /* 在弹窗内使用（简洁版，无外层容器） */
   if (isModal) {
     return (
-      <div className='space-y-4'>
-        <Paragraph className='text-gray-600 dark:text-gray-300'>
-          请输入认证器应用显示的验证码完成登录
-        </Paragraph>
+      <div style={{ paddingTop: 8 }}>
+        <p style={{ color: 'var(--ink-2)', marginBottom: 18, fontSize: 14 }}>
+          {t('请输入认证器应用显示的验证码完成登录')}
+        </p>
 
-        <Form onSubmit={handleSubmit}>
-          <Form.Input
-            field='code'
-            label={useBackupCode ? '备用码' : '验证码'}
-            placeholder={useBackupCode ? '请输入8位备用码' : '请输入6位验证码'}
-            value={verificationCode}
-            onChange={setVerificationCode}
-            onKeyPress={handleKeyPress}
-            size='large'
-            style={{ marginBottom: 16 }}
-            autoFocus
-          />
+        <form onSubmit={handleSubmit}>
+          <div className='lg2-ipt-group' style={{ marginBottom: 20 }}>
+            <label className='auth-label'>{useBackupCode ? t('备用码') : t('验证码')}</label>
+            <div className='auth-ipt'>
+              <input
+                placeholder={useBackupCode ? t('请输入8位备用码') : t('请输入6位验证码')}
+                value={verificationCode}
+                onChange={(e) => setVerificationCode(e.target.value)}
+                onKeyPress={handleKeyPress}
+                autoFocus
+                style={{ fontSize: 16, letterSpacing: useBackupCode ? 2 : 6, textAlign: 'center' }}
+              />
+            </div>
+          </div>
 
-          <Button
-            htmlType='submit'
-            type='primary'
-            loading={loading}
-            block
-            size='large'
-            style={{ marginBottom: 16 }}
+          <button type='submit' className='lg2-submit' disabled={loading} style={{ marginBottom: 14 }}>
+            {loading ? t('验证中...') : t('验证并登录')}
+          </button>
+        </form>
+
+        <Divider margin='12px' />
+
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 24 }}>
+          <button
+            type='button'
+            className='lg2-link-btn'
+            onClick={() => { setUseBackupCode(!useBackupCode); setVerificationCode(''); }}
           >
-            验证并登录
-          </Button>
-        </Form>
-
-        <Divider />
-
-        <div style={{ textAlign: 'center' }}>
-          <Button
-            theme='borderless'
-            type='tertiary'
-            onClick={() => {
-              setUseBackupCode(!useBackupCode);
-              setVerificationCode('');
-            }}
-            style={{ marginRight: 16, color: '#1890ff', padding: 0 }}
-          >
-            {useBackupCode ? '使用认证器验证码' : '使用备用码'}
-          </Button>
-
+            {useBackupCode ? t('使用认证器验证码') : t('使用备用码')}
+          </button>
           {onBack && (
-            <Button
-              theme='borderless'
-              type='tertiary'
-              onClick={onBack}
-              style={{ color: '#1890ff', padding: 0 }}
-            >
-              返回登录
-            </Button>
+            <button type='button' className='lg2-link-btn' onClick={onBack}>
+              {t('返回登录')}
+            </button>
           )}
         </div>
 
-        <div className='bg-gray-50 dark:bg-gray-800 rounded-lg p-3'>
+        <div style={{ marginTop: 18, padding: '12px 14px', background: 'var(--surface-2)', borderRadius: 8, border: '1px solid var(--border-2)' }}>
           <Text size='small' type='secondary'>
-            <strong>提示：</strong>
-            <br />
-            • 验证码每30秒更新一次
-            <br />
-            • 如果无法获取验证码，请使用备用码
-            <br />• 每个备用码只能使用一次
+            <strong>{t('提示：')}</strong><br />
+            {t('• 验证码每30秒更新一次')}<br />
+            {t('• 如果无法获取验证码，请使用备用码')}<br />
+            {t('• 每个备用码只能使用一次')}
           </Text>
         </div>
       </div>
     );
   }
 
+  /* 独立页面版（双栏布局） */
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '60vh',
-      }}
-    >
-      <Card style={{ width: 400, padding: 24 }}>
-        <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <Title heading={3}>两步验证</Title>
-          <Paragraph type='secondary'>
-            请输入认证器应用显示的验证码完成登录
-          </Paragraph>
+    <div className='lg2'>
+      <div className='lg2-hero'>
+        <div className='brand'>
+          <span className='lg'>
+            <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+              <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
+              <path d='M4 11l8-6 8 6'/>
+              <path d='M6 11v4M18 11v4'/>
+            </svg>
+          </span>
+          {systemName}
         </div>
 
-        <Form onSubmit={handleSubmit}>
-          <Form.Input
-            field='code'
-            label={useBackupCode ? '备用码' : '验证码'}
-            placeholder={useBackupCode ? '请输入8位备用码' : '请输入6位验证码'}
-            value={verificationCode}
-            onChange={setVerificationCode}
-            onKeyPress={handleKeyPress}
-            size='large'
-            style={{ marginBottom: 16 }}
-            autoFocus
-          />
+        <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+          <div className='lg2-gtile' style={{ left: '4%', top: '24%', width: 118, height: 118, transform: 'rotate(-12deg)', fontSize: 15, color: '#fff' }}>MiniMax</div>
+          <div className='lg2-gtile' style={{ left: '30%', top: '12%', width: 118, height: 118, transform: 'rotate(8deg)', color: '#E8B84B' }}>Qwen</div>
+          <div className='lg2-gtile' style={{ left: '56%', top: '18%', width: 118, height: 118, transform: 'rotate(-5deg)', color: '#fff' }}>GPT</div>
+          <div className='lg2-gtile' style={{ left: '6%', top: '50%', width: 118, height: 118, transform: 'rotate(6deg)', fontSize: 15, color: '#fff' }}>Claude</div>
+          <div className='lg2-gtile' style={{ left: '58%', top: '48%', width: 118, height: 118, transform: 'rotate(10deg)', fontSize: 14, color: '#fff' }}>DeepSeek</div>
+        </div>
 
-          <Button
-            htmlType='submit'
-            type='primary'
-            loading={loading}
-            block
-            size='large'
-            style={{ marginBottom: 16 }}
-          >
-            验证并登录
-          </Button>
-        </Form>
+        <h1>{t('统一云端')}<br/>{t('守护边缘')}</h1>
+        <p>{t('企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率')}</p>
+      </div>
 
-        <Divider />
+      <div className='lg2-right'>
+        <div className='lg2-form'>
+          <div className='lhead'>
+            <span className='lg'>
+              <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+                <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
+                <path d='M4 11l8-6 8 6'/>
+                <path d='M6 11v4M18 11v4'/>
+              </svg>
+            </span>
+            {systemName}
+          </div>
 
-        <div style={{ textAlign: 'center' }}>
-          <Button
-            theme='borderless'
-            type='tertiary'
-            onClick={() => {
-              setUseBackupCode(!useBackupCode);
-              setVerificationCode('');
-            }}
-            style={{ marginRight: 16, color: '#1890ff', padding: 0 }}
-          >
-            {useBackupCode ? '使用认证器验证码' : '使用备用码'}
-          </Button>
+          <div className='welc'>{t('两步验证')}</div>
 
-          {onBack && (
-            <Button
-              theme='borderless'
-              type='tertiary'
-              onClick={onBack}
-              style={{ color: '#1890ff', padding: 0 }}
+          <p style={{ color: 'var(--ink-2)', marginBottom: 24, fontSize: 14 }}>
+            {t('请输入认证器应用显示的验证码完成登录')}
+          </p>
+
+          <form onSubmit={handleSubmit}>
+            <div className='lg2-ipt-group'>
+              <label className='auth-label'>{useBackupCode ? t('备用码') : t('验证码')}</label>
+              <div className='auth-ipt'>
+                <input
+                  placeholder={useBackupCode ? t('请输入8位备用码') : t('请输入6位验证码')}
+                  value={verificationCode}
+                  onChange={(e) => setVerificationCode(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  autoFocus
+                  style={{ fontSize: 16, letterSpacing: useBackupCode ? 2 : 6, textAlign: 'center' }}
+                />
+              </div>
+            </div>
+
+            <button type='submit' className='lg2-submit' disabled={loading} style={{ marginBottom: 16 }}>
+              {loading ? t('验证中...') : t('验证并登录')}
+            </button>
+          </form>
+
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 24, marginBottom: 20 }}>
+            <button
+              type='button'
+              className='lg2-link-btn'
+              onClick={() => { setUseBackupCode(!useBackupCode); setVerificationCode(''); }}
             >
-              返回登录
-            </Button>
-          )}
-        </div>
+              {useBackupCode ? t('使用认证器验证码') : t('使用备用码')}
+            </button>
+            {onBack && (
+              <button type='button' className='lg2-link-btn' onClick={onBack}>
+                {t('返回登录')}
+              </button>
+            )}
+          </div>
 
-        <div
-          style={{
-            marginTop: 24,
-            padding: 16,
-            background: '#f6f8fa',
-            borderRadius: 6,
-          }}
-        >
-          <Text size='small' type='secondary'>
-            <strong>提示：</strong>
-            <br />
-            • 验证码每30秒更新一次
-            <br />
-            • 如果无法获取验证码，请使用备用码
-            <br />• 每个备用码只能使用一次
-          </Text>
+          <div style={{ padding: '14px 16px', background: 'var(--surface-2)', borderRadius: 8, border: '1px solid var(--border-2)' }}>
+            <Text size='small' type='secondary'>
+              <strong>{t('提示：')}</strong><br />
+              {t('• 验证码每30秒更新一次')}<br />
+              {t('• 如果无法获取验证码，请使用备用码')}<br />
+              {t('• 每个备用码只能使用一次')}
+            </Text>
+          </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

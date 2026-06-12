@@ -23,15 +23,11 @@ import {
   copy,
   showError,
   showNotice,
-  getLogo,
   getSystemName,
 } from '../../helpers';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Button, Card, Form, Typography, Banner } from '@douyinfe/semi-ui';
-import { IconMail, IconLock, IconCopy } from '@douyinfe/semi-icons';
+import { Banner } from '@douyinfe/semi-ui';
 import { useTranslation } from 'react-i18next';
-
-const { Text, Title } = Typography;
 
 const PasswordResetConfirm = () => {
   const { t } = useTranslation();
@@ -46,33 +42,23 @@ const PasswordResetConfirm = () => {
   const [disableButton, setDisableButton] = useState(false);
   const [countdown, setCountdown] = useState(30);
   const [newPassword, setNewPassword] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [formApi, setFormApi] = useState(null);
+  const [searchParams] = useSearchParams();
 
-  const logo = getLogo();
   const systemName = getSystemName();
 
   useEffect(() => {
-    let token = searchParams.get('token');
-    let email = searchParams.get('email');
+    let tokenVal = searchParams.get('token');
+    let emailVal = searchParams.get('email');
     setInputs({
-      token: token || '',
-      email: email || '',
+      token: tokenVal || '',
+      email: emailVal || '',
     });
-    if (formApi) {
-      formApi.setValues({
-        email: email || '',
-        newPassword: newPassword || '',
-      });
-    }
-  }, [searchParams, newPassword, formApi]);
+  }, [searchParams]);
 
   useEffect(() => {
     let countdownInterval = null;
     if (disableButton && countdown > 0) {
-      countdownInterval = setInterval(() => {
-        setCountdown(countdown - 1);
-      }, 1000);
+      countdownInterval = setInterval(() => setCountdown(countdown - 1), 1000);
     } else if (countdown === 0) {
       setDisableButton(false);
       setCountdown(30);
@@ -81,16 +67,14 @@ const PasswordResetConfirm = () => {
   }, [disableButton, countdown]);
 
   async function handleSubmit(e) {
+    if (e && e.preventDefault) e.preventDefault();
     if (!email || !token) {
       showError(t('无效的重置链接，请重新发起密码重置请求'));
       return;
     }
     setDisableButton(true);
     setLoading(true);
-    const res = await API.post(`/api/user/reset`, {
-      email,
-      token,
-    });
+    const res = await API.post(`/api/user/reset`, { email, token });
     const { success, message } = res.data;
     if (success) {
       let password = res.data.data;
@@ -104,112 +88,110 @@ const PasswordResetConfirm = () => {
   }
 
   return (
-    <div className='relative overflow-hidden bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
-      {/* 背景模糊晕染球 */}
-      <div
-        className='blur-ball blur-ball-indigo'
-        style={{ top: '-80px', right: '-80px', transform: 'none' }}
-      />
-      <div
-        className='blur-ball blur-ball-teal'
-        style={{ top: '50%', left: '-120px' }}
-      />
-      <div className='w-full max-w-sm mt-[60px]'>
-        <div className='flex flex-col items-center'>
-          <div className='w-full max-w-md'>
-            <div className='flex items-center justify-center mb-6 gap-2'>
-              <img src={logo} alt='Logo' className='h-10 rounded-full' />
-              <Title heading={3} className='!text-gray-800'>
-                {systemName}
-              </Title>
+    <div className='lg2'>
+      {/* 左侧品牌 Hero */}
+      <div className='lg2-hero'>
+        <div className='brand'>
+          <span className='lg'>
+            <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+              <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
+              <path d='M4 11l8-6 8 6'/>
+              <path d='M6 11v4M18 11v4'/>
+            </svg>
+          </span>
+          {systemName}
+        </div>
+
+        <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+          <div className='lg2-gtile' style={{ left: '4%', top: '24%', width: 118, height: 118, transform: 'rotate(-12deg)', fontSize: 15, color: '#fff' }}>MiniMax</div>
+          <div className='lg2-gtile' style={{ left: '30%', top: '12%', width: 118, height: 118, transform: 'rotate(8deg)', color: '#E8B84B' }}>Qwen</div>
+          <div className='lg2-gtile' style={{ left: '56%', top: '18%', width: 118, height: 118, transform: 'rotate(-5deg)', color: '#fff' }}>GPT</div>
+          <div className='lg2-gtile' style={{ left: '6%', top: '50%', width: 118, height: 118, transform: 'rotate(6deg)', fontSize: 15, color: '#fff' }}>Claude</div>
+          <div className='lg2-gtile' style={{ left: '58%', top: '48%', width: 118, height: 118, transform: 'rotate(10deg)', fontSize: 14, color: '#fff' }}>DeepSeek</div>
+        </div>
+
+        <h1>{t('统一云端')}<br/>{t('守护边缘')}</h1>
+        <p>{t('企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率')}</p>
+      </div>
+
+      {/* 右侧表单 */}
+      <div className='lg2-right'>
+        <div className='lg2-form'>
+          <div className='lhead'>
+            <span className='lg'>
+              <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+                <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
+                <path d='M4 11l8-6 8 6'/>
+                <path d='M6 11v4M18 11v4'/>
+              </svg>
+            </span>
+            {systemName}
+          </div>
+
+          <div className='welc'>{t('密码重置确认')}</div>
+
+          {!isValidResetLink && (
+            <Banner
+              type='danger'
+              description={t('无效的重置链接，请重新发起密码重置请求')}
+              style={{ borderRadius: 8, marginBottom: 18 }}
+              closeIcon={null}
+            />
+          )}
+
+          <form onSubmit={handleSubmit}>
+            <div className='lg2-ipt-group'>
+              <label className='auth-label'>{t('邮箱')}</label>
+              <div className='auth-ipt'>
+                <input
+                  type='email'
+                  value={email}
+                  disabled={true}
+                  placeholder={email ? '' : t('等待获取邮箱信息...')}
+                  style={{ background: 'var(--surface-2)', color: 'var(--ink-3)', cursor: 'not-allowed' }}
+                />
+              </div>
             </div>
 
-            <Card className='border-0 !rounded-2xl overflow-hidden'>
-              <div className='flex justify-center pt-6 pb-2'>
-                <Title heading={3} className='text-gray-800 dark:text-gray-200'>
-                  {t('密码重置确认')}
-                </Title>
-              </div>
-              <div className='px-2 py-8'>
-                {!isValidResetLink && (
-                  <Banner
-                    type='danger'
-                    description={t('无效的重置链接，请重新发起密码重置请求')}
-                    className='mb-4 !rounded-lg'
-                    closeIcon={null}
-                  />
-                )}
-                <Form
-                  getFormApi={(api) => setFormApi(api)}
-                  initValues={{
-                    email: email || '',
-                    newPassword: newPassword || '',
-                  }}
-                  className='space-y-4'
-                >
-                  <Form.Input
-                    field='email'
-                    label={t('邮箱')}
-                    name='email'
+            {newPassword && (
+              <div className='lg2-ipt-group'>
+                <label className='auth-label'>{t('新密码')}</label>
+                <div className='auth-ipt'>
+                  <input
+                    value={newPassword}
                     disabled={true}
-                    prefix={<IconMail />}
-                    placeholder={email ? '' : t('等待获取邮箱信息...')}
+                    style={{ background: 'var(--surface-2)', color: 'var(--ink-3)', cursor: 'not-allowed', paddingRight: 80 }}
                   />
-
-                  {newPassword && (
-                    <Form.Input
-                      field='newPassword'
-                      label={t('新密码')}
-                      name='newPassword'
-                      disabled={true}
-                      prefix={<IconLock />}
-                      suffix={
-                        <Button
-                          icon={<IconCopy />}
-                          type='tertiary'
-                          theme='borderless'
-                          onClick={async () => {
-                            await copy(newPassword);
-                            showNotice(
-                              `${t('密码已复制到剪贴板：')} ${newPassword}`,
-                            );
-                          }}
-                        >
-                          {t('复制')}
-                        </Button>
-                      }
-                    />
-                  )}
-
-                  <div className='space-y-2 pt-2'>
-                    <Button
-                      theme='solid'
-                      className='w-full !rounded-full'
-                      type='primary'
-                      htmlType='submit'
-                      onClick={handleSubmit}
-                      loading={loading}
-                      disabled={
-                        disableButton || newPassword || !isValidResetLink
-                      }
+                  <span
+                    style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}
+                    onClick={async () => {
+                      await copy(newPassword);
+                      showNotice(`${t('密码已复制到剪贴板：')} ${newPassword}`);
+                    }}
+                  >
+                    <button
+                      type='button'
+                      style={{ background: 'transparent', border: 0, cursor: 'pointer', color: 'var(--brand-600)', fontSize: 12, fontWeight: 600, fontFamily: 'inherit', padding: '2px 6px' }}
                     >
-                      {newPassword ? t('密码重置完成') : t('确认重置密码')}
-                    </Button>
-                  </div>
-                </Form>
-
-                <div className='mt-6 text-center text-sm'>
-                  <Text>
-                    <Link
-                      to='/login'
-                      className='text-blue-600 hover:text-blue-800 font-medium'
-                    >
-                      {t('返回登录')}
-                    </Link>
-                  </Text>
+                      {t('复制')}
+                    </button>
+                  </span>
                 </div>
               </div>
-            </Card>
+            )}
+
+            <button
+              type='submit'
+              className='lg2-submit'
+              disabled={disableButton || !!newPassword || !isValidResetLink || loading}
+              style={{ marginBottom: 10 }}
+            >
+              {newPassword ? t('密码重置完成') : loading ? t('重置中...') : t('确认重置密码')}
+            </button>
+          </form>
+
+          <div className='lg2-foot'>
+            <Link to='/login'>{t('返回登录')}</Link>
           </div>
         </div>
       </div>
