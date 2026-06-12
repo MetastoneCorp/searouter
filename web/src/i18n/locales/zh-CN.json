@@ -2776,14 +2776,10 @@
     "支持 JSONPath，如 email, data.user.email": "支持 JSONPath，如 email, data.user.email",
     "授权范围 (Scopes)": "授权范围 (Scopes)",
     "认证方式": "认证方式",
-    "自动检测": "自动检测",
     "参数传递": "参数传递",
     "Basic Auth 头": "Basic Auth 头",
     "暂无自定义 OAuth 提供商": "暂无自定义 OAuth 提供商",
     "确定要删除该提供商吗？": "确定要删除该提供商吗？",
-    "创建成功": "创建成功",
-    "更新成功": "更新成功",
-    "确认解绑": "确认解绑",
     "确定要解绑 {{name}} 吗？": "确定要解绑 {{name}} 吗？",
     "解绑成功": "解绑成功",
     "{{name}} ID": "{{name}} ID",
@@ -2965,6 +2961,7 @@
     "about.numbers.models": "AI 模型支持",
     "about.numbers.uptime": "可用性 SLA",
     "about.numbers.latency": "平均延迟",
-    "about.connect.title": "联系我们"
+    "about.connect.title": "联系我们",
+    "查看批量推理、文件处理与异步任务的运行状态与产出": "查看批量推理、文件处理与异步任务的运行状态与产出"
   }
 }

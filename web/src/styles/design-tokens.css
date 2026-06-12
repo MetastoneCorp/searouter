@@ -342,4 +342,19 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .aud-wave span.on{background:var(--brand-600)}
 .aud-time{font-variant-numeric:tabular-nums;font-size:12.5px;color:var(--ink-2);font-family:var(--mono);flex:0 0 auto}
 .spin{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--brand-600);border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
+
+/* ---------- Task-log icon button ---------- */
+.icon-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--ink-2);
+  display:grid;place-items:center;cursor:pointer;transition:.14s}
+.icon-btn:hover{background:var(--surface-2);color:var(--ink)}
+
+/* ---------- Task-log progress bar ---------- */
+.prog{min-width:150px}
+.prog .bar{height:6px;border-radius:3px;background:var(--surface-2);overflow:hidden}
+.prog .bar .fill{display:block;height:100%;border-radius:3px;background:var(--brand-600);transition:width .3s}
+.prog .meta{font-size:12px;color:var(--ink-2);margin-top:5px;font-variant-numeric:tabular-nums;display:flex;justify-content:space-between}
+.prog.done .bar .fill{background:var(--success)}
+.prog.err .bar .fill{background:var(--danger)}
+/* tid = task-id mono style */
+.tid{font-family:var(--mono);font-size:13px;color:var(--brand-600);font-weight:500}
 @keyframes spin{to{transform:rotate(360deg)}}
