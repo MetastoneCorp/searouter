@@ -184,20 +184,30 @@ resp = client.chat.completions.create(
 
       {/* 1. Hero Section */}
       <section className='landing-hero'>
-        <div className='landing-section-container landing-hero-inner'>
-          <span className='landing-hero-pill'>{t('landing.hero.tagline')}</span>
-          <h1 className='landing-hero-title'>
-            {t('landing.hero.title1')}<br />{t('landing.hero.title2')}
-          </h1>
-          <p className='landing-hero-subtitle'>{t('landing.hero.subtitle')}</p>
-          <div className='landing-hero-cta'>
-            <Link to='/register' className='landing-btn-primary'>
-              {t('landing.hero.cta1')}
-            </Link>
-            <a href='#why' className='landing-btn-ghost'>
-              {t('landing.hero.cta2')}
-            </a>
+        <div className='landing-hero-inner'>
+          <div className='landing-hero-content'>
+            <h1 className='landing-hero-title'>
+              <span className='landing-hero-title-dark'>{t('landing.hero.title_prefix')}</span>
+              <span className='landing-hero-title-blue'>{t('landing.hero.title_highlight')}</span>
+              <span className='landing-hero-title-dark'>{t('landing.hero.title_suffix')}</span>
+            </h1>
+            <p className='landing-hero-subtitle'>
+              {t('landing.hero.subtitle_line1')}<br />
+              <span className='landing-hero-subtitle-quote'>{t('landing.hero.subtitle_line2')}</span>
+            </p>
+            <p className='landing-hero-subheading'>{t('landing.hero.subheading')}</p>
+            <div className='landing-hero-cta'>
+              <Link to='/register' className='landing-hero-btn-primary'>
+                {t('landing.hero.cta_main')}
+              </Link>
+            </div>
           </div>
+        </div>
+        {/* 底部轮播指示器 */}
+        <div className='landing-hero-dots'>
+          <span className='landing-hero-dot landing-hero-dot-active'></span>
+          <span className='landing-hero-dot'></span>
+          <span className='landing-hero-dot'></span>
         </div>
       </section>
 

@@ -26,121 +26,112 @@
 .landing-hero {
   position: relative;
   overflow: hidden;
-  background:
-    radial-gradient(900px 520px at 6% -10%, #DCEBFB 0, rgba(220, 235, 251, 0) 60%),
-    radial-gradient(900px 600px at 105% 30%, #E7F0FC 0, rgba(231, 240, 252, 0) 55%),
-    linear-gradient(180deg, #F3F8FF, #FAFCFF);
-}
-
-.landing-hero::after {
-  content: "";
-  position: absolute;
-  right: -60px;
-  top: 40px;
-  width: 520px;
-  height: 520px;
-  pointer-events: none;
-  background: conic-gradient(from 210deg, rgba(1, 91, 186, .07), transparent 55%);
-  border-radius: 50%;
-  filter: blur(6px);
+  min-height: 640px;
+  background: url(/home-hero.png) right center / cover no-repeat;
+  display: flex;
+  flex-direction: column;
 }
 
 .landing-hero-inner {
   position: relative;
   z-index: 1;
-  padding: 74px 0 82px;
-}
-
-/* pill 胶囊标签 */
-.landing-hero-pill {
-  display: inline-flex;
+  flex: 1;
+  display: flex;
   align-items: center;
-  gap: 9px;
-  background: #fff;
-  border: 1px solid var(--brand-100, #DCEAF9);
-  color: var(--brand-700, #013F82);
-  font-size: 14px;
-  font-weight: 600;
-  padding: 9px 18px;
-  border-radius: 999px;
-  box-shadow: var(--sh-card, 0 1px 2px rgba(20, 36, 64, .04));
 }
 
-.landing-hero-pill::before {
-  content: "";
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--brand-600, #015BBA);
-  box-shadow: 0 0 0 4px rgba(1, 91, 186, .15);
+.landing-hero-content {
+  max-width: 680px;
+  padding: 80px 128px 60px;
 }
 
 /* 主标题 */
 .landing-hero-title {
-  margin: 24px 0 0;
-  font-size: clamp(48px, 6vw, 84px);
-  line-height: 1.04;
-  font-weight: 800;
-  letter-spacing: -.01em;
-  color: var(--brand-600, #015BBA);
+  margin: 0;
+  font-size: 48px;
+  line-height: 72px;
+  font-weight: 700;
+  letter-spacing: 0.96px;
+}
+
+.landing-hero-title-dark {
+  color: #202124;
+}
+
+.landing-hero-title-blue {
+  color: #4c94fb;
 }
 
 /* 副标题 */
 .landing-hero-subtitle {
-  margin: 22px 0 0;
-  max-width: 470px;
-  color: var(--ink-2, #5A6678);
-  font-size: 16px;
-  line-height: 1.8;
+  margin: 16px 0 0;
+  color: #494c4f;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0.36px;
+}
+
+.landing-hero-subtitle-quote {
+  display: inline;
+}
+
+/* 副副标题 */
+.landing-hero-subheading {
+  margin: 12px 0 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: #4c94fa;
+  line-height: 40px;
+  letter-spacing: 0.64px;
 }
 
 /* CTA 按钮组 */
 .landing-hero-cta {
-  display: flex;
-  gap: 14px;
-  margin-top: 32px;
-  flex-wrap: wrap;
+  margin-top: 48px;
 }
 
-.landing-hero-cta .landing-btn-primary {
-  padding: 13px 30px;
-  font-size: 15px;
-  height: auto;
-  background: var(--brand-600, #015BBA);
+.landing-hero-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 48px;
+  border-radius: 8px;
+  background: linear-gradient(107.62deg, #015bba 4.72%, #386ae8 58.81%, #5dd4ff 110.15%);
   color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
   border: none;
-  border-radius: 6px;
-  font-weight: 600;
   cursor: pointer;
-  display: inline-flex;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  transition: opacity 0.14s;
+}
+
+.landing-hero-btn-primary:hover {
+  opacity: 0.9;
+}
+
+/* 轮播圆点指示器 */
+.landing-hero-dots {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 8px;
+  padding: 0 128px 32px;
   align-items: center;
-  text-decoration: none;
-  transition: background .14s;
 }
 
-.landing-hero-cta .landing-btn-primary:hover {
-  background: var(--brand-500, #1E72CC);
+.landing-hero-dot {
+  display: inline-block;
+  width: 24px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
 }
 
-.landing-hero-cta .landing-btn-ghost {
-  padding: 13px 30px;
-  font-size: 15px;
-  height: auto;
-  background: #fff;
-  color: var(--ink, #1A2433);
-  border: 1px solid var(--border, #E6E9F0);
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  transition: all .14s;
-}
-
-.landing-hero-cta .landing-btn-ghost:hover {
-  border-color: #CBD2DE;
-  background: var(--surface-2, #F8FAFC);
+.landing-hero-dot-active {
+  background: #1166c4;
 }
 
 /* ==================== 2. Stats Section ==================== */
@@ -1029,6 +1020,41 @@
   }
 }
 
+@media (max-width: 768px) {
+  .landing-hero {
+    min-height: auto;
+    background: url(/home-hero.png) right bottom / 60% auto no-repeat,
+      linear-gradient(180deg, #f0f6ff, #e8f2ff);
+  }
+
+  .landing-hero-content {
+    padding: 48px 24px 200px;
+  }
+
+  .landing-hero-dots {
+    padding: 0 24px 24px;
+  }
+
+  .landing-hero-title {
+    font-size: 32px;
+    line-height: 48px;
+    letter-spacing: 0.5px;
+  }
+
+  .landing-hero-subtitle {
+    font-size: 15px;
+  }
+
+  .landing-hero-subheading {
+    font-size: 22px;
+    line-height: 32px;
+  }
+
+  .landing-hero-cta {
+    margin-top: 32px;
+  }
+}
+
 @media (max-width: 640px) {
   .landing-quickstart-steps,
   .landing-feat4,
@@ -1038,10 +1064,6 @@
 
   .landing-section-container {
     padding: 0 20px;
-  }
-
-  .landing-hero-title {
-    font-size: 44px;
   }
 
   .landing-comparison-table th,
