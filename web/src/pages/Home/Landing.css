@@ -905,13 +905,16 @@
   quotes: none;
 }
 
-.lp-quote-q::before,
+.lp-quote-q::before {
+  content: '"';
+}
 .lp-quote-q::after {
-  content: '';
+  content: '"';
 }
 
 .lp-quote-desc {
-  margin: 0;
+  margin: 0 auto;
+  max-width: 620px;
   font-size: 14px;
   line-height: 22px;
   font-weight: 400;
