@@ -4,9 +4,11 @@
 
 ---
 
-## 6.16（2026-06-16）— 全新前端 UI
+## v1.1.0（2026-06-16）— 全新前端 UI
 
 按新设计（Figma「MetaStone AI 系统开发 UI 设计」）对前端进行整体重构，统一品牌蓝（#015BBA）tech-utility 视觉风格。
+
+- **访问域名（更新）**：<https://searouter.metastonecorp.com/>
 
 ### 全局
 - 全站 UI 按新设计整体重构。
