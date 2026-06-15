@@ -25,6 +25,7 @@ export const useNavigation = (t, docsLink, headerNavModules, adminDocsLink, isAd
     const defaultModules = {
       home: true,
       console: true,
+      playground: true,
       pricing: true,
       docs: true,
       about: true,
@@ -43,6 +44,11 @@ export const useNavigation = (t, docsLink, headerNavModules, adminDocsLink, isAd
         text: t('控制台'),
         itemKey: 'console',
         to: '/console',
+      },
+      {
+        text: t('操练场'),
+        itemKey: 'playground',
+        to: '/playground',
       },
       {
         text: t('模型广场'),
@@ -89,6 +95,10 @@ export const useNavigation = (t, docsLink, headerNavModules, adminDocsLink, isAd
         return typeof modules.pricing === 'object'
           ? modules.pricing.enabled
           : modules.pricing;
+      }
+      if (link.itemKey === 'playground') {
+        // 操练场为公开页，默认展示，除非显式关闭
+        return modules.playground !== false;
       }
       return modules[link.itemKey] === true;
     });
