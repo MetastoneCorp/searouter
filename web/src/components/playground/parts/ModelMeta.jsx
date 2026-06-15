@@ -40,7 +40,7 @@ const ModelMeta = ({ model, createAt }) => {
   if (time) parts.push(time);
   if (parts.length === 0) return null;
   return (
-    <span className='font-mono tabular-nums'>{parts.join(' · ')}</span>
+    <span className='mono tnum'>{parts.join(' · ')}</span>
   );
 };
 

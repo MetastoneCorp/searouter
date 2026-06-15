@@ -40,35 +40,30 @@ const TurnReasoningBlock = ({
   const preview = content.replace(/\s+/g, ' ').slice(0, 80);
 
   return (
-    <div className='my-3 rounded-xl border-l-2 border-orange-500 bg-zinc-50 p-4 dark:bg-zinc-900/60'>
+    <div className='pgw2-reasoning'>
       <button
         type='button'
         onClick={onToggle}
-        className='flex w-full items-center gap-2 text-left text-[12px] font-medium text-zinc-600 dark:text-zinc-300'
+        className='pgw2-reasoning-hd'
       >
         <Brain
           size={14}
           strokeWidth={2}
-          className='text-orange-600 dark:text-orange-400'
+          className='ico'
         />
-        <span className='tracking-wide'>{t('Thinking')}</span>
+        <span>{t('Thinking')}</span>
         {!isThinkingComplete && (
-          <span
-            aria-hidden='true'
-            className='inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-orange-500'
-          />
+          <span aria-hidden='true' className='pgw2-reasoning-dot' />
         )}
-        <span className='ml-auto inline-flex items-center text-zinc-400'>
+        <span style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', color: 'var(--ink-3)' }}>
           {open ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
         </span>
       </button>
 
       {open ? (
-        <div className='mt-2 whitespace-pre-wrap text-[13px] leading-relaxed text-zinc-600 dark:text-zinc-400'>
-          {content}
-        </div>
+        <div className='pgw2-reasoning-body'>{content}</div>
       ) : (
-        <div className='mt-1 truncate text-[12px] text-zinc-500 dark:text-zinc-500'>
+        <div className='pgw2-reasoning-preview'>
           {preview}
           {content.length > 80 ? '…' : ''}
         </div>

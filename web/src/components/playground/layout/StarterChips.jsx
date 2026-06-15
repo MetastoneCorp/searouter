@@ -25,16 +25,16 @@ const StarterChips = ({ chips, onPick }) => {
   if (!chips || chips.length === 0) return null;
 
   return (
-    <div className='-mx-1 flex w-full flex-nowrap gap-2 overflow-x-auto px-1 py-1 md:flex-wrap md:overflow-visible'>
+    <div className='pgw2-chips'>
       {chips.map((chip) => (
         <button
           key={chip.id}
           type='button'
           onClick={() => onPick?.(chip.prompt)}
-          className='inline-flex flex-shrink-0 items-center gap-2 rounded-full border border-zinc-200 bg-white px-3.5 py-1.5 text-[13px] text-zinc-700 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-zinc-300 hover:text-zinc-900 active:translate-y-[1px] dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-700 dark:hover:text-zinc-100'
+          className='pgw2-chip'
         >
           <span
-            className={`inline-block h-1.5 w-1.5 rounded-full ${chip.dotClass}`}
+            className={`pgw2-chip-dot ${chip.dotClass}`}
             aria-hidden='true'
           />
           {chip.label}

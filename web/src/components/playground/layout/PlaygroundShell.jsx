@@ -126,7 +126,7 @@ const PlaygroundShell = ({
 
   return (
     <div
-      className='min-h-[100dvh] w-full bg-white dark:bg-zinc-950'
+      className='pgw2-shell'
       style={{ paddingTop: 'var(--isuanova-header-height)' }}
     >
       <PlaygroundSubHeader
@@ -162,7 +162,7 @@ const PlaygroundShell = ({
       ) : (
         // Phase 3：active 态切到 ConversationFlow（文档流，自管滚动 + sticky composer）
         <div
-          className='mx-auto flex w-full max-w-[1400px] flex-col overflow-hidden px-4 sm:px-6'
+          className='pgw2-active-wrap'
           style={{
             height:
               'calc(100dvh - var(--isuanova-header-height) - 56px)',

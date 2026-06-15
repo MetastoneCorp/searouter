@@ -26,15 +26,15 @@ const ScrollToLatest = ({ visible, onClick }) => {
   const { t } = useTranslation();
   if (!visible) return null;
   return (
-    <div className='pointer-events-none sticky bottom-4 z-20 flex justify-end pr-2'>
+    <div className='pgw2-scroll-btn-wrap'>
       <button
         type='button'
         onClick={onClick}
         aria-label={t('跳到最新')}
         title={t('跳到最新')}
-        className='pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-zinc-700 ring-1 ring-zinc-200 shadow-md transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-zinc-900 active:translate-y-[1px] dark:bg-zinc-900 dark:text-zinc-200 dark:ring-zinc-800 dark:hover:text-zinc-100'
+        className='pgw2-scroll-btn'
       >
-        <ArrowDown size={16} strokeWidth={2} />
+        <ArrowDown size={15} strokeWidth={2} />
       </button>
     </div>
   );

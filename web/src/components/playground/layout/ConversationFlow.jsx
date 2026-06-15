@@ -58,10 +58,10 @@ const ConversationFlow = ({
   ]);
 
   return (
-    <div className='relative flex h-full w-full flex-col px-3 sm:px-6'>
+    <div style={{ position: 'relative', display: 'flex', height: '100%', width: '100%', flexDirection: 'column', padding: '0 8px' }}>
       {/* 滚动容器：撑满至 sticky composer 上沿 */}
-      <div ref={containerRef} className='pg-scroll relative flex-1 overflow-y-auto'>
-        <div className='divide-y divide-zinc-100 dark:divide-zinc-800/60'>
+      <div ref={containerRef} className='pgw2-scroll' style={{ flex: 1 }}>
+        <div className='pgw2-turns'>
           {messages.map((turn, idx) => (
             <ConversationTurn
               key={turn.id || idx}
@@ -86,13 +86,10 @@ const ConversationFlow = ({
       </div>
 
       {/* Composer 上沿渐变遮罩，防止内容紧贴 */}
-      <div
-        aria-hidden='true'
-        className='pointer-events-none -mt-6 h-6 bg-gradient-to-t from-white to-transparent dark:from-zinc-950'
-      />
+      <div aria-hidden='true' className='pgw2-fade' />
 
       {/* sticky composer */}
-      <div className='sticky bottom-0 bg-white pb-4 pt-2 dark:bg-zinc-950'>
+      <div className='pgw2-composer-dock'>
         <Composer
           value={composerValue}
           onChange={onComposerChange}

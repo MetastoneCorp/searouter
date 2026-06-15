@@ -51,52 +51,47 @@ const ApiKeyEditor = ({ initialValue = '', onSaved, onCleared }) => {
   };
 
   return (
-    <div className='flex flex-col gap-2.5 w-72 p-1'>
-      <div className='flex items-center justify-between'>
-        <span className='text-[10px] tracking-[0.2em] uppercase text-zinc-500 dark:text-zinc-400 font-medium'>
-          API Key
-        </span>
+    <div className='pgw2-key-editor'>
+      <div className='pgw2-key-editor-hd'>
+        <span className='pgw2-key-label'>API Key</span>
         {isPersisted && (
           <button
             type='button'
             onClick={handleClear}
-            className='inline-flex items-center gap-1 text-xs text-zinc-500 transition-colors hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-400'
+            className='pgw2-key-clear'
           >
             <Trash2 size={12} />
             {t('清空')}
           </button>
         )}
       </div>
-      <div className='flex items-center gap-2'>
+      <div className='pgw2-key-row'>
         <Input
           value={draft}
           onChange={setDraft}
           type={showKey ? 'text' : 'password'}
           placeholder='sk-...'
-          className='!rounded-lg flex-1 !bg-white !border !border-zinc-200 dark:!bg-zinc-900 dark:!border-zinc-800'
+          className='!rounded-lg flex-1'
           autoFocus
         />
-        <Button
-          icon={showKey ? <EyeOff size={14} /> : <Eye size={14} />}
-          theme='borderless'
+        <button
+          type='button'
           onClick={() => setShowKey((s) => !s)}
-          className='!rounded-lg flex-shrink-0 !text-zinc-500 hover:!bg-zinc-100 hover:!text-zinc-900 dark:!text-zinc-400 dark:hover:!bg-zinc-800 dark:hover:!text-zinc-100'
-        />
+          className='pgw2-key-toggle'
+        >
+          {showKey ? <EyeOff size={14} /> : <Eye size={14} />}
+        </button>
       </div>
       <Button
         theme='solid'
         onClick={handleSave}
         disabled={!draft || draft === initialValue}
-        /*
-         * 强制白字保持与 Composer Send / ApiKeyPill 等主操作按钮一致；
-         * disabled 状态用 opacity 表达禁用感，不再用浅灰字（避免看不清）
-         */
-        className='!rounded-lg !bg-orange-600 hover:!bg-orange-700 !border-0 !text-white hover:!text-white disabled:!bg-orange-600 disabled:!text-white disabled:!opacity-50'
+        className='!rounded-lg !bg-[var(--brand-600)] hover:!bg-[var(--brand-500)] !border-0 !text-white hover:!text-white disabled:!bg-[var(--brand-600)] disabled:!text-white disabled:!opacity-50'
         block
       >
         {isPersisted ? t('更新 Key') : t('保存 Key')}
       </Button>
-      <span className='text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400'>
+      <span className='pgw2-key-note'>
         {t('仅保存在当前浏览器，不会上传到服务端')}
       </span>
     </div>

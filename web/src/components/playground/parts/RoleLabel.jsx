@@ -22,19 +22,13 @@ import React from 'react';
 // 文档流角色小帽：USER · ASSISTANT · SYSTEM；右侧可拼接 children（model meta、time）
 const RoleLabel = ({ role, tone = 'default', children }) => {
   const text = (role || '').toUpperCase();
-  const colorCls =
-    tone === 'error'
-      ? 'text-red-500 dark:text-red-400'
-      : 'text-zinc-500 dark:text-zinc-400';
   return (
-    <div
-      className={`flex items-baseline gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] ${colorCls}`}
-    >
-      <span>{text}</span>
+    <div className='flex items-center gap-2'>
+      <span className={`pgw2-role-text${tone === 'error' ? ' error' : ''}`}>
+        {text}
+      </span>
       {children && (
-        <span className='text-[11px] font-normal tracking-normal text-zinc-400 dark:text-zinc-500'>
-          {children}
-        </span>
+        <span className='pgw2-role-meta'>{children}</span>
       )}
     </div>
   );

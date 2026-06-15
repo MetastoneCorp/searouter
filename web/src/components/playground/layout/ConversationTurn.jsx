@@ -57,32 +57,19 @@ const ConversationTurn = ({
   const isEditing = editingMessageId === turn.id;
 
   return (
-    <article className='group relative py-5'>
+    <article className='pgw2-turn'>
       {/* 角色行 — user 右对齐，assistant 左对齐 */}
-      <div
-        className={`mb-3 flex items-center gap-2 ${
-          turn.role === 'user' ? 'justify-end pr-1' : ''
-        }`}
-      >
+      <div className={`pgw2-turn-role${turn.role === 'user' ? ' user' : ''}`}>
         <RoleLabel role={turn.role} tone={isError ? 'error' : 'default'}>
           {turn.role === 'assistant' && (
             <ModelMeta
-              model={
-                /*
-                 * 严格读取消息自身记录的模型，不再回退到 modelLabel（顶部当前选择）。
-                 * 如此切换顶栏模型不会影响历史消息显示。turn.model 在创建
-                 * loadingAssistantMessage 时由当时的 inputs.model 写入。
-                 * 修复前生成的存量历史消息没有 turn.model 字段 → 不显示模型，
-                 * 这是与「切换不变」目标对齐的可接受代价。
-                 */
-                turn.model
-              }
+              model={turn.model}
               createAt={turn.createAt}
             />
           )}
           {turn.role === 'user' && <ModelMeta createAt={turn.createAt} />}
           {isError && (
-            <span className='ml-1 text-[11px] uppercase tracking-wider text-red-500'>
+            <span style={{ marginLeft: 4, fontSize: 11, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--danger)' }}>
               {t('failed')}
             </span>
           )}
@@ -100,18 +87,15 @@ const ConversationTurn = ({
       )}
 
       {/* 主内容容器：user 右对齐 + 卡片化；assistant 满宽文档流 */}
-      <div className={turn.role === 'user' ? 'flex justify-end' : ''}>
+      <div className={turn.role === 'user' ? 'pgw2-turn-role user' : ''}>
         <div
-          className={
-            turn.role === 'user'
-              ? 'inline-block max-w-[85%] md:max-w-[70%] rounded-2xl bg-zinc-100 px-4 py-3 text-zinc-900 dark:bg-zinc-800/60 dark:text-zinc-100'
-              : 'w-full text-zinc-900 dark:text-zinc-100'
-          }
+          className={turn.role === 'user' ? 'pgw2-user-bubble' : ''}
+          style={turn.role !== 'user' ? { fontSize: 14.5, lineHeight: 1.65, color: 'var(--ink)' } : {}}
         >
-          <div className='text-[15px] leading-[1.65]'>
+          <div style={{ fontSize: 14.5, lineHeight: 1.65 }}>
             {turn.status === MESSAGE_STATUS.LOADING && !turn.content ? (
-              <span className='inline-flex items-center gap-1.5 text-zinc-400'>
-                <span className='inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-zinc-400' />
+              <span className='pgw2-loading'>
+                <span className='pgw2-dot' />
                 {t('正在生成…')}
               </span>
             ) : (
@@ -127,10 +111,7 @@ const ConversationTurn = ({
               />
             )}
             {isStreaming && turn.role === 'assistant' && (
-              <span
-                aria-hidden='true'
-                className='ml-0.5 inline-block h-[1.1em] w-[2px] translate-y-[2px] animate-pulse bg-zinc-500 align-baseline dark:bg-zinc-400'
-              />
+              <span aria-hidden='true' className='pgw2-cursor' />
             )}
           </div>
         </div>
@@ -138,7 +119,7 @@ const ConversationTurn = ({
 
       {/* hover 操作栏 — user 右对齐，assistant 左对齐 */}
       {!isEditing && (
-        <div className={turn.role === 'user' ? 'flex justify-end' : ''}>
+        <div className={turn.role === 'user' ? 'pgw2-turn-role user' : ''}>
           <TurnActionBar
             role={turn.role}
             onCopy={() => onCopy?.(turn)}

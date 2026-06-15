@@ -31,7 +31,7 @@ const ActionBtn = ({ icon: Icon, label, onClick, disabled }) => (
     type='button'
     onClick={onClick}
     disabled={disabled}
-    className='inline-flex items-center gap-1 rounded-md px-2 py-1 text-[12px] text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-zinc-500 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100'
+    className='pgw2-action-btn'
   >
     <Icon size={13} strokeWidth={2} />
     <span>{label}</span>
@@ -51,7 +51,7 @@ const TurnActionBar = ({
 }) => {
   const { t } = useTranslation();
   return (
-    <div className='-ml-2 mt-2 flex items-center gap-1'>
+    <div className='pgw2-actions'>
       {canCopy && (
         <ActionBtn icon={Copy} label={t('复制')} onClick={onCopy} />
       )}

@@ -93,15 +93,13 @@ const Composer = ({
 
   return (
     <div
-      className='pg-composer relative w-full rounded-2xl border border-zinc-200 bg-white transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] focus-within:border-transparent dark:border-zinc-800 dark:bg-zinc-900'
+      className='pgw2-box'
       style={{
         viewTransitionName: viewTransitionName,
       }}
     >
       {inlineWarning && (
-        <div className='border-b border-red-100 bg-red-50/60 px-4 py-2 text-xs text-red-600 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-300'>
-          {inlineWarning}
-        </div>
+        <div className='pgw2-warn'>{inlineWarning}</div>
       )}
 
       <textarea
@@ -112,17 +110,17 @@ const Composer = ({
         placeholder={t('Ask anything…')}
         disabled={disabled}
         rows={1}
-        className='pg-scroll block w-full resize-none border-0 bg-transparent px-4 pt-4 pb-2 text-[15px] leading-relaxed text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:opacity-60 dark:text-zinc-100'
+        className='pgw2-ta'
       />
 
-      <div className='flex items-center gap-2 border-t border-zinc-100 px-3 py-2 dark:border-zinc-800/60'>
-        <span className='text-[11px] text-zinc-400'>
+      <div className='pgw2-composer-foot'>
+        <span className='pgw2-sys-hint'>
           {hasSystemPrompt
             ? t('系统提示 已设')
             : t('系统提示 未设')}
         </span>
 
-        <span className='ml-auto text-[11px] text-zinc-400'>
+        <span className='pgw2-kbd-hint'>
           {t('Enter 发送 · Shift+Enter 换行')}
         </span>
 
@@ -136,23 +134,17 @@ const Composer = ({
             onClick={handlePrimaryClick}
             disabled={!isStreaming && !canSend}
             aria-label={isStreaming ? t('Stop') : t('Send')}
-            className={`inline-flex h-9 w-9 items-center justify-center rounded-xl text-sm font-medium transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] active:translate-y-[1px] ${
-              isStreaming
-                ? 'bg-zinc-700 text-white hover:bg-zinc-800'
-                : 'bg-orange-600 text-white hover:bg-orange-700 disabled:bg-zinc-200 disabled:text-zinc-400 dark:disabled:bg-zinc-800 dark:disabled:text-zinc-600'
-            }`}
+            className={`pgw2-send${isStreaming ? ' stop' : ''}`}
           >
             {isStreaming ? (
-              <Square size={16} strokeWidth={2} fill='currentColor' />
+              <Square size={15} strokeWidth={2} fill='currentColor' />
             ) : (
-              <SendHorizontal size={16} strokeWidth={2} />
+              <SendHorizontal size={15} strokeWidth={2} />
             )}
           </button>
 
           {showHint && disabledHint && (
-            <div className='absolute right-0 top-full z-30 mt-1.5 whitespace-nowrap rounded-md bg-zinc-900 px-2.5 py-1.5 text-[11px] text-white shadow-lg dark:bg-zinc-100 dark:text-zinc-900'>
-              {disabledHint}
-            </div>
+            <div className='pgw2-hint-tip'>{disabledHint}</div>
           )}
         </div>
       </div>

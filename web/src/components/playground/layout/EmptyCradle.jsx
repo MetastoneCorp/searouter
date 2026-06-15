@@ -19,7 +19,6 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import BrandFingerprint from './BrandFingerprint';
 import Composer from './Composer';
 import StarterChips from './StarterChips';
 import { useStarterChips } from '../../../hooks/playground/useStarterChips';
@@ -46,27 +45,21 @@ const EmptyCradle = ({
   };
 
   return (
-    <div className='pg-mesh-wrap relative flex min-h-[calc(100dvh-var(--isuanova-header-height)-56px)] w-full flex-col px-4'>
-      <BrandFingerprint />
+    <div className='pgw2-cradle'>
+      <div className='pgw2-cradle-bg' aria-hidden='true' />
 
       {/* 上半：greeting 居中显示在视觉中段 */}
-      <div className='relative z-[1] flex flex-1 flex-col items-center justify-center pt-10 pb-4'>
-        <h1
-          className='text-zinc-950 dark:text-zinc-100 font-semibold leading-[1.1] text-center'
-          style={{
-            fontSize: 'clamp(28px, 4.2vw, 36px)',
-            letterSpacing: '-0.02em',
-          }}
-        >
+      <div className='pgw2-cradle-mid'>
+        <h1 className='pgw2-cradle-title'>
           Cube-Router · Playground
         </h1>
-        <p className='mt-3 text-base text-zinc-500 dark:text-zinc-400 text-center'>
+        <p className='pgw2-cradle-sub'>
           {t('你想让模型帮你做什么？')}
         </p>
       </div>
 
       {/* 下半：composer + chips + trust note，紧贴 viewport 底部 */}
-      <div className='relative z-[1] mx-auto w-full max-w-2xl flex flex-col gap-4 pb-6'>
+      <div className='pgw2-cradle-bot'>
         <Composer
           value={composerValue}
           onChange={onComposerChange}
@@ -82,7 +75,7 @@ const EmptyCradle = ({
         />
         <StarterChips chips={chips} onPick={handleChipPick} />
         {showTrustNote && (
-          <p className='text-center text-[11px] text-zinc-400'>
+          <p className='pgw2-trust'>
             {t('Key 仅保存在你的浏览器，不会上传到服务端')}
           </p>
         )}

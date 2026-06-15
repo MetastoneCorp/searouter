@@ -48,15 +48,9 @@ const ApiKeyPill = ({ apiKey, onChange, t }) => {
     >
       <button
         type='button'
-        className={`inline-flex h-9 items-center gap-1.5 rounded-xl px-3 text-sm font-medium transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] active:translate-y-[1px] ${
-          missing
-            ? 'bg-orange-600 text-white hover:bg-orange-700'
-            : 'bg-emerald-600 text-white hover:bg-emerald-700'
-        }`}
+        className={`pgw2-key-pill ${missing ? 'missing' : 'ready'}`}
       >
-        <span className='inline-flex h-4 items-center rounded-[4px] bg-white/25 px-1.5 text-[10px] font-semibold tracking-wider text-white'>
-          API
-        </span>
+        <span className='pgw2-key-badge'>API</span>
         {missing ? t('未配置') : t('已就绪')}
       </button>
     </Popover>
@@ -70,11 +64,7 @@ const IconBtn = ({ active, onClick, ariaLabel, title, children }) => (
     aria-pressed={active ? true : undefined}
     aria-label={ariaLabel}
     title={title}
-    className={`inline-flex h-9 w-9 items-center justify-center rounded-xl transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] active:translate-y-[1px] ${
-      active
-        ? 'bg-orange-50 text-orange-700 ring-1 ring-orange-200 dark:bg-orange-500/10 dark:text-orange-300 dark:ring-orange-500/30'
-        : 'text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100'
-    }`}
+    className={`pgw2-icon-btn${active ? ' active' : ''}`}
   >
     {children}
   </button>
@@ -103,11 +93,9 @@ const PlaygroundSubHeader = ({
 }) => {
   const { t } = useTranslation();
   return (
-    <header
-      className='sticky top-[var(--isuanova-header-height)] z-30 w-full border-b border-zinc-100 bg-white/85 backdrop-blur dark:border-zinc-800/60 dark:bg-zinc-950/85'
-    >
-      <div className='mx-auto flex w-full max-w-[1100px] items-center gap-3 px-4 py-3 sm:px-6'>
-        <div className='ml-auto flex items-center gap-2'>
+    <header className='pgw2-subhd'>
+      <div className='pgw2-subhd-inner'>
+        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 8 }}>
           {isLoggedIn && groups && groups.length > 0 && (
             <Select
               placeholder={t('分组')}
@@ -118,7 +106,7 @@ const PlaygroundSubHeader = ({
               filter={selectFilter}
               disabled={customRequestMode}
               className='!rounded-lg'
-              style={{ width: 130, height: 36 }}
+              style={{ width: 130, height: 34 }}
             />
           )}
           <Select
@@ -135,7 +123,7 @@ const PlaygroundSubHeader = ({
             filter={selectFilter}
             disabled={customRequestMode}
             className='!rounded-lg'
-            style={{ width: 180, height: 36 }}
+            style={{ width: 180, height: 34 }}
           />
 
           {!isLoggedIn && (
@@ -148,7 +136,7 @@ const PlaygroundSubHeader = ({
             ariaLabel={t('高级设置')}
             title={t('高级设置')}
           >
-            <Settings2 size={16} strokeWidth={2} />
+            <Settings2 size={15} strokeWidth={2} />
           </IconBtn>
 
           <button
@@ -156,9 +144,9 @@ const PlaygroundSubHeader = ({
             onClick={onNewChat}
             aria-label={t('新对话')}
             title={t('新对话')}
-            className='inline-flex h-9 items-center gap-1.5 rounded-xl px-3 text-sm font-medium text-zinc-600 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-zinc-100 hover:text-zinc-900 active:translate-y-[1px] dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-100'
+            className='pgw2-new-btn'
           >
-            <Plus size={16} strokeWidth={2} />
+            <Plus size={15} strokeWidth={2} />
             <span>{t('新对话')}</span>
           </button>
         </div>

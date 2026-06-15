@@ -23,30 +23,28 @@ import {
   InputNumber,
   SideSheet,
   Switch,
-  Typography,
 } from '@douyinfe/semi-ui';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ParameterControl from '../ParameterControl';
 import CustomRequestEditor from '../CustomRequestEditor';
 
-// 标签风格与 ParameterControl 保持一致：14px 加粗（Typography.Text strong）
+// 标签风格与 ParameterControl 保持一致
 const FieldLabel = ({ children }) => (
-  <Typography.Text strong className='block text-sm mb-2'>
+  <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--ink-2)', marginBottom: 7 }}>
     {children}
-  </Typography.Text>
+  </label>
 );
 
-const Field = ({ label, children, className = '' }) => (
-  <div className={className}>
+const Field = ({ label, children, style }) => (
+  <div style={style}>
     <FieldLabel>{label}</FieldLabel>
     {children}
   </div>
 );
 
-// 输入控件统一外观：交由 CSS 接管 bg / border（避开 Tailwind dark variant
-// 与 Cascade Layers 优先级冲突），见 index.css 中 .pg-sidesheet 规则
-const inputBaseClass = '!rounded-lg pg-input-shell';
+// 输入控件统一外观
+const inputBaseClass = '!rounded-lg';
 
 // 右侧抽屉式高级设置面板。
 // props:
@@ -71,7 +69,7 @@ const SettingsSideSheet = ({
 }) => {
   const { t } = useTranslation();
   const [advancedOpen, setAdvancedOpen] = useState(false);
-  const dim = customRequestMode ? 'opacity-50 pointer-events-none' : '';
+  const dimStyle = customRequestMode ? { opacity: 0.5, pointerEvents: 'none' } : {};
 
   return (
     <SideSheet
@@ -86,8 +84,8 @@ const SettingsSideSheet = ({
       headerStyle={{ borderBottom: '1px solid var(--semi-color-border)' }}
     >
       {/* 5 项核心：System Prompt（满行）/ Temperature / Max Tokens / Context Turns / Stream */}
-      <div className={`grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-4 ${dim}`}>
-        <Field label={t('系统提示')} className='md:col-span-2'>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 20px', ...dimStyle }}>
+        <Field label={t('系统提示')} style={{ gridColumn: '1 / -1' }}>
           <Input
             value={inputs.systemPrompt || ''}
             onChange={(value) => onInputChange('systemPrompt', value)}
@@ -128,8 +126,8 @@ const SettingsSideSheet = ({
         </Field>
 
         <Field label={t('Stream')}>
-          <div className='pg-input-shell flex h-8 items-center justify-between rounded-lg px-3'>
-            <span className='text-sm text-zinc-700 dark:text-zinc-200'>
+          <div style={{ display: 'flex', height: 36, alignItems: 'center', justifyContent: 'space-between', border: '1px solid var(--border)', borderRadius: 8, padding: '0 12px' }}>
+            <span style={{ fontSize: 13.5, color: 'var(--ink-2)' }}>
               {inputs.stream ? t('On') : t('Off')}
             </span>
             <Switch
@@ -142,23 +140,19 @@ const SettingsSideSheet = ({
       </div>
 
       {/* 更多参数：嵌套折叠（top_p / frequency_penalty / 自定义请求体 等） */}
-      <div className='mt-6 pt-5 border-t border-zinc-200/70 dark:border-zinc-800'>
+      <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid var(--border-2)' }}>
         <button
           type='button'
           onClick={() => setAdvancedOpen((s) => !s)}
-          /*
-           * 字体风格与 FieldLabel（Typography.Text strong + text-sm）保持一致，
-           * 不再 ALL CAPS / tracking，避免在抽屉内出现两套标签层级
-           */
-          className='inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-700 transition-colors hover:text-zinc-900 dark:text-zinc-200 dark:hover:text-zinc-100'
+          style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13.5, fontWeight: 600, color: 'var(--ink)', background: 'transparent', border: 0, cursor: 'pointer' }}
         >
           {advancedOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
           {t('更多参数')}
         </button>
 
         {advancedOpen && (
-          <div className='mt-4 space-y-4'>
-            <div className={dim}>
+          <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={dimStyle}>
               <ParameterControl
                 inputs={inputs}
                 parameterEnabled={parameterEnabled}

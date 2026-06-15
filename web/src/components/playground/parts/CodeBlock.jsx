@@ -38,22 +38,20 @@ const CodeBlock = ({ content, language }) => {
   };
 
   return (
-    <div className='group relative my-3 overflow-hidden rounded-xl bg-zinc-50 ring-1 ring-zinc-100 dark:bg-zinc-900/60 dark:ring-zinc-800'>
+    <div className='pgw2-code'>
       {language && (
-        <div className='border-b border-zinc-100 px-4 py-1 text-[11px] font-mono uppercase tracking-wider text-zinc-400 dark:border-zinc-800/60'>
-          {language}
-        </div>
+        <div className='pgw2-code-lang'>{language}</div>
       )}
-      <pre className='overflow-x-auto px-4 py-3 text-[13px] leading-relaxed text-zinc-800 dark:text-zinc-200'>
+      <pre className='pgw2-code pre'>
         <code>{content}</code>
       </pre>
       <button
         type='button'
         onClick={handleCopy}
         aria-label={t('复制')}
-        className='absolute right-2 top-2 inline-flex h-7 w-7 items-center justify-center rounded-md bg-white/80 text-zinc-500 opacity-0 ring-1 ring-zinc-200 transition-opacity hover:text-zinc-900 group-hover:opacity-100 dark:bg-zinc-900/80 dark:text-zinc-400 dark:ring-zinc-700 dark:hover:text-zinc-100'
+        className='pgw2-code-copy'
       >
-        {copied ? <Check size={14} /> : <Copy size={14} />}
+        {copied ? <Check size={13} /> : <Copy size={13} />}
       </button>
     </div>
   );
