@@ -46,14 +46,14 @@ export const useNavigation = (t, docsLink, headerNavModules, adminDocsLink, isAd
         to: '/console',
       },
       {
-        text: t('操练场'),
-        itemKey: 'playground',
-        to: '/playground',
-      },
-      {
         text: t('模型广场'),
         itemKey: 'pricing',
         to: '/pricing',
+      },
+      {
+        text: t('操练场'),
+        itemKey: 'playground',
+        to: '/playground',
       },
       ...(docsLink
         ? [
