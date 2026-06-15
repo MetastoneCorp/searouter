@@ -17,7 +17,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
-import React, { useContext, useEffect, useCallback, useRef } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useCallback,
+} from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Toast } from '@douyinfe/semi-ui';
@@ -33,6 +37,7 @@ import { useApiRequest } from '../../hooks/playground/useApiRequest';
 import { useSyncMessageAndCustomBody } from '../../hooks/playground/useSyncMessageAndCustomBody';
 import { useMessageEdit } from '../../hooks/playground/useMessageEdit';
 import { useDataLoader } from '../../hooks/playground/useDataLoader';
+import { useApiKey } from '../../hooks/playground/useApiKey';
 
 // Constants and utils
 import {
@@ -40,42 +45,14 @@ import {
   ERROR_MESSAGES,
 } from '../../constants/playground.constants';
 import {
-  getLogo,
-  stringToColor,
-  buildMessageContent,
   createMessage,
   createLoadingAssistantMessage,
-  getTextContent,
   buildApiPayload,
-  encodeToBase64,
 } from '../../helpers';
 
 // Components
-import {
-  OptimizedSettingsPanel,
-  OptimizedDebugPanel,
-  OptimizedMessageContent,
-  OptimizedMessageActions,
-} from '../../components/playground/OptimizedComponents';
-import ChatArea from '../../components/playground/ChatArea';
-import FloatingButtons from '../../components/playground/FloatingButtons';
+import PlaygroundShell from '../../components/playground/layout/PlaygroundShell';
 import { PlaygroundProvider } from '../../contexts/PlaygroundContext';
-
-// 生成头像
-const generateAvatarDataUrl = (username) => {
-  if (!username) {
-    return 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/docs-icon.png';
-  }
-  const firstLetter = username[0].toUpperCase();
-  const bgColor = stringToColor(username);
-  const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-      <circle cx="16" cy="16" r="16" fill="${bgColor}" />
-      <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="16" fill="#ffffff" font-family="sans-serif">${firstLetter}</text>
-    </svg>
-  `;
-  return `data:image/svg+xml;base64,${encodeToBase64(svg)}`;
-};
 
 const Playground = () => {
   const { t } = useTranslation();
@@ -83,6 +60,7 @@ const Playground = () => {
   const isMobile = useIsMobile();
   const styleState = { isMobile };
   const [searchParams] = useSearchParams();
+  const isLoggedIn = !!userState?.user;
 
   const state = usePlaygroundState();
   const {
@@ -91,26 +69,17 @@ const Playground = () => {
     showDebugPanel,
     customRequestMode,
     customRequestBody,
-    showSettings,
     models,
     groups,
-    status,
     message,
     debugData,
     activeDebugTab,
     previewPayload,
     sseSourceRef,
-    chatRef,
     handleInputChange,
     handleParameterToggle,
     debouncedSaveConfig,
     saveMessagesImmediately,
-    handleConfigImport,
-    handleConfigReset,
-    setShowSettings,
-    setModels,
-    setGroups,
-    setStatus,
     setMessage,
     setDebugData,
     setActiveDebugTab,
@@ -120,6 +89,12 @@ const Playground = () => {
     setCustomRequestBody,
   } = state;
 
+  // ApiKey 单源派生：useApiKey 内含 localStorage 同步 + hasAuth
+  const { apiKey, setApiKey, hasAuth } = useApiKey({
+    isLoggedIn,
+    onChange: () => state.setModels([]), // ApiKey 变更后重新加载模型
+  });
+
   // API 请求相关
   const { sendRequest, onStopGenerator } = useApiRequest(
     setMessage,
@@ -127,10 +102,11 @@ const Playground = () => {
     setActiveDebugTab,
     sseSourceRef,
     saveMessagesImmediately,
+    isLoggedIn,
   );
 
   // 数据加载
-  useDataLoader(userState, inputs, handleInputChange, setModels, setGroups);
+  useDataLoader(userState, inputs, handleInputChange, state.setModels, state.setGroups);
 
   // 消息编辑
   const {
@@ -160,22 +136,6 @@ const Playground = () => {
       debouncedSaveConfig,
     );
 
-  // 角色信息
-  const roleInfo = {
-    user: {
-      name: userState?.user?.username || 'User',
-      avatar: generateAvatarDataUrl(userState?.user?.username),
-    },
-    assistant: {
-      name: 'Assistant',
-      avatar: getLogo(),
-    },
-    system: {
-      name: 'System',
-      avatar: getLogo(),
-    },
-  };
-
   // 消息操作
   const messageActions = useMessageActions(
     message,
@@ -184,10 +144,16 @@ const Playground = () => {
     saveMessagesImmediately,
   );
 
+  // 流式状态：最后一条消息处于 loading/incomplete 即视为流式中
+  const isStreaming = (() => {
+    if (!Array.isArray(message) || message.length === 0) return false;
+    const last = message[message.length - 1];
+    return last?.status === 'loading' || last?.status === 'incomplete';
+  })();
+
   // 构建预览请求体
   const constructPreviewPayload = useCallback(() => {
     try {
-      // 如果是自定义请求体模式且有自定义内容，直接返回解析后的自定义请求体
       if (customRequestMode && customRequestBody && customRequestBody.trim()) {
         try {
           return JSON.parse(customRequestBody);
@@ -195,39 +161,7 @@ const Playground = () => {
           console.warn('自定义请求体JSON解析失败，回退到默认预览:', parseError);
         }
       }
-
-      // 默认预览逻辑
-      let messages = [...message];
-
-      // 如果存在用户消息
-      if (
-        !(
-          messages.length === 0 ||
-          messages.every((msg) => msg.role !== MESSAGE_ROLES.USER)
-        )
-      ) {
-        // 处理最后一个用户消息的图片
-        for (let i = messages.length - 1; i >= 0; i--) {
-          if (messages[i].role === MESSAGE_ROLES.USER) {
-            if (inputs.imageEnabled && inputs.imageUrls) {
-              const validImageUrls = inputs.imageUrls.filter(
-                (url) => url.trim() !== '',
-              );
-              if (validImageUrls.length > 0) {
-                const textContent = getTextContent(messages[i]) || '示例消息';
-                const content = buildMessageContent(
-                  textContent,
-                  validImageUrls,
-                  true,
-                );
-                messages[i] = { ...messages[i], content };
-              }
-            }
-            break;
-          }
-        }
-      }
-
+      const messages = [...message];
       return buildApiPayload(messages, null, inputs, parameterEnabled);
     } catch (error) {
       console.error('构造预览请求体失败:', error);
@@ -239,24 +173,24 @@ const Playground = () => {
   function onMessageSend(content, attachment) {
     console.log('attachment: ', attachment);
 
-    // 创建用户消息和加载消息
-    const userMessage = createMessage(MESSAGE_ROLES.USER, content);
-    const loadingMessage = createLoadingAssistantMessage();
+    // 鉴权守卫：未登录且未填 ApiKey → 阻止发送，引导用户去 ApiKeyBanner
+    if (!isLoggedIn && !apiKey) {
+      Toast.warning(t('请先填入 API Key 才能发送请求'));
+      const el = document.getElementById('pg-apikey-anchor');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
 
-    // 如果是自定义请求体模式
+    const userMessage = createMessage(MESSAGE_ROLES.USER, content);
+    const loadingMessage = createLoadingAssistantMessage(inputs?.model);
+
     if (customRequestMode && customRequestBody) {
       try {
         const customPayload = JSON.parse(customRequestBody);
-
         setMessage((prevMessage) => {
           const newMessages = [...prevMessage, userMessage, loadingMessage];
-
-          // 发送自定义请求体
           sendRequest(customPayload, customPayload.stream !== false);
-
-          // 发送消息后保存，传入新消息列表
           setTimeout(() => saveMessagesImmediately(newMessages), 0);
-
           return newMessages;
         });
         return;
@@ -267,21 +201,10 @@ const Playground = () => {
       }
     }
 
-    // 默认模式
-    const validImageUrls = inputs.imageUrls.filter((url) => url.trim() !== '');
-    const messageContent = buildMessageContent(
-      content,
-      validImageUrls,
-      inputs.imageEnabled,
-    );
-    const userMessageWithImages = createMessage(
-      MESSAGE_ROLES.USER,
-      messageContent,
-    );
+    const userMessageFinal = createMessage(MESSAGE_ROLES.USER, content);
 
     setMessage((prevMessage) => {
-      const newMessages = [...prevMessage, userMessageWithImages];
-
+      const newMessages = [...prevMessage, userMessageFinal];
       const payload = buildApiPayload(
         newMessages,
         null,
@@ -289,18 +212,8 @@ const Playground = () => {
         parameterEnabled,
       );
       sendRequest(payload, inputs.stream);
-
-      // 禁用图片模式
-      if (inputs.imageEnabled) {
-        setTimeout(() => {
-          handleInputChange('imageEnabled', false);
-        }, 100);
-      }
-
-      // 发送消息后保存，传入新消息列表（包含用户消息和加载消息）
       const messagesWithLoading = [...newMessages, loadingMessage];
       setTimeout(() => saveMessagesImmediately(messagesWithLoading), 0);
-
       return messagesWithLoading;
     });
   }
@@ -319,64 +232,7 @@ const Playground = () => {
     [setMessage],
   );
 
-  // 渲染函数
-  const renderCustomChatContent = useCallback(
-    ({ message, className }) => {
-      const isCurrentlyEditing = editingMessageId === message.id;
-
-      return (
-        <OptimizedMessageContent
-          message={message}
-          className={className}
-          styleState={styleState}
-          onToggleReasoningExpansion={toggleReasoningExpansion}
-          isEditing={isCurrentlyEditing}
-          onEditSave={handleEditSave}
-          onEditCancel={handleEditCancel}
-          editValue={editValue}
-          onEditValueChange={setEditValue}
-        />
-      );
-    },
-    [
-      styleState,
-      editingMessageId,
-      editValue,
-      handleEditSave,
-      handleEditCancel,
-      setEditValue,
-      toggleReasoningExpansion,
-    ],
-  );
-
-  const renderChatBoxAction = useCallback(
-    (props) => {
-      const { message: currentMessage } = props;
-      const isAnyMessageGenerating = message.some(
-        (msg) => msg.status === 'loading' || msg.status === 'incomplete',
-      );
-      const isCurrentlyEditing = editingMessageId === currentMessage.id;
-
-      return (
-        <OptimizedMessageActions
-          message={currentMessage}
-          styleState={styleState}
-          onMessageReset={messageActions.handleMessageReset}
-          onMessageCopy={messageActions.handleMessageCopy}
-          onMessageDelete={messageActions.handleMessageDelete}
-          onRoleToggle={messageActions.handleRoleToggle}
-          onMessageEdit={handleMessageEdit}
-          isAnyMessageGenerating={isAnyMessageGenerating}
-          isEditing={isCurrentlyEditing}
-        />
-      );
-    },
-    [messageActions, styleState, message, editingMessageId, handleMessageEdit],
-  );
-
   // Effects
-
-  // 同步消息和自定义请求体
   useEffect(() => {
     syncMessageToCustomBody();
   }, [message, syncMessageToCustomBody]);
@@ -385,16 +241,12 @@ const Playground = () => {
     syncCustomBodyToMessage();
   }, [customRequestBody, syncCustomBodyToMessage]);
 
-  // 处理URL参数
   useEffect(() => {
     if (searchParams.get('expired')) {
       Toast.warning(t('登录过期，请重新登录！'));
     }
   }, [searchParams, t]);
 
-  // Playground 组件无需再监听窗口变化，isMobile 由 useIsMobile Hook 自动更新
-
-  // 构建预览payload
   useEffect(() => {
     const timer = setTimeout(() => {
       const preview = constructPreviewPayload();
@@ -405,7 +257,6 @@ const Playground = () => {
         previewTimestamp: preview ? new Date().toISOString() : null,
       }));
     }, 300);
-
     return () => clearTimeout(timer);
   }, [
     message,
@@ -418,7 +269,6 @@ const Playground = () => {
     setDebugData,
   ]);
 
-  // 自动保存配置
   useEffect(() => {
     debouncedSaveConfig();
   }, [
@@ -430,173 +280,64 @@ const Playground = () => {
     debouncedSaveConfig,
   ]);
 
-  // 清空对话的处理函数
+  // 清空对话
   const handleClearMessages = useCallback(() => {
     setMessage([]);
-    // 清空对话后保存，传入空数组
     setTimeout(() => saveMessagesImmediately([]), 0);
   }, [setMessage, saveMessagesImmediately]);
 
-  // 处理粘贴图片
-  const handlePasteImage = useCallback(
-    (base64Data) => {
-      if (!inputs.imageEnabled) {
-        return;
-      }
-      // 添加图片到 imageUrls 数组
-      const newUrls = [...(inputs.imageUrls || []), base64Data];
-      handleInputChange('imageUrls', newUrls);
-    },
-    [inputs.imageEnabled, inputs.imageUrls, handleInputChange],
-  );
-
-  // Playground Context 值
-  const playgroundContextValue = {
-    onPasteImage: handlePasteImage,
-    imageUrls: inputs.imageUrls || [],
-    imageEnabled: inputs.imageEnabled || false,
-  };
+  const playgroundContextValue = {};
 
   return (
     <PlaygroundProvider value={playgroundContextValue}>
-      <div
-        style={{
-          display: 'flex',
-          height: 'calc(100vh - 56px)',
-          background: 'var(--page)',
-          overflow: 'hidden',
-        }}
-      >
-        {/* 左侧配置面板 */}
-        {(showSettings || !isMobile) && (
-          <div
-            style={{
-              flex: '0 0 320px',
-              width: isMobile ? '100%' : 320,
-              background: 'var(--surface)',
-              borderRight: '1px solid var(--border)',
-              display: 'flex',
-              flexDirection: 'column',
-              overflow: 'hidden',
-              ...(isMobile
-                ? {
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    zIndex: 1000,
-                    width: '100%',
-                    boxShadow: 'var(--sh-pop)',
-                  }
-                : {}),
-            }}
-          >
-            <OptimizedSettingsPanel
-              inputs={inputs}
-              parameterEnabled={parameterEnabled}
-              models={models}
-              groups={groups}
-              styleState={styleState}
-              showSettings={showSettings}
-              showDebugPanel={showDebugPanel}
-              customRequestMode={customRequestMode}
-              customRequestBody={customRequestBody}
-              onInputChange={handleInputChange}
-              onParameterToggle={handleParameterToggle}
-              onCloseSettings={() => setShowSettings(false)}
-              onConfigImport={handleConfigImport}
-              onConfigReset={handleConfigReset}
-              onCustomRequestModeChange={setCustomRequestMode}
-              onCustomRequestBodyChange={setCustomRequestBody}
-              previewPayload={previewPayload}
-              messages={message}
-            />
-          </div>
-        )}
-
-        {/* 中部对话区 + 右侧调试面板 */}
-        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-          <ChatArea
-            chatRef={chatRef}
-            message={message}
-            inputs={inputs}
-            styleState={styleState}
-            showDebugPanel={showDebugPanel}
-            showSettings={showSettings}
-            roleInfo={roleInfo}
-            onMessageSend={onMessageSend}
-            onMessageCopy={messageActions.handleMessageCopy}
-            onMessageReset={messageActions.handleMessageReset}
-            onMessageDelete={messageActions.handleMessageDelete}
-            onStopGenerator={onStopGenerator}
-            onClearMessages={handleClearMessages}
-            onToggleDebugPanel={() => setShowDebugPanel(!showDebugPanel)}
-            onToggleSettings={() => setShowSettings(!showSettings)}
-            renderCustomChatContent={renderCustomChatContent}
-            renderChatBoxAction={renderChatBoxAction}
-          />
-        </div>
-
-        {/* 调试面板 - 桌面端右侧 */}
-        {showDebugPanel && !isMobile && (
-          <div
-            style={{
-              flex: '0 0 380px',
-              width: 380,
-              display: 'flex',
-              flexDirection: 'column',
-              overflow: 'hidden',
-              borderLeft: '1px solid var(--border)',
-              background: 'var(--surface)',
-            }}
-          >
-            <OptimizedDebugPanel
-              debugData={debugData}
-              activeDebugTab={activeDebugTab}
-              onActiveDebugTabChange={setActiveDebugTab}
-              styleState={styleState}
-              customRequestMode={customRequestMode}
-            />
-          </div>
-        )}
-
-        {/* 调试面板 - 移动端覆盖层 */}
-        {showDebugPanel && isMobile && (
-          <div
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              zIndex: 1000,
-              background: 'var(--surface)',
-              overflow: 'auto',
-              boxShadow: 'var(--sh-pop)',
-            }}
-          >
-            <OptimizedDebugPanel
-              debugData={debugData}
-              activeDebugTab={activeDebugTab}
-              onActiveDebugTabChange={setActiveDebugTab}
-              styleState={styleState}
-              showDebugPanel={showDebugPanel}
-              onCloseDebugPanel={() => setShowDebugPanel(false)}
-              customRequestMode={customRequestMode}
-            />
-          </div>
-        )}
-
-        {/* 浮动按钮 - 仅移动端 */}
-        <FloatingButtons
-          styleState={styleState}
-          showSettings={showSettings}
-          showDebugPanel={showDebugPanel}
-          onToggleSettings={() => setShowSettings(!showSettings)}
-          onToggleDebugPanel={() => setShowDebugPanel(!showDebugPanel)}
-        />
-      </div>
+      <PlaygroundShell
+        // 鉴权
+        isLoggedIn={isLoggedIn}
+        apiKey={apiKey}
+        hasAuth={hasAuth}
+        onApiKeyChange={setApiKey}
+        // 配置/setters
+        inputs={inputs}
+        parameterEnabled={parameterEnabled}
+        customRequestMode={customRequestMode}
+        customRequestBody={customRequestBody}
+        onInputChange={handleInputChange}
+        onParameterToggle={handleParameterToggle}
+        onCustomRequestModeChange={setCustomRequestMode}
+        onCustomRequestBodyChange={setCustomRequestBody}
+        // 模型/分组
+        models={models}
+        groups={groups}
+        // 消息
+        message={message}
+        setMessage={setMessage}
+        saveMessages={saveMessagesImmediately}
+        onMessageSend={onMessageSend}
+        onStopGenerator={onStopGenerator}
+        onClearMessages={handleClearMessages}
+        // 调试
+        showDebugPanel={showDebugPanel}
+        setShowDebugPanel={setShowDebugPanel}
+        debugData={debugData}
+        activeDebugTab={activeDebugTab}
+        setActiveDebugTab={setActiveDebugTab}
+        previewPayload={previewPayload}
+        // 视觉
+        isMobile={isMobile}
+        // 流式状态
+        isStreaming={isStreaming}
+        // 视觉/状态共享
+        styleState={styleState}
+        messageActions={messageActions || {}}
+        // 编辑相关 (Phase 3)
+        editingMessageId={editingMessageId}
+        editValue={editValue}
+        setEditValue={setEditValue}
+        onToggleReasoning={toggleReasoningExpansion}
+        onEditSave={handleEditSave}
+        onEditCancel={handleEditCancel}
+        onEditTurn={handleMessageEdit}
+      />
     </PlaygroundProvider>
   );
 };
