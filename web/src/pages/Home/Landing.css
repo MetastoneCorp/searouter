@@ -944,7 +944,8 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 20px 24px;
+  height: 64px;
+  padding: 0 24px;
   border-bottom: 1px solid #e0e3e5;
   font-size: 14px;
   line-height: 24px;
@@ -956,7 +957,8 @@
 }
 
 .lp-cmp-th {
-  padding: 24px;
+  height: 74px;
+  padding: 0 24px;
   font-size: 18px;
   line-height: 26px;
   font-weight: 700;

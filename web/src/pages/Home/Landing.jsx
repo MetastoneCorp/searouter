@@ -153,7 +153,7 @@ resp = client.chat.completions.create(
   // why 卡数据
   const whyCards = [
     {
-      icon: '/home/feat-api.svg',
+      icon: '/home/why1.svg',
       title: t('landing.features.relay.title'),
       desc: t('landing.features.relay.desc'),
       items: [
@@ -163,7 +163,7 @@ resp = client.chat.completions.create(
       ],
     },
     {
-      icon: '/home/why-local.svg',
+      icon: '/home/why2.svg',
       title: t('landing.features.onprem.title'),
       desc: t('landing.features.onprem.desc'),
       items: [
@@ -173,7 +173,7 @@ resp = client.chat.completions.create(
       ],
     },
     {
-      icon: '/home/why-routing.svg',
+      icon: '/home/why3.svg',
       title: t('landing.features.routing.title'),
       desc: t('landing.features.routing.desc'),
       items: [
@@ -183,7 +183,7 @@ resp = client.chat.completions.create(
       ],
     },
     {
-      icon: '/home/why-sovereignty.svg',
+      icon: '/home/why4.svg',
       title: t('landing.features.sovereignty.title'),
       desc: t('landing.features.sovereignty.desc'),
       items: [
