@@ -59,6 +59,29 @@ export const usePlaygroundState = () => {
         return null;
       }
     }
+
+    // 数据迁移：给修复前生成的 assistant 历史消息补 model snapshot。
+    // 之前 createLoadingAssistantMessage 不写 model 字段，导致顶栏切换模型
+    // 时 ConversationTurn 用当前 modelLabel 渲染历史 → 历史模型跟着变。
+    // 现在所有新消息都自带 turn.model，且 ConversationTurn 严格读它。
+    // 这里给历史一次性补全：用 savedConfig.inputs.model（上次保存的模型）
+    // 作为 snapshot，回写 localStorage 后稳定下来，不再受顶栏切换影响。
+    if (Array.isArray(loaded) && loaded.length > 0) {
+      const fallbackModel =
+        savedConfig?.inputs?.model || DEFAULT_CONFIG.inputs.model;
+      let needPatch = false;
+      const patched = loaded.map((m) => {
+        if (m && m.role === 'assistant' && !m.model) {
+          needPatch = true;
+          return { ...m, model: fallbackModel };
+        }
+        return m;
+      });
+      if (needPatch) {
+        saveMessages(patched);
+        return patched;
+      }
+    }
     return loaded;
   });
 
@@ -85,18 +108,8 @@ export const usePlaygroundState = () => {
   const [groups, setGroups] = useState([]);
   const [status, setStatus] = useState({});
 
-  // 消息相关状态 - 使用加载的消息或默认消息初始化
-  const [message, setMessage] = useState(
-    () => initialMessages || getDefaultMessages(t),
-  );
-
-  // 当语言改变时，如果是默认消息则更新
-  useEffect(() => {
-    // 只在没有保存的消息时才更新默认消息
-    if (!initialMessages) {
-      setMessage(getDefaultMessages(t));
-    }
-  }, [t, initialMessages]); // 当语言改变时
+  // 消息相关状态 - 默认空消息，由 EmptyState 接管首屏
+  const [message, setMessage] = useState(() => initialMessages || []);
 
   // 调试状态
   const [debugData, setDebugData] = useState({

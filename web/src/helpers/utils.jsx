@@ -444,13 +444,16 @@ export const createMessage = (role, content, options = {}) => ({
 });
 
 // 创建加载中的助手消息
-export const createLoadingAssistantMessage = () =>
+// model：当前发起请求的模型名，写入消息对象后历史记录可以追溯当时使用的模型，
+// 切换模型不会影响已有 assistant 消息渲染
+export const createLoadingAssistantMessage = (model) =>
   createMessage(MESSAGE_ROLES.ASSISTANT, '', {
     reasoningContent: '',
     isReasoningExpanded: true,
     isThinkingComplete: false,
     hasAutoCollapsed: false,
     status: 'loading',
+    model,
   });
 
 // 检查消息是否包含图片
