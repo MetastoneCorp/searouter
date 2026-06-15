@@ -665,7 +665,7 @@ const TopUp = () => {
   };
 
   return (
-    <div className='w-full max-w-7xl mx-auto relative min-h-screen lg:min-h-0 mt-[60px] px-2'>
+    <div className='w-full max-w-7xl mx-auto relative' style={{ padding: '0 8px' }}>
       {/* 划转模态框 */}
       <TransferModal
         t={t}
@@ -732,6 +732,31 @@ const TopUp = () => {
       </Modal>
 
       {/* 主布局区域 */}
+      {/* 概览卡片网格 */}
+      <div className='page-head' style={{ marginBottom: 0, marginTop: 4 }}>
+        <div>
+          <div className='page-title'>{t('钱包管理')}</div>
+          <div className='page-sub'>{t('账户余额、充值与邀请奖励')}</div>
+        </div>
+      </div>
+      <div className='srv-ovgrid' style={{ marginBottom: 20 }}>
+        <div className='srv-ovcard'>
+          <div className='k'>{t('当前余额')}</div>
+          <div className='v tnum'>{renderQuota(userState?.user?.quota)}</div>
+        </div>
+        <div className='srv-ovcard'>
+          <div className='k'>{t('历史消耗')}</div>
+          <div className='v tnum'>{renderQuota(userState?.user?.used_quota)}</div>
+        </div>
+        <div className='srv-ovcard'>
+          <div className='k'>{t('请求次数')}</div>
+          <div className='v tnum'>{userState?.user?.request_count || 0}</div>
+        </div>
+        <div className='srv-ovcard'>
+          <div className='k'>{t('用户分组')}</div>
+          <div className='v' style={{ fontSize: 16 }}>{userState?.user?.group || '-'}</div>
+        </div>
+      </div>
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
         <RechargeCard
           t={t}

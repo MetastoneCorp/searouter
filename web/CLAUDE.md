@@ -63,7 +63,7 @@ web/src/
   hooks/               - Custom React hooks
   i18n/                - Internationalization
     i18n.js            - i18next configuration
-    locales/           - Translation files (zh, en, ja, fr, ru, vi)
+    locales/           - Translation files (zh-CN, zh-TW, en)
   pages/               - Page components (routed)
   services/            - API service functions
   constants/           - Frontend constants
@@ -148,10 +148,6 @@ bun run i18n:lint    # Lint translations
 - Chinese Simplified (zh-CN) - default/fallback
 - Chinese Traditional (zh-TW)
 - English (en)
-- Japanese (ja)
-- French (fr)
-- Russian (ru)
-- Vietnamese (vi)
 
 ### Usage
 

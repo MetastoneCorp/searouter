@@ -134,6 +134,19 @@ export default {
       'semi-color-data-19': 'var(--semi-color-data-19)',
     },
     extend: {
+      colors: {
+        brand: {
+          50: '#EEF4FC',
+          100: '#DCEAF9',
+          500: '#1E72CC',
+          600: '#015BBA',
+          700: '#013F82',
+        },
+        page: '#F5F7FA',
+        surface: { DEFAULT: '#FFFFFF', 2: '#F8FAFC' },
+        ink: { DEFAULT: '#1A2433', 2: '#5A6678', 3: '#8A94A6' },
+        line: { DEFAULT: '#E6E9F0', 2: '#EFF1F6' },
+      },
       borderRadius: {
         'semi-border-radius-extra-small':
           'var(--semi-border-radius-extra-small)',

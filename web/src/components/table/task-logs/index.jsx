@@ -18,7 +18,6 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Layout } from '@douyinfe/semi-ui';
 import CardPro from '../../common/ui/CardPro';
 import TaskLogsTable from './TaskLogsTable';
 import TaskLogsActions from './TaskLogsActions';
@@ -39,7 +38,7 @@ const TaskLogsPage = () => {
       {/* Modals */}
       <ColumnSelectorModal {...taskLogsData} />
       <ContentModal {...taskLogsData} isVideo={false} />
-      {/* 新增：视频预览弹窗 */}
+      {/* 视频预览弹窗 */}
       <ContentModal
         isModalOpen={taskLogsData.isVideoModalOpen}
         setIsModalOpen={taskLogsData.setIsVideoModalOpen}
@@ -48,25 +47,34 @@ const TaskLogsPage = () => {
       />
       <UserInfoModal {...taskLogsData} />
 
-      <Layout>
-        <CardPro
-          type='type2'
-          statsArea={<TaskLogsActions {...taskLogsData} />}
-          searchArea={<TaskLogsFilters {...taskLogsData} />}
-          paginationArea={createCardProPagination({
-            currentPage: taskLogsData.activePage,
-            pageSize: taskLogsData.pageSize,
-            total: taskLogsData.logCount,
-            onPageChange: taskLogsData.handlePageChange,
-            onPageSizeChange: taskLogsData.handlePageSizeChange,
-            isMobile: isMobile,
-            t: taskLogsData.t,
-          })}
-          t={taskLogsData.t}
-        >
-          <TaskLogsTable {...taskLogsData} />
-        </CardPro>
-      </Layout>
+      {/* Page Head */}
+      <div className='page-head flex-wrap'>
+        <div>
+          <div className='page-title'>{taskLogsData.t('任务日志')}</div>
+          <div className='page-sub'>
+            {taskLogsData.t('查看批量推理、文件处理与异步任务的运行状态与产出')}
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <CardPro
+        type='type2'
+        statsArea={<TaskLogsActions {...taskLogsData} />}
+        searchArea={<TaskLogsFilters {...taskLogsData} />}
+        paginationArea={createCardProPagination({
+          currentPage: taskLogsData.activePage,
+          pageSize: taskLogsData.pageSize,
+          total: taskLogsData.logCount,
+          onPageChange: taskLogsData.handlePageChange,
+          onPageSizeChange: taskLogsData.handlePageSizeChange,
+          isMobile: isMobile,
+          t: taskLogsData.t,
+        })}
+        t={taskLogsData.t}
+      >
+        <TaskLogsTable {...taskLogsData} />
+      </CardPro>
     </>
   );
 };

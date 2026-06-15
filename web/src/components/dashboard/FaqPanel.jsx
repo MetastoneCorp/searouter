@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Card, Collapse, Empty } from '@douyinfe/semi-ui';
+import { Collapse, Empty } from '@douyinfe/semi-ui';
 import { HelpCircle } from 'lucide-react';
 import { IconPlus, IconMinus } from '@douyinfe/semi-icons';
 import { marked } from 'marked';
@@ -28,25 +28,17 @@ import {
 } from '@douyinfe/semi-illustrations';
 import ScrollableContainer from '../common/ui/ScrollableContainer';
 
-const FaqPanel = ({
-  faqData,
-  CARD_PROPS,
-  FLEX_CENTER_GAP2,
-  ILLUSTRATION_SIZE,
-  t,
-}) => {
+const FaqPanel = ({ faqData, ILLUSTRATION_SIZE, t }) => {
   return (
-    <Card
-      {...CARD_PROPS}
-      className='shadow-sm !rounded-2xl lg:col-span-1'
-      title={
-        <div className={FLEX_CENTER_GAP2}>
-          <HelpCircle size={16} />
+    <div className='card lg:col-span-1'>
+      <div className='card-head'>
+        <h3>
+          <span className='ico'>
+            <HelpCircle size={16} />
+          </span>
           {t('常见问答')}
-        </div>
-      }
-      bodyStyle={{ padding: 0 }}
-    >
+        </h3>
+      </div>
       <ScrollableContainer maxHeight='24rem'>
         {faqData.length > 0 ? (
           <Collapse
@@ -81,7 +73,7 @@ const FaqPanel = ({
           </div>
         )}
       </ScrollableContainer>
-    </Card>
+    </div>
   );
 };
 

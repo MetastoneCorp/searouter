@@ -40,6 +40,16 @@ const LogsPage = () => {
       <UserInfoModal {...logsData} />
       <ChannelAffinityUsageCacheModal {...logsData} />
 
+      {/* Page Head */}
+      <div className='page-head flex-wrap'>
+        <div>
+          <div className='page-title'>{logsData.t('使用日志')}</div>
+          <div className='page-sub'>
+            {logsData.t('查看每次模型调用的令牌、消耗与耗时明细')}
+          </div>
+        </div>
+      </div>
+
       {/* Main Content */}
       <CardPro
         type='type2'

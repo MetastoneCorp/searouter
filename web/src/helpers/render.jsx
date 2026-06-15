@@ -81,7 +81,7 @@ import {
 export function getLucideIcon(key, selected = false) {
   const size = 16;
   const strokeWidth = 2;
-  const SELECTED_COLOR = 'var(--semi-color-primary)';
+  const SELECTED_COLOR = 'var(--brand-600)';
   const iconColor = selected ? SELECTED_COLOR : 'currentColor';
   const commonProps = {
     size,

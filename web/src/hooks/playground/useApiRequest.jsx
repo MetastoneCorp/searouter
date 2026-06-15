@@ -24,6 +24,7 @@ import {
   API_ENDPOINTS,
   MESSAGE_STATUS,
   DEBUG_TABS,
+  STORAGE_KEYS,
 } from '../../constants/playground.constants';
 import {
   getUserIdFromLocalStorage,
@@ -32,12 +33,43 @@ import {
   processIncompleteThinkTags,
 } from '../../helpers';
 
+// 把 apiKey 净化成 ASCII-printable（移除全角空格、零宽字符、CRLF 等）
+// 防止 fetch headers 抛 "String contains non ISO-8859-1 code point"
+const sanitizeApiKey = (raw) => {
+  if (typeof raw !== 'string') return '';
+  return raw
+    .replace(/[　 ​‌‍﻿]/g, '') // 全角空格 / 不间断空格 / 零宽字符 / BOM
+    .replace(/[^\x20-\x7E]/g, '') // 仅保留 ASCII 可见字符（含空格）
+    .trim();
+};
+
+// 构建请求头：已登录用 session，未登录用 API Key
+const buildRequestHeaders = (isLoggedIn) => {
+  const headers = { 'Content-Type': 'application/json' };
+  if (isLoggedIn) {
+    headers['New-Api-User'] = getUserIdFromLocalStorage();
+  } else {
+    const apiKey = sanitizeApiKey(
+      localStorage.getItem(STORAGE_KEYS.API_KEY) || '',
+    );
+    if (apiKey) {
+      headers['Authorization'] = `Bearer ${apiKey}`;
+    }
+  }
+  return headers;
+};
+
+// 根据登录状态选择 endpoint
+const getChatEndpoint = (isLoggedIn) =>
+  isLoggedIn ? API_ENDPOINTS.CHAT_COMPLETIONS : API_ENDPOINTS.V1_CHAT_COMPLETIONS;
+
 export const useApiRequest = (
   setMessage,
   setDebugData,
   setActiveDebugTab,
   sseSourceRef,
   saveMessages,
+  isLoggedIn,
 ) => {
   const { t } = useTranslation();
 
@@ -185,12 +217,9 @@ export const useApiRequest = (
       setActiveDebugTab(DEBUG_TABS.REQUEST);
 
       try {
-        const response = await fetch(API_ENDPOINTS.CHAT_COMPLETIONS, {
+        const response = await fetch(getChatEndpoint(isLoggedIn), {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'New-Api-User': getUserIdFromLocalStorage(),
-          },
+          headers: buildRequestHeaders(isLoggedIn),
           body: JSON.stringify(payload),
         });
 
@@ -301,11 +330,8 @@ export const useApiRequest = (
       }));
       setActiveDebugTab(DEBUG_TABS.REQUEST);
 
-      const source = new SSE(API_ENDPOINTS.CHAT_COMPLETIONS, {
-        headers: {
-          'Content-Type': 'application/json',
-          'New-Api-User': getUserIdFromLocalStorage(),
-        },
+      const source = new SSE(getChatEndpoint(isLoggedIn), {
+        headers: buildRequestHeaders(isLoggedIn),
         method: 'POST',
         payload: JSON.stringify(payload),
       });

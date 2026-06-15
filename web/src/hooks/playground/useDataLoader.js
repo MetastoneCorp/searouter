@@ -20,8 +20,11 @@ For commercial licensing, please contact support@quantumnous.com
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { API, processModelsData, processGroupsData } from '../../helpers';
+import { showError } from '../../helpers';
 import { API_ENDPOINTS } from '../../constants/playground.constants';
 
+// 模型清单统一从 /api/pricing 取（公共端点，不需要 ApiKey）。
+// 已登录用户额外加载分组 /api/user/self/groups。
 export const useDataLoader = (
   userState,
   inputs,
@@ -30,39 +33,67 @@ export const useDataLoader = (
   setGroups,
 ) => {
   const { t } = useTranslation();
+  const isLoggedIn = !!userState?.user;
 
   const loadModels = useCallback(async () => {
     try {
-      const res = await API.get(API_ENDPOINTS.USER_MODELS);
-      const { success, message, data } = res.data;
+      const res = await API.get('/api/pricing');
+      const data = res?.data?.data;
+      if (!Array.isArray(data) || data.length === 0) {
+        console.warn('[useDataLoader] /api/pricing returned no data');
+        setModels([]);
+        return;
+      }
+      // pricing 返回结构 { model_name, ... }；映射成 Select 用的 {label,value}
+      const modelOptions = data
+        .map((item) => item?.model_name)
+        .filter((name) => typeof name === 'string' && name.length > 0)
+        .map((name) => ({ label: name, value: name }));
 
-      if (success) {
-        const { modelOptions, selectedModel } = processModelsData(
-          data,
-          inputs.model,
-        );
-        setModels(modelOptions);
+      // 去重（pricing 可能含同名供应商分发）
+      const seen = new Set();
+      const dedup = modelOptions.filter((m) => {
+        if (seen.has(m.value)) return false;
+        seen.add(m.value);
+        return true;
+      });
 
-        if (selectedModel !== inputs.model) {
-          handleInputChange('model', selectedModel);
-        }
-      } else {
-        showError(t(message));
+      // 排序：先 gpt 系，再字典序
+      dedup.sort((a, b) => {
+        const ag = a.label.startsWith('gpt');
+        const bg = b.label.startsWith('gpt');
+        if (ag && !bg) return -1;
+        if (!ag && bg) return 1;
+        return a.label.localeCompare(b.label);
+      });
+
+      setModels(dedup);
+
+      // 如果当前选中模型不在列表中，回退到第一个
+      if (
+        dedup.length > 0 &&
+        !dedup.some((m) => m.value === inputs.model)
+      ) {
+        handleInputChange('model', dedup[0].value);
       }
     } catch (error) {
-      showError(t('加载模型失败'));
+      console.error('[useDataLoader] Load models error:', error);
+      setModels([]);
     }
-  }, [inputs.model, handleInputChange, setModels, t]);
+  }, [inputs.model, handleInputChange, setModels]);
 
   const loadGroups = useCallback(async () => {
+    if (!isLoggedIn) {
+      setGroups([]);
+      return;
+    }
     try {
       const res = await API.get(API_ENDPOINTS.USER_GROUPS);
       const { success, message, data } = res.data;
-
       if (success) {
         const userGroup =
           userState?.user?.group ||
-          JSON.parse(localStorage.getItem('user'))?.group;
+          JSON.parse(localStorage.getItem('user') || '{}')?.group;
         const groupOptions = processGroupsData(data, userGroup);
         setGroups(groupOptions);
 
@@ -76,17 +107,14 @@ export const useDataLoader = (
         showError(t(message));
       }
     } catch (error) {
-      showError(t('加载分组失败'));
+      console.error('[useDataLoader] Load groups error:', error);
     }
-  }, [userState, inputs.group, handleInputChange, setGroups, t]);
+  }, [isLoggedIn, userState, inputs.group, handleInputChange, setGroups, t]);
 
-  // 自动加载数据
   useEffect(() => {
-    if (userState?.user) {
-      loadModels();
-      loadGroups();
-    }
-  }, [userState?.user, loadModels, loadGroups]);
+    loadModels();
+    loadGroups();
+  }, [isLoggedIn, loadModels, loadGroups]);
 
   return {
     loadModels,

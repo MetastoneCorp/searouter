@@ -60,7 +60,17 @@ const PageLayout = () => {
     '/pricing',
   ];
 
-  const shouldHideFooter = cardProPages.includes(location.pathname);
+  // 认证页面（登录/注册/重置）隐藏顶栏和页脚，自带独立布局
+  const authRoutes = ['/login', '/register', '/reset', '/user/reset'];
+  const isAuthRoute = authRoutes.some(
+    (route) => location.pathname === route || location.pathname.startsWith(route + '/'),
+  );
+
+  // 首页(Landing)自带新设计的页脚，隐藏全局 FooterBar 避免重复
+  const shouldHideFooter =
+    isAuthRoute ||
+    cardProPages.includes(location.pathname) ||
+    location.pathname === '/';
 
   const shouldInnerPadding =
     location.pathname.includes('/console') &&
@@ -137,6 +147,7 @@ const PageLayout = () => {
           width: '100%',
           top: 0,
           zIndex: 100,
+          display: isAuthRoute ? 'none' : undefined,
         }}
       >
         <HeaderBar
@@ -157,7 +168,7 @@ const PageLayout = () => {
             style={{
               position: 'fixed',
               left: 0,
-              top: '64px',
+              top: '56px',
               zIndex: 99,
               border: 'none',
               paddingRight: '0',

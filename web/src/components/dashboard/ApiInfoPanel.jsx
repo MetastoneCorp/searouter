@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Card, Avatar, Tag, Divider, Empty } from '@douyinfe/semi-ui';
+import { Avatar, Tag, Empty } from '@douyinfe/semi-ui';
 import { Server, Gauge, ExternalLink } from 'lucide-react';
 import {
   IllustrationConstruction,
@@ -30,28 +30,27 @@ const ApiInfoPanel = ({
   apiInfoData,
   handleCopyUrl,
   handleSpeedTest,
-  CARD_PROPS,
-  FLEX_CENTER_GAP2,
   ILLUSTRATION_SIZE,
   t,
 }) => {
   return (
-    <Card
-      {...CARD_PROPS}
-      className='bg-gray-50 border-0 !rounded-2xl'
-      title={
-        <div className={FLEX_CENTER_GAP2}>
-          <Server size={16} />
+    <div className='card'>
+      <div className='card-head'>
+        <h3>
+          <span className='ico'>
+            <Server size={16} />
+          </span>
           {t('API信息')}
-        </div>
-      }
-      bodyStyle={{ padding: 0 }}
-    >
+        </h3>
+      </div>
       <ScrollableContainer maxHeight='24rem'>
         {apiInfoData.length > 0 ? (
-          apiInfoData.map((api) => (
-            <React.Fragment key={api.id}>
-              <div className='flex p-2 hover:bg-white rounded-lg transition-colors cursor-pointer'>
+          <div className='px-3 py-2'>
+            {apiInfoData.map((api) => (
+              <div
+                key={api.id}
+                className='flex p-2 rounded-lg transition-colors cursor-pointer border-b border-line-2 last:border-b-0 hover:bg-brand-50'
+              >
                 <div className='flex-shrink-0 mr-3'>
                   <Avatar size='extra-small' color={api.color}>
                     {api.route.substring(0, 2)}
@@ -59,7 +58,7 @@ const ApiInfoPanel = ({
                 </div>
                 <div className='flex-1'>
                   <div className='flex flex-wrap items-center justify-between mb-1 w-full gap-2'>
-                    <span className='text-sm font-medium text-gray-900 !font-bold break-all'>
+                    <span className='text-sm font-semibold text-ink break-all'>
                       {api.route}
                     </span>
                     <div className='flex items-center gap-1 mt-1 lg:mt-0'>
@@ -88,17 +87,16 @@ const ApiInfoPanel = ({
                     </div>
                   </div>
                   <div
-                    className='!text-semi-color-primary break-all cursor-pointer hover:underline mb-1'
+                    className='text-brand-600 text-[13px] break-all cursor-pointer hover:underline mb-1'
                     onClick={() => handleCopyUrl(api.url)}
                   >
                     {api.url}
                   </div>
-                  <div className='text-gray-500'>{api.description}</div>
+                  <div className='text-ink-3 text-xs'>{api.description}</div>
                 </div>
               </div>
-              <Divider />
-            </React.Fragment>
-          ))
+            ))}
+          </div>
         ) : (
           <div className='flex justify-center items-center min-h-[20rem] w-full'>
             <Empty
@@ -112,7 +110,7 @@ const ApiInfoPanel = ({
           </div>
         )}
       </ScrollableContainer>
-    </Card>
+    </div>
   );
 };
 

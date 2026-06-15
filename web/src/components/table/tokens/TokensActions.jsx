@@ -25,8 +25,6 @@ import DeleteTokensModal from './modals/DeleteTokensModal';
 
 const TokensActions = ({
   selectedKeys,
-  setEditingToken,
-  setShowEdit,
   batchCopyTokens,
   batchDeleteTokens,
   copyText,
@@ -63,20 +61,6 @@ const TokensActions = ({
   return (
     <>
       <div className='flex flex-wrap gap-2 w-full md:w-auto order-2 md:order-1'>
-        <Button
-          type='primary'
-          className='flex-1 md:flex-initial'
-          onClick={() => {
-            setEditingToken({
-              id: undefined,
-            });
-            setShowEdit(true);
-          }}
-          size='small'
-        >
-          {t('添加令牌')}
-        </Button>
-
         <Button
           type='tertiary'
           className='flex-1 md:flex-initial'

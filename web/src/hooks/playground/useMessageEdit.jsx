@@ -105,7 +105,7 @@ export const useMessageEdit = (
                 );
                 setMessage((prevMsg) => [
                   ...prevMsg,
-                  createLoadingAssistantMessage(),
+                  createLoadingAssistantMessage(inputs?.model),
                 ]);
                 sendRequest(payload, inputs.stream);
               }, 100);

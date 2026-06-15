@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Tag, Space, Skeleton } from '@douyinfe/semi-ui';
+import { Skeleton, Space } from '@douyinfe/semi-ui';
 import { renderQuota } from '../../../helpers';
 import CompactModeToggle from '../../common/ui/CompactModeToggle';
 import { useMinimumLoadingTime } from '../../../hooks/common/useMinimumLoadingTime';
@@ -36,58 +36,62 @@ const LogsActions = ({
 
   const placeholder = (
     <Space>
-      <Skeleton.Title style={{ width: 108, height: 21, borderRadius: 6 }} />
-      <Skeleton.Title style={{ width: 65, height: 21, borderRadius: 6 }} />
-      <Skeleton.Title style={{ width: 64, height: 21, borderRadius: 6 }} />
+      <Skeleton.Title style={{ width: 120, height: 21, borderRadius: 6 }} />
+      <Skeleton.Title style={{ width: 80, height: 21, borderRadius: 6 }} />
+      <Skeleton.Title style={{ width: 80, height: 21, borderRadius: 6 }} />
     </Space>
   );
 
   return (
-    <div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-2 w-full'>
+    <div className='flex flex-col gap-3'>
+      {/* Summary 汇总条 — 品牌色背景 */}
       <Skeleton loading={needSkeleton} active placeholder={placeholder}>
-        <Space>
-          <Tag
-            color='blue'
-            style={{
-              fontWeight: 500,
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-              padding: 13,
-            }}
-            className='!rounded-lg'
-          >
-            {t('消耗额度')}: {renderQuota(stat.quota)}
-          </Tag>
-          <Tag
-            color='pink'
-            style={{
-              fontWeight: 500,
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-              padding: 13,
-            }}
-            className='!rounded-lg'
-          >
-            RPM: {stat.rpm}
-          </Tag>
-          <Tag
-            color='white'
-            style={{
-              border: 'none',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-              fontWeight: 500,
-              padding: 13,
-            }}
-            className='!rounded-lg'
-          >
-            TPM: {stat.tpm}
-          </Tag>
-        </Space>
+        <div
+          className='flex flex-wrap gap-x-7 gap-y-3 rounded-[var(--r-card)] px-6 py-[18px]'
+          style={{ background: 'var(--brand-700)', color: '#fff' }}
+        >
+          <div className='flex flex-col gap-1'>
+            <span className='text-[12px]' style={{ color: 'rgba(255,255,255,.7)' }}>
+              {t('消耗额度')}
+            </span>
+            <span className='tnum text-[22px] font-bold tracking-tight'>
+              {renderQuota(stat.quota)}
+            </span>
+          </div>
+
+          <div
+            className='hidden sm:block w-px self-stretch'
+            style={{ background: 'rgba(255,255,255,.18)' }}
+          />
+
+          <div className='flex flex-col gap-1'>
+            <span className='text-[12px]' style={{ color: 'rgba(255,255,255,.7)' }}>
+              RPM
+            </span>
+            <span className='tnum text-[22px] font-bold tracking-tight'>
+              {stat.rpm}
+            </span>
+          </div>
+
+          <div className='flex flex-col gap-1'>
+            <span className='text-[12px]' style={{ color: 'rgba(255,255,255,.7)' }}>
+              TPM
+            </span>
+            <span className='tnum text-[22px] font-bold tracking-tight'>
+              {stat.tpm}
+            </span>
+          </div>
+        </div>
       </Skeleton>
 
-      <CompactModeToggle
-        compactMode={compactMode}
-        setCompactMode={setCompactMode}
-        t={t}
-      />
+      {/* 紧凑模式切换 */}
+      <div className='flex justify-end'>
+        <CompactModeToggle
+          compactMode={compactMode}
+          setCompactMode={setCompactMode}
+          t={t}
+        />
+      </div>
     </div>
   );
 };

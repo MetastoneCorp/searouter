@@ -19,8 +19,6 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React, { useState, useEffect } from 'react';
 import {
-  Card,
-  Typography,
   Tabs,
   TabPane,
   Button,
@@ -52,7 +50,7 @@ const DebugPanel = ({
     onActiveDebugTabChange(key);
   };
 
-  const renderArrow = (items, pos, handleArrowClick, defaultNode) => {
+  const renderArrow = (items, pos, handleArrowClick) => {
     const style = {
       width: 32,
       height: 32,
@@ -97,24 +95,32 @@ const DebugPanel = ({
   };
 
   return (
-    <Card
-      className='h-full flex flex-col'
-      bordered={false}
-      bodyStyle={{
-        padding: styleState.isMobile ? '16px' : '24px',
-        height: '100%',
+    <div
+      style={{
         display: 'flex',
         flexDirection: 'column',
+        height: '100%',
+        overflow: 'hidden',
       }}
     >
-      <div className='flex items-center justify-between mb-6 flex-shrink-0'>
-        <div className='flex items-center'>
-          <div className='w-10 h-10 rounded-full bg-gradient-to-r from-green-500 to-blue-500 flex items-center justify-center mr-3'>
-            <Code size={20} className='text-white' />
-          </div>
-          <Typography.Title heading={5} className='mb-0'>
+      {/* 面板标题 */}
+      <div
+        style={{
+          padding: '14px 18px',
+          borderBottom: '1px solid var(--border-2)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexShrink: 0,
+        }}
+      >
+        <div className='pgw-dbg-head' style={{ padding: 0, border: 0, gap: 8 }}>
+          <span className='ico'>
+            <Code size={16} style={{ color: 'var(--ink-2)' }} />
+          </span>
+          <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--ink)' }}>
             {t('调试信息')}
-          </Typography.Title>
+          </span>
         </div>
 
         {styleState.isMobile && onCloseDebugPanel && (
@@ -124,12 +130,12 @@ const DebugPanel = ({
             theme='borderless'
             type='tertiary'
             size='small'
-            className='!rounded-lg'
           />
         )}
       </div>
 
-      <div className='flex-1 overflow-hidden debug-panel'>
+      {/* Tab 内容 */}
+      <div style={{ flex: 1, overflow: 'hidden', padding: '0' }} className='debug-panel'>
         <Tabs
           renderArrow={renderArrow}
           type='card'
@@ -146,7 +152,7 @@ const DebugPanel = ({
                 {t('预览请求体')}
                 {customRequestMode && (
                   <span className='px-1.5 py-0.5 text-xs bg-orange-100 text-orange-600 rounded-full'>
-                    自定义
+                    {t('自定义')}
                   </span>
                 )}
               </div>
@@ -203,21 +209,29 @@ const DebugPanel = ({
         </Tabs>
       </div>
 
-      <div className='flex items-center justify-between mt-4 pt-4 flex-shrink-0'>
-        {(debugData.timestamp || debugData.previewTimestamp) && (
-          <div className='flex items-center gap-2'>
-            <Clock size={14} className='text-gray-500' />
-            <Typography.Text className='text-xs text-gray-500'>
-              {activeKey === 'preview' && debugData.previewTimestamp
-                ? `${t('预览更新')}: ${new Date(debugData.previewTimestamp).toLocaleString()}`
-                : debugData.timestamp
-                  ? `${t('最后请求')}: ${new Date(debugData.timestamp).toLocaleString()}`
-                  : ''}
-            </Typography.Text>
-          </div>
-        )}
-      </div>
-    </Card>
+      {/* 底部时间戳 */}
+      {(debugData.timestamp || debugData.previewTimestamp) && (
+        <div
+          style={{
+            flexShrink: 0,
+            padding: '8px 18px',
+            borderTop: '1px solid var(--border-2)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+          }}
+        >
+          <Clock size={13} style={{ color: 'var(--ink-3)' }} />
+          <span className='mono' style={{ fontSize: 12, color: 'var(--ink-3)' }}>
+            {activeKey === 'preview' && debugData.previewTimestamp
+              ? `${t('预览更新')}: ${new Date(debugData.previewTimestamp).toLocaleString()}`
+              : debugData.timestamp
+                ? `${t('最后请求')}: ${new Date(debugData.timestamp).toLocaleString()}`
+                : ''}
+          </span>
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -76,8 +76,10 @@ export const DEBUG_TABS = {
 // ========== API 相关常量 ==========
 export const API_ENDPOINTS = {
   CHAT_COMPLETIONS: '/pg/chat/completions',
+  V1_CHAT_COMPLETIONS: '/v1/chat/completions',
   USER_MODELS: '/api/user/models',
   USER_GROUPS: '/api/user/self/groups',
+  V1_MODELS: '/v1/models',
 };
 
 // ========== 配置默认值 ==========
@@ -85,15 +87,15 @@ export const DEFAULT_CONFIG = {
   inputs: {
     model: 'gpt-4o',
     group: '',
+    systemPrompt: '',
     temperature: 0.7,
     top_p: 1,
     max_tokens: 4096,
+    context_turns: 20,
     frequency_penalty: 0,
     presence_penalty: 0,
     seed: null,
     stream: true,
-    imageEnabled: false,
-    imageUrls: [''],
   },
   parameterEnabled: {
     temperature: true,
@@ -128,4 +130,19 @@ export const ERROR_MESSAGES = {
 export const STORAGE_KEYS = {
   CONFIG: 'playground_config',
   MESSAGES: 'playground_messages',
+  API_KEY: 'playground_api_key',
+};
+
+/**
+ * 清理操练场所有 localStorage 残留：配置 / 历史消息 / 未登录状态下的 ApiKey
+ * 用于 logout / 切换账号场景，避免数据串户
+ */
+export const clearPlaygroundStorage = () => {
+  Object.values(STORAGE_KEYS).forEach((key) => {
+    try {
+      localStorage.removeItem(key);
+    } catch {
+      /* ignore quota / disabled storage */
+    }
+  });
 };

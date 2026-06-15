@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { lazy, Suspense, useContext, useMemo } from 'react';
-import { Route, Routes, useLocation, useParams } from 'react-router-dom';
+import { Route, Routes, useLocation, useParams, Navigate } from 'react-router-dom';
 import Loading from './components/common/ui/Loading';
 import User from './pages/User';
 import { AuthRedirect, PrivateRoute, AdminRoute } from './helpers';
@@ -40,6 +40,8 @@ import Chat from './pages/Chat';
 import Chat2Link from './pages/Chat2Link';
 import Midjourney from './pages/Midjourney';
 import Pricing from './pages/Pricing';
+import ModelDetailPage from './pages/ModelDetail';
+import ModelApiPage from './pages/ModelApi';
 import Task from './pages/Task';
 import ModelPage from './pages/Model';
 import ModelDeploymentPage from './pages/ModelDeployment';
@@ -148,12 +150,16 @@ function App() {
           }
         />
         <Route
-          path='/console/playground'
+          path='/playground'
           element={
-            <PrivateRoute>
+            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
               <Playground />
-            </PrivateRoute>
+            </Suspense>
           }
+        />
+        <Route
+          path='/console/playground'
+          element={<Navigate to='/playground' replace />}
         />
         <Route
           path='/console/redemption'
@@ -330,6 +336,44 @@ function App() {
             ) : (
               <Suspense fallback={<Loading></Loading>} key={location.pathname}>
                 <Pricing />
+              </Suspense>
+            )
+          }
+        />
+        <Route
+          path='/pricing/model/:modelName'
+          element={
+            pricingRequireAuth ? (
+              <PrivateRoute>
+                <Suspense
+                  fallback={<Loading></Loading>}
+                  key={location.pathname}
+                >
+                  <ModelDetailPage />
+                </Suspense>
+              </PrivateRoute>
+            ) : (
+              <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+                <ModelDetailPage />
+              </Suspense>
+            )
+          }
+        />
+        <Route
+          path='/pricing/model/:modelName/api'
+          element={
+            pricingRequireAuth ? (
+              <PrivateRoute>
+                <Suspense
+                  fallback={<Loading></Loading>}
+                  key={location.pathname}
+                >
+                  <ModelApiPage />
+                </Suspense>
+              </PrivateRoute>
+            ) : (
+              <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+                <ModelApiPage />
               </Suspense>
             )
           }

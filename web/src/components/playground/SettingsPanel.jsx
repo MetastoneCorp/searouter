@@ -18,8 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Card, Select, Typography, Button, Switch } from '@douyinfe/semi-ui';
-import { Sparkles, Users, ToggleLeft, X, Settings } from 'lucide-react';
+import { Select, Button, Switch } from '@douyinfe/semi-ui';
+import { X, Settings } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { renderGroupOption, selectFilter } from '../../helpers';
 import ParameterControl from './ParameterControl';
@@ -57,27 +57,31 @@ const SettingsPanel = ({
   };
 
   return (
-    <Card
-      className='h-full flex flex-col'
-      bordered={false}
-      bodyStyle={{
-        padding: styleState.isMobile ? '16px' : '24px',
-        height: '100%',
+    <div
+      style={{
         display: 'flex',
         flexDirection: 'column',
+        height: '100%',
+        overflow: 'hidden',
       }}
     >
-      {/* 标题区域 - 与调试面板保持一致 */}
-      <div className='flex items-center justify-between mb-6 flex-shrink-0'>
-        <div className='flex items-center'>
-          <div className='w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mr-3'>
-            <Settings size={20} className='text-white' />
-          </div>
-          <Typography.Title heading={5} className='mb-0'>
-            {t('模型配置')}
-          </Typography.Title>
+      {/* 面板标题 */}
+      <div
+        style={{
+          padding: '14px 18px',
+          borderBottom: '1px solid var(--border-2)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexShrink: 0,
+        }}
+      >
+        <div className='cfg-title' style={{ margin: 0 }}>
+          <span className='ico'>
+            <Settings size={16} />
+          </span>
+          {t('模型配置')}
         </div>
-
         {styleState.isMobile && onCloseSettings && (
           <Button
             icon={<X size={16} />}
@@ -85,14 +89,13 @@ const SettingsPanel = ({
             theme='borderless'
             type='tertiary'
             size='small'
-            className='!rounded-lg'
           />
         )}
       </div>
 
       {/* 移动端配置管理 */}
       {styleState.isMobile && (
-        <div className='mb-4 flex-shrink-0'>
+        <div style={{ padding: '12px 18px 0', flexShrink: 0 }}>
           <ConfigManager
             currentConfig={currentConfig}
             onConfigImport={onConfigImport}
@@ -103,7 +106,17 @@ const SettingsPanel = ({
         </div>
       )}
 
-      <div className='space-y-6 overflow-y-auto flex-1 pr-2 model-settings-scroll'>
+      {/* 可滚动内容区 */}
+      <div
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          padding: '16px 18px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 18,
+        }}
+      >
         {/* 自定义请求体编辑器 */}
         <CustomRequestEditor
           customRequestMode={customRequestMode}
@@ -115,65 +128,47 @@ const SettingsPanel = ({
 
         {/* 分组选择 */}
         <div className={customRequestMode ? 'opacity-50' : ''}>
-          <div className='flex items-center gap-2 mb-2'>
-            <Users size={16} className='text-gray-500' />
-            <Typography.Text strong className='text-sm'>
-              {t('分组')}
-            </Typography.Text>
-            {customRequestMode && (
-              <Typography.Text className='text-xs text-orange-600'>
-                ({t('已在自定义模式中忽略')})
-              </Typography.Text>
-            )}
+          <div className='field' style={{ marginBottom: 0 }}>
+            <label>{t('分组')}</label>
+            <Select
+              placeholder={t('请选择分组')}
+              name='group'
+              required
+              selection
+              filter={selectFilter}
+              autoClearSearchValue={false}
+              onChange={(value) => onInputChange('group', value)}
+              value={inputs.group}
+              autoComplete='new-password'
+              optionList={groups}
+              renderOptionItem={renderGroupOption}
+              style={{ width: '100%' }}
+              dropdownStyle={{ width: '100%', maxWidth: '100%' }}
+              disabled={customRequestMode}
+            />
           </div>
-          <Select
-            placeholder={t('请选择分组')}
-            name='group'
-            required
-            selection
-            filter={selectFilter}
-            autoClearSearchValue={false}
-            onChange={(value) => onInputChange('group', value)}
-            value={inputs.group}
-            autoComplete='new-password'
-            optionList={groups}
-            renderOptionItem={renderGroupOption}
-            style={{ width: '100%' }}
-            dropdownStyle={{ width: '100%', maxWidth: '100%' }}
-            className='!rounded-lg'
-            disabled={customRequestMode}
-          />
         </div>
 
         {/* 模型选择 */}
         <div className={customRequestMode ? 'opacity-50' : ''}>
-          <div className='flex items-center gap-2 mb-2'>
-            <Sparkles size={16} className='text-gray-500' />
-            <Typography.Text strong className='text-sm'>
-              {t('模型')}
-            </Typography.Text>
-            {customRequestMode && (
-              <Typography.Text className='text-xs text-orange-600'>
-                ({t('已在自定义模式中忽略')})
-              </Typography.Text>
-            )}
+          <div className='field' style={{ marginBottom: 0 }}>
+            <label>{t('模型')}</label>
+            <Select
+              placeholder={t('请选择模型')}
+              name='model'
+              required
+              selection
+              filter={selectFilter}
+              autoClearSearchValue={false}
+              onChange={(value) => onInputChange('model', value)}
+              value={inputs.model}
+              autoComplete='new-password'
+              optionList={models}
+              style={{ width: '100%' }}
+              dropdownStyle={{ width: '100%', maxWidth: '100%' }}
+              disabled={customRequestMode}
+            />
           </div>
-          <Select
-            placeholder={t('请选择模型')}
-            name='model'
-            required
-            selection
-            filter={selectFilter}
-            autoClearSearchValue={false}
-            onChange={(value) => onInputChange('model', value)}
-            value={inputs.model}
-            autoComplete='new-password'
-            optionList={models}
-            style={{ width: '100%' }}
-            dropdownStyle={{ width: '100%', maxWidth: '100%' }}
-            className='!rounded-lg'
-            disabled={customRequestMode}
-          />
         </div>
 
         {/* 图片URL输入 */}
@@ -189,7 +184,7 @@ const SettingsPanel = ({
           />
         </div>
 
-        {/* 参数控制组件 */}
+        {/* 参数控制 */}
         <div className={customRequestMode ? 'opacity-50' : ''}>
           <ParameterControl
             inputs={inputs}
@@ -202,18 +197,17 @@ const SettingsPanel = ({
 
         {/* 流式输出开关 */}
         <div className={customRequestMode ? 'opacity-50' : ''}>
-          <div className='flex items-center justify-between'>
-            <div className='flex items-center gap-2'>
-              <ToggleLeft size={16} className='text-gray-500' />
-              <Typography.Text strong className='text-sm'>
-                {t('流式输出')}
-              </Typography.Text>
-              {customRequestMode && (
-                <Typography.Text className='text-xs text-orange-600'>
-                  ({t('已在自定义模式中忽略')})
-                </Typography.Text>
-              )}
-            </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 10,
+            }}
+          >
+            <span style={{ fontSize: 14, fontWeight: 500 }}>
+              {t('流式输出')}
+            </span>
             <Switch
               checked={inputs.stream}
               onChange={(checked) => onInputChange('stream', checked)}
@@ -226,9 +220,15 @@ const SettingsPanel = ({
         </div>
       </div>
 
-      {/* 桌面端的配置管理放在底部 */}
+      {/* 底部导入导出 - 桌面端 */}
       {!styleState.isMobile && (
-        <div className='flex-shrink-0 pt-3'>
+        <div
+          style={{
+            flexShrink: 0,
+            borderTop: '1px solid var(--border-2)',
+            padding: '12px 18px',
+          }}
+        >
           <ConfigManager
             currentConfig={currentConfig}
             onConfigImport={onConfigImport}
@@ -238,7 +238,7 @@ const SettingsPanel = ({
           />
         </div>
       )}
-    </Card>
+    </div>
   );
 };
 

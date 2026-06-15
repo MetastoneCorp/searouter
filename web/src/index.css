@@ -1,5 +1,7 @@
 /* ==================== Tailwind CSS 配置 ==================== */
-@layer tailwind-base, semi, tailwind-components, tailwind-utils;
+@layer tailwind-base, semi, design-system, tailwind-components, tailwind-utils;
+@import './styles/design-tokens.css' layer(design-system);
+@import './styles/semi-overrides.css';
 
 @layer tailwind-base {
   @tailwind base;
@@ -42,10 +44,89 @@ body.sidebar-collapsed {
   --sidebar-current-width: var(--sidebar-width-collapsed);
 }
 
+/* ==================== 字体 ==================== */
+/* Roboto（可变字重 400-700，latin 子集）—— 用于 SeaRouter 品牌字标，与 Figma 一致 */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/roboto-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Noto Sans SC（开源中文字体，自托管）—— 跨平台一致渲染，对齐设计稿字形 */
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/noto-sans-sc-chinese-simplified-400.woff2') format('woff2');
+  unicode-range: U+1100-11FF, U+2E80-A4CF, U+A840-A87F, U+AC00-D7AF,
+    U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF, U+3000-30FF, U+3100-312F,
+    U+3200-33FF, U+3400-4DBF, U+4E00-9FFF, U+20000-2A6DF;
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/noto-sans-sc-latin-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2122, U+2212;
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/noto-sans-sc-chinese-simplified-500.woff2') format('woff2');
+  unicode-range: U+1100-11FF, U+2E80-A4CF, U+A840-A87F, U+AC00-D7AF,
+    U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF, U+3000-30FF, U+3100-312F,
+    U+3200-33FF, U+3400-4DBF, U+4E00-9FFF, U+20000-2A6DF;
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/noto-sans-sc-latin-500.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2122, U+2212;
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/noto-sans-sc-chinese-simplified-700.woff2') format('woff2');
+  unicode-range: U+1100-11FF, U+2E80-A4CF, U+A840-A87F, U+AC00-D7AF,
+    U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF, U+3000-30FF, U+3100-312F,
+    U+3200-33FF, U+3400-4DBF, U+4E00-9FFF, U+20000-2A6DF;
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/noto-sans-sc-latin-700.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2122, U+2212;
+}
+
+/* 品牌字标：Roboto SemiBold（Figma 用 Roboto SemiBold，字距 -0.2px） */
+.brand-wordmark {
+  font-family: 'Roboto', 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif !important;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
 body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+  font-family:
+    'Noto Sans SC', 'Microsoft YaHei', 'Microsoft YaHei UI', 'PingFang SC',
+    'HarmonyOS Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui,
+    sans-serif;
   color: var(--semi-color-text-0);
-  background-color: var(--semi-color-bg-0);
+  background-color: var(--page);
 }
 
 .app-layout {
@@ -54,8 +135,8 @@ body {
 }
 
 .app-sider {
-  height: calc(100vh - 64px);
-  height: calc(100dvh - 64px);
+  height: calc(100vh - 56px);
+  height: calc(100dvh - 56px);
 }
 
 code {
@@ -129,20 +210,20 @@ code {
   font-weight: 600 !important;
 }
 
-/* 自定义侧边栏样式 */
+/* 自定义侧边栏样式 — 品牌蓝 */
 .sidebar-container {
   height: 100%;
   display: flex;
   flex-direction: column;
   min-height: 0;
   transition: width 0.3s ease;
-  background: var(--semi-color-bg-0);
+  background: var(--brand-600);
 }
 
 .sidebar-nav {
   flex: 1;
   width: 100%;
-  background: var(--semi-color-bg-0);
+  background: var(--brand-600);
   height: 100%;
   overflow-x: hidden;
   border-right: none;
@@ -152,28 +233,48 @@ code {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-
 .sidebar-nav::-webkit-scrollbar {
   display: none;
 }
 
-/* 侧边栏导航项样式 */
-.sidebar-nav-item {
-  border-radius: 6px;
-  margin: 3px 8px;
+/* Semi Nav 在蓝底上的文字与图标 */
+.sidebar-nav.semi-navigation {
+  background: var(--brand-600);
+}
+.sidebar-nav .semi-navigation-item,
+.sidebar-nav .semi-navigation-sub-title {
+  color: rgba(255, 255, 255, 0.88);
+}
+.sidebar-nav .semi-navigation-item-text span,
+.sidebar-nav .semi-navigation-item-icon {
+  color: inherit;
+}
+
+/* 导航项（Semi 真实类名） */
+.sidebar-nav .semi-navigation-item {
+  border-radius: 8px;
+  margin: 2px 10px;
   transition: all 0.15s ease;
-  padding: 8px 12px;
+}
+.sidebar-nav .semi-navigation-item-normal:hover,
+.sidebar-nav .semi-navigation-sub-title:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+.sidebar-nav .semi-navigation-item-selected {
+  background-color: #fff !important;
+  font-weight: 600;
+}
+.sidebar-nav .semi-navigation-item-selected .semi-navigation-item-text span,
+.sidebar-nav .semi-navigation-item-selected .semi-navigation-item-icon {
+  color: var(--brand-600) !important;
 }
 
-.sidebar-nav-item:hover {
-  background-color: rgba(var(--semi-blue-0), 0.08);
-  color: var(--semi-color-primary);
+/* 展开态（侧栏内）子菜单项文字为白色；折叠态弹层为 portal 渲染，不受此规则影响，继承 Semi 默认深色 */
+.sidebar-nav .semi-navigation-sub .semi-navigation-item-text span {
+  color: rgba(255, 255, 255, 0.88);
 }
-
-.sidebar-nav-item-selected {
-  background-color: rgba(var(--semi-blue-0), 0.12);
-  color: var(--semi-color-primary);
-  font-weight: 500;
+.sidebar-nav .semi-navigation-item-selected .semi-navigation-item-text span {
+  color: var(--brand-600);
 }
 
 /* 模型广场筛选按钮选中样式 */
@@ -184,7 +285,7 @@ code {
   font-weight: 500;
 }
 
-/* 图标容器样式 */
+/* 图标容器样式（保留原有） */
 .sidebar-icon-container {
   width: 22px;
   height: 22px;
@@ -206,20 +307,19 @@ code {
   transition: all 0.2s ease;
 }
 
-/* 分割线样式 */
+/* 分割线在蓝底上隐藏 */
 .sidebar-divider {
   margin: 4px 8px;
-  opacity: 0.15;
+  opacity: 0;
 }
 
-/* 分组标签样式 */
+/* 分组标签 */
 .sidebar-group-label {
-  padding: 4px 15px 8px;
-  color: var(--semi-color-text-2);
+  padding: 14px 20px 4px;
+  color: rgba(255, 255, 255, 0.55);
   font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  opacity: 0.8;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
 /* 底部折叠按钮 */
@@ -230,13 +330,11 @@ code {
   padding: 12px;
   margin-top: auto;
   cursor: pointer;
-  background-color: var(--semi-color-bg-0);
+  background-color: var(--brand-600);
   position: sticky;
   bottom: 0;
   z-index: 10;
-  box-shadow: 0 -10px 10px -5px var(--semi-color-bg-0);
-  backdrop-filter: blur(4px);
-  border-top: 1px solid rgba(var(--semi-grey-0), 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .sidebar-collapse-button-inner {
@@ -246,7 +344,7 @@ code {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--semi-color-fill-0);
+  background-color: rgba(255, 255, 255, 0.1);
   transition: all 0.2s ease;
 }
 
@@ -257,22 +355,17 @@ code {
 
 /* 侧边栏区域容器 */
 .sidebar-section {
-  padding-top: 12px;
+  padding-top: 8px;
 }
 
 @media (max-width: 767px) {
-  .sidebar-container {
-    background: var(--semi-color-bg-1);
-    border-right: 1px solid var(--semi-color-border);
-  }
-
-  .sidebar-nav {
-    background: var(--semi-color-bg-1);
-  }
-
+  .sidebar-container,
+  .sidebar-nav,
   .sidebar-collapse-button {
-    background-color: var(--semi-color-bg-1);
-    box-shadow: 0 -10px 10px -5px var(--semi-color-bg-1);
+    background: var(--brand-600);
+  }
+  .sidebar-container {
+    border-right: none;
   }
 }
 
@@ -797,57 +890,25 @@ html.dark .with-pastel-balls::before {
 }
 
 /* ==================== 模型定价页面布局 ==================== */
-.pricing-layout {
-  height: calc(100vh - 60px);
-  overflow: hidden;
-  margin-top: 60px;
+/* plaza-shell 撑满除顶栏外剩余高度 */
+.plaza-shell {
+  height: calc(100vh - 56px);
+  margin-top: 56px;
 }
 
-.pricing-sidebar {
-  width: clamp(280px, 24vw, 520px) !important;
-  min-width: clamp(280px, 24vw, 520px) !important;
-  max-width: clamp(280px, 24vw, 520px) !important;
-  height: calc(100vh - 60px);
-  background-color: var(--semi-color-bg-0);
-  overflow: auto;
-}
+/* filter-rail 内滚动条美化 */
+.filter-rail::-webkit-scrollbar { width: 4px; }
+.filter-rail::-webkit-scrollbar-thumb { background: rgba(255,255,255,.25); border-radius: 4px; }
 
-.pricing-content {
-  height: calc(100vh - 60px);
-  background-color: var(--semi-color-bg-0);
-  display: flex;
-  flex-direction: column;
-}
-
-.pricing-pagination-divider {
-  border-color: var(--semi-color-border);
-}
-
-.pricing-content-mobile {
+/* plaza-scroll 内容区覆盖占满剩余 */
+.plaza-scroll {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
+  overflow-y: auto;
 }
 
-.pricing-search-header {
-  padding: 0.5rem;
-  background-color: var(--semi-color-bg-0);
-  flex-shrink: 0;
-  position: sticky;
-  top: 0;
-  z-index: 5;
-}
-
-.pricing-view-container {
-  flex: 1;
-  overflow: auto;
-}
-
-.pricing-view-container-mobile {
-  flex: 1;
-  overflow: auto;
-  min-height: 0;
+/* 保留旧类兼容性（移动端等） */
+.pricing-pagination-divider {
+  border-color: var(--border-2);
 }
 
 /* ==================== semi-ui 组件自定义样式 ==================== */

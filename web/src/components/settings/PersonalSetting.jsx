@@ -141,7 +141,7 @@ const PersonalSetting = () => {
       setDisableButton(false);
       setCountdown(30);
     }
-    return () => clearInterval(countdownInterval); // Clean up on unmount
+    return () => clearInterval(countdownInterval);
   }, [disableButton, countdown]);
 
   useEffect(() => {
@@ -316,10 +316,6 @@ const PersonalSetting = () => {
   };
 
   const changePassword = async () => {
-    // if (inputs.original_password === '') {
-    //   showError(t('请输入原密码！'));
-    //   return;
-    // }
     if (inputs.set_new_password === '') {
       showError(t('请输入新密码！'));
       return;
@@ -393,7 +389,6 @@ const PersonalSetting = () => {
     if (await copy(text)) {
       showSuccess(t('已复制：') + text);
     } else {
-      // setSearchKeyword(text);
       Modal.error({ title: t('无法复制到剪贴板，请手动复制'), content: text });
     }
   };
@@ -405,7 +400,7 @@ const PersonalSetting = () => {
         ? value.target.value !== undefined
           ? value.target.value
           : value.target.checked
-        : value, // handle checkbox properly
+        : value,
     }));
   };
 
@@ -413,9 +408,7 @@ const PersonalSetting = () => {
     try {
       const res = await API.put('/api/user/setting', {
         notify_type: notificationSettings.warningType,
-        quota_warning_threshold: parseFloat(
-          notificationSettings.warningThreshold,
-        ),
+        quota_warning_threshold: parseFloat(notificationSettings.warningThreshold),
         webhook_url: notificationSettings.webhookUrl,
         webhook_secret: notificationSettings.webhookSecret,
         notification_email: notificationSettings.notificationEmail,
@@ -426,8 +419,7 @@ const PersonalSetting = () => {
           const parsed = parseInt(notificationSettings.gotifyPriority);
           return isNaN(parsed) ? 5 : parsed;
         })(),
-        accept_unset_model_ratio_model:
-          notificationSettings.acceptUnsetModelRatioModel,
+        accept_unset_model_ratio_model: notificationSettings.acceptUnsetModelRatioModel,
         record_ip_log: notificationSettings.recordIpLog,
       });
 
@@ -443,60 +435,56 @@ const PersonalSetting = () => {
   };
 
   return (
-    <div className='mt-[60px]'>
-      <div className='flex justify-center'>
-        <div className='w-full max-w-7xl mx-auto px-2'>
-          {/* 顶部用户信息区域 */}
-          <UserInfoHeader t={t} userState={userState} />
+    <div className='main-pad' style={{ marginTop: '60px' }}>
+      {/* 用户信息头部 */}
+      <UserInfoHeader t={t} userState={userState} />
 
-          {/* 签到日历 - 仅在启用时显示 */}
-          {status?.checkin_enabled && (
-            <div className='mt-4 md:mt-6'>
-              <CheckinCalendar
-                t={t}
-                status={status}
-                turnstileEnabled={turnstileEnabled}
-                turnstileSiteKey={turnstileSiteKey}
-              />
-            </div>
-          )}
-
-          {/* 账户管理和其他设置 */}
-          <div className='grid grid-cols-1 xl:grid-cols-2 items-start gap-4 md:gap-6 mt-4 md:mt-6'>
-            {/* 左侧：账户管理设置 */}
-            <div className='flex flex-col gap-4 md:gap-6'>
-              <AccountManagement
-                t={t}
-                userState={userState}
-                status={status}
-                systemToken={systemToken}
-                setShowEmailBindModal={setShowEmailBindModal}
-                setShowWeChatBindModal={setShowWeChatBindModal}
-                generateAccessToken={generateAccessToken}
-                handleSystemTokenClick={handleSystemTokenClick}
-                setShowChangePasswordModal={setShowChangePasswordModal}
-                setShowAccountDeleteModal={setShowAccountDeleteModal}
-                passkeyStatus={passkeyStatus}
-                passkeySupported={passkeySupported}
-                passkeyRegisterLoading={passkeyRegisterLoading}
-                passkeyDeleteLoading={passkeyDeleteLoading}
-                onPasskeyRegister={handleRegisterPasskey}
-                onPasskeyDelete={handleRemovePasskey}
-              />
-
-              {/* 偏好设置（语言等） */}
-              <PreferencesSettings t={t} />
-            </div>
-
-            {/* 右侧：其他设置 */}
-            <NotificationSettings
-              t={t}
-              notificationSettings={notificationSettings}
-              handleNotificationSettingChange={handleNotificationSettingChange}
-              saveNotificationSettings={saveNotificationSettings}
-            />
-          </div>
+      {/* 签到日历 */}
+      {status?.checkin_enabled && (
+        <div style={{ marginTop: '20px' }}>
+          <CheckinCalendar
+            t={t}
+            status={status}
+            turnstileEnabled={turnstileEnabled}
+            turnstileSiteKey={turnstileSiteKey}
+          />
         </div>
+      )}
+
+      {/* 账户管理 */}
+      <AccountManagement
+        t={t}
+        userState={userState}
+        status={status}
+        systemToken={systemToken}
+        setShowEmailBindModal={setShowEmailBindModal}
+        setShowWeChatBindModal={setShowWeChatBindModal}
+        generateAccessToken={generateAccessToken}
+        handleSystemTokenClick={handleSystemTokenClick}
+        setShowChangePasswordModal={setShowChangePasswordModal}
+        setShowAccountDeleteModal={setShowAccountDeleteModal}
+        passkeyStatus={passkeyStatus}
+        passkeySupported={passkeySupported}
+        passkeyRegisterLoading={passkeyRegisterLoading}
+        passkeyDeleteLoading={passkeyDeleteLoading}
+        onPasskeyRegister={handleRegisterPasskey}
+        onPasskeyDelete={handleRemovePasskey}
+      />
+
+      {/* 偏好设置 */}
+      <PreferencesSettings t={t} />
+
+      {/* 其他设置（通知/价格/隐私/边栏） */}
+      <NotificationSettings
+        t={t}
+        notificationSettings={notificationSettings}
+        handleNotificationSettingChange={handleNotificationSettingChange}
+        saveNotificationSettings={saveNotificationSettings}
+      />
+
+      {/* 页脚 */}
+      <div style={{ textAlign: 'center', color: 'var(--ink-3)', fontSize: '12px', padding: '24px 0 8px' }}>
+        © 2026 SEAROUTER. 版权所有 · 设计与开发由 METASTONE
       </div>
 
       {/* 模态框组件 */}

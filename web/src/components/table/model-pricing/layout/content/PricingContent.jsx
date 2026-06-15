@@ -17,43 +17,82 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
-import React from 'react';
-import PricingTopSection from '../header/PricingTopSection';
+import React, { useState } from 'react';
+import PricingFilterModal from '../../modal/PricingFilterModal';
+import PricingVendorIntroWithSkeleton from '../header/PricingVendorIntroWithSkeleton';
+import SearchActions from '../header/SearchActions';
 import PricingView from './PricingView';
 
 const PricingContent = ({ isMobile, sidebarProps, ...props }) => {
-  return (
-    <div
-      className={isMobile ? 'pricing-content-mobile' : 'pricing-scroll-hide'}
-    >
-      {/* 固定的顶部区域（分类介绍 + 搜索和操作） */}
-      <div className='pricing-search-header'>
-        <PricingTopSection
-          {...props}
-          isMobile={isMobile}
-          sidebarProps={sidebarProps}
-          showWithRecharge={sidebarProps.showWithRecharge}
-          setShowWithRecharge={sidebarProps.setShowWithRecharge}
-          currency={sidebarProps.currency}
-          setCurrency={sidebarProps.setCurrency}
-          showRatio={sidebarProps.showRatio}
-          setShowRatio={sidebarProps.setShowRatio}
-          viewMode={sidebarProps.viewMode}
-          setViewMode={sidebarProps.setViewMode}
-          tokenUnit={sidebarProps.tokenUnit}
-          setTokenUnit={sidebarProps.setTokenUnit}
-        />
-      </div>
+  const [showFilterModal, setShowFilterModal] = useState(false);
 
-      {/* 可滚动的内容区域 */}
-      <div
-        className={
-          isMobile ? 'pricing-view-container-mobile' : 'pricing-view-container'
-        }
-      >
-        <PricingView {...props} viewMode={sidebarProps.viewMode} />
-      </div>
-    </div>
+  return (
+    <>
+      {isMobile ? (
+        <>
+          {/* 移动端：工具栏 + 内容 */}
+          <div style={{ padding: '12px 16px 8px', flexShrink: 0 }}>
+            <SearchActions
+              {...props}
+              isMobile={isMobile}
+              searchValue={props.searchValue}
+              setShowFilterModal={setShowFilterModal}
+              showWithRecharge={sidebarProps.showWithRecharge}
+              setShowWithRecharge={sidebarProps.setShowWithRecharge}
+              currency={sidebarProps.currency}
+              setCurrency={sidebarProps.setCurrency}
+              showRatio={sidebarProps.showRatio}
+              setShowRatio={sidebarProps.setShowRatio}
+              viewMode={sidebarProps.viewMode}
+              setViewMode={sidebarProps.setViewMode}
+              tokenUnit={sidebarProps.tokenUnit}
+              setTokenUnit={sidebarProps.setTokenUnit}
+              t={props.t}
+            />
+          </div>
+          <div style={{ flex: 1, overflow: 'auto', minHeight: 0 }}>
+            <PricingView {...props} viewMode={sidebarProps.viewMode} />
+          </div>
+          <PricingFilterModal
+            visible={showFilterModal}
+            onClose={() => setShowFilterModal(false)}
+            sidebarProps={sidebarProps}
+            t={props.t}
+          />
+        </>
+      ) : (
+        <>
+          {/* 桌面端：hero + toolbar + 卡片区 */}
+          <PricingVendorIntroWithSkeleton
+            loading={props.loading}
+            filterVendor={props.filterVendor}
+            models={props.filteredModels}
+            allModels={props.models}
+            t={props.t}
+            selectedRowKeys={props.selectedRowKeys}
+            copyText={props.copyText}
+            handleChange={props.handleChange}
+            handleCompositionStart={props.handleCompositionStart}
+            handleCompositionEnd={props.handleCompositionEnd}
+            isMobile={isMobile}
+            searchValue={props.searchValue}
+            setShowFilterModal={setShowFilterModal}
+            showWithRecharge={sidebarProps.showWithRecharge}
+            setShowWithRecharge={sidebarProps.setShowWithRecharge}
+            currency={sidebarProps.currency}
+            setCurrency={sidebarProps.setCurrency}
+            showRatio={sidebarProps.showRatio}
+            setShowRatio={sidebarProps.setShowRatio}
+            viewMode={sidebarProps.viewMode}
+            setViewMode={sidebarProps.setViewMode}
+            tokenUnit={sidebarProps.tokenUnit}
+            setTokenUnit={sidebarProps.setTokenUnit}
+          />
+
+          <PricingView {...props} viewMode={sidebarProps.viewMode} />
+        </>
+      )}
+    </>
   );
 };
 

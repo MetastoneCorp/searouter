@@ -21,7 +21,6 @@ import React from 'react';
 import {
   Avatar,
   Space,
-  Tag,
   Tooltip,
   Popover,
   Typography,
@@ -43,24 +42,6 @@ import {
 } from '../../../helpers';
 import { IconHelpCircle } from '@douyinfe/semi-icons';
 import { Route, Sparkles } from 'lucide-react';
-
-const colors = [
-  'amber',
-  'blue',
-  'cyan',
-  'green',
-  'grey',
-  'indigo',
-  'light-blue',
-  'lime',
-  'orange',
-  'pink',
-  'purple',
-  'red',
-  'teal',
-  'violet',
-  'yellow',
-];
 
 function formatRatio(ratio) {
   if (ratio === undefined || ratio === null) {
@@ -104,83 +85,36 @@ function buildChannelAffinityTooltip(affinity, t) {
 function renderType(type, t) {
   switch (type) {
     case 1:
-      return (
-        <Tag color='cyan' shape='circle'>
-          {t('充值')}
-        </Tag>
-      );
+      return <span className='tag'>{t('充值')}</span>;
     case 2:
-      return (
-        <Tag color='lime' shape='circle'>
-          {t('消费')}
-        </Tag>
-      );
+      return <span className='tag'>{t('消费')}</span>;
     case 3:
-      return (
-        <Tag color='orange' shape='circle'>
-          {t('管理')}
-        </Tag>
-      );
+      return <span className='tag gray'>{t('管理')}</span>;
     case 4:
-      return (
-        <Tag color='purple' shape='circle'>
-          {t('系统')}
-        </Tag>
-      );
+      return <span className='tag gray'>{t('系统')}</span>;
     case 5:
-      return (
-        <Tag color='red' shape='circle'>
-          {t('错误')}
-        </Tag>
-      );
+      return <span className='pill err'>{t('错误')}</span>;
     default:
-      return (
-        <Tag color='grey' shape='circle'>
-          {t('未知')}
-        </Tag>
-      );
+      return <span className='tag gray'>{t('未知')}</span>;
   }
 }
 
 function renderIsStream(bool, t) {
   if (bool) {
-    return (
-      <Tag color='blue' shape='circle'>
-        {t('流')}
-      </Tag>
-    );
+    return <span className='tag'>{t('流')}</span>;
   } else {
-    return (
-      <Tag color='purple' shape='circle'>
-        {t('非流')}
-      </Tag>
-    );
+    return <span className='tag gray'>{t('非流')}</span>;
   }
 }
 
 function renderUseTime(type, t) {
   const time = parseInt(type);
   if (time < 101) {
-    return (
-      <Tag color='green' shape='circle'>
-        {' '}
-        {time} s{' '}
-      </Tag>
-    );
+    return <span className='pill ok tnum'>{time} s</span>;
   } else if (time < 300) {
-    return (
-      <Tag color='orange' shape='circle'>
-        {' '}
-        {time} s{' '}
-      </Tag>
-    );
+    return <span className='pill warn tnum'>{time} s</span>;
   } else {
-    return (
-      <Tag color='red' shape='circle'>
-        {' '}
-        {time} s{' '}
-      </Tag>
-    );
+    return <span className='pill err tnum'>{time} s</span>;
   }
 }
 
@@ -188,37 +122,18 @@ function renderFirstUseTime(type, t) {
   let time = parseFloat(type) / 1000.0;
   time = time.toFixed(1);
   if (time < 3) {
-    return (
-      <Tag color='green' shape='circle'>
-        {' '}
-        {time} s{' '}
-      </Tag>
-    );
+    return <span className='pill ok tnum'>{time} s</span>;
   } else if (time < 10) {
-    return (
-      <Tag color='orange' shape='circle'>
-        {' '}
-        {time} s{' '}
-      </Tag>
-    );
+    return <span className='pill warn tnum'>{time} s</span>;
   } else {
-    return (
-      <Tag color='red' shape='circle'>
-        {' '}
-        {time} s{' '}
-      </Tag>
-    );
+    return <span className='pill err tnum'>{time} s</span>;
   }
 }
 
 function renderBillingTag(record, t) {
   const other = getLogOther(record.other);
   if (other?.billing_source === 'subscription') {
-    return (
-      <Tag color='green' shape='circle'>
-        {t('订阅抵扣')}
-      </Tag>
-    );
+    return <span className='tag'>{t('订阅抵扣')}</span>;
   }
   return null;
 }
@@ -337,6 +252,7 @@ export const getLogsColumns = ({
       key: COLUMN_KEYS.TIME,
       title: t('时间'),
       dataIndex: 'timestamp2string',
+      render: (text) => <span className='mono tnum text-ink-2'>{text}</span>,
     },
     {
       key: COLUMN_KEYS.CHANNEL,
@@ -373,12 +289,7 @@ export const getLogsColumns = ({
             <span style={{ position: 'relative', display: 'inline-block' }}>
               <Tooltip content={record.channel_name || t('未知渠道')}>
                 <span>
-                  <Tag
-                    color={colors[parseInt(text) % colors.length]}
-                    shape='circle'
-                  >
-                    {text}
-                  </Tag>
+                  <span className='tag tnum'>{text}</span>
                 </span>
               </Tooltip>
               {showMarker && (
@@ -421,9 +332,7 @@ export const getLogsColumns = ({
               )}
             </span>
             {isMultiKey && (
-              <Tag color='white' shape='circle'>
-                {multiKeyIndex}
-              </Tag>
+              <span className='tag gray'>{multiKeyIndex}</span>
             )}
           </Space>
         ) : null;
@@ -461,16 +370,14 @@ export const getLogsColumns = ({
       render: (text, record, index) => {
         return record.type === 0 || record.type === 2 || record.type === 5 ? (
           <div>
-            <Tag
-              color='grey'
-              shape='circle'
+            <span
+              className='tag gray mono cursor-pointer'
               onClick={(event) => {
                 copyText(event, text);
               }}
             >
-              {' '}
-              {t(text)}{' '}
-            </Tag>
+              {t(text)}
+            </span>
           </div>
         ) : (
           <></>
@@ -598,13 +505,13 @@ export const getLogsColumns = ({
               lineHeight: 1.2,
             }}
           >
-            <span>{text}</span>
+            <span className='tnum'>{text}</span>
             {cacheText ? (
               <span
                 style={{
                   marginTop: 2,
                   fontSize: 11,
-                  color: 'var(--semi-color-text-2)',
+                  color: 'var(--ink-2)',
                   whiteSpace: 'nowrap',
                 }}
               >
@@ -624,7 +531,7 @@ export const getLogsColumns = ({
       render: (text, record, index) => {
         return parseInt(text) > 0 &&
           (record.type === 0 || record.type === 2 || record.type === 5) ? (
-          <>{<span> {text} </span>}</>
+          <span className='tnum'>{text}</span>
         ) : (
           <></>
         );
@@ -670,15 +577,14 @@ export const getLogsColumns = ({
         return (record.type === 2 || record.type === 5) && text ? (
           <Tooltip content={text}>
             <span>
-              <Tag
-                color='orange'
-                shape='circle'
+              <span
+                className='tag gray mono cursor-pointer'
                 onClick={(event) => {
                   copyText(event, text);
                 }}
               >
                 {text}
-              </Tag>
+              </span>
             </span>
           </Tooltip>
         ) : (

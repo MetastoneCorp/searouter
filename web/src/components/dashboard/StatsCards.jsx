@@ -18,97 +18,68 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Card, Avatar, Skeleton, Tag } from '@douyinfe/semi-ui';
+import { Skeleton } from '@douyinfe/semi-ui';
 import { VChart } from '@visactor/react-vchart';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const StatsCards = ({
-  groupedStatsData,
-  loading,
-  getTrendSpec,
-  CARD_PROPS,
-  CHART_CONFIG,
-}) => {
+const StatsCards = ({ groupedStatsData, loading, getTrendSpec, CHART_CONFIG }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const statItems = groupedStatsData.flatMap((group) => group.items);
+
   return (
-    <div className='mb-4'>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
-        {groupedStatsData.map((group, idx) => (
-          <Card
-            key={idx}
-            {...CARD_PROPS}
-            className={`${group.color} border-0 !rounded-2xl w-full`}
-            title={group.title}
-          >
-            <div className='space-y-4'>
-              {group.items.map((item, itemIdx) => (
-                <div
-                  key={itemIdx}
-                  className='flex items-center justify-between cursor-pointer'
-                  onClick={item.onClick}
-                >
-                  <div className='flex items-center'>
-                    <Avatar
-                      className='mr-3'
-                      size='small'
-                      color={item.avatarColor}
-                    >
-                      {item.icon}
-                    </Avatar>
-                    <div>
-                      <div className='text-xs text-gray-500'>{item.title}</div>
-                      <div className='text-lg font-semibold'>
-                        <Skeleton
-                          loading={loading}
-                          active
-                          placeholder={
-                            <Skeleton.Paragraph
-                              active
-                              rows={1}
-                              style={{
-                                width: '65px',
-                                height: '24px',
-                                marginTop: '4px',
-                              }}
-                            />
-                          }
-                        >
-                          {item.value}
-                        </Skeleton>
-                      </div>
-                    </div>
-                  </div>
-                  {item.title === t('当前余额') ? (
-                    <Tag
-                      color='white'
-                      shape='circle'
-                      size='large'
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate('/console/topup');
-                      }}
-                    >
-                      {t('充值')}
-                    </Tag>
-                  ) : (
-                    (loading ||
-                      (item.trendData && item.trendData.length > 0)) && (
-                      <div className='w-24 h-10'>
-                        <VChart
-                          spec={getTrendSpec(item.trendData, item.trendColor)}
-                          option={CHART_CONFIG}
-                        />
-                      </div>
-                    )
-                  )}
-                </div>
-              ))}
+    <div className='grid g-4 mb-4 max-[640px]:!grid-cols-1'>
+      {statItems.map((item, idx) => (
+        <div
+          key={idx}
+          className={`stat ${item.onClick ? 'cursor-pointer' : ''}`}
+          onClick={item.onClick}
+        >
+          <div className='label'>
+            <span className='badge-ico'>{item.icon}</span>
+            {item.title}
+            {item.title === t('当前余额') && (
+              <button
+                type='button'
+                className='ml-auto h-6 px-2.5 rounded-md bg-brand-50 text-brand-600 text-xs font-semibold transition-colors hover:bg-brand-100'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate('/console/topup');
+                }}
+              >
+                {t('充值')}
+              </button>
+            )}
+          </div>
+          <div className='flex items-end justify-between gap-2'>
+            <div className='num tnum'>
+              <Skeleton
+                loading={loading}
+                active
+                placeholder={
+                  <Skeleton.Paragraph
+                    active
+                    rows={1}
+                    style={{ width: '72px', height: '28px', marginTop: '10px' }}
+                  />
+                }
+              >
+                {item.value}
+              </Skeleton>
             </div>
-          </Card>
-        ))}
-      </div>
+            {!loading && item.trendData && item.trendData.length > 0 && (
+              <div className='w-24 h-10 flex-shrink-0'>
+                <VChart
+                  spec={getTrendSpec(item.trendData, item.trendColor)}
+                  option={CHART_CONFIG}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

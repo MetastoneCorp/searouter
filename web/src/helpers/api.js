@@ -101,16 +101,29 @@ export const buildApiPayload = (
   inputs,
   parameterEnabled,
 ) => {
-  const processedMessages = messages
+  let processedMessages = messages
     .filter(isValidMessage)
     .map(formatMessageForAPI)
     .filter(Boolean);
 
-  // 如果有系统提示，插入到消息开头
-  if (systemPrompt && systemPrompt.trim()) {
+  // 上下文轮数截断（保留最近 N 轮，user+assistant 各算一条）
+  const turns = Number(inputs?.context_turns);
+  if (Number.isFinite(turns) && turns > 0) {
+    const keep = turns * 2;
+    if (processedMessages.length > keep) {
+      processedMessages = processedMessages.slice(-keep);
+    }
+  }
+
+  // 系统提示：优先使用入参 systemPrompt，回退到 inputs.systemPrompt
+  const sp =
+    (systemPrompt && systemPrompt.trim && systemPrompt.trim()) ||
+    (inputs?.systemPrompt && inputs.systemPrompt.trim()) ||
+    '';
+  if (sp) {
     processedMessages.unshift({
       role: MESSAGE_ROLES.SYSTEM,
-      content: systemPrompt.trim(),
+      content: sp,
     });
   }
 

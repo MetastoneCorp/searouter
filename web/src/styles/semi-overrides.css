@@ -1,0 +1,71 @@
+/* ============================================================
+   Semi Design 主题覆盖 — 映射到 SeaRouter 品牌 token
+   统一收敛在本文件，禁止散落 !important
+   注意：本文件必须保持未分层（不进 @layer），靠源顺序覆盖
+   Semi 自身的未分层样式（vitePluginSemi 已禁用）。
+   ============================================================ */
+
+/* ---------- 颜色变量映射 ---------- */
+body {
+  --semi-color-primary: #015bba;
+  --semi-color-primary-hover: #1e72cc;
+  --semi-color-primary-active: #013f82;
+  --semi-color-primary-light-default: #eef4fc;
+  --semi-color-primary-light-hover: #dceaf9;
+  --semi-color-primary-light-active: #dceaf9;
+  --semi-color-link: #015bba;
+  --semi-color-link-hover: #1e72cc;
+  --semi-color-link-active: #013f82;
+  --semi-color-success: #16a34a;
+  --semi-color-warning: #e8a317;
+  --semi-color-danger: #e5484d;
+  --semi-color-text-0: #1a2433;
+  --semi-color-text-1: #5a6678;
+  --semi-color-text-2: #8a94a6;
+  --semi-color-border: #e6e9f0;
+  --semi-color-bg-0: #ffffff;
+  --semi-color-bg-1: #f8fafc;
+  --semi-color-fill-0: #f8fafc;
+  --semi-color-focus-border: #1e72cc;
+  --semi-border-radius-small: 4px;
+  --semi-border-radius-medium: 6px;
+  --semi-border-radius-large: 8px;
+}
+
+/* ---------- Table：表头浅灰底、行 hover 蓝底 ---------- */
+.semi-table-thead > .semi-table-row > .semi-table-row-head {
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-weight: 600;
+}
+.semi-table-tbody > .semi-table-row:hover > .semi-table-row-cell {
+  background: var(--brand-50);
+}
+.semi-table {
+  font-size: 13.5px;
+}
+
+/* ---------- Button：6px 圆角 ---------- */
+.semi-button {
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* ---------- Input/Select/TextArea：focus 蓝色光环 ---------- */
+.semi-input-wrapper-focus,
+.semi-select-focus,
+.semi-input-textarea-wrapper:focus-within {
+  border-color: var(--brand-500);
+  box-shadow: 0 0 0 3px var(--brand-50);
+}
+
+/* ---------- Modal：14px 圆角 ---------- */
+.semi-modal .semi-modal-content {
+  border-radius: 14px;
+}
+
+/* ---------- Tabs：激活态蓝色下划线 ---------- */
+.semi-tabs-bar-line .semi-tabs-tab-active {
+  color: var(--brand-600);
+  font-weight: 600;
+}

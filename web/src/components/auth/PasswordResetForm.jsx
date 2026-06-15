@@ -20,19 +20,14 @@ For commercial licensing, please contact support@quantumnous.com
 import React, { useEffect, useState } from 'react';
 import {
   API,
-  getLogo,
   showError,
   showInfo,
   showSuccess,
   getSystemName,
 } from '../../helpers';
 import Turnstile from 'react-turnstile';
-import { Button, Card, Form, Typography } from '@douyinfe/semi-ui';
-import { IconMail } from '@douyinfe/semi-icons';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
-const { Text, Title } = Typography;
 
 const PasswordResetForm = () => {
   const { t } = useTranslation();
@@ -48,7 +43,6 @@ const PasswordResetForm = () => {
   const [disableButton, setDisableButton] = useState(false);
   const [countdown, setCountdown] = useState(30);
 
-  const logo = getLogo();
   const systemName = getSystemName();
 
   useEffect(() => {
@@ -65,9 +59,7 @@ const PasswordResetForm = () => {
   useEffect(() => {
     let countdownInterval = null;
     if (disableButton && countdown > 0) {
-      countdownInterval = setInterval(() => {
-        setCountdown(countdown - 1);
-      }, 1000);
+      countdownInterval = setInterval(() => setCountdown(countdown - 1), 1000);
     } else if (countdown === 0) {
       setDisableButton(false);
       setCountdown(30);
@@ -80,6 +72,7 @@ const PasswordResetForm = () => {
   }
 
   async function handleSubmit(e) {
+    if (e && e.preventDefault) e.preventDefault();
     if (!email) {
       showError(t('请输入邮箱地址'));
       return;
@@ -104,87 +97,84 @@ const PasswordResetForm = () => {
   }
 
   return (
-    <div className='relative overflow-hidden bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
-      {/* 背景模糊晕染球 */}
-      <div
-        className='blur-ball blur-ball-indigo'
-        style={{ top: '-80px', right: '-80px', transform: 'none' }}
-      />
-      <div
-        className='blur-ball blur-ball-teal'
-        style={{ top: '50%', left: '-120px' }}
-      />
-      <div className='w-full max-w-sm mt-[60px]'>
-        <div className='flex flex-col items-center'>
-          <div className='w-full max-w-md'>
-            <div className='flex items-center justify-center mb-6 gap-2'>
-              <img src={logo} alt='Logo' className='h-10 rounded-full' />
-              <Title heading={3} className='!text-gray-800'>
-                {systemName}
-              </Title>
-            </div>
+    <div className='lg2'>
+      {/* 左侧插画 Hero */}
+      <div className='lg2-hero'>
+        <img src='/login-hero.png' alt='' className='lg2-hero-img' />
+        {/* 左上角 logo */}
+        <div className='brand'>
+          <span className='lg'>
+            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+              <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
+              <path d='M4 11l8-6 8 6'/>
+              <path d='M6 11v4M18 11v4'/>
+            </svg>
+          </span>
+          <span style={{ fontSize: 36, fontWeight: 700, color: '#fff' }}>{systemName}</span>
+        </div>
+        {/* 左下角文案 */}
+        <div className='lg2-hero-copy'>
+          <h1>{t('统一云端')}<br/>{t('守护边缘')}</h1>
+          <p>{t('企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率')}</p>
+        </div>
+      </div>
 
-            <Card className='border-0 !rounded-2xl overflow-hidden'>
-              <div className='flex justify-center pt-6 pb-2'>
-                <Title heading={3} className='text-gray-800 dark:text-gray-200'>
-                  {t('密码重置')}
-                </Title>
-              </div>
-              <div className='px-2 py-8'>
-                <Form className='space-y-3'>
-                  <Form.Input
-                    field='email'
-                    label={t('邮箱')}
-                    placeholder={t('请输入您的邮箱地址')}
-                    name='email'
-                    value={email}
-                    onChange={handleChange}
-                    prefix={<IconMail />}
-                  />
+      {/* 右侧表单 */}
+      <div className='lg2-right'>
+        <div className='lg2-form'>
+          <div className='lhead'>
+            <span className='lg'>
+              <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+                <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
+                <path d='M4 11l8-6 8 6'/>
+                <path d='M6 11v4M18 11v4'/>
+              </svg>
+            </span>
+            {systemName}
+          </div>
 
-                  <div className='space-y-2 pt-2'>
-                    <Button
-                      theme='solid'
-                      className='w-full !rounded-full'
-                      type='primary'
-                      htmlType='submit'
-                      onClick={handleSubmit}
-                      loading={loading}
-                      disabled={disableButton}
-                    >
-                      {disableButton
-                        ? `${t('重试')} (${countdown})`
-                        : t('提交')}
-                    </Button>
-                  </div>
-                </Form>
+          <div className='welc'>{t('密码重置')}</div>
 
-                <div className='mt-6 text-center text-sm'>
-                  <Text>
-                    {t('想起来了？')}{' '}
-                    <Link
-                      to='/login'
-                      className='text-blue-600 hover:text-blue-800 font-medium'
-                    >
-                      {t('登录')}
-                    </Link>
-                  </Text>
-                </div>
-              </div>
-            </Card>
-
-            {turnstileEnabled && (
-              <div className='flex justify-center mt-6'>
-                <Turnstile
-                  sitekey={turnstileSiteKey}
-                  onVerify={(token) => {
-                    setTurnstileToken(token);
-                  }}
+          <form onSubmit={handleSubmit}>
+            <div className='lg2-ipt-group'>
+              <label className='auth-label'>{t('邮箱')}</label>
+              <div className='auth-ipt'>
+                <input
+                  type='email'
+                  placeholder={t('请输入您的邮箱地址')}
+                  value={email}
+                  onChange={(e) => handleChange(e.target.value)}
+                  autoComplete='email'
                 />
               </div>
-            )}
+            </div>
+
+            <button
+              type='submit'
+              className='lg2-submit'
+              disabled={loading || disableButton}
+              style={{ marginBottom: 10 }}
+            >
+              {disableButton
+                ? `${t('重试')} (${countdown})`
+                : loading ? t('提交中...') : t('提交')}
+            </button>
+          </form>
+
+          <div className='lg2-foot'>
+            {t('想起来了？')}{' '}
+            <Link to='/login'>{t('登录')}</Link>
           </div>
         </div>
+
+        {turnstileEnabled && (
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '16px 0' }}>
+            <Turnstile
+              sitekey={turnstileSiteKey}
+              onVerify={(token) => setTurnstileToken(token)}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

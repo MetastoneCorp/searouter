@@ -18,27 +18,30 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Typography } from '@douyinfe/semi-ui';
-import { Key } from 'lucide-react';
-import CompactModeToggle from '../../common/ui/CompactModeToggle';
 
-const { Text } = Typography;
+const formatTime = (createAt) => {
+  if (!createAt) return '';
+  try {
+    const d = new Date(createAt);
+    return d.toLocaleTimeString(undefined, {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  } catch {
+    return '';
+  }
+};
 
-const TokensDescription = ({ compactMode, setCompactMode, t }) => {
+// 角色标签右侧的 inline meta：可选 model + time，点 dot 分隔
+const ModelMeta = ({ model, createAt }) => {
+  const time = formatTime(createAt);
+  const parts = [];
+  if (model) parts.push(model);
+  if (time) parts.push(time);
+  if (parts.length === 0) return null;
   return (
-    <div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-2 w-full'>
-      <div className='flex items-center text-blue-500'>
-        <Key size={16} className='mr-2' />
-        <Text>{t('令牌管理')}</Text>
-      </div>
-
-      <CompactModeToggle
-        compactMode={compactMode}
-        setCompactMode={setCompactMode}
-        t={t}
-      />
-    </div>
+    <span className='mono tnum'>{parts.join(' · ')}</span>
   );
 };
 
-export default TokensDescription;
+export default ModelMeta;

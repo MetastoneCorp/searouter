@@ -18,194 +18,81 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { memo } from 'react';
-import { Card, Skeleton } from '@douyinfe/semi-ui';
 
-const THEME_COLORS = {
-  allVendors: {
-    primary: '37 99 235',
-    background: 'rgba(59, 130, 246, 0.1)',
-    border: 'rgba(59, 130, 246, 0.2)',
-  },
-  specific: {
-    primary: '16 185 129',
-    background: 'rgba(16, 185, 129, 0.1)',
-    border: 'rgba(16, 185, 129, 0.2)',
-  },
-  neutral: {
-    background: 'rgba(156, 163, 175, 0.1)',
-    border: 'rgba(156, 163, 175, 0.2)',
-  },
-};
+/* plaza-hero 骨架屏：模拟 hero 区块加载态 */
+const PricingVendorIntroSkeleton = memo(({ isAllVendors = false, isMobile = false }) => {
+  const pulse = {
+    background: 'rgba(255,255,255,.22)',
+    borderRadius: 6,
+    animation: 'pulse 1.6s ease-in-out infinite',
+  };
 
-const SIZES = {
-  title: { width: { all: 120, specific: 100 }, height: 24 },
-  tag: { width: 80, height: 20 },
-  description: { height: 14 },
-  avatar: { width: 40, height: 40 },
-  searchInput: { height: 32 },
-  button: { width: 80, height: 32 },
-};
-
-const SKELETON_STYLES = {
-  cover: (primaryColor) => ({
-    '--palette-primary-darkerChannel': primaryColor,
-    backgroundImage: `linear-gradient(0deg, rgba(var(--palette-primary-darkerChannel) / 80%), rgba(var(--palette-primary-darkerChannel) / 80%)), url('/cover-4.webp')`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-  }),
-  title: {
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
-    borderRadius: 8,
-    backdropFilter: 'blur(4px)',
-  },
-  tag: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 9999,
-    backdropFilter: 'blur(4px)',
-    border: '1px solid rgba(255,255,255,0.3)',
-  },
-  description: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 4,
-    backdropFilter: 'blur(4px)',
-  },
-  avatar: (isAllVendors) => {
-    const colors = isAllVendors
-      ? THEME_COLORS.allVendors
-      : THEME_COLORS.specific;
-    return {
-      backgroundColor: colors.background,
-      borderRadius: 12,
-      border: `1px solid ${colors.border}`,
-    };
-  },
-  searchInput: {
-    backgroundColor: THEME_COLORS.neutral.background,
-    borderRadius: 8,
-    border: `1px solid ${THEME_COLORS.neutral.border}`,
-  },
-  button: {
-    backgroundColor: THEME_COLORS.neutral.background,
-    borderRadius: 8,
-    border: `1px solid ${THEME_COLORS.neutral.border}`,
-  },
-};
-
-const createSkeletonRect = (style = {}, key = null) => (
-  <div key={key} className='animate-pulse' style={style} />
-);
-
-const PricingVendorIntroSkeleton = memo(
-  ({ isAllVendors = false, isMobile = false }) => {
-    const placeholder = (
-      <Card
-        className='!rounded-2xl shadow-sm border-0'
-        cover={
-          <div
-            className='relative h-full'
-            style={SKELETON_STYLES.cover(
-              isAllVendors
-                ? THEME_COLORS.allVendors.primary
-                : THEME_COLORS.specific.primary,
-            )}
-          >
-            <div className='relative z-10 h-full flex items-center justify-between p-4'>
-              <div className='flex-1 min-w-0 mr-4'>
-                <div className='flex flex-row flex-wrap items-center gap-2 sm:gap-3 mb-2'>
-                  {createSkeletonRect(
-                    {
-                      ...SKELETON_STYLES.title,
-                      width: isAllVendors
-                        ? SIZES.title.width.all
-                        : SIZES.title.width.specific,
-                      height: SIZES.title.height,
-                    },
-                    'title',
-                  )}
-                  {createSkeletonRect(
-                    {
-                      ...SKELETON_STYLES.tag,
-                      width: SIZES.tag.width,
-                      height: SIZES.tag.height,
-                    },
-                    'tag',
-                  )}
-                </div>
-                <div className='space-y-2'>
-                  {createSkeletonRect(
-                    {
-                      ...SKELETON_STYLES.description,
-                      width: '100%',
-                      height: SIZES.description.height,
-                    },
-                    'desc1',
-                  )}
-                  {createSkeletonRect(
-                    {
-                      ...SKELETON_STYLES.description,
-                      backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                      width: '75%',
-                      height: SIZES.description.height,
-                    },
-                    'desc2',
-                  )}
-                </div>
-              </div>
-
-              <div className='flex-shrink-0 w-16 h-16 rounded-2xl bg-white/90 shadow-md backdrop-blur-sm flex items-center justify-center'>
-                {createSkeletonRect(
-                  {
-                    ...SKELETON_STYLES.avatar(isAllVendors),
-                    width: SIZES.avatar.width,
-                    height: SIZES.avatar.height,
-                  },
-                  'avatar',
-                )}
-              </div>
-            </div>
-          </div>
-        }
+  return (
+    <>
+      {/* Hero 骨架 */}
+      <div
+        className='plaza-hero'
+        style={{ pointerEvents: 'none' }}
       >
-        <div className='flex items-center gap-2 w-full'>
-          <div className='flex-1'>
-            {createSkeletonRect(
-              {
-                ...SKELETON_STYLES.searchInput,
-                width: '100%',
-                height: SIZES.searchInput.height,
-              },
-              'search',
-            )}
-          </div>
-
-          {createSkeletonRect(
-            {
-              ...SKELETON_STYLES.button,
-              width: SIZES.button.width,
-              height: SIZES.button.height,
-            },
-            'copy-button',
-          )}
-
-          {isMobile &&
-            createSkeletonRect(
-              {
-                ...SKELETON_STYLES.button,
-                width: SIZES.button.width,
-                height: SIZES.button.height,
-              },
-              'filter-button',
-            )}
+        <div style={{ ...pulse, width: 200, height: 36, marginBottom: 16 }} />
+        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <div style={{ ...pulse, width: 120, height: 18 }} />
+          <div style={{ ...pulse, width: 220, height: 18 }} />
         </div>
-      </Card>
-    );
+        <div
+          className='spark'
+          style={{ background: 'rgba(255,255,255,.1)', border: '1px solid rgba(255,255,255,.2)' }}
+        >
+          <div style={{ ...pulse, width: 40, height: 40, borderRadius: '50%' }} />
+        </div>
+      </div>
 
-    return (
-      <Skeleton loading={true} active placeholder={placeholder}></Skeleton>
-    );
-  },
-);
+      {/* 工具栏骨架 */}
+      <div className='plaza-tools'>
+        <div
+          style={{
+            flex: 1,
+            height: 42,
+            background: 'var(--border-2)',
+            borderRadius: 10,
+            animation: 'pulse 1.6s ease-in-out infinite',
+          }}
+        />
+        <div
+          style={{
+            width: 80,
+            height: 30,
+            background: 'var(--border-2)',
+            borderRadius: 6,
+            animation: 'pulse 1.6s ease-in-out infinite',
+          }}
+        />
+        {!isMobile && (
+          <>
+            <div
+              style={{
+                width: 120,
+                height: 30,
+                background: 'var(--border-2)',
+                borderRadius: 6,
+                animation: 'pulse 1.6s ease-in-out infinite',
+              }}
+            />
+            <div
+              style={{
+                width: 100,
+                height: 30,
+                background: 'var(--border-2)',
+                borderRadius: 9,
+                animation: 'pulse 1.6s ease-in-out infinite',
+              }}
+            />
+          </>
+        )}
+      </div>
+    </>
+  );
+});
 
 PricingVendorIntroSkeleton.displayName = 'PricingVendorIntroSkeleton';
 

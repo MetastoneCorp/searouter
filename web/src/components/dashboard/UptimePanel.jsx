@@ -18,15 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import {
-  Card,
-  Button,
-  Spin,
-  Tabs,
-  TabPane,
-  Tag,
-  Empty,
-} from '@douyinfe/semi-ui';
+import { Button, Spin, Tabs, TabPane, Tag, Empty } from '@douyinfe/semi-ui';
 import { Gauge, RefreshCw } from 'lucide-react';
 import {
   IllustrationConstruction,
@@ -42,40 +34,39 @@ const UptimePanel = ({
   loadUptimeData,
   uptimeLegendData,
   renderMonitorList,
-  CARD_PROPS,
   ILLUSTRATION_SIZE,
   t,
 }) => {
   return (
-    <Card
-      {...CARD_PROPS}
-      className='shadow-sm !rounded-2xl lg:col-span-1'
-      title={
-        <div className='flex items-center justify-between w-full gap-2'>
-          <div className='flex items-center gap-2'>
+    <div className='card lg:col-span-1 flex flex-col'>
+      <div className='card-head'>
+        <h3>
+          <span className='ico'>
             <Gauge size={16} />
-            {t('服务可用性')}
-          </div>
-          <Button
-            icon={<RefreshCw size={14} />}
-            onClick={loadUptimeData}
-            loading={uptimeLoading}
-            size='small'
-            theme='borderless'
-            type='tertiary'
-            className='text-gray-500 hover:text-blue-500 hover:bg-blue-50 !rounded-full'
-          />
-        </div>
-      }
-      bodyStyle={{ padding: 0 }}
-    >
+          </span>
+          {t('服务可用性')}
+        </h3>
+        <Button
+          icon={<RefreshCw size={14} />}
+          onClick={loadUptimeData}
+          loading={uptimeLoading}
+          size='small'
+          theme='borderless'
+          type='tertiary'
+          aria-label={t('刷新')}
+          className='!rounded-full'
+        />
+      </div>
+
       {/* 内容区域 */}
-      <div className='relative'>
+      <div className='relative flex-1'>
         <Spin spinning={uptimeLoading}>
           {uptimeData.length > 0 ? (
             uptimeData.length === 1 ? (
               <ScrollableContainer maxHeight='24rem'>
-                {renderMonitorList(uptimeData[0].monitors)}
+                <div className='px-3 py-2'>
+                  {renderMonitorList(uptimeData[0].monitors)}
+                </div>
               </ScrollableContainer>
             ) : (
               <Tabs
@@ -94,7 +85,7 @@ const UptimePanel = ({
                         <Tag
                           color={
                             activeUptimeTab === group.categoryName
-                              ? 'red'
+                              ? 'blue'
                               : 'grey'
                           }
                           size='small'
@@ -108,7 +99,9 @@ const UptimePanel = ({
                     key={groupIdx}
                   >
                     <ScrollableContainer maxHeight='21.5rem'>
-                      {renderMonitorList(group.monitors)}
+                      <div className='px-3 py-2'>
+                        {renderMonitorList(group.monitors)}
+                      </div>
                     </ScrollableContainer>
                   </TabPane>
                 ))}
@@ -131,7 +124,7 @@ const UptimePanel = ({
 
       {/* 图例 */}
       {uptimeData.length > 0 && (
-        <div className='p-3 bg-gray-50 rounded-b-2xl'>
+        <div className='p-3 bg-surface-2 border-t border-line-2 rounded-b-lg'>
           <div className='flex flex-wrap gap-3 text-xs justify-center'>
             {uptimeLegendData.map((legend, index) => (
               <div key={index} className='flex items-center gap-1'>
@@ -139,13 +132,13 @@ const UptimePanel = ({
                   className='w-2 h-2 rounded-full'
                   style={{ backgroundColor: legend.color }}
                 />
-                <span className='text-gray-600'>{legend.label}</span>
+                <span className='text-ink-2'>{legend.label}</span>
               </div>
             ))}
           </div>
         </div>
       )}
-    </Card>
+    </div>
   );
 };
 

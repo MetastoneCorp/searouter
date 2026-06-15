@@ -49,19 +49,17 @@ const Navigation = ({
 
   const renderNavLinks = () => {
     const baseClasses =
-      'flex-shrink-0 flex items-center gap-1 font-semibold rounded-md transition-all duration-200 ease-in-out';
-    const spacingClasses = isMobile ? 'p-1' : 'p-2';
+      'relative flex-shrink-0 flex items-center h-14 px-3 text-sm font-medium transition-colors';
 
     return mainNavLinks.map((link) => {
       const linkContent = <span>{link.text}</span>;
       const active = isActive(link);
 
-      // 选中状态样式
       const activeClasses = active
-        ? 'text-semi-color-primary bg-semi-color-primary-light-default'
-        : 'hover:text-semi-color-primary';
+        ? 'text-brand-600 font-semibold after:content-[""] after:absolute after:left-3 after:right-3 after:bottom-0 after:h-0.5 after:bg-brand-600 after:rounded'
+        : 'text-ink-2 hover:text-ink';
 
-      const commonLinkClasses = `${baseClasses} ${spacingClasses} ${activeClasses}`;
+      const commonLinkClasses = `${baseClasses} ${activeClasses}`;
 
       if (link.isExternal) {
         return (

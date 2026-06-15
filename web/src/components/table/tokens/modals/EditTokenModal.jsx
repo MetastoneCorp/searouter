@@ -529,7 +529,7 @@ const EditTokenModal = (props) => {
                 <div className='flex items-center mb-2'>
                   <Avatar
                     size='small'
-                    color='purple'
+                    color='blue'
                     className='mr-2 shadow-md'
                   >
                     <IconLink size={16} />

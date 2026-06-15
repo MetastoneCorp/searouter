@@ -58,9 +58,9 @@ const ChatPage = () => {
       src={iframeSrc}
       style={{
         width: '100%',
-        height: 'calc(100vh - 64px)',
+        height: 'calc(100vh - 56px)',
         border: 'none',
-        marginTop: '64px',
+        marginTop: '56px',
       }}
       title='Token Frame'
       allow='camera;microphone'
