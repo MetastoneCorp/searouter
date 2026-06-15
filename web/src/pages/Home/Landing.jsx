@@ -18,34 +18,12 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useContext, useState, useEffect } from 'react';
-import { Tabs, TabPane } from '@douyinfe/semi-ui';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {
-  IconCopy,
-  IconTickCircle,
-} from '@douyinfe/semi-icons';
-import {
-  IconApiPlug,
-  IconStepRegister,
-  IconStepConfig,
-  IconStepUse,
-} from '../../components/icons/LandingIcons';
+import { IconCopy, IconTickCircle } from '@douyinfe/semi-icons';
 import { StatusContext } from '../../context/Status';
 import { useIsMobile } from '../../hooks/common/useIsMobile';
 import { API, copy, showSuccess } from '../../helpers';
-import {
-  OpenAI,
-  Claude,
-  Gemini,
-  DeepSeek,
-  Zhipu,
-  Qwen,
-  Moonshot,
-  XAI,
-  Minimax,
-  Cohere,
-} from '@lobehub/icons';
 import NoticeModal from '../../components/layout/NoticeModal';
 import './Landing.css';
 
@@ -55,11 +33,14 @@ const Landing = () => {
   const isMobile = useIsMobile();
   const [noticeVisible, setNoticeVisible] = useState(false);
   const [endpointCopied, setEndpointCopied] = useState(false);
+  const [activeClient, setActiveClient] = useState('claude');
+  const [codeCopied, setCodeCopied] = useState(false);
 
-  const serverAddress = statusState?.status?.server_address || `${window.location.origin}`;
+  const serverAddress =
+    statusState?.status?.server_address || 'https://searouter.metastonecorp.com';
 
   const handleCopyEndpoint = async () => {
-    const ok = await copy(`${serverAddress}/v1`);
+    const ok = await copy(`${serverAddress}`);
     if (ok) {
       setEndpointCopied(true);
       showSuccess(t('已复制到剪切板'));
@@ -67,7 +48,7 @@ const Landing = () => {
     }
   };
 
-  // Code example content for tabs
+  // 各客户端代码示例
   const claudeCodeExample = `# ${t('landing.quickstart.clients.env_hint')}
 export ANTHROPIC_BASE_URL=${serverAddress}/v1
 export ANTHROPIC_API_KEY=sk-your-api-key
@@ -85,6 +66,11 @@ export ANTHROPIC_API_KEY=sk-your-api-key
   "api_key": "sk-your-api-key"
 }`;
 
+  const cherryCodeExample = `# Cherry Studio · ${t('landing.quickstart.clients.provider_settings')}
+${t('landing.quickstart.clients.api_address')}: ${serverAddress}/v1
+API Key: sk-your-api-key
+${t('模型')}: ${t('landing.quickstart.clients.model_select')}`;
+
   const sdkCodeExample = `from openai import OpenAI
 
 client = OpenAI(
@@ -96,65 +82,46 @@ resp = client.chat.completions.create(
     messages=[{"role": "user", "content": "Hello!"}],
 )`;
 
-  const cherryConfigItems = [
-    { label: t('landing.quickstart.clients.api_address'), value: `${serverAddress}/v1` },
-    { label: 'API Key', value: 'sk-your-api-key' },
-    { label: t('模型'), value: t('landing.quickstart.clients.model_select') },
-  ];
-
-  // Copy states for each tab
-  const [copiedTab, setCopiedTab] = useState(null);
-
-  const handleCopyCode = async (code, tabKey) => {
-    const ok = await copy(code);
-    if (ok) {
-      setCopiedTab(tabKey);
-      showSuccess(t('已复制到剪切板'));
-      setTimeout(() => setCopiedTab(null), 2000);
-    }
-  };
-
-  const handleCopyKeyDown = (e, code, tabKey) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleCopyCode(code, tabKey);
-    }
-  };
-
-  // Client tabs configuration
   const clientTabs = [
     {
       key: 'claude',
       label: t('landing.quickstart.clients.claude'),
-      icon: <Claude size={16} />,
+      icon: <img src='/home/cfg-claude.svg' alt='' className='lp-cfg-tab-icon-img' />,
+      iconActive: true,
       code: claudeCodeExample,
-      type: 'code',
     },
     {
       key: 'opencode',
       label: t('landing.quickstart.clients.opencode'),
-      icon: <OpenAI size={16} />,
+      icon: <img src='/home/cfg-opencode.svg' alt='' className='lp-cfg-tab-icon-img' />,
       code: openCodeExample,
-      type: 'code',
     },
     {
       key: 'cherry',
       label: t('landing.quickstart.clients.cherry'),
-      icon: <span className='landing-client-icon-text'>🍒</span>,
-      code: null,
-      type: 'config',
-      items: cherryConfigItems,
+      icon: <span className='lp-cfg-tab-emoji'>🍒</span>,
+      code: cherryCodeExample,
     },
     {
       key: 'sdk',
       label: t('landing.quickstart.clients.sdk'),
-      icon: <span className='landing-client-icon-text'>{'</>'}</span>,
+      icon: <span className='lp-cfg-tab-code'>{'</>'}</span>,
       code: sdkCodeExample,
-      type: 'code',
     },
   ];
 
-  // Check and show notice
+  const activeTab = clientTabs.find((tb) => tb.key === activeClient) || clientTabs[0];
+
+  const handleCopyCode = async () => {
+    const ok = await copy(activeTab.code);
+    if (ok) {
+      setCodeCopied(true);
+      showSuccess(t('已复制到剪切板'));
+      setTimeout(() => setCodeCopied(false), 2000);
+    }
+  };
+
+  // 公告检测
   useEffect(() => {
     const checkNoticeAndShow = async () => {
       const lastCloseDate = localStorage.getItem('notice_close_date');
@@ -174,524 +141,428 @@ resp = client.chat.completions.create(
     checkNoticeAndShow();
   }, []);
 
+  // why 卡数据
+  const whyCards = [
+    {
+      icon: '/home/feat-api.svg',
+      title: t('landing.features.relay.title'),
+      desc: t('landing.features.relay.desc'),
+      items: [
+        t('landing.features.relay.item1'),
+        t('landing.features.relay.item2'),
+        t('landing.features.relay.item3'),
+      ],
+    },
+    {
+      icon: '/home/why-local.svg',
+      title: t('landing.features.onprem.title'),
+      desc: t('landing.features.onprem.desc'),
+      items: [
+        t('landing.features.onprem.item1'),
+        t('landing.features.onprem.item2'),
+        t('landing.features.onprem.item3'),
+      ],
+    },
+    {
+      icon: '/home/why-routing.svg',
+      title: t('landing.features.routing.title'),
+      desc: t('landing.features.routing.desc'),
+      items: [
+        t('landing.features.routing.item1'),
+        t('landing.features.routing.item2'),
+        t('landing.features.routing.item3'),
+      ],
+    },
+    {
+      icon: '/home/why-sovereignty.svg',
+      title: t('landing.features.sovereignty.title'),
+      desc: t('landing.features.sovereignty.desc'),
+      items: [
+        t('landing.features.sovereignty.item1'),
+        t('landing.features.sovereignty.item2'),
+        t('landing.features.sovereignty.item3'),
+      ],
+    },
+  ];
+
+  // 特性 4 卡
+  const featureCards = [
+    {
+      icon: '/home/feat-api.svg',
+      title: t('landing.highlights.card1.title'),
+      desc: t('landing.highlights.card1.desc'),
+      tags: ['OpenAI', 'Claude', 'Gemini', 'DeepSeek', 'GLM', '+50'],
+    },
+    {
+      icon: '/home/feat-hybrid.svg',
+      title: t('landing.highlights.card2.title'),
+      desc: t('landing.highlights.card2.desc'),
+    },
+    {
+      icon: '/home/feat-ha.svg',
+      title: t('landing.highlights.card3.title'),
+      desc: t('landing.highlights.card3.desc'),
+    },
+    {
+      icon: '/home/feat-sovereignty.svg',
+      title: t('landing.highlights.card4.title'),
+      desc: t('landing.highlights.card4.desc'),
+    },
+  ];
+
   return (
-    <div className='landing-page'>
+    <div className='lp'>
       <NoticeModal
         visible={noticeVisible}
         onClose={() => setNoticeVisible(false)}
         isMobile={isMobile}
       />
 
-      {/* 1. Hero Section */}
-      <section className='landing-hero'>
-        <div className='landing-hero-inner'>
-          <div className='landing-hero-content'>
-            <h1 className='landing-hero-title'>
-              <span className='landing-hero-title-dark'>{t('landing.hero.title_prefix')}</span>
-              <span className='landing-hero-title-blue'>{t('landing.hero.title_highlight')}</span>
-              <span className='landing-hero-title-dark'>{t('landing.hero.title_suffix')}</span>
+      {/* ============ 1. Hero ============ */}
+      <section className='lp-hero'>
+        <div className='lp-hero-inner'>
+          <div className='lp-hero-text'>
+            <h1 className='lp-hero-title'>
+              <span className='lp-hero-title-dark'>{t('landing.hero.title_prefix')}</span>
+              <span className='lp-hero-title-blue'>{t('landing.hero.title_highlight')}</span>
+              <span className='lp-hero-title-dark'>{t('landing.hero.title_suffix')}</span>
             </h1>
-            <p className='landing-hero-subtitle'>
-              {t('landing.hero.subtitle_line1')}<br />
-              <span className='landing-hero-subtitle-quote'>{t('landing.hero.subtitle_line2')}</span>
+            <p className='lp-hero-sub'>
+              {t('landing.hero.subtitle_line1')}
+              <br />
+              {t('landing.hero.subtitle_line2')}
             </p>
-            <p className='landing-hero-subheading'>{t('landing.hero.subheading')}</p>
-            <div className='landing-hero-cta'>
-              <Link to='/register' className='landing-hero-btn-primary'>
-                {t('landing.hero.cta_main')}
-              </Link>
-            </div>
+            <p className='lp-hero-subheading'>{t('landing.hero.subheading')}</p>
           </div>
+          <Link to='/register' className='lp-hero-btn'>
+            {t('landing.hero.cta_main')}
+          </Link>
         </div>
-        {/* 底部轮播指示器 */}
-        <div className='landing-hero-dots'>
-          <span className='landing-hero-dot landing-hero-dot-active'></span>
-          <span className='landing-hero-dot'></span>
-          <span className='landing-hero-dot'></span>
+        <div className='lp-hero-dots'>
+          <span className='lp-hero-dot lp-hero-dot-active'></span>
+          <span className='lp-hero-dot'></span>
+          <span className='lp-hero-dot'></span>
         </div>
       </section>
 
-      {/* 2. Stats Section */}
-      <div className='landing-stats'>
-        <div className='landing-section-container'>
-          <div className='landing-stats-row'>
-            <div className='landing-stat-item'>
-              <div className='landing-stat-num'>30T+</div>
-              <div className='landing-stat-lbl'>{t('landing.stats.tokens')}</div>
-            </div>
-            <div className='landing-stat-item'>
-              <div className='landing-stat-num'>50+</div>
-              <div className='landing-stat-lbl'>{t('landing.hero.stat1')}</div>
-            </div>
-            <div className='landing-stat-item'>
-              <div className='landing-stat-num'>99.9%</div>
-              <div className='landing-stat-lbl'>{t('landing.hero.stat2')}</div>
-            </div>
-            <div className='landing-stat-item'>
-              <div className='landing-stat-num'>&lt;50ms</div>
-              <div className='landing-stat-lbl'>{t('landing.hero.stat3')}</div>
-            </div>
-          </div>
+      {/* ============ 2. Stats divider ============ */}
+      <div className='lp-divider'>
+        <div className='lp-divider-cell'>
+          <div className='lp-divider-num'>30T+</div>
+          <div className='lp-divider-lbl'>{t('landing.stats.tokens')}</div>
+        </div>
+        <div className='lp-divider-cell'>
+          <div className='lp-divider-num'>50+</div>
+          <div className='lp-divider-lbl'>{t('landing.hero.stat1')}</div>
+        </div>
+        <div className='lp-divider-cell'>
+          <div className='lp-divider-num'>99.9%</div>
+          <div className='lp-divider-lbl'>{t('landing.hero.stat2')}</div>
+        </div>
+        <div className='lp-divider-cell'>
+          <div className='lp-divider-num'>&lt;50ms</div>
+          <div className='lp-divider-lbl'>{t('landing.hero.stat3')}</div>
         </div>
       </div>
 
-      {/* 3. Quick Start Section */}
-      <section className='landing-quickstart'>
-        <div className='landing-section-container'>
-          <h2 className='landing-section-h'>{t('landing.quickstart.title')}</h2>
-          <p className='landing-section-sub'>{t('landing.quickstart.subtitle')}</p>
-
-          <div className='landing-quickstart-steps'>
-            {/* Step 1: Register */}
-            <div className='landing-step'>
-              <div className='landing-step-no'>01.</div>
-              <span className='landing-step-ic'>
-                <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.9' strokeLinecap='round' strokeLinejoin='round'>
-                  <circle cx='12' cy='8' r='4' /><path d='M4 21a8 8 0 0 1 16 0' />
-                </svg>
-              </span>
-              <h3 className='landing-step-title'>{t('landing.quickstart.step1.title')}</h3>
-              <p className='landing-step-desc'>{t('landing.quickstart.step1.desc')}</p>
-              <Link to='/register' className='landing-step-btn'>{t('landing.quickstart.step1.action')}</Link>
+      {/* ============ main content ============ */}
+      <div className='lp-main'>
+        {/* 3. Quick Start */}
+        <section className='lp-qs'>
+          <div className='lp-qs-head'>
+            <h2 className='lp-h2'>{t('landing.quickstart.title')}</h2>
+            <p className='lp-sub16'>{t('landing.quickstart.subtitle')}</p>
+          </div>
+          <div className='lp-qs-steps'>
+            {/* 01 注册账户 */}
+            <div className='lp-step'>
+              <div className='lp-step-top'>
+                <span className='lp-step-no'>01.</span>
+                <span className='lp-step-ic'>
+                  <img src='/home/step-register.svg' alt='' />
+                </span>
+              </div>
+              <div className='lp-step-body'>
+                <h3 className='lp-step-title'>{t('landing.quickstart.step1.title')}</h3>
+                <p className='lp-step-desc'>{t('landing.quickstart.step1.desc')}</p>
+              </div>
+              <Link to='/register' className='lp-step-btn'>
+                {t('landing.quickstart.step1.action')}
+              </Link>
             </div>
 
-            {/* Step 2: Configure Endpoint */}
-            <div className='landing-step'>
-              <div className='landing-step-no'>02.</div>
-              <span className='landing-step-ic'>
-                <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.9' strokeLinecap='round' strokeLinejoin='round'>
-                  <circle cx='12' cy='12' r='3' />
-                  <path d='M19.4 13.5a7.8 7.8 0 0 0 0-3l1.6-1.2-2-3.4-1.9.8a7.6 7.6 0 0 0-2.6-1.5L14 2h-4l-.5 2.2a7.6 7.6 0 0 0-2.6 1.5l-1.9-.8-2 3.4 1.6 1.2a7.8 7.8 0 0 0 0 3L3 14.7l2 3.4 1.9-.8a7.6 7.6 0 0 0 2.6 1.5L10 22h4l.5-2.2a7.6 7.6 0 0 0 2.6-1.5l1.9.8 2-3.4z' />
-                </svg>
-              </span>
-              <h3 className='landing-step-title'>{t('landing.quickstart.step2.title')}</h3>
-              <p className='landing-step-desc'>{t('landing.quickstart.step2.desc')}</p>
-              <div className='landing-endpoint-box'>
-                <code className='landing-endpoint-code'>{serverAddress}/v1</code>
+            {/* 02 配置端点 */}
+            <div className='lp-step'>
+              <div className='lp-step-top'>
+                <span className='lp-step-no'>02.</span>
+                <span className='lp-step-ic'>
+                  <img src='/home/step-config.svg' alt='' />
+                </span>
+              </div>
+              <div className='lp-step-body'>
+                <h3 className='lp-step-title'>{t('landing.quickstart.step2.title')}</h3>
+                <p className='lp-step-desc'>{t('landing.quickstart.step2.desc')}</p>
+              </div>
+              <div className='lp-endpoint'>
+                <code className='lp-endpoint-code'>{serverAddress}</code>
                 <button
-                  className={`landing-copy-icon-btn ${endpointCopied ? 'copied' : ''}`}
+                  className={`lp-endpoint-copy ${endpointCopied ? 'copied' : ''}`}
                   onClick={handleCopyEndpoint}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleCopyEndpoint(); }
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleCopyEndpoint();
+                    }
                   }}
                   aria-label={endpointCopied ? t('已复制') : t('复制端点地址')}
                   title={t('复制端点地址')}
                 >
-                  {endpointCopied ? <IconTickCircle size={14} /> : <IconCopy size={14} />}
+                  {endpointCopied ? (
+                    <IconTickCircle size='small' />
+                  ) : (
+                    <img src='/home/icon-copy-endpoint.svg' alt='' className='lp-endpoint-copy-img' />
+                  )}
                 </button>
               </div>
             </div>
 
-            {/* Step 3: Start Using */}
-            <div className='landing-step'>
-              <div className='landing-step-no'>03.</div>
-              <span className='landing-step-ic'>
-                <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.9' strokeLinecap='round' strokeLinejoin='round'>
-                  <path d='m8 9-3 3 3 3M16 9l3 3-3 3' />
-                </svg>
-              </span>
-              <h3 className='landing-step-title'>{t('landing.quickstart.step3.title')}</h3>
-              <p className='landing-step-desc'>{t('landing.quickstart.step3.desc')}</p>
-              <Link to='/console' className='landing-step-btn'>{t('landing.quickstart.step3.action')}</Link>
+            {/* 03 开始使用 */}
+            <div className='lp-step'>
+              <div className='lp-step-top'>
+                <span className='lp-step-no'>03.</span>
+                <span className='lp-step-ic'>
+                  <img src='/home/step-use.svg' alt='' />
+                </span>
+              </div>
+              <div className='lp-step-body'>
+                <h3 className='lp-step-title'>{t('landing.quickstart.step3.title')}</h3>
+                <p className='lp-step-desc'>{t('landing.quickstart.step3.desc')}</p>
+              </div>
+              <Link to='/console' className='lp-step-btn'>
+                {t('landing.quickstart.step3.action')}
+              </Link>
             </div>
           </div>
+        </section>
 
-          {/* Client Configuration Examples */}
-          <div className='landing-cfg'>
-            <div className='landing-cfg-head'>
-              <span className='landing-cfg-sq'>
-                <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-                  <path d='m8 9-3 3 3 3M16 9l3 3-3 3' />
-                </svg>
+        {/* 4. 客户端配置示例 */}
+        <section className='lp-cfg-wrap'>
+          <div className='lp-cfg'>
+            <div className='lp-cfg-head'>
+              <span className='lp-cfg-head-ic'>
+                <img src='/home/cfg-header-icon.svg' alt='' />
               </span>
-              {t('landing.quickstart.clients.title')}
+              <span className='lp-cfg-head-title'>{t('landing.quickstart.clients.title')}</span>
             </div>
-            <div>
-              <Tabs type='line' size='large' className='landing-client-tabs'>
-                {clientTabs.map((tab) => (
-                  <TabPane
-                    tab={
-                      <span className='landing-client-tab'>
-                        <span className='landing-client-tab-icon'>{tab.icon}</span>
-                        <span className='landing-client-tab-label'>{tab.label}</span>
-                      </span>
-                    }
-                    itemKey={tab.key}
-                    key={tab.key}
+            <div className='lp-cfg-tabs'>
+              {clientTabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  className={`lp-cfg-tab ${activeClient === tab.key ? 'active' : ''}`}
+                  onClick={() => {
+                    setActiveClient(tab.key);
+                    setCodeCopied(false);
+                  }}
+                >
+                  <span
+                    className={`lp-cfg-tab-icon ${
+                      tab.iconActive && activeClient === tab.key ? 'on-blue' : ''
+                    }`}
                   >
-                    {tab.type === 'code' ? (
-                      <div className='landing-code-block-wrapper'>
-                        <pre
-                          className='landing-quickstart-code-block'
-                          aria-label={`${tab.label} ${t('配置示例')}`}
-                        >
-                          <code>{tab.code}</code>
-                        </pre>
-                        <button
-                          className={`landing-code-copy-btn ${copiedTab === tab.key ? 'copied' : ''}`}
-                          onClick={() => handleCopyCode(tab.code, tab.key)}
-                          onKeyDown={(e) => handleCopyKeyDown(e, tab.code, tab.key)}
-                          aria-label={copiedTab === tab.key ? t('已复制') : t('复制代码')}
-                          title={t('复制代码')}
-                        >
-                          {copiedTab === tab.key ? (
-                            <>
-                              <IconTickCircle size={14} />
-                              <span className='landing-code-copy-text'>{t('已复制')}</span>
-                            </>
-                          ) : (
-                            <>
-                              <IconCopy size={14} />
-                              <span className='landing-code-copy-text'>{t('复制')}</span>
-                            </>
-                          )}
-                        </button>
-                      </div>
-                    ) : (
-                      <div
-                        className='landing-quickstart-client-config'
-                        role='list'
-                        aria-label={`${tab.label} ${t('配置项')}`}
-                      >
-                        {tab.items.map((item, index) => (
-                          <div className='landing-quickstart-config-item' key={index} role='listitem'>
-                            <span className='landing-quickstart-config-label'>{item.label}:</span>
-                            <code className='landing-quickstart-config-value'>{item.value}</code>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </TabPane>
-                ))}
-              </Tabs>
+                    {tab.icon}
+                  </span>
+                  <span className='lp-cfg-tab-label'>{tab.label}</span>
+                </button>
+              ))}
+            </div>
+            <div className='lp-cfg-body'>
+              <pre className='lp-cfg-code'>
+                <code>{activeTab.code}</code>
+              </pre>
+              <button
+                className={`lp-cfg-copy ${codeCopied ? 'copied' : ''}`}
+                onClick={handleCopyCode}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleCopyCode();
+                  }
+                }}
+                aria-label={codeCopied ? t('已复制') : t('复制代码')}
+                title={t('复制代码')}
+              >
+                {codeCopied ? (
+                  <IconTickCircle size='small' />
+                ) : (
+                  <img src='/home/icon-copy-code.svg' alt='' className='lp-cfg-copy-img' />
+                )}
+                <span className='lp-cfg-copy-text'>{codeCopied ? t('已复制') : t('复制')}</span>
+              </button>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 4. Partners Section */}
-      <section className='landing-partners'>
-        <div className='landing-section-container'>
-          <div className='landing-partners-grid'>
-            <div>
-              <h2 className='landing-partners-title'>{t('landing.partners.title')}</h2>
-              <p className='landing-partners-desc'>{t('landing.partners.desc')}</p>
-              <Link to='/register' className='landing-partners-btn'>{t('landing.partners.cta')}</Link>
+        {/* 5. 合作伙伴 */}
+        <section className='lp-partners'>
+          <h2 className='lp-h2 lp-partners-title'>{t('landing.partners.title')}</h2>
+          <div className='lp-partners-content'>
+            <div className='lp-partners-text'>
+              <p className='lp-partners-desc'>{t('landing.partners.desc')}</p>
+              <Link to='/register' className='lp-partners-btn'>
+                {t('landing.partners.cta')}
+              </Link>
             </div>
-            <div>
-              <div className='landing-orbit'>
-                <div className='landing-orbit-ring'></div>
-                <div className='landing-orbit-ring r2'></div>
-                <div className='landing-orbit-ring r3'></div>
-                <div className='landing-orbit-spin'>
-                  <span className='landing-orbit-dot' style={{ left: '50%', top: '2%', color: '#F59E0B' }}>xAI</span>
-                  <span className='landing-orbit-dot' style={{ left: '96%', top: '48%', color: '#10A37F' }}>GPT</span>
-                  <span className='landing-orbit-dot' style={{ left: '50%', top: '97%', color: '#015BBA' }}>智谱</span>
-                  <span className='landing-orbit-dot' style={{ left: '4%', top: '48%', color: '#7C3AED' }}>M</span>
+            <div className='lp-partners-orbit'>
+              <img src='/home/partners-orbit.png' alt='' />
+            </div>
+          </div>
+        </section>
+
+        {/* 6. 特性 4 卡 */}
+        <section className='lp-features'>
+          {featureCards.map((card, i) => (
+            <div className='lp-feat' key={i}>
+              <span className='lp-feat-ic'>
+                <img src={card.icon} alt='' />
+              </span>
+              <h3 className='lp-feat-title'>{card.title}</h3>
+              <p className='lp-feat-desc'>{card.desc}</p>
+              {card.tags && (
+                <div className='lp-feat-tags'>
+                  {card.tags.map((tag) => (
+                    <span className='lp-feat-tag' key={tag}>
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-                <div className='landing-orbit-spin rev'>
-                  <span className='landing-orbit-dot' style={{ left: '81%', top: '16%', color: '#2563EB' }}>Ge</span>
-                  <span className='landing-orbit-dot' style={{ left: '82%', top: '80%', color: '#DC2626' }}>DS</span>
-                  <span className='landing-orbit-dot' style={{ left: '17%', top: '80%', color: '#0891B2' }}>Qw</span>
-                  <span className='landing-orbit-dot' style={{ left: '17%', top: '17%', color: '#16A34A' }}>Ll</span>
-                </div>
-                <div className='landing-orbit-core' aria-label='SeaRouter'>
-                  <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-                    <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2' />
-                    <path d='M4 11l8-6 8 6' />
-                    <path d='M6 11v4M18 11v4' />
-                  </svg>
-                </div>
+              )}
+            </div>
+          ))}
+        </section>
+
+        {/* 7. 为什么选择 SeaRouter */}
+        <section className='lp-why'>
+          <div className='lp-why-head'>
+            <h2 className='lp-h2'>{t('landing.features.title')}</h2>
+            <p className='lp-sub16'>{t('landing.features.desc')}</p>
+          </div>
+          <div className='lp-why-grid'>
+            {whyCards.map((card, i) => (
+              <div className='lp-why-card' key={i}>
+                <span className='lp-why-ic'>
+                  <img src={card.icon} alt='' />
+                </span>
+                <h3 className='lp-why-title'>{card.title}</h3>
+                <p className='lp-why-desc'>{card.desc}</p>
+                <ul className='lp-why-list'>
+                  {card.items.map((item, j) => (
+                    <li key={j}>
+                      <img src='/home/tick-circle-16.svg' alt='' className='lp-tick' />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 8. 对比表 */}
+        <section className='lp-cmp'>
+          <div className='lp-cmp-head'>
+            <h2 className='lp-h2'>{t('landing.comparison.title')}</h2>
+            <p className='lp-sub16'>{t('landing.comparison.desc')}</p>
+          </div>
+          <div className='lp-cmp-table'>
+            <div className='lp-cmp-col'>
+              <div className='lp-cmp-cell lp-cmp-th'>{t('landing.comparison.feature')}</div>
+              <div className='lp-cmp-cell'>{t('landing.comparison.row1')}</div>
+              <div className='lp-cmp-cell'>{t('landing.comparison.row2')}</div>
+              <div className='lp-cmp-cell'>{t('landing.comparison.row3')}</div>
+              <div className='lp-cmp-cell'>{t('landing.comparison.row4')}</div>
+              <div className='lp-cmp-cell'>{t('landing.comparison.row5')}</div>
+            </div>
+            <div className='lp-cmp-col'>
+              <div className='lp-cmp-cell lp-cmp-th'>{t('landing.comparison.others')}</div>
+              <div className='lp-cmp-cell lp-cmp-center'>
+                <img src='/home/tick-circle-16.svg' alt='✓' className='lp-tick16' />
+              </div>
+              <div className='lp-cmp-cell lp-cmp-center'>
+                <img src='/home/tick-circle-16.svg' alt='✓' className='lp-tick16' />
+              </div>
+              <div className='lp-cmp-cell lp-cmp-center'>
+                <span className='lp-cmp-x'>✗</span>
+              </div>
+              <div className='lp-cmp-cell'>{t('landing.comparison.weak')}</div>
+              <div className='lp-cmp-cell lp-cmp-center'>
+                <span className='lp-cmp-x'>✗</span>
+              </div>
+            </div>
+            <div className='lp-cmp-col lp-cmp-col-hl'>
+              <div className='lp-cmp-cell lp-cmp-th lp-cmp-th-hl'>SeaRouter</div>
+              <div className='lp-cmp-cell lp-cmp-center'>
+                <img src='/home/tick-circle-16.svg' alt='✓' className='lp-tick16' />
+              </div>
+              <div className='lp-cmp-cell lp-cmp-center'>
+                <img src='/home/tick-circle-16.svg' alt='✓' className='lp-tick16' />
+              </div>
+              <div className='lp-cmp-cell'>
+                <img src='/home/tick-circle-16.svg' alt='✓' className='lp-tick16' />
+                <span className='lp-cmp-badge'>{t('landing.comparison.badge1')}</span>
+              </div>
+              <div className='lp-cmp-cell'>
+                <img src='/home/tick-circle-16.svg' alt='✓' className='lp-tick16' />
+                <span className='lp-cmp-badge'>{t('landing.comparison.badge2')}</span>
+              </div>
+              <div className='lp-cmp-cell'>
+                <img src='/home/tick-circle-16.svg' alt='✓' className='lp-tick16' />
+                <span className='lp-cmp-badge'>{t('landing.comparison.badge3')}</span>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 5. Feature Cards */}
-      <section className='landing-features'>
-        <div className='landing-section-container'>
-          <h2 className='landing-section-h'>{t('landing.features2.title')}</h2>
-          <div className='landing-feat4'>
-            <div className='landing-feat'>
-              <span className='landing-feat-sq'>
-                <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.9' strokeLinecap='round' strokeLinejoin='round'>
-                  <path d='M4 7h16M4 12h16M4 17h10' />
-                </svg>
-              </span>
-              <h3 className='landing-feat-title'>{t('landing.highlights.card1.title')}</h3>
-              <p className='landing-feat-desc'>{t('landing.highlights.card1.desc')}</p>
-              <div className='landing-feat-tags'>
-                <span className='landing-tag'>OpenAI</span>
-                <span className='landing-tag'>Claude</span>
-                <span className='landing-tag'>Gemini</span>
-                <span className='landing-tag'>DeepSeek</span>
-                <span className='landing-tag'>GLM</span>
-                <span className='landing-tag'>+50</span>
-              </div>
-            </div>
-            <div className='landing-feat'>
-              <span className='landing-feat-sq'>
-                <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.9' strokeLinecap='round' strokeLinejoin='round'>
-                  <path d='M17.5 19a4.5 4.5 0 0 0 .5-9 6 6 0 0 0-11.6-1.5A4 4 0 0 0 6.5 19z' />
-                  <path d='M12 13v6M9 16l3 3 3-3' />
-                </svg>
-              </span>
-              <h3 className='landing-feat-title'>{t('landing.highlights.card2.title')}</h3>
-              <p className='landing-feat-desc'>{t('landing.highlights.card2.desc')}</p>
-            </div>
-            <div className='landing-feat'>
-              <span className='landing-feat-sq'>
-                <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.9' strokeLinecap='round' strokeLinejoin='round'>
-                  <path d='M3 17l5-6 4 4 5-7 4 5' />
-                </svg>
-              </span>
-              <h3 className='landing-feat-title'>{t('landing.highlights.card3.title')}</h3>
-              <p className='landing-feat-desc'>{t('landing.highlights.card3.desc')}</p>
-            </div>
-            <div className='landing-feat'>
-              <span className='landing-feat-sq'>
-                <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.9' strokeLinecap='round' strokeLinejoin='round'>
-                  <path d='M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z' />
-                  <path d='m9 12 2 2 4-4' />
-                </svg>
-              </span>
-              <h3 className='landing-feat-title'>{t('landing.highlights.card4.title')}</h3>
-              <p className='landing-feat-desc'>{t('landing.highlights.card4.desc')}</p>
-            </div>
+        {/* 9. 引言条 */}
+        <section className='lp-quote'>
+          <q className='lp-quote-q'>{t('landing.mission.quote')}</q>
+          <p className='lp-quote-desc'>{t('landing.mission.desc')}</p>
+        </section>
+
+        {/* 10. 准备好了吗 CTA */}
+        <section className='lp-cta'>
+          <div className='lp-cta-text'>
+            <h2 className='lp-cta-title'>{t('landing.cta.title')}</h2>
+            <p className='lp-cta-sub'>{t('landing.cta.desc')}</p>
           </div>
-        </div>
-      </section>
-
-      {/* 6. Why SeaRouter Section */}
-      <section className='landing-why' id='why'>
-        <div className='landing-section-container'>
-          <h2 className='landing-section-h'>{t('landing.features.title')}</h2>
-          <p className='landing-section-sub'>{t('landing.features.desc')}</p>
-          <div className='landing-why4'>
-            {/* 全球模型中转 */}
-            <div className='landing-why-card'>
-              <span className='landing-why-sq'>
-                <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.9' strokeLinecap='round' strokeLinejoin='round'>
-                  <circle cx='12' cy='12' r='9' />
-                  <path d='M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18' />
-                </svg>
-              </span>
-              <h3 className='landing-why-title'>{t('landing.features.relay.title')}</h3>
-              <p className='landing-why-desc'>{t('landing.features.relay.desc')}</p>
-              <ul className='landing-checks'>
-                <li>
-                  <span className='landing-check-svg'>
-                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round'><path d='m5 12 4 4 10-10' /></svg>
-                  </span>
-                  {t('landing.features.relay.item1')}
-                </li>
-                <li>
-                  <span className='landing-check-svg'>
-                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round'><path d='m5 12 4 4 10-10' /></svg>
-                  </span>
-                  {t('landing.features.relay.item2')}
-                </li>
-                <li>
-                  <span className='landing-check-svg'>
-                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round'><path d='m5 12 4 4 10-10' /></svg>
-                  </span>
-                  {t('landing.features.relay.item3')}
-                </li>
-              </ul>
-            </div>
-
-            {/* 本地算力融合 */}
-            <div className='landing-why-card'>
-              <span className='landing-why-sq'>
-                <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.9' strokeLinecap='round' strokeLinejoin='round'>
-                  <rect x='3' y='4' width='18' height='12' rx='2' />
-                  <path d='M7 20h10M9 16v4M15 16v4' />
-                </svg>
-              </span>
-              <h3 className='landing-why-title'>{t('landing.features.onprem.title')}</h3>
-              <p className='landing-why-desc'>{t('landing.features.onprem.desc')}</p>
-              <ul className='landing-checks'>
-                <li>
-                  <span className='landing-check-svg'>
-                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round'><path d='m5 12 4 4 10-10' /></svg>
-                  </span>
-                  {t('landing.features.onprem.item1')}
-                </li>
-                <li>
-                  <span className='landing-check-svg'>
-                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round'><path d='m5 12 4 4 10-10' /></svg>
-                  </span>
-                  {t('landing.features.onprem.item2')}
-                </li>
-                <li>
-                  <span className='landing-check-svg'>
-                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round'><path d='m5 12 4 4 10-10' /></svg>
-                  </span>
-                  {t('landing.features.onprem.item3')}
-                </li>
-              </ul>
-            </div>
-
-            {/* 智能弹性路由 */}
-            <div className='landing-why-card'>
-              <span className='landing-why-sq'>
-                <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.9' strokeLinecap='round' strokeLinejoin='round'>
-                  <circle cx='6' cy='6' r='2.5' /><circle cx='18' cy='18' r='2.5' />
-                  <path d='M8.5 6H15a3 3 0 0 1 3 3v6.5M6 8.5V15' />
-                </svg>
-              </span>
-              <h3 className='landing-why-title'>{t('landing.features.routing.title')}</h3>
-              <p className='landing-why-desc'>{t('landing.features.routing.desc')}</p>
-              <ul className='landing-checks'>
-                <li>
-                  <span className='landing-check-svg'>
-                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round'><path d='m5 12 4 4 10-10' /></svg>
-                  </span>
-                  {t('landing.features.routing.item1')}
-                </li>
-                <li>
-                  <span className='landing-check-svg'>
-                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round'><path d='m5 12 4 4 10-10' /></svg>
-                  </span>
-                  {t('landing.features.routing.item2')}
-                </li>
-                <li>
-                  <span className='landing-check-svg'>
-                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round'><path d='m5 12 4 4 10-10' /></svg>
-                  </span>
-                  {t('landing.features.routing.item3')}
-                </li>
-              </ul>
-            </div>
-
-            {/* 算力主权 */}
-            <div className='landing-why-card'>
-              <span className='landing-why-sq'>
-                <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.9' strokeLinecap='round' strokeLinejoin='round'>
-                  <path d='M13 2 3 14h7l-1 8 10-12h-7z' />
-                </svg>
-              </span>
-              <h3 className='landing-why-title'>{t('landing.features.sovereignty.title')}</h3>
-              <p className='landing-why-desc'>{t('landing.features.sovereignty.desc')}</p>
-              <ul className='landing-checks'>
-                <li>
-                  <span className='landing-check-svg'>
-                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round'><path d='m5 12 4 4 10-10' /></svg>
-                  </span>
-                  {t('landing.features.sovereignty.item1')}
-                </li>
-                <li>
-                  <span className='landing-check-svg'>
-                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round'><path d='m5 12 4 4 10-10' /></svg>
-                  </span>
-                  {t('landing.features.sovereignty.item2')}
-                </li>
-                <li>
-                  <span className='landing-check-svg'>
-                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round'><path d='m5 12 4 4 10-10' /></svg>
-                  </span>
-                  {t('landing.features.sovereignty.item3')}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. Comparison Table */}
-      <section className='landing-comparison'>
-        <div className='landing-section-container'>
-          <h2 className='landing-section-h'>{t('landing.comparison.title')}</h2>
-          <p className='landing-section-sub'>{t('landing.comparison.desc')}</p>
-          <table className='landing-comparison-table'>
-            <thead>
-              <tr>
-                <th>{t('landing.comparison.feature')}</th>
-                <th style={{ textAlign: 'center' }}>{t('landing.comparison.others')}</th>
-                <th className='landing-col-hl'>SeaRouter</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className='landing-feat-name'>{t('landing.comparison.row1')}</td>
-                <td className='landing-col'><span className='landing-yes'>✓</span></td>
-                <td className='landing-col-hl'><span className='landing-yes'>✓</span></td>
-              </tr>
-              <tr>
-                <td className='landing-feat-name'>{t('landing.comparison.row2')}</td>
-                <td className='landing-col'><span className='landing-yes'>✓</span></td>
-                <td className='landing-col-hl'><span className='landing-yes'>✓</span></td>
-              </tr>
-              <tr>
-                <td className='landing-feat-name'>{t('landing.comparison.row3')}</td>
-                <td className='landing-col'><span className='landing-no'>✕</span></td>
-                <td className='landing-col-hl'>
-                  <span className='landing-badge-ok'>{t('landing.comparison.badge1')}</span>
-                </td>
-              </tr>
-              <tr>
-                <td className='landing-feat-name'>{t('landing.comparison.row4')}</td>
-                <td className='landing-col'>{t('landing.comparison.weak')}</td>
-                <td className='landing-col-hl'>
-                  <span className='landing-badge-ok'>{t('landing.comparison.badge2')}</span>
-                </td>
-              </tr>
-              <tr>
-                <td className='landing-feat-name'>{t('landing.comparison.row5')}</td>
-                <td className='landing-col'><span className='landing-no'>✕</span></td>
-                <td className='landing-col-hl'>
-                  <span className='landing-badge-ok'>{t('landing.comparison.badge3')}</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* 8. Quote / Mission Section */}
-      <section className='landing-quote'>
-        <div className='landing-section-container'>
-          <q className='landing-quote-q'>{t('landing.mission.quote')}</q>
-          <p className='landing-quote-desc'>{t('landing.mission.desc')}</p>
-        </div>
-      </section>
-
-      {/* 9. CTA Section */}
-      <section className='landing-cta'>
-        <div className='landing-section-container'>
-          <h2 className='landing-cta-title'>{t('landing.cta.title')}</h2>
-          <p className='landing-section-sub'>{t('landing.cta.desc')}</p>
-          <div className='landing-cta-row'>
-            <Link to='/register' className='landing-btn-primary'>
+          <div className='lp-cta-btns'>
+            <Link to='/register' className='lp-cta-btn-primary'>
               {t('landing.cta.btn1')}
             </Link>
-            <Link to='/console/channel' className='landing-btn-ghost'>
+            <Link to='/console/channel' className='lp-cta-btn-ghost'>
               {t('landing.cta.btn2')}
             </Link>
-            <Link to='/console/token' className='landing-btn-ghost'>
+            <Link to='/console/token' className='lp-cta-btn-ghost'>
               {t('landing.cta.btn3')}
             </Link>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      {/* 10. Footer */}
-      <footer className='landing-footer'>
-        <div className='landing-section-container'>
-          <div className='landing-footer-row'>
-            <span className='landing-footer-copy'>
-              © 2026 MetaStone. {t('landing.footer.tagline')}
-            </span>
-            <div className='landing-footer-links'>
-              <Link to='/'>{t('landing.footer.home')}</Link>
-              <Link to='/console'>{t('landing.footer.console')}</Link>
-              <Link to='/pricing'>{t('landing.footer.pricing')}</Link>
-              <a href='https://github.com/metastone-ai' target='_blank' rel='noopener noreferrer' aria-label='GitHub (opens in new tab)'>
-                GitHub
-              </a>
-            </div>
-          </div>
+      {/* 11. Footer */}
+      <footer className='lp-footer'>
+        <span className='lp-footer-copy'>© 2026 MetaStone. {t('landing.footer.tagline')}</span>
+        <div className='lp-footer-links'>
+          <Link to='/'>{t('landing.footer.home')}</Link>
+          <Link to='/console'>{t('landing.footer.console')}</Link>
+          <Link to='/pricing'>{t('landing.footer.pricing')}</Link>
+          <a
+            href='https://github.com/metastone-ai'
+            target='_blank'
+            rel='noopener noreferrer'
+            aria-label='GitHub (opens in new tab)'
+          >
+            GitHub
+          </a>
         </div>
       </footer>
     </div>
