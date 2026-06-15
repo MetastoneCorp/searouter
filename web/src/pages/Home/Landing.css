@@ -42,11 +42,11 @@
 }
 
 .lp-hero--a {
-  background: url(/home-hero.png) center top / cover no-repeat;
+  background: url(/home-hero.webp) center top / cover no-repeat;
 }
 
 .lp-hero--b {
-  background: url(/home/home-hero2.png) center top / cover no-repeat;
+  background: url(/home/home-hero2.webp) center top / cover no-repeat;
 }
 
 .lp-hero-inner {
