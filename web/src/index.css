@@ -57,17 +57,74 @@ body.sidebar-collapsed {
     U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* Noto Sans SC（开源中文字体，自托管）—— 跨平台一致渲染，对齐设计稿字形 */
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/noto-sans-sc-chinese-simplified-400.woff2') format('woff2');
+  unicode-range: U+1100-11FF, U+2E80-A4CF, U+A840-A87F, U+AC00-D7AF,
+    U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF, U+3000-30FF, U+3100-312F,
+    U+3200-33FF, U+3400-4DBF, U+4E00-9FFF, U+20000-2A6DF;
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/noto-sans-sc-latin-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2122, U+2212;
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/noto-sans-sc-chinese-simplified-500.woff2') format('woff2');
+  unicode-range: U+1100-11FF, U+2E80-A4CF, U+A840-A87F, U+AC00-D7AF,
+    U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF, U+3000-30FF, U+3100-312F,
+    U+3200-33FF, U+3400-4DBF, U+4E00-9FFF, U+20000-2A6DF;
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/noto-sans-sc-latin-500.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2122, U+2212;
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/noto-sans-sc-chinese-simplified-700.woff2') format('woff2');
+  unicode-range: U+1100-11FF, U+2E80-A4CF, U+A840-A87F, U+AC00-D7AF,
+    U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF, U+3000-30FF, U+3100-312F,
+    U+3200-33FF, U+3400-4DBF, U+4E00-9FFF, U+20000-2A6DF;
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/noto-sans-sc-latin-700.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2122, U+2212;
+}
+
 /* 品牌字标：Roboto SemiBold（Figma 用 Roboto SemiBold，字距 -0.2px） */
 .brand-wordmark {
-  font-family: 'Roboto', 'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif !important;
+  font-family: 'Roboto', 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif !important;
   font-weight: 600;
   letter-spacing: -0.2px;
 }
 
 body {
   font-family:
-    'Microsoft YaHei', 'Microsoft YaHei UI', 'PingFang SC', 'HarmonyOS Sans',
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    'Noto Sans SC', 'Microsoft YaHei', 'Microsoft YaHei UI', 'PingFang SC',
+    'HarmonyOS Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui,
+    sans-serif;
   color: var(--semi-color-text-0);
   background-color: var(--page);
 }

@@ -6,7 +6,7 @@
 
 /* ==================== 字体族 ==================== */
 .lp {
-  --lp-yahei: 'Microsoft YaHei', 'Microsoft YaHei UI', 'PingFang SC', 'HarmonyOS Sans',
+  --lp-yahei: 'Noto Sans SC', 'Microsoft YaHei', 'Microsoft YaHei UI', 'PingFang SC', 'HarmonyOS Sans',
     -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --lp-mono: 'NSimSun', 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
   --lp-maxw: 1440px;

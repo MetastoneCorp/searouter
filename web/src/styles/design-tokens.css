@@ -13,7 +13,7 @@
   --success:#16A34A; --warning:#E8A317; --danger:#E5484D;
   --ok-bg:#E7F6EC; --warn-bg:#FBF1DC; --danger-bg:#FCE9E9;
 
-  --font:"Microsoft YaHei","Microsoft YaHei UI","PingFang SC","HarmonyOS Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --font:"Noto Sans SC","Microsoft YaHei","Microsoft YaHei UI","PingFang SC","HarmonyOS Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
   --mono:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;
 
   --r-card:8px; --r-btn:6px; --r-tag:4px;
