@@ -54,25 +54,31 @@ import LinuxDoIcon from '../common/logo/LinuxDoIcon';
 import TwoFAVerification from './TwoFAVerification';
 import { useTranslation } from 'react-i18next';
 import { SiDiscord } from 'react-icons/si';
-
-/* 品牌 Logo SVG（波浪图标） */
-const BrandLogo = () => (
-  <span className='lg2-form' style={{ display: 'inline-flex', margin: 0, width: 'auto', padding: 0 }}>
-    <span className='lhead' style={{ margin: 0 }}>
-      <span className='lg'>
-        <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-          <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
-          <path d='M4 11l8-6 8 6'/>
-          <path d='M6 11v4M18 11v4'/>
-        </svg>
-      </span>
-    </span>
-  </span>
-);
+import ThemeToggle from '../layout/headerbar/ThemeToggle';
+import LanguageSelector from '../layout/headerbar/LanguageSelector';
+import { useTheme, useSetTheme } from '../../context/Theme';
 
 const LoginForm = () => {
   let navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const theme = useTheme();
+  const setTheme = useSetTheme();
+  const [currentLang, setCurrentLang] = useState(i18n.language);
+
+  useEffect(() => {
+    const handleLangChange = (lng) => setCurrentLang(lng);
+    i18n.on('languageChanged', handleLangChange);
+    return () => i18n.off('languageChanged', handleLangChange);
+  }, [i18n]);
+
+  const handleLanguageChange = (lang) => {
+    i18n.changeLanguage(lang);
+    localStorage.setItem('i18nextLng', lang);
+  };
+
+  const handleThemeToggle = (t) => {
+    if (setTheme) setTheme(t);
+  };
   const githubButtonTextKeyByState = {
     idle: '使用 GitHub 继续',
     redirecting: '正在跳转 GitHub...',
@@ -643,7 +649,7 @@ const LoginForm = () => {
         disabled={loginLoading || ((hasUserAgreement || hasPrivacyPolicy) && !agreedToTerms)}
         style={{ marginBottom: 10 }}
       >
-        {loginLoading ? t('登录中...') : t('登录')}
+        {loginLoading ? t('登录中...') : t('登录 / 注册')}
       </button>
 
       <button
@@ -704,35 +710,37 @@ const LoginForm = () => {
 
   return (
     <div className='lg2'>
-      {/* 左侧品牌 Hero */}
+      {/* 左侧插画 Hero */}
       <div className='lg2-hero'>
+        <img src='/login-hero.png' alt='' className='lg2-hero-img' />
+        {/* 左上角 logo */}
         <div className='brand'>
           <span className='lg'>
-            <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
               <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
               <path d='M4 11l8-6 8 6'/>
               <path d='M6 11v4M18 11v4'/>
             </svg>
           </span>
-          {systemName}
+          <span style={{ fontSize: 36, fontWeight: 700, color: '#fff' }}>{systemName}</span>
         </div>
-
-        {/* 玻璃磁贴装饰 */}
-        <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
-          <div className='lg2-gtile' style={{ left: '4%', top: '24%', width: 118, height: 118, transform: 'rotate(-12deg)', fontSize: 15, color: '#fff' }}>MiniMax</div>
-          <div className='lg2-gtile' style={{ left: '30%', top: '12%', width: 118, height: 118, transform: 'rotate(8deg)', color: '#E8B84B' }}>Qwen</div>
-          <div className='lg2-gtile' style={{ left: '56%', top: '18%', width: 118, height: 118, transform: 'rotate(-5deg)', color: '#fff' }}>GPT</div>
-          <div className='lg2-gtile' style={{ left: '6%', top: '50%', width: 118, height: 118, transform: 'rotate(6deg)', fontSize: 15, color: '#fff' }}>Claude</div>
-          <div className='lg2-gtile' style={{ left: '58%', top: '48%', width: 118, height: 118, transform: 'rotate(10deg)', fontSize: 14, color: '#fff' }}>DeepSeek</div>
+        {/* 左下角文案 */}
+        <div className='lg2-hero-copy'>
+          <h1>{t('统一云端')}<br/>{t('守护边缘')}</h1>
+          <p>{t('企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率')}</p>
         </div>
-
-        <h1>{t('统一云端')}<br/>{t('守护边缘')}</h1>
-        <p>{t('企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率')}</p>
       </div>
 
       {/* 右侧表单 */}
       <div className='lg2-right'>
+        {/* 右上角：语言/主题切换 */}
+        <div className='lg2-topbar'>
+          <ThemeToggle theme={theme} onThemeToggle={handleThemeToggle} t={t} />
+          <LanguageSelector currentLang={currentLang} onLanguageChange={handleLanguageChange} t={t} />
+        </div>
+
         <div className='lg2-form'>
+          {/* 卡片头：logo + 系统名 */}
           <div className='lhead'>
             <span className='lg'>
               <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
@@ -744,7 +752,7 @@ const LoginForm = () => {
             {systemName}
           </div>
 
-          <div className='welc'>{t('欢迎登录')}</div>
+          <div className='welc'>{t('欢迎登录')} {systemName}</div>
 
           {showEmailForm ? emailForm : oauthPanel}
         </div>

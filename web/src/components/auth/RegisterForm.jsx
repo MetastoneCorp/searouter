@@ -577,29 +577,25 @@ const RegisterForm = () => {
 
   return (
     <div className='lg2'>
-      {/* 左侧品牌 Hero */}
+      {/* 左侧插画 Hero */}
       <div className='lg2-hero'>
+        <img src='/login-hero.png' alt='' className='lg2-hero-img' />
+        {/* 左上角 logo */}
         <div className='brand'>
           <span className='lg'>
-            <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
               <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
               <path d='M4 11l8-6 8 6'/>
               <path d='M6 11v4M18 11v4'/>
             </svg>
           </span>
-          {systemName}
+          <span style={{ fontSize: 36, fontWeight: 700, color: '#fff' }}>{systemName}</span>
         </div>
-
-        <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
-          <div className='lg2-gtile' style={{ left: '4%', top: '24%', width: 118, height: 118, transform: 'rotate(-12deg)', fontSize: 15, color: '#fff' }}>MiniMax</div>
-          <div className='lg2-gtile' style={{ left: '30%', top: '12%', width: 118, height: 118, transform: 'rotate(8deg)', color: '#E8B84B' }}>Qwen</div>
-          <div className='lg2-gtile' style={{ left: '56%', top: '18%', width: 118, height: 118, transform: 'rotate(-5deg)', color: '#fff' }}>GPT</div>
-          <div className='lg2-gtile' style={{ left: '6%', top: '50%', width: 118, height: 118, transform: 'rotate(6deg)', fontSize: 15, color: '#fff' }}>Claude</div>
-          <div className='lg2-gtile' style={{ left: '58%', top: '48%', width: 118, height: 118, transform: 'rotate(10deg)', fontSize: 14, color: '#fff' }}>DeepSeek</div>
+        {/* 左下角文案 */}
+        <div className='lg2-hero-copy'>
+          <h1>{t('统一云端')}<br/>{t('守护边缘')}</h1>
+          <p>{t('企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率')}</p>
         </div>
-
-        <h1>{t('统一云端')}<br/>{t('守护边缘')}</h1>
-        <p>{t('企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率')}</p>
       </div>
 
       {/* 右侧表单 */}

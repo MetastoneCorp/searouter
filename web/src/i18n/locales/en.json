@@ -2127,6 +2127,7 @@
     "留空则默认使用服务器地址，注意不能携带http://或者https://": "If left blank, the server address will be used by default. Note that http:// or https:// should not be included",
     "登 录": "Log In",
     "登录": "Sign in",
+    "登录 / 注册": "Sign in / Register",
     "登录成功！": "Login successful!",
     "登录过期，请重新登录！": "Login expired, please log in again!",
     "白名单": "Whitelist",
