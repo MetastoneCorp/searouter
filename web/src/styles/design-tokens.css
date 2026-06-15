@@ -13,7 +13,7 @@
   --success:#16A34A; --warning:#E8A317; --danger:#E5484D;
   --ok-bg:#E7F6EC; --warn-bg:#FBF1DC; --danger-bg:#FCE9E9;
 
-  --font:"PingFang SC","HarmonyOS Sans","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --font:"Microsoft YaHei","Microsoft YaHei UI","PingFang SC","HarmonyOS Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
   --mono:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;
 
   --r-card:8px; --r-btn:6px; --r-tag:4px;
@@ -486,7 +486,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .lg2-hero{position:relative;overflow:hidden;color:#fff;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;background:#f5f5f5}
 .lg2-hero-img{position:absolute;inset:24px;width:calc(100% - 48px);height:calc(100% - 48px);object-fit:cover;border-radius:24px;display:block}
 /* 左上角 logo 叠在插画上 */
-.lg2-hero .brand{position:absolute;top:44px;left:44px;display:flex;align-items:center;gap:11px;font-size:21px;font-weight:700;color:#fff;z-index:2}
+.lg2-hero .brand{position:absolute;top:44px;left:44px;display:flex;align-items:center;gap:11px;font-size:21px;font-weight:700;color:#fff;z-index:2;font-family:"Roboto","Microsoft YaHei","PingFang SC",system-ui,sans-serif;letter-spacing:-.2px}
 .lg2-hero .brand .lg{width:44px;height:44px;border-radius:9px;background:rgba(255,255,255,.92);display:grid;place-items:center;color:var(--brand-600)}
 /* 左下角文案叠在插画上 */
 .lg2-hero-copy{position:relative;z-index:2;padding:0 12px 12px 12px}
@@ -498,7 +498,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .lg2-topbar{position:absolute;top:20px;right:24px;display:flex;align-items:center;gap:8px;z-index:10}
 /* 卡片：宽420px，padding 40px，gap 40px */
 .lg2-form{margin:auto;width:420px;max-width:90%;padding:40px;background:#fff;border-radius:24px}
-.lg2-form .lhead{display:flex;align-items:center;gap:11px;font-size:32px;font-weight:700;color:#015bba;margin-bottom:0}
+.lg2-form .lhead{display:flex;align-items:center;gap:11px;font-size:32px;font-weight:700;color:#015bba;margin-bottom:0;font-family:"Roboto","Microsoft YaHei","PingFang SC",system-ui,sans-serif;letter-spacing:-.2px}
 .lg2-form .lhead .lg{width:40px;height:40px;border-radius:9px;background:linear-gradient(135deg,#2E7DDB,#015BBA);display:grid;place-items:center;color:#fff}
 .lg2-form .welc{text-align:center;font-size:20px;font-weight:500;margin:20px 0 24px;color:#333}
 .lg2-form .auth-label{display:block;font-size:14px;font-weight:400;margin:0 0 6px;color:#5c5f61}

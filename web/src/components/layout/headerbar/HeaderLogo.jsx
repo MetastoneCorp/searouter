@@ -57,7 +57,7 @@ const HeaderLogo = ({
           >
             <Typography.Title
               heading={4}
-              className='!text-lg !font-semibold !mb-0'
+              className='brand-wordmark !text-lg !font-semibold !mb-0'
             >
               {systemName}
             </Typography.Title>
