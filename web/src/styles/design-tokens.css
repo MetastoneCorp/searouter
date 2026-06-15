@@ -656,6 +656,24 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .pgw2-user-bubble{display:inline-block;max-width:85%;border-radius:14px;
   background:var(--brand-50);border:1px solid var(--brand-100);
   padding:11px 15px;font-size:14.5px;line-height:1.65;color:var(--ink)}
+/* 用户气泡为浅蓝底：覆盖 markdown.css 中为深色背景设计的白字，避免白底白字看不清 */
+.pgw2-user-bubble .user-message,
+.pgw2-user-bubble .user-message .markdown-body,
+.pgw2-user-bubble .user-message p,
+.pgw2-user-bubble .user-message span,
+.pgw2-user-bubble .user-message div,
+.pgw2-user-bubble .user-message li,
+.pgw2-user-bubble .user-message h1,
+.pgw2-user-bubble .user-message h2,
+.pgw2-user-bubble .user-message h3,
+.pgw2-user-bubble .user-message h4,
+.pgw2-user-bubble .user-message h5,
+.pgw2-user-bubble .user-message h6,
+.pgw2-user-bubble .user-message td,
+.pgw2-user-bubble .user-message th{color:var(--ink) !important}
+.pgw2-user-bubble .user-message a{color:var(--brand-600) !important}
+.pgw2-user-bubble .user-message blockquote{color:var(--ink-2) !important;
+  border-left-color:var(--brand-100) !important;background-color:transparent !important}
 /* 流式光标闪烁 */
 .pgw2-cursor{display:inline-block;width:2px;height:1.1em;background:var(--ink-2);
   margin-left:1px;vertical-align:baseline;transform:translateY(2px);
