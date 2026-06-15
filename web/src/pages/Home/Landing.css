@@ -38,8 +38,15 @@
   max-width: var(--lp-maxw);
   margin: 0 auto;
   height: 900px;
-  background: url(/home-hero.png) center top / cover no-repeat;
   overflow: hidden;
+}
+
+.lp-hero--a {
+  background: url(/home-hero.png) center top / cover no-repeat;
+}
+
+.lp-hero--b {
+  background: url(/home/home-hero2.png) center top / cover no-repeat;
 }
 
 .lp-hero-inner {
@@ -130,10 +137,121 @@
   height: 4px;
   border-radius: 16px;
   background: #fff;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
 }
 
 .lp-hero-dot-active {
   background: #1166c4;
+}
+
+/* ---- Hero slide 2（统一云端 守护边缘 + AI 云） ---- */
+.lp-hero-inner2 {
+  top: 161px;
+  gap: 40px;
+}
+
+.lp-hero-inner2 .lp-hero-text {
+  gap: 24px;
+}
+
+.lp-hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 4px 24px;
+  border-radius: 82px;
+  background: #eef7ff;
+  border: 1px solid #2f9ef9;
+  color: #186bc2;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 1.28px;
+  font-weight: 300;
+}
+
+.lp-hero-tag img {
+  width: 18px;
+  height: 18px;
+}
+
+.lp-hero-title2 {
+  margin: 0;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  font-family: var(--lp-yahei);
+  font-size: 96px;
+  line-height: 104px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.lp-hero-title2-a {
+  color: #186bc2;
+}
+
+.lp-hero-title2-b {
+  background: linear-gradient(95.23deg, #186bc2 1.2%, #4a95eb 66.46%, #b5b0fe 98.02%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lp-hero-sub2 {
+  margin: 0;
+  max-width: 721px;
+  color: #494c4f;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+}
+
+.lp-hero-cta2 {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.lp-hero-btn2-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(109.11deg, #015bba 4.72%, #386ae8 58.81%, #5dd4ff 110.15%);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  transition: opacity 0.14s;
+}
+
+.lp-hero-btn2-primary:hover {
+  opacity: 0.92;
+}
+
+.lp-hero-btn2-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 44px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  color: #333;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: border-color 0.14s;
+}
+
+.lp-hero-btn2-ghost:hover {
+  border-color: #015bba;
 }
 
 /* ==================== 2. 数据条 divider ==================== */

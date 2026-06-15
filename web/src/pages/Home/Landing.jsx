@@ -35,6 +35,15 @@ const Landing = () => {
   const [endpointCopied, setEndpointCopied] = useState(false);
   const [activeClient, setActiveClient] = useState('claude');
   const [codeCopied, setCodeCopied] = useState(false);
+  const [heroSlide, setHeroSlide] = useState(0);
+
+  // Hero 双图轮播：每 6s 自动切换
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroSlide((s) => (s + 1) % 2);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
 
   const serverAddress =
     statusState?.status?.server_address || 'https://searouter.metastonecorp.com';
@@ -218,30 +227,60 @@ resp = client.chat.completions.create(
         isMobile={isMobile}
       />
 
-      {/* ============ 1. Hero ============ */}
-      <section className='lp-hero'>
-        <div className='lp-hero-inner'>
-          <div className='lp-hero-text'>
-            <h1 className='lp-hero-title'>
-              <span className='lp-hero-title-dark'>{t('landing.hero.title_prefix')}</span>
-              <span className='lp-hero-title-blue'>{t('landing.hero.title_highlight')}</span>
-              <span className='lp-hero-title-dark'>{t('landing.hero.title_suffix')}</span>
-            </h1>
-            <p className='lp-hero-sub'>
-              {t('landing.hero.subtitle_line1')}
-              <br />
-              {t('landing.hero.subtitle_line2')}
-            </p>
-            <p className='lp-hero-subheading'>{t('landing.hero.subheading')}</p>
+      {/* ============ 1. Hero（双图轮播） ============ */}
+      <section className={`lp-hero ${heroSlide === 0 ? 'lp-hero--a' : 'lp-hero--b'}`}>
+        {heroSlide === 0 ? (
+          <div className='lp-hero-inner'>
+            <div className='lp-hero-text'>
+              <h1 className='lp-hero-title'>
+                <span className='lp-hero-title-dark'>{t('landing.hero.title_prefix')}</span>
+                <span className='lp-hero-title-blue'>{t('landing.hero.title_highlight')}</span>
+                <span className='lp-hero-title-dark'>{t('landing.hero.title_suffix')}</span>
+              </h1>
+              <p className='lp-hero-sub'>
+                {t('landing.hero.subtitle_line1')}
+                <br />
+                {t('landing.hero.subtitle_line2')}
+              </p>
+              <p className='lp-hero-subheading'>{t('landing.hero.subheading')}</p>
+            </div>
+            <Link to='/register' className='lp-hero-btn'>
+              {t('landing.hero.cta_main')}
+            </Link>
           </div>
-          <Link to='/register' className='lp-hero-btn'>
-            {t('landing.hero.cta_main')}
-          </Link>
-        </div>
+        ) : (
+          <div className='lp-hero-inner lp-hero-inner2'>
+            <div className='lp-hero-text'>
+              <span className='lp-hero-tag'>
+                <img src='/home/hero-tag-icon.svg' alt='' width='18' height='18' />
+                {t('landing.hero2.tag')}
+              </span>
+              <h1 className='lp-hero-title2'>
+                <span className='lp-hero-title2-a'>{t('landing.hero2.title_a')}</span>
+                <span className='lp-hero-title2-b'>{t('landing.hero2.title_b')}</span>
+              </h1>
+              <p className='lp-hero-sub2'>{t('landing.hero2.subtitle')}</p>
+            </div>
+            <div className='lp-hero-cta2'>
+              <Link to='/register' className='lp-hero-btn2-primary'>
+                {t('landing.hero2.cta1')}
+              </Link>
+              <Link to='/about' className='lp-hero-btn2-ghost'>
+                {t('landing.hero2.cta2')}
+              </Link>
+            </div>
+          </div>
+        )}
         <div className='lp-hero-dots'>
-          <span className='lp-hero-dot lp-hero-dot-active'></span>
-          <span className='lp-hero-dot'></span>
-          <span className='lp-hero-dot'></span>
+          {[0, 1].map((i) => (
+            <button
+              key={i}
+              type='button'
+              aria-label={`hero slide ${i + 1}`}
+              className={`lp-hero-dot ${heroSlide === i ? 'lp-hero-dot-active' : ''}`}
+              onClick={() => setHeroSlide(i)}
+            />
+          ))}
         </div>
       </section>
 
