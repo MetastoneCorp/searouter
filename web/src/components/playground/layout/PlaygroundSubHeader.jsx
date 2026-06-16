@@ -18,8 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState } from 'react';
-import { Popover, Select } from '@douyinfe/semi-ui';
-import { Plus, Settings2 } from 'lucide-react';
+import { Popover, Select, Modal } from '@douyinfe/semi-ui';
+import { Plus, Settings2, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { selectFilter } from '../../../helpers';
 import { renderGroupOption } from '../../../helpers/render';
@@ -138,6 +138,25 @@ const PlaygroundSubHeader = ({
           >
             <Settings2 size={15} strokeWidth={2} />
           </IconBtn>
+
+          {hasMessages && (
+            <IconBtn
+              onClick={() =>
+                Modal.confirm({
+                  title: t('清空对话'),
+                  content: t('确定删除全部对话记录吗？此操作不可撤销。'),
+                  okText: t('删除'),
+                  cancelText: t('取消'),
+                  type: 'warning',
+                  onOk: onNewChat,
+                })
+              }
+              ariaLabel={t('清空对话')}
+              title={t('清空对话')}
+            >
+              <Trash2 size={15} strokeWidth={2} />
+            </IconBtn>
+          )}
 
           <button
             type='button'

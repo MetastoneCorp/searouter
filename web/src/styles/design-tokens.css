@@ -20,6 +20,8 @@
   --sh-pop:0 6px 24px rgba(20,36,64,.12);
   --sh-card:0 1px 2px rgba(20,36,64,.04);
   --nav-h:56px; --side-w:220px; --side-w-collapsed:64px;
+  /* 操练场（migrated）布局引用的头部高度变量，对齐本项目顶栏 56px */
+  --isuanova-header-height:56px;
 }
 
 .tnum{font-variant-numeric:tabular-nums}
