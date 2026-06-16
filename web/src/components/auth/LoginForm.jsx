@@ -456,16 +456,20 @@ const LoginForm = () => {
 
   const termsBlock = (hasUserAgreement || hasPrivacyPolicy) && (
     <div className='lg2-form' style={{ display: 'block', width: 'auto', margin: 0, padding: 0 }}>
-      <label className='agree' style={{ display: 'flex', alignItems: 'flex-start', gap: 9, fontSize: 12.5, color: 'var(--ink-2)', margin: '4px 0 22px', cursor: 'pointer' }}>
+      <div className='agree' style={{ display: 'flex', alignItems: 'flex-start', gap: 9, fontSize: 12.5, color: 'var(--ink-2)', margin: '4px 0 22px' }}>
         <Checkbox
           checked={agreedToTerms}
           onChange={(e) => setAgreedToTerms(e.target.checked)}
           style={{ marginTop: 1 }}
         />
-        <span>
+        <span
+          onClick={() => setAgreedToTerms((v) => !v)}
+          style={{ cursor: 'pointer' }}
+        >
           {t('我已阅读并同意')}
           {hasUserAgreement && (
             <a href='/user-agreement' target='_blank' rel='noopener noreferrer'
+              onClick={(e) => e.stopPropagation()}
               style={{ color: 'var(--brand-600)', margin: '0 3px' }}>
               {t('用户协议')}
             </a>
@@ -473,12 +477,13 @@ const LoginForm = () => {
           {hasUserAgreement && hasPrivacyPolicy && t('和')}
           {hasPrivacyPolicy && (
             <a href='/privacy-policy' target='_blank' rel='noopener noreferrer'
+              onClick={(e) => e.stopPropagation()}
               style={{ color: 'var(--brand-600)', margin: '0 3px' }}>
               {t('隐私政策')}
             </a>
           )}
         </span>
-      </label>
+      </div>
     </div>
   );
 
