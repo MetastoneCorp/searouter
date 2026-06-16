@@ -121,6 +121,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const systemName = getSystemName();
+  const logo = getLogo();
 
   let affCode = new URLSearchParams(window.location.search).get('aff');
   if (affCode) {
@@ -715,13 +716,7 @@ const LoginForm = () => {
         <img src='/login-hero.png' alt='' className='lg2-hero-img' />
         {/* 左上角 logo */}
         <div className='brand'>
-          <span className='lg'>
-            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-              <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
-              <path d='M4 11l8-6 8 6'/>
-              <path d='M6 11v4M18 11v4'/>
-            </svg>
-          </span>
+          <img src={logo} alt='' className='lg2-brand-logo' />
           <span style={{ fontSize: 36, fontWeight: 700, color: '#fff' }}>{systemName}</span>
         </div>
         {/* 左下角文案 */}
@@ -742,13 +737,7 @@ const LoginForm = () => {
         <div className='lg2-form'>
           {/* 卡片头：logo + 系统名 */}
           <div className='lhead'>
-            <span className='lg'>
-              <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-                <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
-                <path d='M4 11l8-6 8 6'/>
-                <path d='M6 11v4M18 11v4'/>
-              </svg>
-            </span>
+            <img src={logo} alt='' className='lg2-lhead-logo' />
             {systemName}
           </div>
 
