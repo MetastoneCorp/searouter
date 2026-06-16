@@ -121,6 +121,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const systemName = getSystemName();
+  const logo = getLogo();
 
   let affCode = new URLSearchParams(window.location.search).get('aff');
   if (affCode) {
@@ -455,16 +456,20 @@ const LoginForm = () => {
 
   const termsBlock = (hasUserAgreement || hasPrivacyPolicy) && (
     <div className='lg2-form' style={{ display: 'block', width: 'auto', margin: 0, padding: 0 }}>
-      <label className='agree' style={{ display: 'flex', alignItems: 'flex-start', gap: 9, fontSize: 12.5, color: 'var(--ink-2)', margin: '4px 0 22px', cursor: 'pointer' }}>
+      <div className='agree' style={{ display: 'flex', alignItems: 'flex-start', gap: 9, fontSize: 12.5, color: 'var(--ink-2)', margin: '4px 0 22px' }}>
         <Checkbox
           checked={agreedToTerms}
           onChange={(e) => setAgreedToTerms(e.target.checked)}
           style={{ marginTop: 1 }}
         />
-        <span>
+        <span
+          onClick={() => setAgreedToTerms((v) => !v)}
+          style={{ cursor: 'pointer' }}
+        >
           {t('我已阅读并同意')}
           {hasUserAgreement && (
             <a href='/user-agreement' target='_blank' rel='noopener noreferrer'
+              onClick={(e) => e.stopPropagation()}
               style={{ color: 'var(--brand-600)', margin: '0 3px' }}>
               {t('用户协议')}
             </a>
@@ -472,12 +477,13 @@ const LoginForm = () => {
           {hasUserAgreement && hasPrivacyPolicy && t('和')}
           {hasPrivacyPolicy && (
             <a href='/privacy-policy' target='_blank' rel='noopener noreferrer'
+              onClick={(e) => e.stopPropagation()}
               style={{ color: 'var(--brand-600)', margin: '0 3px' }}>
               {t('隐私政策')}
             </a>
           )}
         </span>
-      </label>
+      </div>
     </div>
   );
 
@@ -715,13 +721,7 @@ const LoginForm = () => {
         <img src='/login-hero.png' alt='' className='lg2-hero-img' />
         {/* 左上角 logo */}
         <div className='brand'>
-          <span className='lg'>
-            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-              <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
-              <path d='M4 11l8-6 8 6'/>
-              <path d='M6 11v4M18 11v4'/>
-            </svg>
-          </span>
+          <img src={logo} alt='' className='lg2-brand-logo' />
           <span style={{ fontSize: 36, fontWeight: 700, color: '#fff' }}>{systemName}</span>
         </div>
         {/* 左下角文案 */}
@@ -742,13 +742,7 @@ const LoginForm = () => {
         <div className='lg2-form'>
           {/* 卡片头：logo + 系统名 */}
           <div className='lhead'>
-            <span className='lg'>
-              <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-                <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
-                <path d='M4 11l8-6 8 6'/>
-                <path d='M6 11v4M18 11v4'/>
-              </svg>
-            </span>
+            <img src={logo} alt='' className='lg2-lhead-logo' />
             {systemName}
           </div>
 

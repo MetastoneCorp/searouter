@@ -66,11 +66,12 @@ const PageLayout = () => {
     (route) => location.pathname === route || location.pathname.startsWith(route + '/'),
   );
 
-  // 首页(Landing)自带新设计的页脚，隐藏全局 FooterBar 避免重复
+  // 首页(Landing)自带新设计的页脚；操练场底部为聊天框 —— 均隐藏全局 FooterBar
   const shouldHideFooter =
     isAuthRoute ||
     cardProPages.includes(location.pathname) ||
-    location.pathname === '/';
+    location.pathname === '/' ||
+    location.pathname === '/playground';
 
   const shouldInnerPadding =
     location.pathname.includes('/console') &&
