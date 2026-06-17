@@ -1312,3 +1312,25 @@
     padding: 14px 12px;
   }
 }
+
+/* ==================== 各 section 底图横向铺满屏幕 ==================== */
+/* full-bleed：让带底图的 section 撑满整个视口宽度（.lp 已 overflow-x:hidden，无横向滚动） */
+.lp-hero,
+.lp-divider,
+.lp-partners,
+.lp-cmp,
+.lp-quote,
+.lp-cta {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+/* 满宽 section 内的非居中内容仍按设计宽度居中，避免超宽屏过度拉伸 */
+.lp-partners-content,
+.lp-cmp-table {
+  max-width: var(--lp-maxw);
+  margin-left: auto;
+  margin-right: auto;
+}
+
