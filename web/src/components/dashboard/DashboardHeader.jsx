@@ -47,9 +47,9 @@ const DashboardHeader = ({
           onClick={showSearchModal}
           className='flex items-center gap-2 h-[38px] px-3.5 bg-surface border border-line rounded-md text-[13px] text-ink-2 tnum transition-colors hover:border-[#CBD2DE] hover:bg-surface-2'
         >
-          <span>{inputs?.start_timestamp}</span>
+          <span>{String(inputs?.start_timestamp ?? '')}</span>
           <span className='text-ink-3'>→</span>
-          <span>{inputs?.end_timestamp}</span>
+          <span>{String(inputs?.end_timestamp ?? '')}</span>
           <Clock size={15} className='text-ink-3' />
         </button>
         <Button
