@@ -62,7 +62,8 @@ const SearchModal = ({
           value: start_timestamp,
           type: 'dateTime',
           name: 'start_timestamp',
-          onChange: (value) => handleInputChange(value, 'start_timestamp'),
+          onChange: (_date, dateString) =>
+            handleInputChange(dateString, 'start_timestamp'),
         })}
 
         {createFormField(Form.DatePicker, {
@@ -72,7 +73,8 @@ const SearchModal = ({
           value: end_timestamp,
           type: 'dateTime',
           name: 'end_timestamp',
-          onChange: (value) => handleInputChange(value, 'end_timestamp'),
+          onChange: (_date, dateString) =>
+            handleInputChange(dateString, 'end_timestamp'),
         })}
 
         {createFormField(Form.Select, {
