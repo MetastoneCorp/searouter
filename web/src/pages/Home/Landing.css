@@ -42,11 +42,18 @@
 }
 
 .lp-hero--a {
-  background: url(/home-hero.webp) center top / cover no-repeat;
+  /* 图按高度铺满(=设计 1440×900)、居中对齐内容列，超宽不放大；左右各用与图对应边缘列同色的竖向渐变填充，任意屏宽都无缝 */
+  background:
+    url(/home-hero.webp) center top / auto 100% no-repeat,
+    linear-gradient(180deg, #fafcfe 0%, #eef6fc 100%) left top / 50.5% 100% no-repeat,
+    linear-gradient(180deg, #e8f2fa 0%, #c8e0f5 100%) right top / 50.5% 100% no-repeat;
 }
 
 .lp-hero--b {
-  background: url(/home/home-hero2.webp) center top / cover no-repeat;
+  background:
+    url(/home/home-hero2.webp) center top / auto 100% no-repeat,
+    linear-gradient(180deg, #f9f9f9 0%, #f6f5f8 100%) left top / 50.5% 100% no-repeat,
+    linear-gradient(180deg, #ececf0 0%, #e7ecf3 100%) right top / 50.5% 100% no-repeat;
 }
 
 .lp-hero-inner {
