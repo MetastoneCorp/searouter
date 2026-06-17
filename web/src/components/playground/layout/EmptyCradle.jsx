@@ -51,7 +51,7 @@ const EmptyCradle = ({
       {/* 上半：greeting 居中显示在视觉中段 */}
       <div className='pgw2-cradle-mid'>
         <h1 className='pgw2-cradle-title'>
-          Cube-Router · Playground
+          SeaRouter · Playground
         </h1>
         <p className='pgw2-cradle-sub'>
           {t('你想让模型帮你做什么？')}
