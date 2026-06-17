@@ -452,7 +452,7 @@ resp = client.chat.completions.create(
               </Link>
             </div>
             <div className='lp-partners-orbit'>
-              <img src='/home/partners-orbit.png' alt='' />
+              <img src='/home/partners-orbit.svg' alt='' />
             </div>
           </div>
         </section>
