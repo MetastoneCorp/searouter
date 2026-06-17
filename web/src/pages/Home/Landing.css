@@ -54,7 +54,8 @@
   left: 0;
   top: 282px;
   width: 100%;
-  padding: 0 128px;
+  /* 满宽 section：内容收进居中的 1440 设计列（含 128 内缩），底图仍铺满视口 */
+  padding: 0 max(128px, calc(50vw - var(--lp-maxw) / 2 + 128px));
   display: flex;
   flex-direction: column;
   gap: 64px;
@@ -653,7 +654,7 @@
 
 /* ==================== 5. 合作伙伴 ==================== */
 .lp-partners {
-  padding: 32px 128px;
+  padding: 32px max(128px, calc(50vw - var(--lp-maxw) / 2 + 128px));
   display: flex;
   flex-direction: column;
   gap: 32px;
