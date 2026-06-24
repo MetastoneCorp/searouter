@@ -281,6 +281,14 @@ code {
   align-items: center;
   justify-content: center;
 }
+/* 收起态去掉图标右边距（展开态用于和文字间距），使图标在方块内水平+垂直居中 */
+.sidebar-nav .semi-navigation-item-collapsed .sidebar-icon-container {
+  margin: 0 !important;
+}
+/* 收起态隐藏菜单项文字（仍占位会把图标挤偏），确保图标在方块内居中 */
+.sidebar-nav .semi-navigation-item-collapsed .semi-navigation-item-text {
+  display: none !important;
+}
 .sidebar-nav .semi-navigation-item-normal:hover,
 .sidebar-nav .semi-navigation-sub-title:hover {
   background-color: rgba(255, 255, 255, 0.12);
