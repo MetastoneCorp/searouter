@@ -494,9 +494,8 @@ const SiderBar = ({ onNavigate = () => {} }) => {
         <SkeletonWrapper
           loading={showSkeleton}
           type='button'
-          width={collapsed ? 36 : 156}
-          height={24}
-          className='w-full'
+          width={36}
+          height={28}
         >
           <Button
             theme='outline'
@@ -513,15 +512,18 @@ const SiderBar = ({ onNavigate = () => {} }) => {
               />
             }
             onClick={toggleCollapsed}
-            icononly={collapsed}
-            style={
-              collapsed
-                ? { width: 36, height: 24, padding: 0, color: 'rgba(255,255,255,.85)', background: 'rgba(255,255,255,.1)', border: 'none' }
-                : { padding: '4px 12px', width: '100%', color: 'rgba(255,255,255,.85)', background: 'rgba(255,255,255,.1)', border: 'none' }
-            }
-          >
-            {!collapsed ? t('收起侧边栏') : null}
-          </Button>
+            icononly
+            aria-label={collapsed ? t('展开侧边栏') : t('收起侧边栏')}
+            style={{
+              width: 36,
+              height: 28,
+              padding: 0,
+              color: 'rgba(255,255,255,.85)',
+              background: 'rgba(255,255,255,.1)',
+              border: 'none',
+              borderRadius: 8,
+            }}
+          />
         </SkeletonWrapper>
       </div>
     </div>
