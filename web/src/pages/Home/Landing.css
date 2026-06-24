@@ -42,11 +42,18 @@
 }
 
 .lp-hero--a {
-  background: url(/home-hero.webp) center top / cover no-repeat;
+  /* 图按高度铺满(=设计 1440×900)、居中对齐内容列，超宽不放大；左右各用与图对应边缘列同色的竖向渐变填充，任意屏宽都无缝 */
+  background:
+    url(/home-hero.webp) center top / auto 100% no-repeat,
+    linear-gradient(180deg, #fafcfe 0%, #eef6fc 100%) left top / 50.5% 100% no-repeat,
+    linear-gradient(180deg, #e8f2fa 0%, #c8e0f5 100%) right top / 50.5% 100% no-repeat;
 }
 
 .lp-hero--b {
-  background: url(/home/home-hero2.webp) center top / cover no-repeat;
+  background:
+    url(/home/home-hero2.webp) center top / auto 100% no-repeat,
+    linear-gradient(180deg, #f9f9f9 0%, #f6f5f8 100%) left top / 50.5% 100% no-repeat,
+    linear-gradient(180deg, #ececf0 0%, #e7ecf3 100%) right top / 50.5% 100% no-repeat;
 }
 
 .lp-hero-inner {
@@ -54,7 +61,8 @@
   left: 0;
   top: 282px;
   width: 100%;
-  padding: 0 128px;
+  /* 满宽 section：内容收进居中的 1440 设计列（含 128 内缩），底图仍铺满视口 */
+  padding: 0 max(128px, calc(50vw - var(--lp-maxw) / 2 + 128px));
   display: flex;
   flex-direction: column;
   gap: 64px;
@@ -653,7 +661,7 @@
 
 /* ==================== 5. 合作伙伴 ==================== */
 .lp-partners {
-  padding: 32px 128px;
+  padding: 32px max(128px, calc(50vw - var(--lp-maxw) / 2 + 128px));
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -1312,3 +1320,25 @@
     padding: 14px 12px;
   }
 }
+
+/* ==================== 各 section 底图横向铺满屏幕 ==================== */
+/* full-bleed：让带底图的 section 撑满整个视口宽度（.lp 已 overflow-x:hidden，无横向滚动） */
+.lp-hero,
+.lp-divider,
+.lp-partners,
+.lp-cmp,
+.lp-quote,
+.lp-cta {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+/* 满宽 section 内的非居中内容仍按设计宽度居中，避免超宽屏过度拉伸 */
+.lp-partners-content,
+.lp-cmp-table {
+  max-width: var(--lp-maxw);
+  margin-left: auto;
+  margin-right: auto;
+}
+
