@@ -665,7 +665,7 @@ const TopUp = () => {
   };
 
   return (
-    <div className='w-full max-w-7xl mx-auto relative' style={{ padding: '0 8px' }}>
+    <div className='main-pad w-full relative'>
       {/* 划转模态框 */}
       <TransferModal
         t={t}
@@ -746,7 +746,9 @@ const TopUp = () => {
         </div>
         <div className='srv-ovcard'>
           <div className='k'>{t('历史消耗')}</div>
-          <div className='v tnum'>{renderQuota(userState?.user?.used_quota)}</div>
+          <div className='v tnum'>
+            {renderQuota(userState?.user?.used_quota)}
+          </div>
         </div>
         <div className='srv-ovcard'>
           <div className='k'>{t('请求次数')}</div>
@@ -754,7 +756,9 @@ const TopUp = () => {
         </div>
         <div className='srv-ovcard'>
           <div className='k'>{t('用户分组')}</div>
-          <div className='v' style={{ fontSize: 16 }}>{userState?.user?.group || '-'}</div>
+          <div className='v' style={{ fontSize: 16 }}>
+            {userState?.user?.group || '-'}
+          </div>
         </div>
       </div>
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
