@@ -285,8 +285,11 @@ code {
 .sidebar-nav .semi-navigation-item-collapsed .sidebar-icon-container {
   margin: 0 !important;
 }
-/* 收起态隐藏菜单项文字（仍占位会把图标挤偏），确保图标在方块内居中 */
-.sidebar-nav .semi-navigation-item-collapsed .semi-navigation-item-text {
+/* 收起态隐藏菜单项文字与展开箭头（两者会占位/被 margin-left:auto 推开，把图标挤偏），确保图标在方块内居中 */
+.sidebar-nav .semi-navigation-item-collapsed .semi-navigation-item-text,
+.sidebar-nav
+  .semi-navigation-item-collapsed
+  .semi-navigation-item-icon-toggle-right {
   display: none !important;
 }
 .sidebar-nav .semi-navigation-item-normal:hover,
