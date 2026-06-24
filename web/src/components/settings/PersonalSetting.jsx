@@ -408,7 +408,9 @@ const PersonalSetting = () => {
     try {
       const res = await API.put('/api/user/setting', {
         notify_type: notificationSettings.warningType,
-        quota_warning_threshold: parseFloat(notificationSettings.warningThreshold),
+        quota_warning_threshold: parseFloat(
+          notificationSettings.warningThreshold,
+        ),
         webhook_url: notificationSettings.webhookUrl,
         webhook_secret: notificationSettings.webhookSecret,
         notification_email: notificationSettings.notificationEmail,
@@ -419,7 +421,8 @@ const PersonalSetting = () => {
           const parsed = parseInt(notificationSettings.gotifyPriority);
           return isNaN(parsed) ? 5 : parsed;
         })(),
-        accept_unset_model_ratio_model: notificationSettings.acceptUnsetModelRatioModel,
+        accept_unset_model_ratio_model:
+          notificationSettings.acceptUnsetModelRatioModel,
         record_ip_log: notificationSettings.recordIpLog,
       });
 
@@ -435,7 +438,7 @@ const PersonalSetting = () => {
   };
 
   return (
-    <div className='main-pad' style={{ marginTop: '60px' }}>
+    <div className='main-pad personal-setting' style={{ marginTop: '60px' }}>
       {/* 用户信息头部 */}
       <UserInfoHeader t={t} userState={userState} />
 
@@ -481,11 +484,6 @@ const PersonalSetting = () => {
         handleNotificationSettingChange={handleNotificationSettingChange}
         saveNotificationSettings={saveNotificationSettings}
       />
-
-      {/* 页脚 */}
-      <div style={{ textAlign: 'center', color: 'var(--ink-3)', fontSize: '12px', padding: '24px 0 8px' }}>
-        © 2026 SEAROUTER. 版权所有 · 设计与开发由 METASTONE
-      </div>
 
       {/* 模态框组件 */}
       <EmailBindModal

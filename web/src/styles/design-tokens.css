@@ -1740,6 +1740,10 @@ table.tbl {
   font-weight: 700;
   margin: 0 0 4px;
 }
+/* 个人设置页：操作/保存按钮统一最小宽度，避免有长有短 */
+.personal-setting .btn {
+  min-width: 120px;
+}
 .srv-secsub {
   color: var(--ink-3);
   font-size: 12.5px;

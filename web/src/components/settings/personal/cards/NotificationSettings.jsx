@@ -18,11 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useRef, useEffect, useState, useContext } from 'react';
-import {
-  Form,
-  Toast,
-  Switch,
-} from '@douyinfe/semi-ui';
+import { Form, Toast, Switch } from '@douyinfe/semi-ui';
 import {
   renderQuotaWithPrompt,
   API,
@@ -52,13 +48,22 @@ const NotificationSettings = ({
   const [sidebarModulesUser, setSidebarModulesUser] = useState({
     chat: { enabled: true, playground: true, chat: true },
     console: {
-      enabled: true, detail: true, token: true, log: true,
-      midjourney: true, task: true,
+      enabled: true,
+      detail: true,
+      token: true,
+      log: true,
+      midjourney: true,
+      task: true,
     },
     personal: { enabled: true, topup: true, personal: true },
     admin: {
-      enabled: true, channel: true, models: true, deployment: true,
-      redemption: true, user: true, setting: true,
+      enabled: true,
+      channel: true,
+      models: true,
+      deployment: true,
+      redemption: true,
+      user: true,
+      setting: true,
     },
   });
   const [adminConfig, setAdminConfig] = useState(null);
@@ -107,13 +112,22 @@ const NotificationSettings = ({
     setSidebarModulesUser({
       chat: { enabled: true, playground: true, chat: true },
       console: {
-        enabled: true, detail: true, token: true, log: true,
-        midjourney: true, task: true,
+        enabled: true,
+        detail: true,
+        token: true,
+        log: true,
+        midjourney: true,
+        task: true,
       },
       personal: { enabled: true, topup: true, personal: true },
       admin: {
-        enabled: true, channel: true, models: true, deployment: true,
-        redemption: true, user: true, setting: true,
+        enabled: true,
+        channel: true,
+        models: true,
+        deployment: true,
+        redemption: true,
+        user: true,
+        setting: true,
       },
     });
   };
@@ -123,7 +137,9 @@ const NotificationSettings = ({
       try {
         if (statusState?.status?.SidebarModulesAdmin) {
           try {
-            const adminConf = JSON.parse(statusState.status.SidebarModulesAdmin);
+            const adminConf = JSON.parse(
+              statusState.status.SidebarModulesAdmin,
+            );
             setAdminConfig(mergeAdminConfig(adminConf));
           } catch (error) {
             setAdminConfig(mergeAdminConfig(null));
@@ -162,7 +178,9 @@ const NotificationSettings = ({
   const isAllowedByAdmin = (sectionKey, moduleKey = null) => {
     if (!adminConfig) return true;
     if (moduleKey) {
-      return adminConfig[sectionKey]?.enabled && adminConfig[sectionKey]?.[moduleKey];
+      return (
+        adminConfig[sectionKey]?.enabled && adminConfig[sectionKey]?.[moduleKey]
+      );
     }
     return adminConfig[sectionKey]?.enabled;
   };
@@ -173,7 +191,11 @@ const NotificationSettings = ({
       title: t('聊天区域'),
       description: t('操练场和聊天功能'),
       modules: [
-        { key: 'playground', title: t('操练场'), description: t('AI模型测试环境') },
+        {
+          key: 'playground',
+          title: t('操练场'),
+          description: t('AI模型测试环境'),
+        },
         { key: 'chat', title: t('聊天'), description: t('聊天会话管理') },
       ],
     },
@@ -185,7 +207,11 @@ const NotificationSettings = ({
         { key: 'detail', title: t('数据看板'), description: t('系统数据统计') },
         { key: 'token', title: t('令牌管理'), description: t('API令牌管理') },
         { key: 'log', title: t('使用日志'), description: t('API使用记录') },
-        { key: 'midjourney', title: t('绘图日志'), description: t('绘图任务记录') },
+        {
+          key: 'midjourney',
+          title: t('绘图日志'),
+          description: t('绘图任务记录'),
+        },
         { key: 'task', title: t('任务日志'), description: t('系统任务记录') },
       ],
     },
@@ -195,7 +221,11 @@ const NotificationSettings = ({
       description: t('用户个人功能'),
       modules: [
         { key: 'topup', title: t('钱包管理'), description: t('余额充值管理') },
-        { key: 'personal', title: t('个人设置'), description: t('个人信息设置') },
+        {
+          key: 'personal',
+          title: t('个人设置'),
+          description: t('个人信息设置'),
+        },
       ],
     },
     {
@@ -205,10 +235,22 @@ const NotificationSettings = ({
       modules: [
         { key: 'channel', title: t('渠道管理'), description: t('API渠道配置') },
         { key: 'models', title: t('模型管理'), description: t('AI模型配置') },
-        { key: 'deployment', title: t('模型部署'), description: t('模型部署管理') },
-        { key: 'redemption', title: t('兑换码管理'), description: t('兑换码生成管理') },
+        {
+          key: 'deployment',
+          title: t('模型部署'),
+          description: t('模型部署管理'),
+        },
+        {
+          key: 'redemption',
+          title: t('兑换码管理'),
+          description: t('兑换码生成管理'),
+        },
         { key: 'user', title: t('用户管理'), description: t('用户账户管理') },
-        { key: 'setting', title: t('系统设置'), description: t('系统参数配置') },
+        {
+          key: 'setting',
+          title: t('系统设置'),
+          description: t('系统参数配置'),
+        },
       ],
     },
   ]
@@ -219,7 +261,9 @@ const NotificationSettings = ({
         isSidebarModuleAllowed(section.key, module.key),
       ),
     }))
-    .filter((section) => section.modules.length > 0 && isAllowedByAdmin(section.key));
+    .filter(
+      (section) => section.modules.length > 0 && isAllowedByAdmin(section.key),
+    );
 
   const handleSubmit = () => {
     if (formApiRef.current) {
@@ -233,12 +277,19 @@ const NotificationSettings = ({
   };
 
   return (
-    <>
+    <div className='card card-pad srv-block'>
       {/* 其他设置标题 */}
       <div className='srv-sectitle srv-block'>
-        <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='var(--ink-2)' strokeWidth='1.8'>
-          <circle cx='12' cy='12' r='3'/>
-          <path d='M19.4 13.5a7.8 7.8 0 0 0 0-3l1.6-1.2-2-3.4-1.9.8a7.6 7.6 0 0 0-2.6-1.5L14 2h-4l-.5 2.2a7.6 7.6 0 0 0-2.6 1.5l-1.9-.8-2 3.4 1.6 1.2a7.8 7.8 0 0 0 0 3L3 14.7l2 3.4 1.9-.8a7.6 7.6 0 0 0 2.6 1.5L10 22h4l.5-2.2a7.6 7.6 0 0 0 2.6-1.5l1.9.8 2-3.4z'/>
+        <svg
+          width='18'
+          height='18'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='var(--ink-2)'
+          strokeWidth='1.8'
+        >
+          <circle cx='12' cy='12' r='3' />
+          <path d='M19.4 13.5a7.8 7.8 0 0 0 0-3l1.6-1.2-2-3.4-1.9.8a7.6 7.6 0 0 0-2.6-1.5L14 2h-4l-.5 2.2a7.6 7.6 0 0 0-2.6 1.5l-1.9-.8-2 3.4 1.6 1.2a7.8 7.8 0 0 0 0 3L3 14.7l2 3.4 1.9-.8a7.6 7.6 0 0 0 2.6 1.5L10 22h4l.5-2.2a7.6 7.6 0 0 0 2.6-1.5l1.9.8 2-3.4z' />
         </svg>
         {t('其他设置')}
       </div>
@@ -247,7 +298,7 @@ const NotificationSettings = ({
       </div>
 
       {/* 通知配置卡 */}
-      <div className='card card-pad' style={{ marginBottom: '16px' }}>
+      <div style={{ marginTop: '28px' }}>
         <div className='srv-bar'>{t('通知配置')}</div>
         <Form
           getFormApi={(api) => (formApiRef.current = api)}
@@ -258,7 +309,8 @@ const NotificationSettings = ({
             <>
               {/* 通知方式单选 */}
               <div className='field-label'>
-                {t('通知方式')} <span style={{ color: 'var(--danger)' }}>*</span>
+                {t('通知方式')}{' '}
+                <span style={{ color: 'var(--danger)' }}>*</span>
               </div>
               <div className='srv-radio-row'>
                 {[
@@ -283,7 +335,9 @@ const NotificationSettings = ({
                 <div className='field-label'>
                   {t('额度预警阈值')}{' '}
                   <span style={{ color: 'var(--ink-3)', fontWeight: 400 }}>
-                    {renderQuotaWithPrompt(notificationSettings.warningThreshold)}
+                    {renderQuotaWithPrompt(
+                      notificationSettings.warningThreshold,
+                    )}
                   </span>{' '}
                   <span style={{ color: 'var(--danger)' }}>*</span>
                 </div>
@@ -294,7 +348,9 @@ const NotificationSettings = ({
                   style={{ maxWidth: '280px' }}
                 />
                 <div className='helper'>
-                  {t('当钱包或订阅剩余额度低于此数值时，系统将通过选择的方式发送通知')}
+                  {t(
+                    '当钱包或订阅剩余额度低于此数值时，系统将通过选择的方式发送通知',
+                  )}
                 </div>
               </div>
 
@@ -310,7 +366,9 @@ const NotificationSettings = ({
                     style={{ maxWidth: '320px' }}
                   />
                   <div className='helper'>
-                    {t('设置用于接收额度预警的邮箱地址，不填则使用账号绑定的邮箱')}
+                    {t(
+                      '设置用于接收额度预警的邮箱地址，不填则使用账号绑定的邮箱',
+                    )}
                   </div>
                 </div>
               )}
@@ -322,12 +380,16 @@ const NotificationSettings = ({
                     <div className='field-label'>{t('Webhook地址')}</div>
                     <input
                       className='input'
-                      placeholder={t('请输入Webhook地址，例如: https://example.com/webhook')}
+                      placeholder={t(
+                        '请输入Webhook地址，例如: https://example.com/webhook',
+                      )}
                       value={notificationSettings.webhookUrl}
                       onChange={(e) => handleFormChange('webhookUrl', e)}
                     />
                     <div className='helper'>
-                      {t('只支持HTTPS，系统将以POST方式发送通知，请确保地址可以接收POST请求')}
+                      {t(
+                        '只支持HTTPS，系统将以POST方式发送通知，请确保地址可以接收POST请求',
+                      )}
                     </div>
                   </div>
                   <div style={{ marginTop: '16px' }}>
@@ -340,11 +402,15 @@ const NotificationSettings = ({
                       style={{ maxWidth: '320px' }}
                     />
                     <div className='helper'>
-                      {t('密钥将以Bearer方式添加到请求头中，用于验证webhook请求的合法性')}
+                      {t(
+                        '密钥将以Bearer方式添加到请求头中，用于验证webhook请求的合法性',
+                      )}
                     </div>
                   </div>
                   <div style={{ marginTop: '16px' }}>
-                    <div className='field-label'>{t('Webhook请求结构说明')}</div>
+                    <div className='field-label'>
+                      {t('Webhook请求结构说明')}
+                    </div>
                     <div style={{ height: '200px', marginBottom: '12px' }}>
                       <CodeViewer
                         content={{
@@ -368,12 +434,16 @@ const NotificationSettings = ({
                   <div className='field-label'>{t('Bark推送URL')}</div>
                   <input
                     className='input'
-                    placeholder={t('请输入Bark推送URL，例如: https://api.day.app/yourkey/{{title}}/{{content}}')}
+                    placeholder={t(
+                      '请输入Bark推送URL，例如: https://api.day.app/yourkey/{{title}}/{{content}}',
+                    )}
                     value={notificationSettings.barkUrl}
                     onChange={(e) => handleFormChange('barkUrl', e)}
                   />
                   <div className='helper'>
-                    {t('支持HTTP和HTTPS，模板变量: {{title}} (通知标题), {{content}} (通知内容)')}
+                    {t(
+                      '支持HTTP和HTTPS，模板变量: {{title}} (通知标题), {{content}} (通知内容)',
+                    )}
                   </div>
                 </div>
               )}
@@ -385,11 +455,15 @@ const NotificationSettings = ({
                     <div className='field-label'>{t('Gotify服务器地址')}</div>
                     <input
                       className='input'
-                      placeholder={t('请输入Gotify服务器地址，例如: https://gotify.example.com')}
+                      placeholder={t(
+                        '请输入Gotify服务器地址，例如: https://gotify.example.com',
+                      )}
                       value={notificationSettings.gotifyUrl}
                       onChange={(e) => handleFormChange('gotifyUrl', e)}
                     />
-                    <div className='helper'>{t('支持HTTP和HTTPS，填写Gotify服务器的完整URL地址')}</div>
+                    <div className='helper'>
+                      {t('支持HTTP和HTTPS，填写Gotify服务器的完整URL地址')}
+                    </div>
                   </div>
                   <div style={{ marginTop: '16px' }}>
                     <div className='field-label'>{t('Gotify应用令牌')}</div>
@@ -400,7 +474,9 @@ const NotificationSettings = ({
                       onChange={(e) => handleFormChange('gotifyToken', e)}
                       style={{ maxWidth: '320px' }}
                     />
-                    <div className='helper'>{t('在Gotify服务器创建应用后获得的令牌，用于发送通知')}</div>
+                    <div className='helper'>
+                      {t('在Gotify服务器创建应用后获得的令牌，用于发送通知')}
+                    </div>
                   </div>
                   <div style={{ marginTop: '16px' }}>
                     <div className='field-label'>{t('消息优先级')}</div>
@@ -408,7 +484,12 @@ const NotificationSettings = ({
                       className='select'
                       style={{ maxWidth: '200px' }}
                       value={notificationSettings.gotifyPriority}
-                      onChange={(e) => handleFormChange('gotifyPriority', parseInt(e.target.value))}
+                      onChange={(e) =>
+                        handleFormChange(
+                          'gotifyPriority',
+                          parseInt(e.target.value),
+                        )
+                      }
                     >
                       <option value={0}>{t('0 - 最低')}</option>
                       <option value={2}>{t('2 - 低')}</option>
@@ -416,13 +497,19 @@ const NotificationSettings = ({
                       <option value={8}>{t('8 - 高')}</option>
                       <option value={10}>{t('10 - 最高')}</option>
                     </select>
-                    <div className='helper'>{t('消息优先级，范围0-10，默认为5')}</div>
+                    <div className='helper'>
+                      {t('消息优先级，范围0-10，默认为5')}
+                    </div>
                   </div>
                 </>
               )}
 
               <div className='srv-saverow'>
-                <button className='btn btn-primary' type='button' onClick={handleSubmit}>
+                <button
+                  className='btn btn-primary'
+                  type='button'
+                  onClick={handleSubmit}
+                >
                   {t('保存设置')}
                 </button>
               </div>
@@ -432,7 +519,7 @@ const NotificationSettings = ({
       </div>
 
       {/* 价格设置卡 */}
-      <div className='card card-pad' style={{ marginBottom: '16px' }}>
+      <div style={{ marginTop: '28px' }}>
         <div className='srv-bar'>{t('价格设置')}</div>
         <div className='row between'>
           <div style={{ fontSize: '13.5px', fontWeight: 600 }}>
@@ -440,22 +527,29 @@ const NotificationSettings = ({
           </div>
           <Switch
             checked={notificationSettings.acceptUnsetModelRatioModel}
-            onChange={(value) => handleFormChange('acceptUnsetModelRatioModel', value)}
+            onChange={(value) =>
+              handleFormChange('acceptUnsetModelRatioModel', value)
+            }
             size='default'
           />
         </div>
         <div className='helper' style={{ margin: '8px 0 0' }}>
-          {t('当模型没有设置价格时仍接受调用，仅当您信任该网站时使用，可能会产生高额费用')}
+          {t(
+            '当模型没有设置价格时仍接受调用，仅当您信任该网站时使用，可能会产生高额费用',
+          )}
         </div>
         <div className='srv-saverow'>
-          <button className='btn btn-primary' onClick={saveNotificationSettings}>
+          <button
+            className='btn btn-primary'
+            onClick={saveNotificationSettings}
+          >
             {t('保存设置')}
           </button>
         </div>
       </div>
 
       {/* 隐私设置卡 */}
-      <div className='card card-pad' style={{ marginBottom: '16px' }}>
+      <div style={{ marginTop: '28px' }}>
         <div className='srv-bar'>{t('隐私设置')}</div>
         <div className='row between'>
           <div style={{ fontSize: '13.5px', fontWeight: 600 }}>
@@ -471,15 +565,18 @@ const NotificationSettings = ({
           {t('开启后，仅"消费"和"错误"日志将记录您的客户端IP地址')}
         </div>
         <div className='srv-saverow'>
-          <button className='btn btn-primary' onClick={saveNotificationSettings}>
+          <button
+            className='btn btn-primary'
+            onClick={saveNotificationSettings}
+          >
             {t('保存设置')}
           </button>
         </div>
       </div>
 
-      {/* 边栏设置卡（权限控制） */}
+      {/* 边栏设置（权限控制） */}
       {hasSidebarSettingsPermission() && (
-        <div className='card card-pad'>
+        <div style={{ marginTop: '28px' }}>
           <div className='srv-bar'>{t('边栏设置')}</div>
           <div className='helper' style={{ marginBottom: '14px' }}>
             {t('您可以个性化设置侧边栏的要显示功能')}
@@ -499,8 +596,12 @@ const NotificationSettings = ({
                 }}
               >
                 <div>
-                  <div style={{ fontWeight: 600, fontSize: '13.5px' }}>{section.title}</div>
-                  <div className='helper' style={{ marginTop: '2px' }}>{section.description}</div>
+                  <div style={{ fontWeight: 600, fontSize: '13.5px' }}>
+                    {section.title}
+                  </div>
+                  <div className='helper' style={{ marginTop: '2px' }}>
+                    {section.description}
+                  </div>
                 </div>
                 <Switch
                   checked={sidebarModulesUser[section.key]?.enabled !== false}
@@ -521,7 +622,10 @@ const NotificationSettings = ({
                         border: '1px solid var(--border)',
                         borderRadius: '8px',
                         padding: '10px 14px',
-                        opacity: sidebarModulesUser[section.key]?.enabled === false ? 0.5 : 1,
+                        opacity:
+                          sidebarModulesUser[section.key]?.enabled === false
+                            ? 0.5
+                            : 1,
                       }}
                     >
                       <div>
@@ -529,10 +633,15 @@ const NotificationSettings = ({
                         <div className='ds'>{module.description}</div>
                       </div>
                       <Switch
-                        checked={sidebarModulesUser[section.key]?.[module.key] !== false}
+                        checked={
+                          sidebarModulesUser[section.key]?.[module.key] !==
+                          false
+                        }
                         onChange={handleModuleChange(section.key, module.key)}
                         size='small'
-                        disabled={sidebarModulesUser[section.key]?.enabled === false}
+                        disabled={
+                          sidebarModulesUser[section.key]?.enabled === false
+                        }
                       />
                     </div>
                   ))}
@@ -554,7 +663,7 @@ const NotificationSettings = ({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
