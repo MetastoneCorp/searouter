@@ -438,7 +438,15 @@ const PersonalSetting = () => {
   };
 
   return (
-    <div className='main-pad personal-setting' style={{ marginTop: '60px' }}>
+    <div className='personal-setting' style={{ marginTop: '60px' }}>
+      {/* 页面标题 */}
+      <div className='page-head' style={{ marginBottom: '16px' }}>
+        <div>
+          <div className='page-title'>{t('个人设置')}</div>
+          <div className='page-sub'>{t('账户信息、安全设置与偏好')}</div>
+        </div>
+      </div>
+
       {/* 用户信息头部 */}
       <UserInfoHeader t={t} userState={userState} />
 

@@ -665,7 +665,7 @@ const TopUp = () => {
   };
 
   return (
-    <div className='main-pad w-full relative'>
+    <div className='w-full relative mt-[60px]'>
       {/* 划转模态框 */}
       <TransferModal
         t={t}
