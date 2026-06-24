@@ -98,9 +98,7 @@ const Composer = ({
         viewTransitionName: viewTransitionName,
       }}
     >
-      {inlineWarning && (
-        <div className='pgw2-warn'>{inlineWarning}</div>
-      )}
+      {inlineWarning && <div className='pgw2-warn'>{inlineWarning}</div>}
 
       <textarea
         ref={taRef}
@@ -114,11 +112,9 @@ const Composer = ({
       />
 
       <div className='pgw2-composer-foot'>
-        <span className='pgw2-sys-hint'>
-          {hasSystemPrompt
-            ? t('系统提示 已设')
-            : t('系统提示 未设')}
-        </span>
+        {hasSystemPrompt && (
+          <span className='pgw2-sys-hint'>{t('系统提示 已设')}</span>
+        )}
 
         <span className='pgw2-kbd-hint'>
           {t('Enter 发送 · Shift+Enter 换行')}
