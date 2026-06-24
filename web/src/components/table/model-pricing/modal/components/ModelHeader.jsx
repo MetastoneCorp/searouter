@@ -29,7 +29,7 @@ const CARD_STYLES = {
   icon: 'w-8 h-8 flex items-center justify-center',
 };
 
-const ModelHeader = ({ modelData, vendorsMap = {}, t }) => {
+const ModelHeader = ({ modelData, vendorsMap = {}, t, large = false }) => {
   // 获取模型图标（优先模型图标，其次供应商图标）
   const getModelIcon = () => {
     // 1) 优先使用模型自定义图标
@@ -79,7 +79,10 @@ const ModelHeader = ({ modelData, vendorsMap = {}, t }) => {
       <div className='ml-3 font-normal'>
         <Paragraph
           className='!mb-0 !font-medium'
-          style={{ fontSize: '14px' }}
+          style={{
+            fontSize: large ? '18px' : '14px',
+            color: large ? '#1f2937' : undefined,
+          }}
           copyable={{
             content: modelData?.model_name || '',
             onCopy: () => Toast.success({ content: t('已复制模型名称') }),

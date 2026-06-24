@@ -18,11 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Card, Avatar, Typography, Tag, Space } from '@douyinfe/semi-ui';
-import { IconInfoCircle } from '@douyinfe/semi-icons';
+import { Tag, Space } from '@douyinfe/semi-ui';
 import { stringToColor } from '../../../../../helpers';
-
-const { Text } = Typography;
 
 const ModelBasicInfo = ({ modelData, vendorsMap = {}, t }) => {
   // 获取模型描述（使用后端真实数据）
@@ -58,36 +55,19 @@ const ModelBasicInfo = ({ modelData, vendorsMap = {}, t }) => {
   };
 
   return (
-    <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
-      <div className='flex items-center mb-4'>
-        <Avatar size='small' color='blue' className='mr-2 shadow-md'>
-          <IconInfoCircle size={16} />
-        </Avatar>
-        <div>
-          <Text className='font-medium' style={{ fontSize: '14px' }}>
-            {t('基本信息')}
-          </Text>
-          <div
-            className='text-xs'
-            style={{ color: 'var(--semi-color-text-2)' }}
-          >
-            {t('模型的详细描述和基本特性')}
-          </div>
-        </div>
-      </div>
-      <div style={{ color: 'var(--semi-color-text-2)' }}>
-        <p className='mb-4'>{getModelDescription()}</p>
-        {getModelTags().length > 0 && (
-          <Space wrap>
-            {getModelTags().map((tag, index) => (
-              <Tag key={index} color={tag.color} shape='circle' size='small'>
-                {tag.text}
-              </Tag>
-            ))}
-          </Space>
-        )}
-      </div>
-    </Card>
+    <section className='dsec'>
+      <h4>{t('基本信息')}</h4>
+      <p>{getModelDescription()}</p>
+      {getModelTags().length > 0 && (
+        <Space wrap style={{ marginTop: 10 }}>
+          {getModelTags().map((tag, index) => (
+            <Tag key={index} color={tag.color} shape='circle' size='small'>
+              {tag.text}
+            </Tag>
+          ))}
+        </Space>
+      )}
+    </section>
   );
 };
 

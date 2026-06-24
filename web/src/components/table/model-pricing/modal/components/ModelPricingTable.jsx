@@ -18,11 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Card, Avatar, Typography, Table, Tag } from '@douyinfe/semi-ui';
-import { IconCoinMoneyStroked } from '@douyinfe/semi-icons';
+import { Table, Tag } from '@douyinfe/semi-ui';
 import { calculateModelPrice } from '../../../../../helpers';
-
-const { Text } = Typography;
 
 const ModelPricingTable = ({
   modelData,
@@ -193,23 +190,8 @@ const ModelPricingTable = ({
   };
 
   return (
-    <Card className='!rounded-2xl shadow-sm border-0'>
-      <div className='flex items-center mb-4'>
-        <Avatar size='small' color='orange' className='mr-2 shadow-md'>
-          <IconCoinMoneyStroked size={16} />
-        </Avatar>
-        <div>
-          <Text className='font-medium' style={{ fontSize: '14px' }}>
-            {t('分组价格')}
-          </Text>
-          <div
-            className='text-xs'
-            style={{ color: 'var(--semi-color-text-2)' }}
-          >
-            {t('不同用户分组的价格信息')}
-          </div>
-        </div>
-      </div>
+    <section className='dsec'>
+      <h4>{t('分组价格')}</h4>
       {autoChain.length > 0 && (
         <div className='flex flex-wrap items-center gap-1 mb-4'>
           <span
@@ -231,7 +213,7 @@ const ModelPricingTable = ({
         </div>
       )}
       {renderGroupPriceTable()}
-    </Card>
+    </section>
   );
 };
 

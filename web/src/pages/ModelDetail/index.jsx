@@ -21,6 +21,7 @@ import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useModelPricingData } from '../../hooks/model-pricing/useModelPricingData';
+import { calculateModelPrice } from '../../helpers';
 import ModelHeader from '../../components/table/model-pricing/modal/components/ModelHeader';
 import ModelBasicInfo from '../../components/table/model-pricing/modal/components/ModelBasicInfo';
 import ModelEndpoints from '../../components/table/model-pricing/modal/components/ModelEndpoints';
@@ -87,7 +88,12 @@ const NotFoundState = ({ modelName, onBack, t }) => (
   <div className='detail-wrap' style={{ textAlign: 'center', paddingTop: 80 }}>
     <div style={{ fontSize: 48, marginBottom: 16 }}>🔍</div>
     <div
-      style={{ fontSize: 18, fontWeight: 600, marginBottom: 8, color: 'var(--ink)' }}
+      style={{
+        fontSize: 18,
+        fontWeight: 600,
+        marginBottom: 8,
+        color: 'var(--ink)',
+      }}
     >
       {t('找不到模型')}
     </div>
@@ -146,6 +152,19 @@ const ModelDetailPage = () => {
   const isLoaded = !loading;
   // 数据加载完毕但找不到模型
   const notFound = isLoaded && !modelData;
+
+  // 价格（与模型广场列表卡片一致，按倍率计算输入/输出价格）
+  const priceData = useMemo(() => {
+    if (!modelData) return null;
+    return calculateModelPrice({
+      record: modelData,
+      selectedGroup: 'all',
+      groupRatio,
+      tokenUnit,
+      displayPrice,
+      currency,
+    });
+  }, [modelData, groupRatio, tokenUnit, displayPrice, currency]);
 
   const handleBack = () => {
     if (window.history.length > 2) {
@@ -243,6 +262,7 @@ const ModelDetailPage = () => {
             <ModelHeader
               modelData={modelData}
               vendorsMap={vendorsMap}
+              large
               t={t}
             />
           </div>
@@ -263,7 +283,7 @@ const ModelDetailPage = () => {
               {t('API 调用说明')}
             </button>
             <button
-              className='btn btn-ghost'
+              className='btn btn-primary'
               onClick={() => navigate('/console/playground')}
             >
               {t('立即体验')}
@@ -304,25 +324,28 @@ const ModelDetailPage = () => {
                 <span className='tag'>{t('按次计费')}</span>
               </div>
             )}
-            {modelData.quota_type === 0 && modelData.model_price != null && (
-              <div className='meta-item'>
-                <span className='mk'>{t('输入')}:</span>
-                <span className='mv price tnum'>
-                  {displayPrice(modelData.model_price)}
-                  {t('/千 tokens')}
-                </span>
-              </div>
-            )}
-            {modelData.quota_type === 0 &&
-              modelData.completion_price != null && (
+            {priceData?.isPerToken && (
+              <>
+                <div className='meta-item'>
+                  <span className='mk'>{t('输入')}:</span>
+                  <span className='mv price tnum'>
+                    {priceData.inputPrice} / 1{priceData.unitLabel} tokens
+                  </span>
+                </div>
                 <div className='meta-item'>
                   <span className='mk'>{t('输出')}:</span>
                   <span className='mv price tnum'>
-                    {displayPrice(modelData.completion_price)}
-                    {t('/千 tokens')}
+                    {priceData.completionPrice} / 1{priceData.unitLabel} tokens
                   </span>
                 </div>
-              )}
+              </>
+            )}
+            {priceData && !priceData.isPerToken && (
+              <div className='meta-item'>
+                <span className='mk'>{t('模型价格')}:</span>
+                <span className='mv price tnum'>{priceData.price}</span>
+              </div>
+            )}
           </div>
         )}
 
