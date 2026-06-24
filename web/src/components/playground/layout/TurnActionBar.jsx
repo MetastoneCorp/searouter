@@ -52,9 +52,7 @@ const TurnActionBar = ({
   const { t } = useTranslation();
   return (
     <div className='pgw2-actions'>
-      {canCopy && (
-        <ActionBtn icon={Copy} label={t('复制')} onClick={onCopy} />
-      )}
+      {canCopy && <ActionBtn icon={Copy} label={t('复制')} onClick={onCopy} />}
       {canRetry && role === 'assistant' && (
         <ActionBtn icon={RefreshCw} label={t('重生成')} onClick={onRetry} />
       )}

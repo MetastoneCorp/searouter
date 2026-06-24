@@ -18,17 +18,33 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { User, Sparkles, Settings2 } from 'lucide-react';
 
-// 文档流角色小帽：USER · ASSISTANT · SYSTEM；右侧可拼接 children（model meta、time）
+const ROLE_NAMES = { user: '用户', assistant: 'AI', system: '系统' };
+const ROLE_ICONS = { user: User, assistant: Sparkles, system: Settings2 };
+
+// 文档流角色帽：头像图标 + 名字（用户/AI/系统）在上、meta（model、time）在名字下方
 const RoleLabel = ({ role, tone = 'default', children }) => {
-  const text = (role || '').toUpperCase();
+  const { t } = useTranslation();
+  const name = ROLE_NAMES[role]
+    ? t(ROLE_NAMES[role])
+    : (role || '').toUpperCase();
+  const Icon = ROLE_ICONS[role];
   return (
-    <div className='flex items-center gap-2'>
-      <span className={`pgw2-role-text${tone === 'error' ? ' error' : ''}`}>
-        {text}
-      </span>
+    <div className='pgw2-role'>
+      {Icon && (
+        <span
+          className={`pgw2-role-avatar pgw2-role-avatar--${role}`}
+          title={name}
+        >
+          <Icon size={15} strokeWidth={2} />
+        </span>
+      )}
       {children && (
-        <span className='pgw2-role-meta'>{children}</span>
+        <span className={`pgw2-role-meta${tone === 'error' ? ' error' : ''}`}>
+          {children}
+        </span>
       )}
     </div>
   );

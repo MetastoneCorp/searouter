@@ -41,21 +41,20 @@ const TurnReasoningBlock = ({
 
   return (
     <div className='pgw2-reasoning'>
-      <button
-        type='button'
-        onClick={onToggle}
-        className='pgw2-reasoning-hd'
-      >
-        <Brain
-          size={14}
-          strokeWidth={2}
-          className='ico'
-        />
+      <button type='button' onClick={onToggle} className='pgw2-reasoning-hd'>
+        <Brain size={14} strokeWidth={2} className='ico' />
         <span>{t('Thinking')}</span>
         {!isThinkingComplete && (
           <span aria-hidden='true' className='pgw2-reasoning-dot' />
         )}
-        <span style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', color: 'var(--ink-3)' }}>
+        <span
+          style={{
+            marginLeft: 'auto',
+            display: 'inline-flex',
+            alignItems: 'center',
+            color: 'var(--ink-3)',
+          }}
+        >
           {open ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
         </span>
       </button>

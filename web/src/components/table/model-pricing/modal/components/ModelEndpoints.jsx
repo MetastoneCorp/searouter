@@ -18,10 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Card, Avatar, Typography, Badge } from '@douyinfe/semi-ui';
-import { IconLink } from '@douyinfe/semi-icons';
-
-const { Text } = Typography;
+import { Badge } from '@douyinfe/semi-ui';
 
 const ModelEndpoints = ({ modelData, endpointMap = {}, t }) => {
   const renderAPIEndpoints = () => {
@@ -72,25 +69,10 @@ const ModelEndpoints = ({ modelData, endpointMap = {}, t }) => {
   };
 
   return (
-    <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
-      <div className='flex items-center mb-4'>
-        <Avatar size='small' color='purple' className='mr-2 shadow-md'>
-          <IconLink size={16} />
-        </Avatar>
-        <div>
-          <Text className='font-medium' style={{ fontSize: '14px' }}>
-            {t('API端点')}
-          </Text>
-          <div
-            className='text-xs'
-            style={{ color: 'var(--semi-color-text-2)' }}
-          >
-            {t('模型支持的接口端点信息')}
-          </div>
-        </div>
-      </div>
+    <section className='dsec'>
+      <h4>{t('API端点')}</h4>
       {renderAPIEndpoints()}
-    </Card>
+    </section>
   );
 };
 

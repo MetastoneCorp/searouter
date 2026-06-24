@@ -32,10 +32,7 @@ import {
 } from '../../helpers';
 import Turnstile from 'react-turnstile';
 import { Checkbox, Modal } from '@douyinfe/semi-ui';
-import {
-  IconGithubLogo,
-  IconLock,
-} from '@douyinfe/semi-icons';
+import { IconGithubLogo, IconLock } from '@douyinfe/semi-icons';
 import {
   onGitHubOAuthClicked,
   onLinuxDOOAuthClicked,
@@ -295,8 +292,14 @@ const RegisterForm = () => {
 
   const onTelegramLoginClicked = async (response) => {
     const fields = [
-      'id', 'first_name', 'last_name', 'username',
-      'photo_url', 'auth_date', 'hash', 'lang',
+      'id',
+      'first_name',
+      'last_name',
+      'username',
+      'photo_url',
+      'auth_date',
+      'hash',
+      'lang',
     ];
     const params = {};
     fields.forEach((field) => {
@@ -331,7 +334,16 @@ const RegisterForm = () => {
 
   const termsBlock = (hasUserAgreement || hasPrivacyPolicy) && (
     <div style={{ marginBottom: 18 }}>
-      <label style={{ display: 'flex', alignItems: 'flex-start', gap: 9, fontSize: 12.5, color: 'var(--ink-2)', cursor: 'pointer' }}>
+      <label
+        style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: 9,
+          fontSize: 12.5,
+          color: 'var(--ink-2)',
+          cursor: 'pointer',
+        }}
+      >
         <Checkbox
           checked={agreedToTerms}
           onChange={(e) => setAgreedToTerms(e.target.checked)}
@@ -340,15 +352,23 @@ const RegisterForm = () => {
         <span>
           {t('我已阅读并同意')}
           {hasUserAgreement && (
-            <a href='/user-agreement' target='_blank' rel='noopener noreferrer'
-              style={{ color: 'var(--brand-600)', margin: '0 3px' }}>
+            <a
+              href='/user-agreement'
+              target='_blank'
+              rel='noopener noreferrer'
+              style={{ color: 'var(--brand-600)', margin: '0 3px' }}
+            >
               {t('用户协议')}
             </a>
           )}
           {hasUserAgreement && hasPrivacyPolicy && t('和')}
           {hasPrivacyPolicy && (
-            <a href='/privacy-policy' target='_blank' rel='noopener noreferrer'
-              style={{ color: 'var(--brand-600)', margin: '0 3px' }}>
+            <a
+              href='/privacy-policy'
+              target='_blank'
+              rel='noopener noreferrer'
+              style={{ color: 'var(--brand-600)', margin: '0 3px' }}
+            >
               {t('隐私政策')}
             </a>
           )}
@@ -369,11 +389,23 @@ const RegisterForm = () => {
       centered={true}
       okButtonProps={{ loading: wechatCodeSubmitLoading }}
     >
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <img src={status.wechat_qrcode} alt='微信二维码' style={{ marginBottom: 16 }} />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <img
+          src={status.wechat_qrcode}
+          alt='微信二维码'
+          style={{ marginBottom: 16 }}
+        />
       </div>
       <div style={{ textAlign: 'center', marginBottom: 16 }}>
-        <p>{t('微信扫码关注公众号，输入「验证码」获取验证码（三分钟内有效）')}</p>
+        <p>
+          {t('微信扫码关注公众号，输入「验证码」获取验证码（三分钟内有效）')}
+        </p>
       </div>
       <div>
         <div className='lg2-ipt-group'>
@@ -382,7 +414,9 @@ const RegisterForm = () => {
             <input
               placeholder={t('验证码')}
               value={inputs.wechat_verification_code}
-              onChange={(e) => handleChange('wechat_verification_code', e.target.value)}
+              onChange={(e) =>
+                handleChange('wechat_verification_code', e.target.value)
+              }
             />
           </div>
         </div>
@@ -394,37 +428,63 @@ const RegisterForm = () => {
   const oauthButtons = (
     <div>
       {status.wechat_login && (
-        <button className='lg2-oauth-btn' onClick={onWeChatLoginClicked} disabled={wechatLoading}>
-          <span style={{ color: '#07C160', display: 'flex', alignItems: 'center' }}><WeChatIcon /></span>
+        <button
+          className='lg2-oauth-btn'
+          onClick={onWeChatLoginClicked}
+          disabled={wechatLoading}
+        >
+          <span
+            style={{ color: '#07C160', display: 'flex', alignItems: 'center' }}
+          >
+            <WeChatIcon />
+          </span>
           {t('使用 微信 继续')}
         </button>
       )}
       {status.github_oauth && (
-        <button className='lg2-oauth-btn' onClick={handleGitHubClick} disabled={githubLoading || githubButtonDisabled}>
+        <button
+          className='lg2-oauth-btn'
+          onClick={handleGitHubClick}
+          disabled={githubLoading || githubButtonDisabled}
+        >
           <IconGithubLogo size='large' />
           {githubButtonText}
         </button>
       )}
       {status.discord_oauth && (
-        <button className='lg2-oauth-btn' onClick={handleDiscordClick} disabled={discordLoading}>
+        <button
+          className='lg2-oauth-btn'
+          onClick={handleDiscordClick}
+          disabled={discordLoading}
+        >
           <SiDiscord style={{ color: '#5865F2', width: 20, height: 20 }} />
           {t('使用 Discord 继续')}
         </button>
       )}
       {status.oidc_enabled && (
-        <button className='lg2-oauth-btn' onClick={handleOIDCClick} disabled={oidcLoading}>
+        <button
+          className='lg2-oauth-btn'
+          onClick={handleOIDCClick}
+          disabled={oidcLoading}
+        >
           <OIDCIcon style={{ color: '#1877F2' }} />
           {t('使用 OIDC 继续')}
         </button>
       )}
       {status.linuxdo_oauth && (
-        <button className='lg2-oauth-btn' onClick={handleLinuxDOClick} disabled={linuxdoLoading}>
+        <button
+          className='lg2-oauth-btn'
+          onClick={handleLinuxDOClick}
+          disabled={linuxdoLoading}
+        >
           <LinuxDoIcon style={{ color: '#E95420', width: 20, height: 20 }} />
           {t('使用 LinuxDO 继续')}
         </button>
       )}
       {status.telegram_oauth && (
-        <div style={{ display: 'flex', justifyContent: 'center', margin: '8px 0' }}>
+        <div
+          style={{ display: 'flex', justifyContent: 'center', margin: '8px 0' }}
+        >
           <TelegramLoginButton
             dataOnauth={onTelegramLoginClicked}
             botName={status.telegram_bot_name}
@@ -460,9 +520,17 @@ const RegisterForm = () => {
             autoComplete='new-password'
           />
           <span className='eye' onClick={() => setShowPassword(!showPassword)}>
-            <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8'>
-              <path d='M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/>
-              {!showPassword && <path d='m3 3 18 18' strokeWidth='1.6'/>}
+            <svg
+              width='18'
+              height='18'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='1.8'
+            >
+              <path d='M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z' />
+              <circle cx='12' cy='12' r='3' />
+              {!showPassword && <path d='m3 3 18 18' strokeWidth='1.6' />}
             </svg>
           </span>
         </div>
@@ -478,10 +546,21 @@ const RegisterForm = () => {
             onChange={(e) => handleChange('password2', e.target.value)}
             autoComplete='new-password'
           />
-          <span className='eye' onClick={() => setShowPassword2(!showPassword2)}>
-            <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8'>
-              <path d='M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/>
-              {!showPassword2 && <path d='m3 3 18 18' strokeWidth='1.6'/>}
+          <span
+            className='eye'
+            onClick={() => setShowPassword2(!showPassword2)}
+          >
+            <svg
+              width='18'
+              height='18'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='1.8'
+            >
+              <path d='M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z' />
+              <circle cx='12' cy='12' r='3' />
+              {!showPassword2 && <path d='m3 3 18 18' strokeWidth='1.6' />}
             </svg>
           </span>
         </div>
@@ -506,7 +585,9 @@ const RegisterForm = () => {
                 onClick={sendVerificationCode}
                 disabled={disableButton || verificationCodeLoading}
               >
-                {disableButton ? `${t('重新发送')} (${countdown})` : t('获取验证码')}
+                {disableButton
+                  ? `${t('重新发送')} (${countdown})`
+                  : t('获取验证码')}
               </button>
             </div>
           </div>
@@ -516,7 +597,9 @@ const RegisterForm = () => {
               <input
                 placeholder={t('输入验证码')}
                 value={inputs.verification_code}
-                onChange={(e) => handleChange('verification_code', e.target.value)}
+                onChange={(e) =>
+                  handleChange('verification_code', e.target.value)
+                }
               />
             </div>
           </div>
@@ -528,7 +611,10 @@ const RegisterForm = () => {
       <button
         type='submit'
         className='lg2-submit'
-        disabled={registerLoading || ((hasUserAgreement || hasPrivacyPolicy) && !agreedToTerms)}
+        disabled={
+          registerLoading ||
+          ((hasUserAgreement || hasPrivacyPolicy) && !agreedToTerms)
+        }
         style={{ marginBottom: 10 }}
       >
         {registerLoading ? t('注册中...') : t('注册')}
@@ -548,8 +634,7 @@ const RegisterForm = () => {
       )}
 
       <div className='lg2-foot'>
-        {t('已有账户？')}{' '}
-        <Link to='/login'>{t('登录')}</Link>
+        {t('已有账户？')} <Link to='/login'>{t('登录')}</Link>
       </div>
     </form>
   );
@@ -562,13 +647,17 @@ const RegisterForm = () => {
       <button
         className='lg2-oauth-btn'
         onClick={() => setShowEmailRegister(true)}
-        style={{ fontWeight: 600, background: 'var(--ink)', color: '#fff', border: 0 }}
+        style={{
+          fontWeight: 600,
+          background: 'var(--ink)',
+          color: '#fff',
+          border: 0,
+        }}
       >
         {t('使用 用户名 注册')}
       </button>
       <div className='lg2-foot'>
-        {t('已有账户？')}{' '}
-        <Link to='/login'>{t('登录')}</Link>
+        {t('已有账户？')} <Link to='/login'>{t('登录')}</Link>
       </div>
     </div>
   );
@@ -583,18 +672,37 @@ const RegisterForm = () => {
         {/* 左上角 logo */}
         <div className='brand'>
           <span className='lg'>
-            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-              <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
-              <path d='M4 11l8-6 8 6'/>
-              <path d='M6 11v4M18 11v4'/>
+            <svg
+              width='24'
+              height='24'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            >
+              <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2' />
+              <path d='M4 11l8-6 8 6' />
+              <path d='M6 11v4M18 11v4' />
             </svg>
           </span>
-          <span style={{ fontSize: 36, fontWeight: 700, color: '#fff' }}>{systemName}</span>
+          <span style={{ fontSize: 36, fontWeight: 700, color: '#fff' }}>
+            {systemName}
+          </span>
         </div>
         {/* 左下角文案 */}
         <div className='lg2-hero-copy'>
-          <h1>{t('统一云端')}<br/>{t('守护边缘')}</h1>
-          <p>{t('企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率')}</p>
+          <h1>
+            {t('统一云端')}
+            <br />
+            {t('守护边缘')}
+          </h1>
+          <p>
+            {t(
+              '企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率',
+            )}
+          </p>
         </div>
       </div>
 
@@ -603,10 +711,19 @@ const RegisterForm = () => {
         <div className='lg2-form'>
           <div className='lhead'>
             <span className='lg'>
-              <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-                <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
-                <path d='M4 11l8-6 8 6'/>
-                <path d='M6 11v4M18 11v4'/>
+              <svg
+                width='22'
+                height='22'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              >
+                <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2' />
+                <path d='M4 11l8-6 8 6' />
+                <path d='M6 11v4M18 11v4' />
               </svg>
             </span>
             {systemName}
@@ -618,7 +735,13 @@ const RegisterForm = () => {
         </div>
 
         {turnstileEnabled && (
-          <div style={{ display: 'flex', justifyContent: 'center', padding: '16px 0' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              padding: '16px 0',
+            }}
+          >
             <Turnstile
               sitekey={turnstileSiteKey}
               onVerify={(token) => setTurnstileToken(token)}

@@ -85,7 +85,9 @@ const PlaygroundShell = ({
   const withTransition = useViewTransition();
 
   const isEmpty = !Array.isArray(message) || message.length === 0;
-  const hasSystemPrompt = !!(inputs?.systemPrompt && inputs.systemPrompt.trim());
+  const hasSystemPrompt = !!(
+    inputs?.systemPrompt && inputs.systemPrompt.trim()
+  );
 
   // 守卫：未登录无 Key 时阻止发送
   const guardSend = (content) => {
@@ -164,8 +166,7 @@ const PlaygroundShell = ({
         <div
           className='pgw2-active-wrap'
           style={{
-            height:
-              'calc(100dvh - var(--isuanova-header-height) - 56px)',
+            height: 'calc(100dvh - var(--isuanova-header-height) - 56px)',
           }}
         >
           <PlaygroundErrorBoundary onReset={onClearMessages}>

@@ -17,11 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
-import React, {
-  useContext,
-  useEffect,
-  useCallback,
-} from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Toast } from '@douyinfe/semi-ui';
@@ -106,7 +102,13 @@ const Playground = () => {
   );
 
   // 数据加载
-  useDataLoader(userState, inputs, handleInputChange, state.setModels, state.setGroups);
+  useDataLoader(
+    userState,
+    inputs,
+    handleInputChange,
+    state.setModels,
+    state.setGroups,
+  );
 
   // 消息编辑
   const {

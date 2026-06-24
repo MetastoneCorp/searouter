@@ -104,18 +104,37 @@ const PasswordResetForm = () => {
         {/* 左上角 logo */}
         <div className='brand'>
           <span className='lg'>
-            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-              <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
-              <path d='M4 11l8-6 8 6'/>
-              <path d='M6 11v4M18 11v4'/>
+            <svg
+              width='24'
+              height='24'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            >
+              <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2' />
+              <path d='M4 11l8-6 8 6' />
+              <path d='M6 11v4M18 11v4' />
             </svg>
           </span>
-          <span style={{ fontSize: 36, fontWeight: 700, color: '#fff' }}>{systemName}</span>
+          <span style={{ fontSize: 36, fontWeight: 700, color: '#fff' }}>
+            {systemName}
+          </span>
         </div>
         {/* 左下角文案 */}
         <div className='lg2-hero-copy'>
-          <h1>{t('统一云端')}<br/>{t('守护边缘')}</h1>
-          <p>{t('企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率')}</p>
+          <h1>
+            {t('统一云端')}
+            <br />
+            {t('守护边缘')}
+          </h1>
+          <p>
+            {t(
+              '企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率',
+            )}
+          </p>
         </div>
       </div>
 
@@ -124,10 +143,19 @@ const PasswordResetForm = () => {
         <div className='lg2-form'>
           <div className='lhead'>
             <span className='lg'>
-              <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-                <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
-                <path d='M4 11l8-6 8 6'/>
-                <path d='M6 11v4M18 11v4'/>
+              <svg
+                width='22'
+                height='22'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              >
+                <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2' />
+                <path d='M4 11l8-6 8 6' />
+                <path d='M6 11v4M18 11v4' />
               </svg>
             </span>
             {systemName}
@@ -157,18 +185,25 @@ const PasswordResetForm = () => {
             >
               {disableButton
                 ? `${t('重试')} (${countdown})`
-                : loading ? t('提交中...') : t('提交')}
+                : loading
+                  ? t('提交中...')
+                  : t('提交')}
             </button>
           </form>
 
           <div className='lg2-foot'>
-            {t('想起来了？')}{' '}
-            <Link to='/login'>{t('登录')}</Link>
+            {t('想起来了？')} <Link to='/login'>{t('登录')}</Link>
           </div>
         </div>
 
         {turnstileEnabled && (
-          <div style={{ display: 'flex', justifyContent: 'center', padding: '16px 0' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              padding: '16px 0',
+            }}
+          >
             <Turnstile
               sitekey={turnstileSiteKey}
               onVerify={(token) => setTurnstileToken(token)}

@@ -36,8 +36,15 @@ const ParameterControl = ({
       className={`toggle${parameterEnabled[paramKey] ? ' on' : ''}`}
       onClick={() => onParameterToggle(paramKey)}
       disabled={disabled}
-      style={{ opacity: disabled ? 0.4 : 1, cursor: disabled ? 'not-allowed' : 'pointer' }}
-      title={parameterEnabled[paramKey] ? t('已启用，点击禁用') : t('已禁用，点击启用')}
+      style={{
+        opacity: disabled ? 0.4 : 1,
+        cursor: disabled ? 'not-allowed' : 'pointer',
+      }}
+      title={
+        parameterEnabled[paramKey]
+          ? t('已启用，点击禁用')
+          : t('已禁用，点击启用')
+      }
     />
   );
 
@@ -45,7 +52,11 @@ const ParameterControl = ({
     <>
       {/* Temperature */}
       <div
-        style={{ opacity: !parameterEnabled.temperature || disabled ? 0.5 : 1, transition: 'opacity .2s', marginBottom: 16 }}
+        style={{
+          opacity: !parameterEnabled.temperature || disabled ? 0.5 : 1,
+          transition: 'opacity .2s',
+          marginBottom: 16,
+        }}
       >
         <div className='param-head'>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -67,7 +78,11 @@ const ParameterControl = ({
 
       {/* Top P */}
       <div
-        style={{ opacity: !parameterEnabled.top_p || disabled ? 0.5 : 1, transition: 'opacity .2s', marginBottom: 16 }}
+        style={{
+          opacity: !parameterEnabled.top_p || disabled ? 0.5 : 1,
+          transition: 'opacity .2s',
+          marginBottom: 16,
+        }}
       >
         <div className='param-head'>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -89,7 +104,11 @@ const ParameterControl = ({
 
       {/* Frequency Penalty */}
       <div
-        style={{ opacity: !parameterEnabled.frequency_penalty || disabled ? 0.5 : 1, transition: 'opacity .2s', marginBottom: 16 }}
+        style={{
+          opacity: !parameterEnabled.frequency_penalty || disabled ? 0.5 : 1,
+          transition: 'opacity .2s',
+          marginBottom: 16,
+        }}
       >
         <div className='param-head'>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -111,7 +130,11 @@ const ParameterControl = ({
 
       {/* Presence Penalty */}
       <div
-        style={{ opacity: !parameterEnabled.presence_penalty || disabled ? 0.5 : 1, transition: 'opacity .2s', marginBottom: 16 }}
+        style={{
+          opacity: !parameterEnabled.presence_penalty || disabled ? 0.5 : 1,
+          transition: 'opacity .2s',
+          marginBottom: 16,
+        }}
       >
         <div className='param-head'>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -133,7 +156,11 @@ const ParameterControl = ({
 
       {/* Max Tokens */}
       <div
-        style={{ opacity: !parameterEnabled.max_tokens || disabled ? 0.5 : 1, transition: 'opacity .2s', marginBottom: 16 }}
+        style={{
+          opacity: !parameterEnabled.max_tokens || disabled ? 0.5 : 1,
+          transition: 'opacity .2s',
+          marginBottom: 16,
+        }}
       >
         <div className='param-head' style={{ marginBottom: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -155,13 +182,19 @@ const ParameterControl = ({
 
       {/* Seed */}
       <div
-        style={{ opacity: !parameterEnabled.seed || disabled ? 0.5 : 1, transition: 'opacity .2s', marginBottom: 16 }}
+        style={{
+          opacity: !parameterEnabled.seed || disabled ? 0.5 : 1,
+          transition: 'opacity .2s',
+          marginBottom: 16,
+        }}
       >
         <div className='param-head' style={{ marginBottom: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <ToggleBtn paramKey='seed' />
             <span>Seed</span>
-            <span className='helper' style={{ margin: 0, fontSize: 12 }}>({t('可选，用于复现结果')})</span>
+            <span className='helper' style={{ margin: 0, fontSize: 12 }}>
+              ({t('可选，用于复现结果')})
+            </span>
           </div>
         </div>
         <Input

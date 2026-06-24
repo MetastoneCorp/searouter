@@ -63,7 +63,8 @@ const PageLayout = () => {
   // 认证页面（登录/注册/重置）隐藏顶栏和页脚，自带独立布局
   const authRoutes = ['/login', '/register', '/reset', '/user/reset'];
   const isAuthRoute = authRoutes.some(
-    (route) => location.pathname === route || location.pathname.startsWith(route + '/'),
+    (route) =>
+      location.pathname === route || location.pathname.startsWith(route + '/'),
   );
 
   // 首页(Landing)自带新设计的页脚；操练场底部为聊天框 —— 均隐藏全局 FooterBar

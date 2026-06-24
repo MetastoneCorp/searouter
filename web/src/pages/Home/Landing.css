@@ -6,17 +6,34 @@
 
 /* ==================== 字体族 ==================== */
 .lp {
-  --lp-yahei: 'Noto Sans SC', 'Microsoft YaHei', 'Microsoft YaHei UI', 'PingFang SC', 'HarmonyOS Sans',
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --lp-mono: 'NSimSun', 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+  --lp-yahei:
+    'Noto Sans SC', 'Microsoft YaHei', 'Microsoft YaHei UI', 'PingFang SC',
+    'HarmonyOS Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui,
+    sans-serif;
+  --lp-mono:
+    'NSimSun', 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, Consolas,
+    monospace;
   --lp-maxw: 1440px;
 
   font-family: var(--lp-yahei);
   background: #fff;
-  /* 顶页径向渐变（右上 + 左下淡蓝）—— 对齐 Figma 根节点背景 */
+  /* Figma 整页背景 418:2427：右上 + 左下淡蓝光晕（真实半径 1844×8319，从页面顶起，hero 自身背景盖住顶部，主内容区显示衰减后的浅蓝） */
   background-image:
-    radial-gradient(184px 832px at 100% 0%, rgba(211, 228, 254, 0.4), rgba(211, 228, 254, 0) 50%),
-    radial-gradient(184px 832px at 0% 100%, rgba(211, 228, 254, 0.3), rgba(211, 228, 254, 0) 50%),
+    radial-gradient(
+      1844px 8319px at 100% 0%,
+      rgba(211, 228, 254, 0.4) 0%,
+      rgba(211, 228, 254, 0) 50%
+    ),
+    radial-gradient(
+      1844px 1440px at 100% 0%,
+      rgba(211, 228, 254, 0.4) 0%,
+      rgba(211, 228, 254, 0) 50%
+    ),
+    radial-gradient(
+      1844px 8319px at 0% 100%,
+      rgba(211, 228, 254, 0.3) 0%,
+      rgba(211, 228, 254, 0) 60%
+    ),
     linear-gradient(#fff, #fff);
   color: #202124;
   overflow-x: hidden;
@@ -31,6 +48,16 @@
   gap: 64px;
 }
 
+/* 快速开始 + 客户端配置：透明，叠加在 .lp-main 的整页光晕之上（背景由 .lp-main::before 提供） */
+.lp-flow {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
 /* ==================== 1. Hero ==================== */
 .lp-hero {
   position: relative;
@@ -39,21 +66,157 @@
   margin: 0 auto;
   height: 900px;
   overflow: hidden;
+  /* 设计：白底 + 右上/左下淡蓝径向光晕 + 右侧抽象流线插画（锚定居中 1440 设计列右边缘，超宽不放大） */
+  background:
+    url(/home/hero-lines.svg) right calc((100vw - var(--lp-maxw)) / 2) top /
+      auto 100% no-repeat,
+    radial-gradient(
+        1200px 900px at 100% 0%,
+        rgba(211, 228, 254, 0.4) 0%,
+        rgba(211, 228, 254, 0) 60%
+      )
+      right top / 100% 100% no-repeat,
+    radial-gradient(
+        1200px 900px at 0% 100%,
+        rgba(211, 228, 254, 0.6) 0%,
+        rgba(211, 228, 254, 0) 67%
+      )
+      left bottom / 100% 100% no-repeat,
+    #ffffff;
+}
+
+/* ==================== 顶部导航 lp-nav ==================== */
+.lp-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 80px;
+  box-sizing: border-box;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.lp-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.lp-nav-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.lp-nav-name {
+  font-family: 'Roboto', 'Microsoft YaHei', system-ui, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #015bba;
+  letter-spacing: -0.2px;
+}
+
+.lp-nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 46px;
+}
+
+.lp-nav-tab {
+  position: relative;
+  padding-bottom: 6px;
+  font-family: var(--lp-yahei);
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.14s;
+}
+
+.lp-nav-tab:hover {
+  color: #015bba;
+}
+
+.lp-nav-tab--active {
+  color: #015bba;
+  border-bottom: 2px solid #015bba;
+}
+
+.lp-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lp-nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.14s;
+}
+
+.lp-nav-icon:hover {
+  color: #015bba;
+}
+
+.lp-nav-divider {
+  width: 1px;
+  height: 32px;
+  background: #e2e8f0;
+}
+
+.lp-nav-login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 24px;
+  border-radius: 8px;
+  background: #015bba;
+  color: #fff;
+  font-family: var(--lp-yahei);
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  transition: opacity 0.14s;
+}
+
+.lp-nav-login:hover {
+  opacity: 0.92;
 }
 
 .lp-hero--a {
   /* 图按高度铺满(=设计 1440×900)、居中对齐内容列，超宽不放大；左右各用与图对应边缘列同色的竖向渐变填充，任意屏宽都无缝 */
   background:
     url(/home-hero.webp) center top / auto 100% no-repeat,
-    linear-gradient(180deg, #fafcfe 0%, #eef6fc 100%) left top / 50.5% 100% no-repeat,
-    linear-gradient(180deg, #e8f2fa 0%, #c8e0f5 100%) right top / 50.5% 100% no-repeat;
+    linear-gradient(180deg, #fafcfe 0%, #eef6fc 100%) left top / 50.5% 100%
+      no-repeat,
+    linear-gradient(180deg, #e8f2fa 0%, #c8e0f5 100%) right top / 50.5% 100%
+      no-repeat;
 }
 
 .lp-hero--b {
   background:
     url(/home/home-hero2.webp) center top / auto 100% no-repeat,
-    linear-gradient(180deg, #f9f9f9 0%, #f6f5f8 100%) left top / 50.5% 100% no-repeat,
-    linear-gradient(180deg, #ececf0 0%, #e7ecf3 100%) right top / 50.5% 100% no-repeat;
+    linear-gradient(180deg, #f9f9f9 0%, #f6f5f8 100%) left top / 50.5% 100%
+      no-repeat,
+    linear-gradient(180deg, #ececf0 0%, #e7ecf3 100%) right top / 50.5% 100%
+      no-repeat;
 }
 
 .lp-hero-inner {
@@ -118,7 +281,12 @@
   width: 160px;
   height: 48px;
   border-radius: 8px;
-  background: linear-gradient(107.62deg, #015bba 4.72%, #386ae8 58.81%, #5dd4ff 110.15%);
+  background: linear-gradient(
+    107.62deg,
+    #015bba 4.72%,
+    #386ae8 58.81%,
+    #5dd4ff 110.15%
+  );
   color: #fff;
   font-size: 18px;
   font-weight: 700;
@@ -156,7 +324,7 @@
 
 /* ---- Hero slide 2（统一云端 守护边缘 + AI 云） ---- */
 .lp-hero-inner2 {
-  top: 161px;
+  top: 210px;
   gap: 40px;
 }
 
@@ -190,8 +358,8 @@
   gap: 24px;
   align-items: center;
   font-family: var(--lp-yahei);
-  font-size: 96px;
-  line-height: 104px;
+  font-size: 84px;
+  line-height: 92px;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -201,7 +369,12 @@
 }
 
 .lp-hero-title2-b {
-  background: linear-gradient(95.23deg, #186bc2 1.2%, #4a95eb 66.46%, #b5b0fe 98.02%);
+  background: linear-gradient(
+    95.23deg,
+    #186bc2 1.2%,
+    #4a95eb 66.46%,
+    #b5b0fe 98.02%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -226,16 +399,28 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 160px;
+  gap: 12px;
   height: 44px;
+  padding: 0 24px;
   border-radius: 8px;
-  background: linear-gradient(109.11deg, #015bba 4.72%, #386ae8 58.81%, #5dd4ff 110.15%);
+  background: linear-gradient(
+    109.49deg,
+    #015bba 4.72%,
+    #386ae8 58.81%,
+    #5dd4ff 110.15%
+  );
   color: #fff;
   font-size: 18px;
   font-weight: 700;
   text-decoration: none;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   transition: opacity 0.14s;
+}
+
+.lp-hero-btn2-primary .lp-hero-btn2-arrow {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
 .lp-hero-btn2-primary:hover {
@@ -325,7 +510,7 @@
 
 /* ==================== 3. 快速开始 ==================== */
 .lp-qs {
-  padding: 0 128px;
+  padding: 0 max(128px, calc(50vw - var(--lp-maxw) / 2 + 128px));
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -373,7 +558,12 @@
   width: 56px;
   height: 56px;
   border-radius: 14px;
-  background: linear-gradient(-44.26deg, #63b1f0 3.46%, #456fdb 41.17%, #003ec7 87.81%);
+  background: linear-gradient(
+    -44.26deg,
+    #63b1f0 3.46%,
+    #456fdb 41.17%,
+    #003ec7 87.81%
+  );
   display: grid;
   place-items: center;
   flex-shrink: 0;
@@ -482,7 +672,7 @@
 
 /* ==================== 4. 客户端配置示例 ==================== */
 .lp-cfg-wrap {
-  padding: 0 128px;
+  padding: 0 max(128px, calc(50vw - var(--lp-maxw) / 2 + 128px));
 }
 
 .lp-cfg {
@@ -499,14 +689,22 @@
   gap: 10px;
   padding: 16px 32px 16.8px;
   border-bottom: 0.8px solid rgba(28, 31, 35, 0.08);
-  background: linear-gradient(133.54deg, rgba(99, 102, 241, 0.05) 0%, rgba(99, 102, 241, 0) 100%);
+  background: linear-gradient(
+    133.54deg,
+    rgba(99, 102, 241, 0.05) 0%,
+    rgba(99, 102, 241, 0) 100%
+  );
 }
 
 .lp-cfg-head-ic {
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(129, 140, 248, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.15) 0%,
+    rgba(129, 140, 248, 0.1) 100%
+  );
   display: grid;
   place-items: center;
   flex-shrink: 0;
@@ -666,13 +864,8 @@
   flex-direction: column;
   gap: 32px;
   align-items: center;
-  /* 径向渐变背景（右上角淡蓝聚集） */
-  background-image: radial-gradient(
-    circle at 93% 8%,
-    rgba(167, 208, 255, 0.8) 0%,
-    rgba(205, 227, 255, 0.16) 26%,
-    rgba(243, 247, 255, 0) 60%
-  );
+  /* 100% 还原 Figma：右上中心透明 → 外圈 #A7D0FF 的旋转椭圆径向渐变（opacity 0.8），叠加在整页白底上 */
+  background: url(/home/partners-bg.svg) center / 100% 100% no-repeat;
 }
 
 .lp-partners-title {
@@ -913,9 +1106,6 @@
   flex-direction: column;
   gap: 32px;
   align-items: center;
-  background-image:
-    radial-gradient(184px 97px at 100% 0%, rgba(211, 228, 254, 0.4), rgba(211, 228, 254, 0) 50%),
-    radial-gradient(184px 97px at 0% 100%, rgba(211, 228, 254, 0.3), rgba(211, 228, 254, 0) 50%);
 }
 
 .lp-cmp-head {
@@ -1079,7 +1269,12 @@
   font-size: 40px;
   line-height: 48px;
   font-weight: 700;
-  background: linear-gradient(129.5deg, #186bc2 41.11%, #4a95eb 51.61%, #b5b0fe 56.43%);
+  background: linear-gradient(
+    129.5deg,
+    #186bc2 41.11%,
+    #4a95eb 51.61%,
+    #b5b0fe 56.43%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1107,7 +1302,12 @@
   width: 160px;
   padding: 8px 24px;
   border-radius: 8px;
-  background: linear-gradient(99.92deg, #015bba 1.38%, #386ae8 67.61%, #5dd4ff 109.89%);
+  background: linear-gradient(
+    99.92deg,
+    #015bba 1.38%,
+    #386ae8 67.61%,
+    #5dd4ff 109.89%
+  );
   color: #fff;
   font-size: 18px;
   line-height: 26px;
@@ -1136,7 +1336,9 @@
   line-height: 26px;
   font-weight: 700;
   text-decoration: none;
-  transition: border-color 0.14s, background 0.14s;
+  transition:
+    border-color 0.14s,
+    background 0.14s;
 }
 
 .lp-cta-btn-ghost:hover {
@@ -1341,4 +1543,3 @@
   margin-left: auto;
   margin-right: auto;
 }
-

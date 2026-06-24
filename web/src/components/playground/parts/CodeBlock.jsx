@@ -39,9 +39,7 @@ const CodeBlock = ({ content, language }) => {
 
   return (
     <div className='pgw2-code'>
-      {language && (
-        <div className='pgw2-code-lang'>{language}</div>
-      )}
+      {language && <div className='pgw2-code-lang'>{language}</div>}
       <pre className='pgw2-code pre'>
         <code>{content}</code>
       </pre>

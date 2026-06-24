@@ -101,15 +101,24 @@ const PreferencesSettings = ({ t }) => {
   return (
     <div className='card card-pad srv-block'>
       <div className='srv-sectitle'>
-        <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='var(--ink-2)' strokeWidth='1.8'>
-          <circle cx='12' cy='12' r='9'/>
-          <path d='M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18'/>
+        <svg
+          width='18'
+          height='18'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='var(--ink-2)'
+          strokeWidth='1.8'
+        >
+          <circle cx='12' cy='12' r='9' />
+          <path d='M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18' />
         </svg>
         {t('偏好设置')}
       </div>
       <div className='srv-secsub'>{t('界面语言和其他个人偏好')}</div>
 
-      <div className='srv-bar' style={{ marginTop: '18px' }}>{t('语言偏好')}</div>
+      <div className='srv-bar' style={{ marginTop: '18px' }}>
+        {t('语言偏好')}
+      </div>
       <select
         className='select'
         style={{ maxWidth: '280px' }}
@@ -124,7 +133,9 @@ const PreferencesSettings = ({ t }) => {
         ))}
       </select>
       <div className='helper' style={{ marginTop: '8px' }}>
-        {t('提示：语言偏好会同步到您登录的所有设备，并影响API返回的错误消息语言。')}
+        {t(
+          '提示：语言偏好会同步到您登录的所有设备，并影响API返回的错误消息语言。',
+        )}
       </div>
     </div>
   );

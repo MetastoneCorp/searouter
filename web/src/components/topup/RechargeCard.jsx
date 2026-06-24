@@ -114,7 +114,9 @@ const RechargeCard = ({
         </div>
         <div>
           <div className='k'>{t('历史消耗')}</div>
-          <div className='v tnum'>{renderQuota(userState?.user?.used_quota)}</div>
+          <div className='v tnum'>
+            {renderQuota(userState?.user?.used_quota)}
+          </div>
         </div>
         <div>
           <div className='k'>{t('请求次数')}</div>
@@ -123,7 +125,13 @@ const RechargeCard = ({
       </div>
 
       {statusLoading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: '32px 0' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '32px 0',
+          }}
+        >
           <Spin size='large' />
         </div>
       ) : enableOnlineTopUp || enableStripeTopUp ? (
@@ -150,22 +158,36 @@ const RechargeCard = ({
             <div className='helper'>
               {t('实付金额：')}
               {showAmountSkeleton ? (
-                <Skeleton.Title active style={{ width: 80, height: 16, display: 'inline-block' }} />
+                <Skeleton.Title
+                  active
+                  style={{ width: 80, height: 16, display: 'inline-block' }}
+                />
               ) : (
-                <span style={{ color: 'var(--danger)', fontWeight: 600 }}>{renderAmount()}</span>
+                <span style={{ color: 'var(--danger)', fontWeight: 600 }}>
+                  {renderAmount()}
+                </span>
               )}
             </div>
           </div>
 
           {/* 充值额度预设选项 */}
           <div>
-            <div className='field-label' style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div
+              className='field-label'
+              style={{ display: 'flex', alignItems: 'center', gap: 8 }}
+            >
               {t('选择充值额度')}
               {(() => {
                 const { symbol, rate, type } = getCurrencyConfig();
                 if (type === 'USD') return null;
                 return (
-                  <span style={{ color: 'var(--ink-3)', fontSize: 12, fontWeight: 400 }}>
+                  <span
+                    style={{
+                      color: 'var(--ink-3)',
+                      fontSize: 12,
+                      fontWeight: 400,
+                    }}
+                  >
                     (1 $ = {rate.toFixed(2)} {symbol})
                   </span>
                 );
@@ -208,14 +230,17 @@ const RechargeCard = ({
                     className={`srv-amt${selectedPreset === preset.value ? ' on' : ''}`}
                     onClick={() => {
                       selectPresetAmount(preset);
-                      if (inputRef.current) inputRef.current.value = preset.value;
+                      if (inputRef.current)
+                        inputRef.current.value = preset.value;
                     }}
                   >
                     <div className='a tnum'>
-                      {symbol}{formatLargeNumber(Math.round(displayValue * 100) / 100)}
+                      {symbol}
+                      {formatLargeNumber(Math.round(displayValue * 100) / 100)}
                     </div>
                     <div className='b'>
-                      {t('实付')} {symbol}{displayActualPay.toFixed(2)}，
+                      {t('实付')} {symbol}
+                      {displayActualPay.toFixed(2)}，
                       {discount < 1.0
                         ? `${t('节省')} ${symbol}${displaySave.toFixed(2)}`
                         : `${t('节省')} ${symbol}0.00`}
@@ -230,7 +255,15 @@ const RechargeCard = ({
           <div>
             <div className='field-label'>{t('选择支付方式')}</div>
             {payMethods && payMethods.length > 0 ? (
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: 12,
+                  flexWrap: 'wrap',
+                }}
+              >
                 <div className='srv-pay'>
                   {payMethods.map((payMethod) => {
                     const isStripe = payMethod.type === 'stripe';
@@ -249,14 +282,21 @@ const RechargeCard = ({
                       ) : payMethod.type === 'stripe' ? (
                         <SiStripe size={18} color='#635BFF' />
                       ) : (
-                        <CreditCard size={18} color={payMethod.color || 'var(--ink-2)'} />
+                        <CreditCard
+                          size={18}
+                          color={payMethod.color || 'var(--ink-2)'}
+                        />
                       );
 
                     const optEl = (
                       <label
                         key={payMethod.type}
                         className={`srv-payopt${isOn ? ' on' : ''}${disabled ? ' disabled' : ''}`}
-                        style={disabled ? { opacity: 0.45, cursor: 'not-allowed' } : {}}
+                        style={
+                          disabled
+                            ? { opacity: 0.45, cursor: 'not-allowed' }
+                            : {}
+                        }
                         onClick={() => {
                           if (!disabled) setSelectedPayWay(payMethod.type);
                         }}
@@ -275,7 +315,9 @@ const RechargeCard = ({
                         {optEl}
                       </Tooltip>
                     ) : (
-                      <React.Fragment key={payMethod.type}>{optEl}</React.Fragment>
+                      <React.Fragment key={payMethod.type}>
+                        {optEl}
+                      </React.Fragment>
                     );
                   })}
                 </div>
@@ -283,7 +325,11 @@ const RechargeCard = ({
                   className='btn btn-primary'
                   disabled={!selectedPayWay || paymentLoading}
                   onClick={() => selectedPayWay && preTopUp(selectedPayWay)}
-                  style={(!selectedPayWay || paymentLoading) ? { opacity: 0.55, cursor: 'not-allowed' } : {}}
+                  style={
+                    !selectedPayWay || paymentLoading
+                      ? { opacity: 0.55, cursor: 'not-allowed' }
+                      : {}
+                  }
                 >
                   {paymentLoading ? (
                     <span className='spin' style={{ width: 14, height: 14 }} />
@@ -292,14 +338,32 @@ const RechargeCard = ({
                 </button>
               </div>
             ) : (
-              <div style={{ color: 'var(--ink-3)', fontSize: 13, padding: '10px 14px', background: 'var(--surface-2)', borderRadius: 8, border: '1px dashed var(--border)' }}>
+              <div
+                style={{
+                  color: 'var(--ink-3)',
+                  fontSize: 13,
+                  padding: '10px 14px',
+                  background: 'var(--surface-2)',
+                  borderRadius: 8,
+                  border: '1px dashed var(--border)',
+                }}
+              >
                 {t('暂无可用的支付方式，请联系管理员配置')}
               </div>
             )}
           </div>
         </>
       ) : (
-        <div style={{ color: 'var(--ink-2)', fontSize: 13.5, padding: '14px 18px', background: 'var(--brand-50)', borderRadius: 8, border: '1px solid var(--brand-100)' }}>
+        <div
+          style={{
+            color: 'var(--ink-2)',
+            fontSize: 13.5,
+            padding: '14px 18px',
+            background: 'var(--brand-50)',
+            borderRadius: 8,
+            border: '1px solid var(--brand-100)',
+          }}
+        >
           {t('管理员未开启在线充值功能，请联系管理员开启或使用兑换码充值。')}
         </div>
       )}
@@ -308,7 +372,12 @@ const RechargeCard = ({
       {enableCreemTopUp && creemProducts.length > 0 && (
         <div>
           <div className='srv-bar'>{t('Creem 充值')}</div>
-          <div className='srv-plans' style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))' }}>
+          <div
+            className='srv-plans'
+            style={{
+              gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
+            }}
+          >
             {creemProducts.map((product, index) => (
               <div
                 key={index}
@@ -317,9 +386,12 @@ const RechargeCard = ({
                 onClick={() => creemPreTopUp(product)}
               >
                 <h4>{product.name}</h4>
-                <div className='desc'>{t('充值额度')}: {product.quota}</div>
+                <div className='desc'>
+                  {t('充值额度')}: {product.quota}
+                </div>
                 <div className='price' style={{ fontSize: 24 }}>
-                  {product.currency === 'EUR' ? '€' : '$'}{product.price}
+                  {product.currency === 'EUR' ? '€' : '$'}
+                  {product.price}
                 </div>
               </div>
             ))}
@@ -344,7 +416,9 @@ const RechargeCard = ({
             disabled={isSubmitting}
             style={isSubmitting ? { opacity: 0.55 } : {}}
           >
-            {isSubmitting && <span className='spin' style={{ width: 14, height: 14 }} />}
+            {isSubmitting && (
+              <span className='spin' style={{ width: 14, height: 14 }} />
+            )}
             {t('兑换额度')}
           </button>
         </div>
@@ -352,7 +426,12 @@ const RechargeCard = ({
           <div className='helper'>
             {t('在找兑换码？')}
             <span
-              style={{ color: 'var(--brand-600)', cursor: 'pointer', marginLeft: 4, textDecoration: 'underline' }}
+              style={{
+                color: 'var(--brand-600)',
+                cursor: 'pointer',
+                marginLeft: 4,
+                textDecoration: 'underline',
+              }}
               onClick={openTopUpLink}
             >
               {t('购买兑换码')}
@@ -369,7 +448,14 @@ const RechargeCard = ({
       <div className='page-head' style={{ marginBottom: 18 }}>
         <div>
           <div className='srv-sectitle'>
-            <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='var(--ink-2)' strokeWidth='1.8'>
+            <svg
+              width='18'
+              height='18'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='var(--ink-2)'
+              strokeWidth='1.8'
+            >
               <rect x='2' y='5' width='20' height='14' rx='2' />
               <path d='M2 10h20' />
             </svg>
@@ -386,31 +472,76 @@ const RechargeCard = ({
       {shouldShowSubscription ? (
         <>
           {/* Tab 切换 */}
-          <div style={{ display: 'flex', gap: 4, marginBottom: 16, background: 'var(--surface-2)', borderRadius: 8, padding: 3 }}>
+          <div
+            style={{
+              display: 'flex',
+              gap: 4,
+              marginBottom: 16,
+              background: 'var(--surface-2)',
+              borderRadius: 8,
+              padding: 3,
+            }}
+          >
             <button
               onClick={() => setActiveTab('subscription')}
               style={{
-                flex: 1, height: 34, border: 0, borderRadius: 6, fontSize: 13, fontWeight: 600,
-                background: activeTab === 'subscription' ? 'var(--surface)' : 'transparent',
-                color: activeTab === 'subscription' ? 'var(--brand-600)' : 'var(--ink-2)',
-                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-                boxShadow: activeTab === 'subscription' ? 'var(--sh-card)' : 'none',
+                flex: 1,
+                height: 34,
+                border: 0,
+                borderRadius: 6,
+                fontSize: 13,
+                fontWeight: 600,
+                background:
+                  activeTab === 'subscription'
+                    ? 'var(--surface)'
+                    : 'transparent',
+                color:
+                  activeTab === 'subscription'
+                    ? 'var(--brand-600)'
+                    : 'var(--ink-2)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 6,
+                boxShadow:
+                  activeTab === 'subscription' ? 'var(--sh-card)' : 'none',
               }}
             >
-              <Sparkles size={14} />{t('订阅套餐')}
+              <Sparkles size={14} />
+              {t('订阅套餐')}
             </button>
             <button
               onClick={() => setActiveTab('topup')}
               style={{
-                flex: 1, height: 34, border: 0, borderRadius: 6, fontSize: 13, fontWeight: 600,
-                background: activeTab === 'topup' ? 'var(--surface)' : 'transparent',
-                color: activeTab === 'topup' ? 'var(--brand-600)' : 'var(--ink-2)',
-                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                flex: 1,
+                height: 34,
+                border: 0,
+                borderRadius: 6,
+                fontSize: 13,
+                fontWeight: 600,
+                background:
+                  activeTab === 'topup' ? 'var(--surface)' : 'transparent',
+                color:
+                  activeTab === 'topup' ? 'var(--brand-600)' : 'var(--ink-2)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 6,
                 boxShadow: activeTab === 'topup' ? 'var(--sh-card)' : 'none',
               }}
             >
-              <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
-                <rect x='2' y='5' width='20' height='14' rx='2' /><path d='M2 10h20' />
+              <svg
+                width='14'
+                height='14'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+              >
+                <rect x='2' y='5' width='20' height='14' rx='2' />
+                <path d='M2 10h20' />
               </svg>
               {t('额度充值')}
             </button>

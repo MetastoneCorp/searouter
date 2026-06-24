@@ -401,7 +401,10 @@ const EditUserModal = (props) => {
           <div className='mb-3'>
             <div className='mb-1'>
               <Text size='small'>{t('金额')}</Text>
-              <Text size='small' type='tertiary'> ({t('仅用于换算，实际保存的是额度')})</Text>
+              <Text size='small' type='tertiary'>
+                {' '}
+                ({t('仅用于换算，实际保存的是额度')})
+              </Text>
             </div>
             <InputNumber
               prefix={getCurrencyConfig().symbol}
@@ -411,7 +414,9 @@ const EditUserModal = (props) => {
               onChange={(val) => {
                 setAddAmountLocal(val);
                 setAddQuotaLocal(
-                  val != null && val !== '' ? displayAmountToQuota(Math.abs(val)) * Math.sign(val) : '',
+                  val != null && val !== ''
+                    ? displayAmountToQuota(Math.abs(val)) * Math.sign(val)
+                    : '',
                 );
               }}
               style={{ width: '100%' }}
@@ -430,7 +435,11 @@ const EditUserModal = (props) => {
               setAddQuotaLocal(val);
               setAddAmountLocal(
                 val != null && val !== ''
-                  ? Number((quotaToDisplayAmount(Math.abs(val)) * Math.sign(val)).toFixed(2))
+                  ? Number(
+                      (
+                        quotaToDisplayAmount(Math.abs(val)) * Math.sign(val)
+                      ).toFixed(2),
+                    )
                   : '',
               );
             }}

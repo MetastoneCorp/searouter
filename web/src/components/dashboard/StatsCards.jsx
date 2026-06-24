@@ -23,7 +23,12 @@ import { VChart } from '@visactor/react-vchart';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const StatsCards = ({ groupedStatsData, loading, getTrendSpec, CHART_CONFIG }) => {
+const StatsCards = ({
+  groupedStatsData,
+  loading,
+  getTrendSpec,
+  CHART_CONFIG,
+}) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 

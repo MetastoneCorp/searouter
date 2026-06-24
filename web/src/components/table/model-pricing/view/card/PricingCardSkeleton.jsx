@@ -28,37 +28,64 @@ const PricingCardSkeleton = ({
   const placeholder = (
     <div className='model-grid'>
       {Array.from({ length: skeletonCount }).map((_, index) => (
-        <div key={index} className='mcard' style={{ gap: 14, pointerEvents: 'none' }}>
+        <div
+          key={index}
+          className='mcard'
+          style={{ gap: 14, pointerEvents: 'none' }}
+        >
           {/* 头部 */}
           <div className='mcard-top'>
             <Skeleton.Avatar
               size='large'
               style={{ width: 46, height: 46, borderRadius: 11, flexShrink: 0 }}
             />
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <Skeleton.Title style={{ width: `${100 + (index % 4) * 20}px`, height: 18 }} />
-              <Skeleton.Button style={{ width: 60, height: 18, borderRadius: 4 }} />
+            <div
+              style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 6,
+              }}
+            >
+              <Skeleton.Title
+                style={{ width: `${100 + (index % 4) * 20}px`, height: 18 }}
+              />
+              <Skeleton.Button
+                style={{ width: 60, height: 18, borderRadius: 4 }}
+              />
             </div>
           </div>
 
           {/* 价格区 */}
           <div className='mcard-price' style={{ gap: 8 }}>
             <div className='prow'>
-              <Skeleton.Button style={{ width: 40, height: 14, borderRadius: 4 }} />
-              <Skeleton.Button style={{ width: 120, height: 14, borderRadius: 4 }} />
+              <Skeleton.Button
+                style={{ width: 40, height: 14, borderRadius: 4 }}
+              />
+              <Skeleton.Button
+                style={{ width: 120, height: 14, borderRadius: 4 }}
+              />
             </div>
             <div className='prow'>
-              <Skeleton.Button style={{ width: 40, height: 14, borderRadius: 4 }} />
-              <Skeleton.Button style={{ width: 120, height: 14, borderRadius: 4 }} />
+              <Skeleton.Button
+                style={{ width: 40, height: 14, borderRadius: 4 }}
+              />
+              <Skeleton.Button
+                style={{ width: 120, height: 14, borderRadius: 4 }}
+              />
             </div>
           </div>
 
           {/* 底部 */}
           <div className='mcard-foot'>
             <div style={{ display: 'flex', gap: 6 }}>
-              <Skeleton.Button style={{ width: 60, height: 22, borderRadius: 4 }} />
+              <Skeleton.Button
+                style={{ width: 60, height: 22, borderRadius: 4 }}
+              />
               {index % 2 === 0 && (
-                <Skeleton.Button style={{ width: 50, height: 22, borderRadius: 4 }} />
+                <Skeleton.Button
+                  style={{ width: 50, height: 22, borderRadius: 4 }}
+                />
               )}
             </div>
           </div>

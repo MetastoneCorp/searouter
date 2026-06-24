@@ -64,7 +64,9 @@ const AboutContent = () => {
             <div className='about-timeline-dot'></div>
             <div className='about-timeline-content'>
               <span className='about-timeline-year'>2025</span>
-              <span className='about-timeline-text'>{t('about.story.founded')}</span>
+              <span className='about-timeline-text'>
+                {t('about.story.founded')}
+              </span>
             </div>
           </div>
           <div className='about-timeline-item'>
@@ -78,7 +80,9 @@ const AboutContent = () => {
             <div className='about-timeline-dot active'></div>
             <div className='about-timeline-content'>
               <span className='about-timeline-year'>2026</span>
-              <span className='about-timeline-text'>{t('about.story.now')}</span>
+              <span className='about-timeline-text'>
+                {t('about.story.now')}
+              </span>
             </div>
           </div>
         </div>
@@ -95,7 +99,10 @@ const AboutContent = () => {
         <div className='about-values-grid'>
           <div className='about-value-card'>
             <div className='about-value-icon'>
-              <IconTickCircle size={28} style={{ color: 'var(--semi-color-success)' }} />
+              <IconTickCircle
+                size={28}
+                style={{ color: 'var(--semi-color-success)' }}
+              />
             </div>
             <h3>{t('about.values.open.title')}</h3>
             <p>{t('about.values.open.desc')}</p>
@@ -181,7 +188,11 @@ const AboutContent = () => {
           <a href='/'>{t('about.footer.home')}</a>
           <a href='/console'>{t('about.footer.console')}</a>
           <a href='/pricing'>{t('about.footer.pricing')}</a>
-          <a href='https://github.com/searouter' target='_blank' rel='noopener noreferrer'>
+          <a
+            href='https://github.com/searouter'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             GitHub
           </a>
         </div>

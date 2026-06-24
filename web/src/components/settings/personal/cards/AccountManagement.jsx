@@ -66,7 +66,9 @@ const AccountManagement = ({
         showError(res.data.message || t('获取绑定信息失败'));
       }
     } catch (error) {
-      showError(error.response?.data?.message || error.message || t('获取绑定信息失败'));
+      showError(
+        error.response?.data?.message || error.message || t('获取绑定信息失败'),
+      );
     }
   };
 
@@ -79,7 +81,9 @@ const AccountManagement = ({
       onOk: async () => {
         setCustomOAuthLoading((prev) => ({ ...prev, [providerId]: true }));
         try {
-          const res = await API.delete(`/api/user/oauth/bindings/${providerId}`);
+          const res = await API.delete(
+            `/api/user/oauth/bindings/${providerId}`,
+          );
           if (res.data.success) {
             showSuccess(t('解绑成功'));
             await loadCustomOAuthBindings();
@@ -87,7 +91,9 @@ const AccountManagement = ({
             showError(res.data.message);
           }
         } catch (error) {
-          showError(error.response?.data?.message || error.message || t('操作失败'));
+          showError(
+            error.response?.data?.message || error.message || t('操作失败'),
+          );
         } finally {
           setCustomOAuthLoading((prev) => ({ ...prev, [providerId]: false }));
         }
@@ -120,31 +126,45 @@ const AccountManagement = ({
     <div className='card card-pad srv-block'>
       {/* 区块标题 */}
       <div className='srv-sectitle'>
-        <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='var(--ink-2)' strokeWidth='1.8'>
-          <circle cx='12' cy='8' r='4'/>
-          <path d='M4 21a8 8 0 0 1 16 0'/>
+        <svg
+          width='18'
+          height='18'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='var(--ink-2)'
+          strokeWidth='1.8'
+        >
+          <circle cx='12' cy='8' r='4' />
+          <path d='M4 21a8 8 0 0 1 16 0' />
         </svg>
         {t('账户管理')}
       </div>
       <div className='srv-secsub'>{t('账户绑定、安全设置和身份验证')}</div>
 
       {/* 账户绑定区域 */}
-      <div className='srv-bar' style={{ marginTop: '18px' }}>{t('账户绑定')}</div>
+      <div className='srv-bar' style={{ marginTop: '18px' }}>
+        {t('账户绑定')}
+      </div>
       <div className='srv-bind'>
         {/* 邮箱绑定 */}
         <div className='srv-bindcard'>
           <div className='l'>
             <span className='ic'>
-              <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8'>
-                <rect x='3' y='5' width='18' height='14' rx='2'/>
-                <path d='m3 7 9 6 9-6'/>
+              <svg
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='1.8'
+              >
+                <rect x='3' y='5' width='18' height='14' rx='2' />
+                <path d='m3 7 9 6 9-6' />
               </svg>
             </span>
             <div>
               <div className='nm'>{t('邮箱')}</div>
-              <div className='st'>
-                {userState.user?.email || t('未绑定')}
-              </div>
+              <div className='st'>{userState.user?.email || t('未绑定')}</div>
             </div>
           </div>
           <a onClick={() => setShowEmailBindModal(true)}>
@@ -156,8 +176,15 @@ const AccountManagement = ({
         <div className='srv-bindcard'>
           <div className='l'>
             <span className='ic'>
-              <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8'>
-                <path d='M8 12a4 4 0 1 1 8 0M5 9a7 7 0 0 1 14 0c0 5-3 7-3 7H8s-3-2-3-7z'/>
+              <svg
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='1.8'
+              >
+                <path d='M8 12a4 4 0 1 1 8 0M5 9a7 7 0 0 1 14 0c0 5-3 7-3 7H8s-3-2-3-7z' />
               </svg>
             </span>
             <div>
@@ -184,8 +211,15 @@ const AccountManagement = ({
         <div className='srv-bindcard'>
           <div className='l'>
             <span className='ic'>
-              <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8'>
-                <path d='M9 19c-4 1.5-4-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.3 4.3 0 0 0-.1-3.2s-1-.3-3.5 1.3a12 12 0 0 0-6 0C6.6 2 5.6 2.3 5.6 2.3a4.3 4.3 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 8.7c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V20'/>
+              <svg
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='1.8'
+              >
+                <path d='M9 19c-4 1.5-4-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.3 4.3 0 0 0-.1-3.2s-1-.3-3.5 1.3a12 12 0 0 0-6 0C6.6 2 5.6 2.3 5.6 2.3a4.3 4.3 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 8.7c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V20' />
               </svg>
             </span>
             <div>
@@ -196,9 +230,13 @@ const AccountManagement = ({
             </div>
           </div>
           {status.github_oauth && !isBound(userState.user?.github_id) ? (
-            <a onClick={() => onGitHubOAuthClicked(status.github_client_id)}>{t('绑定')}</a>
+            <a onClick={() => onGitHubOAuthClicked(status.github_client_id)}>
+              {t('绑定')}
+            </a>
           ) : (
-            <span className='off'>{isBound(userState.user?.github_id) ? t('已绑定') : t('未启用')}</span>
+            <span className='off'>
+              {isBound(userState.user?.github_id) ? t('已绑定') : t('未启用')}
+            </span>
           )}
         </div>
 
@@ -206,8 +244,15 @@ const AccountManagement = ({
         <div className='srv-bindcard'>
           <div className='l'>
             <span className='ic'>
-              <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8'>
-                <path d='M8 12h.01M16 12h.01M7 18c-2 0-3-1.5-3-4 0-4 2-7 5-8l1 2a9 9 0 0 1 4 0l1-2c3 1 5 4 5 8 0 2.5-1 4-3 4l-1-2a12 12 0 0 1-8 0z'/>
+              <svg
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='1.8'
+              >
+                <path d='M8 12h.01M16 12h.01M7 18c-2 0-3-1.5-3-4 0-4 2-7 5-8l1 2a9 9 0 0 1 4 0l1-2c3 1 5 4 5 8 0 2.5-1 4-3 4l-1-2a12 12 0 0 1-8 0z' />
               </svg>
             </span>
             <div>
@@ -218,9 +263,13 @@ const AccountManagement = ({
             </div>
           </div>
           {status.discord_oauth && !isBound(userState.user?.discord_id) ? (
-            <a onClick={() => onDiscordOAuthClicked(status.discord_client_id)}>{t('绑定')}</a>
+            <a onClick={() => onDiscordOAuthClicked(status.discord_client_id)}>
+              {t('绑定')}
+            </a>
           ) : (
-            <span className='off'>{isBound(userState.user?.discord_id) ? t('已绑定') : t('未启用')}</span>
+            <span className='off'>
+              {isBound(userState.user?.discord_id) ? t('已绑定') : t('未启用')}
+            </span>
           )}
         </div>
 
@@ -228,21 +277,38 @@ const AccountManagement = ({
         <div className='srv-bindcard'>
           <div className='l'>
             <span className='ic'>
-              <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8'>
-                <circle cx='12' cy='12' r='9'/><path d='M8 12h8'/>
+              <svg
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='1.8'
+              >
+                <circle cx='12' cy='12' r='9' />
+                <path d='M8 12h8' />
               </svg>
             </span>
             <div>
               <div className='nm'>OIDC</div>
-              <div className='st'>
-                {userState.user?.oidc_id || t('未绑定')}
-              </div>
+              <div className='st'>{userState.user?.oidc_id || t('未绑定')}</div>
             </div>
           </div>
           {status.oidc_enabled && !isBound(userState.user?.oidc_id) ? (
-            <a onClick={() => onOIDCClicked(status.oidc_authorization_endpoint, status.oidc_client_id)}>{t('绑定')}</a>
+            <a
+              onClick={() =>
+                onOIDCClicked(
+                  status.oidc_authorization_endpoint,
+                  status.oidc_client_id,
+                )
+              }
+            >
+              {t('绑定')}
+            </a>
           ) : (
-            <span className='off'>{isBound(userState.user?.oidc_id) ? t('已绑定') : t('未启用')}</span>
+            <span className='off'>
+              {isBound(userState.user?.oidc_id) ? t('已绑定') : t('未启用')}
+            </span>
           )}
         </div>
 
@@ -250,8 +316,15 @@ const AccountManagement = ({
         <div className='srv-bindcard'>
           <div className='l'>
             <span className='ic'>
-              <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8'>
-                <path d='M21 5 3 12l5 2 2 6 3-4 5 3z'/>
+              <svg
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='1.8'
+              >
+                <path d='M21 5 3 12l5 2 2 6 3-4 5 3z' />
               </svg>
             </span>
             <div>
@@ -276,8 +349,15 @@ const AccountManagement = ({
         <div className='srv-bindcard'>
           <div className='l'>
             <span className='ic'>
-              <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8'>
-                <path d='M6 4v12a4 4 0 0 0 4 4h8'/>
+              <svg
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='1.8'
+              >
+                <path d='M6 4v12a4 4 0 0 0 4 4h8' />
               </svg>
             </span>
             <div>
@@ -288,9 +368,13 @@ const AccountManagement = ({
             </div>
           </div>
           {status.linuxdo_oauth && !isBound(userState.user?.linux_do_id) ? (
-            <a onClick={() => onLinuxDOOAuthClicked(status.linuxdo_client_id)}>{t('绑定')}</a>
+            <a onClick={() => onLinuxDOOAuthClicked(status.linuxdo_client_id)}>
+              {t('绑定')}
+            </a>
           ) : (
-            <span className='off'>{isBound(userState.user?.linux_do_id) ? t('已绑定') : t('未启用')}</span>
+            <span className='off'>
+              {isBound(userState.user?.linux_do_id) ? t('已绑定') : t('未启用')}
+            </span>
           )}
         </div>
 
@@ -303,26 +387,40 @@ const AccountManagement = ({
               <div key={provider.slug} className='srv-bindcard'>
                 <div className='l'>
                   <span className='ic'>
-                    <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8'>
-                      <rect x='3' y='11' width='18' height='11' rx='2'/><path d='M7 11V7a5 5 0 0 1 10 0v4'/>
+                    <svg
+                      width='16'
+                      height='16'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      strokeWidth='1.8'
+                    >
+                      <rect x='3' y='11' width='18' height='11' rx='2' />
+                      <path d='M7 11V7a5 5 0 0 1 10 0v4' />
                     </svg>
                   </span>
                   <div>
                     <div className='nm'>{provider.name}</div>
                     <div className='st'>
-                      {bound ? (binding?.provider_user_id || t('已绑定')) : t('未绑定')}
+                      {bound
+                        ? binding?.provider_user_id || t('已绑定')
+                        : t('未绑定')}
                     </div>
                   </div>
                 </div>
                 {bound ? (
                   <a
-                    onClick={() => handleUnbindCustomOAuth(provider.id, provider.name)}
+                    onClick={() =>
+                      handleUnbindCustomOAuth(provider.id, provider.name)
+                    }
                     style={{ color: 'var(--danger)' }}
                   >
                     {customOAuthLoading[provider.id] ? '...' : t('解绑')}
                   </a>
                 ) : (
-                  <a onClick={() => handleBindCustomOAuth(provider)}>{t('绑定')}</a>
+                  <a onClick={() => handleBindCustomOAuth(provider)}>
+                    {t('绑定')}
+                  </a>
                 )}
               </div>
             );
@@ -350,7 +448,9 @@ const AccountManagement = ({
       </Modal>
 
       {/* 安全设置区域 */}
-      <div className='srv-bar' style={{ marginTop: '24px' }}>{t('安全设置')}</div>
+      <div className='srv-bar' style={{ marginTop: '24px' }}>
+        {t('安全设置')}
+      </div>
 
       {/* 系统访问令牌 */}
       <div className='srv-secrow'>
@@ -378,7 +478,10 @@ const AccountManagement = ({
           <div className='nm'>{t('密码管理')}</div>
           <div className='ds'>{t('定期更改密码可以提高账户安全性')}</div>
         </div>
-        <button className='btn btn-primary' onClick={() => setShowChangePasswordModal(true)}>
+        <button
+          className='btn btn-primary'
+          onClick={() => setShowChangePasswordModal(true)}
+        >
           {t('修改密码')}
         </button>
       </div>
@@ -392,10 +495,18 @@ const AccountManagement = ({
               ? t('已启用 Passkey，无需密码即可登录')
               : t('使用 Passkey 实现免密且更安全的登录体验')}
           </div>
-          <div style={{ fontSize: '12px', color: 'var(--ink-3)', marginTop: '4px' }}>
+          <div
+            style={{
+              fontSize: '12px',
+              color: 'var(--ink-3)',
+              marginTop: '4px',
+            }}
+          >
             {t('最后使用时间')}：{lastUsedLabel}
             {!passkeySupported && (
-              <span style={{ marginLeft: '8px', color: 'var(--warning,#F59E0B)' }}>
+              <span
+                style={{ marginLeft: '8px', color: 'var(--warning,#F59E0B)' }}
+              >
                 {t('当前设备不支持 Passkey')}
               </span>
             )}

@@ -33,7 +33,9 @@ const CONTENT_TEXTS = {
   unknown: {
     displayName: (t) => t('未知供应商'),
     description: (t) =>
-      t('包含来自未知或未标明供应商的AI模型，这些模型可能来自小型供应商或开源项目。'),
+      t(
+        '包含来自未知或未标明供应商的AI模型，这些模型可能来自小型供应商或开源项目。',
+      ),
   },
   all: {
     description: (t) =>
@@ -298,7 +300,9 @@ const PricingVendorIntro = memo(
           width={isMobile ? '95%' : 560}
           bodyStyle={{ maxHeight: '60vh', overflowY: 'auto' }}
         >
-          <div style={{ fontSize: 14, lineHeight: 1.75 }}>{descModalContent}</div>
+          <div style={{ fontSize: 14, lineHeight: 1.75 }}>
+            {descModalContent}
+          </div>
         </Modal>
       </>
     );
