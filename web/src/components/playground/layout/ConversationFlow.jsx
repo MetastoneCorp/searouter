@@ -58,7 +58,16 @@ const ConversationFlow = ({
   ]);
 
   return (
-    <div style={{ position: 'relative', display: 'flex', height: '100%', width: '100%', flexDirection: 'column', padding: '0 8px' }}>
+    <div
+      style={{
+        position: 'relative',
+        display: 'flex',
+        height: '100%',
+        width: '100%',
+        flexDirection: 'column',
+        padding: '0 8px',
+      }}
+    >
       {/* 滚动容器：撑满至 sticky composer 上沿 */}
       <div ref={containerRef} className='pgw2-scroll' style={{ flex: 1 }}>
         <div className='pgw2-turns'>

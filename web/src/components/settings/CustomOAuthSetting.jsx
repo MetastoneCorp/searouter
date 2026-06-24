@@ -198,7 +198,7 @@ const CustomOAuthSetting = ({ serverAddress }) => {
       'token_endpoint',
       'user_info_endpoint',
     ];
-    
+
     if (!editingProvider) {
       requiredFields.push('client_secret');
     }
@@ -211,15 +211,25 @@ const CustomOAuthSetting = ({ serverAddress }) => {
     }
 
     // Validate endpoint URLs must be full URLs
-    const endpointFields = ['authorization_endpoint', 'token_endpoint', 'user_info_endpoint'];
+    const endpointFields = [
+      'authorization_endpoint',
+      'token_endpoint',
+      'user_info_endpoint',
+    ];
     for (const field of endpointFields) {
       const value = formValues[field];
-      if (value && !value.startsWith('http://') && !value.startsWith('https://')) {
+      if (
+        value &&
+        !value.startsWith('http://') &&
+        !value.startsWith('https://')
+      ) {
         // Check if user selected a preset but forgot to fill server address
         if (selectedPreset && !baseUrl) {
           showError(t('请先填写服务器地址，以自动生成完整的端点 URL'));
         } else {
-          showError(t('端点 URL 必须是完整地址（以 http:// 或 https:// 开头）'));
+          showError(
+            t('端点 URL 必须是完整地址（以 http:// 或 https:// 开头）'),
+          );
         }
         return;
       }
@@ -230,7 +240,7 @@ const CustomOAuthSetting = ({ serverAddress }) => {
       if (editingProvider) {
         res = await API.put(
           `/api/custom-oauth-provider/${editingProvider.id}`,
-          formValues
+          formValues,
         );
       } else {
         res = await API.post('/api/custom-oauth-provider/', formValues);
@@ -265,9 +275,11 @@ const CustomOAuthSetting = ({ serverAddress }) => {
       };
       // Only fill endpoints if server address is provided
       if (cleanUrl) {
-        newValues.authorization_endpoint = cleanUrl + presetConfig.authorization_endpoint;
+        newValues.authorization_endpoint =
+          cleanUrl + presetConfig.authorization_endpoint;
         newValues.token_endpoint = cleanUrl + presetConfig.token_endpoint;
-        newValues.user_info_endpoint = cleanUrl + presetConfig.user_info_endpoint;
+        newValues.user_info_endpoint =
+          cleanUrl + presetConfig.user_info_endpoint;
       }
       setFormValues((prev) => ({ ...prev, ...newValues }));
       // Update form fields directly via formApi
@@ -334,7 +346,7 @@ const CustomOAuthSetting = ({ serverAddress }) => {
         <Space>
           <Button
             icon={<IconEdit />}
-            size="small"
+            size='small'
             onClick={() => handleEdit(record)}
           >
             {t('编辑')}
@@ -343,7 +355,7 @@ const CustomOAuthSetting = ({ serverAddress }) => {
             title={t('确定要删除此 OAuth 提供商吗？')}
             onConfirm={() => handleDelete(record.id)}
           >
-            <Button icon={<IconDelete />} size="small" type="danger">
+            <Button icon={<IconDelete />} size='small' type='danger'>
               {t('删除')}
             </Button>
           </Popconfirm>
@@ -356,11 +368,11 @@ const CustomOAuthSetting = ({ serverAddress }) => {
     <Card>
       <Form.Section text={t('自定义 OAuth 提供商')}>
         <Banner
-          type="info"
+          type='info'
           description={
             <>
               {t(
-                '配置自定义 OAuth 提供商，支持 GitHub Enterprise、GitLab、Gitea、Nextcloud、Keycloak、ORY 等兼容 OAuth 2.0 协议的身份提供商'
+                '配置自定义 OAuth 提供商，支持 GitHub Enterprise、GitLab、Gitea、Nextcloud、Keycloak、ORY 等兼容 OAuth 2.0 协议的身份提供商',
               )}
               <br />
               {t('回调 URL 格式')}: {serverAddress || t('网站地址')}/oauth/
@@ -372,7 +384,7 @@ const CustomOAuthSetting = ({ serverAddress }) => {
 
         <Button
           icon={<IconPlus />}
-          theme="solid"
+          theme='solid'
           onClick={handleAdd}
           style={{ marginBottom: 16 }}
         >
@@ -383,13 +395,15 @@ const CustomOAuthSetting = ({ serverAddress }) => {
           columns={columns}
           dataSource={providers}
           loading={loading}
-          rowKey="id"
+          rowKey='id'
           pagination={false}
           empty={t('暂无自定义 OAuth 提供商')}
         />
 
         <Modal
-          title={editingProvider ? t('编辑 OAuth 提供商') : t('添加 OAuth 提供商')}
+          title={
+            editingProvider ? t('编辑 OAuth 提供商') : t('添加 OAuth 提供商')
+          }
           visible={modalVisible}
           onOk={handleSubmit}
           onCancel={() => setModalVisible(false)}
@@ -406,7 +420,7 @@ const CustomOAuthSetting = ({ serverAddress }) => {
               <Row gutter={16} style={{ marginBottom: 16 }}>
                 <Col span={12}>
                   <Form.Select
-                    field="preset"
+                    field='preset'
                     label={t('预设模板')}
                     placeholder={t('选择预设模板（可选）')}
                     value={selectedPreset}
@@ -422,11 +436,9 @@ const CustomOAuthSetting = ({ serverAddress }) => {
                 </Col>
                 <Col span={12}>
                   <Form.Input
-                    field="base_url"
+                    field='base_url'
                     label={
-                      selectedPreset
-                        ? t('服务器地址') + ' *'
-                        : t('服务器地址')
+                      selectedPreset ? t('服务器地址') + ' *' : t('服务器地址')
                     }
                     placeholder={t('例如：https://gitea.example.com')}
                     value={baseUrl}
@@ -444,7 +456,7 @@ const CustomOAuthSetting = ({ serverAddress }) => {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Input
-                  field="name"
+                  field='name'
                   label={t('显示名称')}
                   placeholder={t('例如：GitHub Enterprise')}
                   rules={[{ required: true, message: t('请输入显示名称') }]}
@@ -452,8 +464,8 @@ const CustomOAuthSetting = ({ serverAddress }) => {
               </Col>
               <Col span={12}>
                 <Form.Input
-                  field="slug"
-                  label="Slug"
+                  field='slug'
+                  label='Slug'
                   placeholder={t('例如：github-enterprise')}
                   extraText={t('URL 标识，只能包含小写字母、数字和连字符')}
                   rules={[{ required: true, message: t('请输入 Slug') }]}
@@ -464,17 +476,17 @@ const CustomOAuthSetting = ({ serverAddress }) => {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Input
-                  field="client_id"
-                  label="Client ID"
+                  field='client_id'
+                  label='Client ID'
                   placeholder={t('OAuth Client ID')}
                   rules={[{ required: true, message: t('请输入 Client ID') }]}
                 />
               </Col>
               <Col span={12}>
                 <Form.Input
-                  field="client_secret"
-                  label="Client Secret"
-                  type="password"
+                  field='client_secret'
+                  label='Client Secret'
+                  type='password'
                   placeholder={
                     editingProvider
                       ? t('留空则保持原有密钥')
@@ -496,7 +508,7 @@ const CustomOAuthSetting = ({ serverAddress }) => {
             <Row gutter={16}>
               <Col span={24}>
                 <Form.Input
-                  field="authorization_endpoint"
+                  field='authorization_endpoint'
                   label={t('Authorization Endpoint')}
                   placeholder={
                     selectedPreset && OAUTH_PRESETS[selectedPreset]
@@ -505,7 +517,10 @@ const CustomOAuthSetting = ({ serverAddress }) => {
                       : 'https://example.com/oauth/authorize'
                   }
                   rules={[
-                    { required: true, message: t('请输入 Authorization Endpoint') },
+                    {
+                      required: true,
+                      message: t('请输入 Authorization Endpoint'),
+                    },
                   ]}
                 />
               </Col>
@@ -514,23 +529,27 @@ const CustomOAuthSetting = ({ serverAddress }) => {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Input
-                  field="token_endpoint"
+                  field='token_endpoint'
                   label={t('Token Endpoint')}
                   placeholder={
                     selectedPreset && OAUTH_PRESETS[selectedPreset]
-                      ? t('自动生成：') + OAUTH_PRESETS[selectedPreset].token_endpoint
+                      ? t('自动生成：') +
+                        OAUTH_PRESETS[selectedPreset].token_endpoint
                       : 'https://example.com/oauth/token'
                   }
-                  rules={[{ required: true, message: t('请输入 Token Endpoint') }]}
+                  rules={[
+                    { required: true, message: t('请输入 Token Endpoint') },
+                  ]}
                 />
               </Col>
               <Col span={12}>
                 <Form.Input
-                  field="user_info_endpoint"
+                  field='user_info_endpoint'
                   label={t('User Info Endpoint')}
                   placeholder={
                     selectedPreset && OAUTH_PRESETS[selectedPreset]
-                      ? t('自动生成：') + OAUTH_PRESETS[selectedPreset].user_info_endpoint
+                      ? t('自动生成：') +
+                        OAUTH_PRESETS[selectedPreset].user_info_endpoint
                       : 'https://example.com/api/user'
                   }
                   rules={[
@@ -543,14 +562,14 @@ const CustomOAuthSetting = ({ serverAddress }) => {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Input
-                  field="scopes"
+                  field='scopes'
                   label={t('Scopes')}
-                  placeholder="openid profile email"
+                  placeholder='openid profile email'
                 />
               </Col>
               <Col span={12}>
                 <Form.Input
-                  field="well_known"
+                  field='well_known'
                   label={t('Well-Known URL')}
                   placeholder={t('OIDC Discovery 端点（可选）')}
                 />
@@ -560,14 +579,19 @@ const CustomOAuthSetting = ({ serverAddress }) => {
             <Text strong style={{ display: 'block', margin: '16px 0 8px' }}>
               {t('字段映射')}
             </Text>
-            <Text type="secondary" style={{ display: 'block', marginBottom: 8 }}>
-              {t('配置如何从用户信息 API 响应中提取用户数据，支持 JSONPath 语法')}
+            <Text
+              type='secondary'
+              style={{ display: 'block', marginBottom: 8 }}
+            >
+              {t(
+                '配置如何从用户信息 API 响应中提取用户数据，支持 JSONPath 语法',
+              )}
             </Text>
 
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Input
-                  field="user_id_field"
+                  field='user_id_field'
                   label={t('用户 ID 字段')}
                   placeholder={t('例如：sub、id、data.user.id')}
                   extraText={t('用于唯一标识用户的字段路径')}
@@ -575,7 +599,7 @@ const CustomOAuthSetting = ({ serverAddress }) => {
               </Col>
               <Col span={12}>
                 <Form.Input
-                  field="username_field"
+                  field='username_field'
                   label={t('用户名字段')}
                   placeholder={t('例如：preferred_username、login')}
                 />
@@ -585,14 +609,14 @@ const CustomOAuthSetting = ({ serverAddress }) => {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Input
-                  field="display_name_field"
+                  field='display_name_field'
                   label={t('显示名称字段')}
                   placeholder={t('例如：name、full_name')}
                 />
               </Col>
               <Col span={12}>
                 <Form.Input
-                  field="email_field"
+                  field='email_field'
                   label={t('邮箱字段')}
                   placeholder={t('例如：email')}
                 />
@@ -606,7 +630,7 @@ const CustomOAuthSetting = ({ serverAddress }) => {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Select
-                  field="auth_style"
+                  field='auth_style'
                   label={t('认证方式')}
                   optionList={[
                     { value: 0, label: t('自动检测') },
@@ -616,7 +640,7 @@ const CustomOAuthSetting = ({ serverAddress }) => {
                 />
               </Col>
               <Col span={12}>
-                <Form.Checkbox field="enabled" noLabel>
+                <Form.Checkbox field='enabled' noLabel>
                   {t('启用此 OAuth 提供商')}
                 </Form.Checkbox>
               </Col>

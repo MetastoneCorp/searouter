@@ -18,13 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  Notification,
-  Button,
-  Space,
-  Toast,
-  Select,
-} from '@douyinfe/semi-ui';
+import { Notification, Button, Space, Toast, Select } from '@douyinfe/semi-ui';
 import {
   API,
   showError,

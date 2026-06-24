@@ -109,7 +109,12 @@ const NotFoundState = ({ modelName, onBack, t }) => (
   <div className='detail-wrap' style={{ textAlign: 'center', paddingTop: 80 }}>
     <div style={{ fontSize: 48, marginBottom: 16 }}>🔍</div>
     <div
-      style={{ fontSize: 18, fontWeight: 600, marginBottom: 8, color: 'var(--ink)' }}
+      style={{
+        fontSize: 18,
+        fontWeight: 600,
+        marginBottom: 8,
+        color: 'var(--ink)',
+      }}
     >
       {t('找不到模型')}
     </div>
@@ -136,7 +141,10 @@ const CodeBlock = ({ code, lang }) => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <div className='codeblock' style={{ whiteSpace: 'pre', overflowX: 'auto', fontSize: 13 }}>
+      <div
+        className='codeblock'
+        style={{ whiteSpace: 'pre', overflowX: 'auto', fontSize: 13 }}
+      >
         {code}
       </div>
       <button
@@ -184,11 +192,7 @@ const ModelApiPage = () => {
     }
   }, [modelName]);
 
-  const {
-    models,
-    loading,
-    endpointMap,
-  } = useModelPricingData();
+  const { models, loading, endpointMap } = useModelPricingData();
 
   const modelData = useMemo(() => {
     if (models && models.length > 0) {
@@ -229,7 +233,9 @@ const ModelApiPage = () => {
 
   // 取第一个 chat/completions 端点，若无则取第一个可用端点路径
   const chatPath =
-    supportedEndpoints.find((ep) => ep.path && ep.path.includes('chat/completions'))?.path ||
+    supportedEndpoints.find(
+      (ep) => ep.path && ep.path.includes('chat/completions'),
+    )?.path ||
     supportedEndpoints.find((ep) => ep.path)?.path ||
     'v1/chat/completions';
 
@@ -334,9 +340,7 @@ console.log(resp.choices[0].message.content);`;
             <button
               className='btn btn-ghost'
               onClick={() =>
-                navigate(
-                  '/pricing/model/' + encodeURIComponent(decodedName),
-                )
+                navigate('/pricing/model/' + encodeURIComponent(decodedName))
               }
             >
               {t('模型详情')}
@@ -408,9 +412,7 @@ console.log(resp.choices[0].message.content);`;
             {supportedEndpoints.map((ep, i) => (
               <div key={i} className='endpoint-row'>
                 <span className='ep-name'>{ep.type}：</span>
-                {ep.path && (
-                  <code>{ep.path}</code>
-                )}
+                {ep.path && <code>{ep.path}</code>}
                 {ep.path && (
                   <span
                     style={{
@@ -433,7 +435,10 @@ console.log(resp.choices[0].message.content);`;
           {/* Tab 切换 */}
           <div
             className='detail-tabs'
-            style={{ marginBottom: 16, borderBottom: '1px solid var(--border)' }}
+            style={{
+              marginBottom: 16,
+              borderBottom: '1px solid var(--border)',
+            }}
           >
             {codeTabs.map((tab) => (
               <button
@@ -485,9 +490,19 @@ console.log(resp.choices[0].message.content);`;
                     model
                   </code>
                 </td>
-                <td style={{ color: 'var(--ink-2)', fontFamily: 'var(--mono)', fontSize: 13 }}>string</td>
+                <td
+                  style={{
+                    color: 'var(--ink-2)',
+                    fontFamily: 'var(--mono)',
+                    fontSize: 13,
+                  }}
+                >
+                  string
+                </td>
                 <td>
-                  <span className='tag' style={{ fontSize: 12 }}>{t('是')}</span>
+                  <span className='tag' style={{ fontSize: 12 }}>
+                    {t('是')}
+                  </span>
                 </td>
                 <td style={{ color: 'var(--ink)', fontSize: 14 }}>
                   {t('模型名称，本模型填写')}{' '}
@@ -518,12 +533,24 @@ console.log(resp.choices[0].message.content);`;
                     messages
                   </code>
                 </td>
-                <td style={{ color: 'var(--ink-2)', fontFamily: 'var(--mono)', fontSize: 13 }}>array</td>
+                <td
+                  style={{
+                    color: 'var(--ink-2)',
+                    fontFamily: 'var(--mono)',
+                    fontSize: 13,
+                  }}
+                >
+                  array
+                </td>
                 <td>
-                  <span className='tag' style={{ fontSize: 12 }}>{t('是')}</span>
+                  <span className='tag' style={{ fontSize: 12 }}>
+                    {t('是')}
+                  </span>
                 </td>
                 <td style={{ color: 'var(--ink)', fontSize: 14 }}>
-                  {t('对话消息列表，每条包含 role（user/assistant/system）和 content')}
+                  {t(
+                    '对话消息列表，每条包含 role（user/assistant/system）和 content',
+                  )}
                 </td>
               </tr>
               <tr>
@@ -540,9 +567,19 @@ console.log(resp.choices[0].message.content);`;
                     stream
                   </code>
                 </td>
-                <td style={{ color: 'var(--ink-2)', fontFamily: 'var(--mono)', fontSize: 13 }}>boolean</td>
+                <td
+                  style={{
+                    color: 'var(--ink-2)',
+                    fontFamily: 'var(--mono)',
+                    fontSize: 13,
+                  }}
+                >
+                  boolean
+                </td>
                 <td>
-                  <span className='tag gray' style={{ fontSize: 12 }}>{t('否')}</span>
+                  <span className='tag gray' style={{ fontSize: 12 }}>
+                    {t('否')}
+                  </span>
                 </td>
                 <td style={{ color: 'var(--ink)', fontSize: 14 }}>
                   {t('是否流式返回，默认 false')}
@@ -562,9 +599,19 @@ console.log(resp.choices[0].message.content);`;
                     temperature
                   </code>
                 </td>
-                <td style={{ color: 'var(--ink-2)', fontFamily: 'var(--mono)', fontSize: 13 }}>number</td>
+                <td
+                  style={{
+                    color: 'var(--ink-2)',
+                    fontFamily: 'var(--mono)',
+                    fontSize: 13,
+                  }}
+                >
+                  number
+                </td>
                 <td>
-                  <span className='tag gray' style={{ fontSize: 12 }}>{t('否')}</span>
+                  <span className='tag gray' style={{ fontSize: 12 }}>
+                    {t('否')}
+                  </span>
                 </td>
                 <td style={{ color: 'var(--ink)', fontSize: 14 }}>
                   {t('采样温度，范围 0–2，值越高输出越随机，默认 1')}
@@ -584,9 +631,19 @@ console.log(resp.choices[0].message.content);`;
                     max_tokens
                   </code>
                 </td>
-                <td style={{ color: 'var(--ink-2)', fontFamily: 'var(--mono)', fontSize: 13 }}>integer</td>
+                <td
+                  style={{
+                    color: 'var(--ink-2)',
+                    fontFamily: 'var(--mono)',
+                    fontSize: 13,
+                  }}
+                >
+                  integer
+                </td>
                 <td>
-                  <span className='tag gray' style={{ fontSize: 12 }}>{t('否')}</span>
+                  <span className='tag gray' style={{ fontSize: 12 }}>
+                    {t('否')}
+                  </span>
                 </td>
                 <td style={{ color: 'var(--ink)', fontSize: 14 }}>
                   {t('最大生成 token 数')}
@@ -618,7 +675,9 @@ console.log(resp.choices[0].message.content);`;
                 padding: '16px 18px',
               }}
             >
-              <div style={{ fontSize: 13, color: 'var(--ink-3)', marginBottom: 6 }}>
+              <div
+                style={{ fontSize: 13, color: 'var(--ink-3)', marginBottom: 6 }}
+              >
                 {t('模型名称')}
               </div>
               <div
@@ -640,7 +699,9 @@ console.log(resp.choices[0].message.content);`;
                 padding: '16px 18px',
               }}
             >
-              <div style={{ fontSize: 13, color: 'var(--ink-3)', marginBottom: 6 }}>
+              <div
+                style={{ fontSize: 13, color: 'var(--ink-3)', marginBottom: 6 }}
+              >
                 Base URL
               </div>
               <div
@@ -662,7 +723,9 @@ console.log(resp.choices[0].message.content);`;
                 padding: '16px 18px',
               }}
             >
-              <div style={{ fontSize: 13, color: 'var(--ink-3)', marginBottom: 6 }}>
+              <div
+                style={{ fontSize: 13, color: 'var(--ink-3)', marginBottom: 6 }}
+              >
                 API Key
               </div>
               <div style={{ fontSize: 14, color: 'var(--ink-2)' }}>
@@ -678,7 +741,13 @@ console.log(resp.choices[0].message.content);`;
                   padding: '16px 18px',
                 }}
               >
-                <div style={{ fontSize: 13, color: 'var(--ink-3)', marginBottom: 6 }}>
+                <div
+                  style={{
+                    fontSize: 13,
+                    color: 'var(--ink-3)',
+                    marginBottom: 6,
+                  }}
+                >
                   {t('上下文长度')}
                 </div>
                 <div

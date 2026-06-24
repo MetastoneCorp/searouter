@@ -23,24 +23,58 @@ import { IconFilter } from '@douyinfe/semi-icons';
 
 /* ---- SVG icons ---- */
 const IcoSearch = () => (
-  <svg width='17' height='17' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
-    <circle cx='11' cy='11' r='7'/><path d='m21 21-4-4'/>
+  <svg
+    width='17'
+    height='17'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='2'
+  >
+    <circle cx='11' cy='11' r='7' />
+    <path d='m21 21-4-4' />
   </svg>
 );
 const IcoCopy = () => (
-  <svg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'>
-    <rect x='9' y='9' width='11' height='11' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/>
+  <svg
+    width='15'
+    height='15'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='1.8'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <rect x='9' y='9' width='11' height='11' rx='2' />
+    <path d='M5 15V5a2 2 0 0 1 2-2h10' />
   </svg>
 );
 const IcoGrid = () => (
-  <svg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
-    <rect x='3' y='3' width='7' height='7'/><rect x='14' y='3' width='7' height='7'/>
-    <rect x='3' y='14' width='7' height='7'/><rect x='14' y='14' width='7' height='7'/>
+  <svg
+    width='15'
+    height='15'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='2'
+  >
+    <rect x='3' y='3' width='7' height='7' />
+    <rect x='14' y='3' width='7' height='7' />
+    <rect x='3' y='14' width='7' height='7' />
+    <rect x='14' y='14' width='7' height='7' />
   </svg>
 );
 const IcoList = () => (
-  <svg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
-    <path d='M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01'/>
+  <svg
+    width='15'
+    height='15'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='2'
+  >
+    <path d='M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01' />
   </svg>
 );
 
@@ -80,15 +114,29 @@ const SearchActions = memo(
       setShowFilterModal?.(true);
     }, [setShowFilterModal]);
 
-    const handleViewGrid = useCallback(() => setViewMode?.('card'), [setViewMode]);
-    const handleViewList = useCallback(() => setViewMode?.('table'), [setViewMode]);
+    const handleViewGrid = useCallback(
+      () => setViewMode?.('card'),
+      [setViewMode],
+    );
+    const handleViewList = useCallback(
+      () => setViewMode?.('table'),
+      [setViewMode],
+    );
 
     const handleTokenUnitToggle = useCallback(() => {
       setTokenUnit?.(tokenUnit === 'K' ? 'M' : 'K');
     }, [tokenUnit, setTokenUnit]);
 
     return (
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, width: '100%', flexWrap: 'wrap' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+          width: '100%',
+          flexWrap: 'wrap',
+        }}
+      >
         {/* 搜索框 */}
         <label className='plaza-search' style={{ flex: 1, minWidth: 160 }}>
           <IcoSearch />

@@ -18,12 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState, useEffect } from 'react';
-import {
-  Tabs,
-  TabPane,
-  Button,
-  Dropdown,
-} from '@douyinfe/semi-ui';
+import { Tabs, TabPane, Button, Dropdown } from '@douyinfe/semi-ui';
 import { Code, Zap, Clock, X, Eye, Send } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import CodeViewer from './CodeViewer';
@@ -135,7 +130,10 @@ const DebugPanel = ({
       </div>
 
       {/* Tab 内容 */}
-      <div style={{ flex: 1, overflow: 'hidden', padding: '0' }} className='debug-panel'>
+      <div
+        style={{ flex: 1, overflow: 'hidden', padding: '0' }}
+        className='debug-panel'
+      >
         <Tabs
           renderArrow={renderArrow}
           type='card'
@@ -222,7 +220,10 @@ const DebugPanel = ({
           }}
         >
           <Clock size={13} style={{ color: 'var(--ink-3)' }} />
-          <span className='mono' style={{ fontSize: 12, color: 'var(--ink-3)' }}>
+          <span
+            className='mono'
+            style={{ fontSize: 12, color: 'var(--ink-3)' }}
+          >
             {activeKey === 'preview' && debugData.previewTimestamp
               ? `${t('预览更新')}: ${new Date(debugData.previewTimestamp).toLocaleString()}`
               : debugData.timestamp

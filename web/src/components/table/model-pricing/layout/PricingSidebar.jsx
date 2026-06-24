@@ -24,38 +24,105 @@ import { usePricingFilterCounts } from '../../../../hooks/model-pricing/usePrici
 
 /* ---- SVG icons ---- */
 const IcoVendor = () => (
-  <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'>
-    <path d='M21 12a9 9 0 1 1-3-6.7'/><path d='M21 4v5h-5'/>
+  <svg
+    width='18'
+    height='18'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='1.8'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <path d='M21 12a9 9 0 1 1-3-6.7' />
+    <path d='M21 4v5h-5' />
   </svg>
 );
 const IcoTag = () => (
-  <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'>
-    <path d='M20.6 13.4 12 22l-9-9V3h10z'/><circle cx='7.5' cy='7.5' r='1.2' fill='currentColor'/>
+  <svg
+    width='18'
+    height='18'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='1.8'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <path d='M20.6 13.4 12 22l-9-9V3h10z' />
+    <circle cx='7.5' cy='7.5' r='1.2' fill='currentColor' />
   </svg>
 );
 const IcoGroup = () => (
-  <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'>
-    <circle cx='7.5' cy='15.5' r='4.5'/><path d='m10.5 12.5 8-8M17 4l3 3'/>
+  <svg
+    width='18'
+    height='18'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='1.8'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <circle cx='7.5' cy='15.5' r='4.5' />
+    <path d='m10.5 12.5 8-8M17 4l3 3' />
   </svg>
 );
 const IcoBill = () => (
-  <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'>
-    <path d='M5 3h10l4 4v14H5z'/><path d='M14 3v4h4M8 13h8M8 17h6'/>
+  <svg
+    width='18'
+    height='18'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='1.8'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <path d='M5 3h10l4 4v14H5z' />
+    <path d='M14 3v4h4M8 13h8M8 17h6' />
   </svg>
 );
 const IcoEndpoint = () => (
-  <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'>
-    <path d='M8 9l-3 3 3 3M16 9l3 3-3 3M13 5l-2 14'/>
+  <svg
+    width='18'
+    height='18'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='1.8'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <path d='M8 9l-3 3 3 3M16 9l3 3-3 3M13 5l-2 14' />
   </svg>
 );
 const IcoChev = () => (
-  <svg className='chev' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
-    <path d='M6 9l6 6 6-6'/>
+  <svg
+    className='chev'
+    width='16'
+    height='16'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='2'
+  >
+    <path d='M6 9l6 6 6-6' />
   </svg>
 );
 const IcoReset = () => (
-  <svg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-    <path d='M3 12a9 9 0 1 0 3-6.7'/><path d='M3 4v5h5'/>
+  <svg
+    width='15'
+    height='15'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='2'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <path d='M3 12a9 9 0 1 0 3-6.7' />
+    <path d='M3 4v5h5' />
   </svg>
 );
 
@@ -78,7 +145,9 @@ const FilterGroup = ({ icon, title, children, defaultOpen = false }) => {
 const FilterOpt = ({ label, count, active, onClick, icon }) => (
   <div className={`fopt${active ? ' on' : ''}`} onClick={onClick}>
     <span className='cbx'></span>
-    {icon && <span style={{ display: 'flex', alignItems: 'center' }}>{icon}</span>}
+    {icon && (
+      <span style={{ display: 'flex', alignItems: 'center' }}>{icon}</span>
+    )}
     {label}
     {count !== undefined && <span className='cnt'>{count}</span>}
   </div>
@@ -169,7 +238,9 @@ const PricingSidebar = ({
     });
     return [
       { name: 'all', icon: null, count: sourceModels.length },
-      ...Array.from(vendors.values()).sort((a, b) => a.name.localeCompare(b.name)),
+      ...Array.from(vendors.values()).sort((a, b) =>
+        a.name.localeCompare(b.name),
+      ),
     ];
   }, [categoryProps.models]);
 
@@ -196,7 +267,10 @@ const PricingSidebar = ({
 
   /* ---- 分组数据 ---- */
   const groupData = useMemo(() => {
-    const groups = ['all', ...Object.keys(categoryProps.usableGroup || {}).filter((k) => k !== '')];
+    const groups = [
+      'all',
+      ...Object.keys(categoryProps.usableGroup || {}).filter((k) => k !== ''),
+    ];
     return groups.map((g) => {
       const modelCount =
         g === 'all'
@@ -209,28 +283,42 @@ const PricingSidebar = ({
         key: g,
         label: g === 'all' ? t('全部分组') : g,
         count: modelCount,
-        ratio: g === 'all' ? null : (ratio !== undefined ? `x${ratio}` : 'x1'),
+        ratio: g === 'all' ? null : ratio !== undefined ? `x${ratio}` : 'x1',
       };
     });
-  }, [categoryProps.models, categoryProps.usableGroup, categoryProps.groupRatio, t]);
+  }, [
+    categoryProps.models,
+    categoryProps.usableGroup,
+    categoryProps.groupRatio,
+    t,
+  ]);
 
   /* ---- 端点类型数据 ---- */
   const endpointData = useMemo(() => {
     const epSet = new Set();
     (categoryProps.models || []).forEach((model) => {
-      if (model.supported_endpoint_types && Array.isArray(model.supported_endpoint_types)) {
+      if (
+        model.supported_endpoint_types &&
+        Array.isArray(model.supported_endpoint_types)
+      ) {
         model.supported_endpoint_types.forEach((ep) => epSet.add(ep));
       }
     });
     const all = [
-      { key: 'all', label: t('全部端点'), count: (categoryProps.models || []).length },
+      {
+        key: 'all',
+        label: t('全部端点'),
+        count: (categoryProps.models || []).length,
+      },
       ...Array.from(epSet)
         .sort()
         .map((ep) => ({
           key: ep,
           label: ep,
           count: (categoryProps.models || []).filter(
-            (m) => m.supported_endpoint_types && m.supported_endpoint_types.includes(ep),
+            (m) =>
+              m.supported_endpoint_types &&
+              m.supported_endpoint_types.includes(ep),
           ).length,
         })),
     ];
@@ -283,7 +371,14 @@ const PricingSidebar = ({
 
   return (
     <>
-      <div className='frail-title' style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div
+        className='frail-title'
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
         <span>{t('筛选')}</span>
         <button
           onClick={handleResetFilters}
@@ -311,8 +406,15 @@ const PricingSidebar = ({
             key={v.name}
             label={v.name === 'all' ? t('全部供应商') : v.name}
             count={v.count}
-            active={filterVendor === v.name || (v.name === 'all' && (!filterVendor || filterVendor === 'all'))}
-            onClick={() => (v.name === 'all' ? setFilterVendor('all') : handleVendorClick(v.name))}
+            active={
+              filterVendor === v.name ||
+              (v.name === 'all' && (!filterVendor || filterVendor === 'all'))
+            }
+            onClick={() =>
+              v.name === 'all'
+                ? setFilterVendor('all')
+                : handleVendorClick(v.name)
+            }
             icon={v.icon ? getLobeHubIcon(v.icon, 14) : null}
           />
         ))}
@@ -348,7 +450,10 @@ const PricingSidebar = ({
               key={g.key}
               label={g.ratio ? `${g.label} ${g.ratio}` : g.label}
               count={g.count}
-              active={filterGroup === g.key || (g.key === 'all' && (!filterGroup || filterGroup === 'all'))}
+              active={
+                filterGroup === g.key ||
+                (g.key === 'all' && (!filterGroup || filterGroup === 'all'))
+              }
               onClick={() => handleGroupClickInner(g.key)}
             />
           ))}
@@ -358,15 +463,35 @@ const PricingSidebar = ({
       {/* 计费类型 */}
       <FilterGroup icon={<IcoBill />} title={t('计费类型')}>
         {[
-          { val: 'all', label: t('全部类型'), count: (categoryProps.models || []).length },
-          { val: 0, label: t('按量计费'), count: (categoryProps.models || []).filter((m) => m.quota_type === 0).length },
-          { val: 1, label: t('按次计费'), count: (categoryProps.models || []).filter((m) => m.quota_type === 1).length },
+          {
+            val: 'all',
+            label: t('全部类型'),
+            count: (categoryProps.models || []).length,
+          },
+          {
+            val: 0,
+            label: t('按量计费'),
+            count: (categoryProps.models || []).filter(
+              (m) => m.quota_type === 0,
+            ).length,
+          },
+          {
+            val: 1,
+            label: t('按次计费'),
+            count: (categoryProps.models || []).filter(
+              (m) => m.quota_type === 1,
+            ).length,
+          },
         ].map((item) => (
           <FilterOpt
             key={String(item.val)}
             label={item.label}
             count={item.count}
-            active={filterQuotaType === item.val || (item.val === 'all' && (!filterQuotaType || filterQuotaType === 'all'))}
+            active={
+              filterQuotaType === item.val ||
+              (item.val === 'all' &&
+                (!filterQuotaType || filterQuotaType === 'all'))
+            }
             onClick={() => handleQuotaClick(item.val)}
           />
         ))}
@@ -380,7 +505,11 @@ const PricingSidebar = ({
               key={ep.key}
               label={ep.label}
               count={ep.count}
-              active={filterEndpointType === ep.key || (ep.key === 'all' && (!filterEndpointType || filterEndpointType === 'all'))}
+              active={
+                filterEndpointType === ep.key ||
+                (ep.key === 'all' &&
+                  (!filterEndpointType || filterEndpointType === 'all'))
+              }
               onClick={() => handleEndpointClick(ep.key)}
             />
           ))}

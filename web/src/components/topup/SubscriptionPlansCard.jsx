@@ -18,11 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useMemo, useState } from 'react';
-import {
-  Select,
-  Skeleton,
-  Tooltip,
-} from '@douyinfe/semi-ui';
+import { Select, Skeleton, Tooltip } from '@douyinfe/semi-ui';
 import { API, showError, showSuccess, renderQuota } from '../../helpers';
 import { getCurrencyConfig } from '../../helpers/render';
 import { RefreshCw, Sparkles } from 'lucide-react';
@@ -246,17 +242,34 @@ const SubscriptionPlansCard = ({
         /* 骨架屏 */
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <div className='card card-pad' style={{ padding: 14 }}>
-            <Skeleton.Title active style={{ width: 120, height: 20, marginBottom: 10 }} />
+            <Skeleton.Title
+              active
+              style={{ width: 120, height: 20, marginBottom: 10 }}
+            />
             <Skeleton.Paragraph active rows={2} />
           </div>
           <div className='srv-plans'>
             {[1, 2, 3].map((i) => (
               <div key={i} className='srv-plan'>
-                <Skeleton.Title active style={{ width: '60%', height: 22, marginBottom: 8 }} />
-                <Skeleton.Paragraph active rows={1} style={{ marginBottom: 12 }} />
-                <Skeleton.Title active style={{ width: '40%', height: 30, margin: '0 auto 12px' }} />
+                <Skeleton.Title
+                  active
+                  style={{ width: '60%', height: 22, marginBottom: 8 }}
+                />
+                <Skeleton.Paragraph
+                  active
+                  rows={1}
+                  style={{ marginBottom: 12 }}
+                />
+                <Skeleton.Title
+                  active
+                  style={{ width: '40%', height: 30, margin: '0 auto 12px' }}
+                />
                 <Skeleton.Paragraph active rows={3} />
-                <Skeleton.Button active block style={{ marginTop: 14, height: 34 }} />
+                <Skeleton.Button
+                  active
+                  block
+                  style={{ marginTop: 14, height: 34 }}
+                />
               </div>
             ))}
           </div>
@@ -264,7 +277,10 @@ const SubscriptionPlansCard = ({
       ) : (
         <>
           {/* 我的订阅区块标题栏 */}
-          <div className='srv-bar' style={{ justifyContent: 'space-between', marginBottom: 0 }}>
+          <div
+            className='srv-bar'
+            style={{ justifyContent: 'space-between', marginBottom: 0 }}
+          >
             <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               {t('我的订阅')}
               {hasActiveSubscription ? (
@@ -272,15 +288,25 @@ const SubscriptionPlansCard = ({
                   {activeSubscriptions.length} {t('个生效中')}
                 </span>
               ) : (
-                <span className='tag gray' style={{ height: 20, fontSize: 11 }}>{t('无生效')}</span>
+                <span className='tag gray' style={{ height: 20, fontSize: 11 }}>
+                  {t('无生效')}
+                </span>
               )}
               {allSubscriptions.length > activeSubscriptions.length && (
                 <span className='tag gray' style={{ height: 20, fontSize: 11 }}>
-                  {allSubscriptions.length - activeSubscriptions.length} {t('个已过期')}
+                  {allSubscriptions.length - activeSubscriptions.length}{' '}
+                  {t('个已过期')}
                 </span>
               )}
             </span>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 'auto' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                marginLeft: 'auto',
+              }}
+            >
               <Select
                 value={displayBillingPreference}
                 onChange={onChangeBillingPreference}
@@ -310,21 +336,36 @@ const SubscriptionPlansCard = ({
                 disabled={refreshing}
                 title={t('刷新')}
               >
-                <RefreshCw size={14} className={refreshing ? 'animate-spin' : ''} />
+                <RefreshCw
+                  size={14}
+                  className={refreshing ? 'animate-spin' : ''}
+                />
               </button>
             </div>
           </div>
 
           {disableSubscriptionPreference && isSubscriptionPreference && (
-            <div style={{ fontSize: 12.5, color: 'var(--ink-3)', marginTop: -8 }}>
-              {t('已保存偏好为')}{subscriptionPreferenceLabel}{t('，当前无生效订阅，将自动使用钱包')}
+            <div
+              style={{ fontSize: 12.5, color: 'var(--ink-3)', marginTop: -8 }}
+            >
+              {t('已保存偏好为')}
+              {subscriptionPreferenceLabel}
+              {t('，当前无生效订阅，将自动使用钱包')}
             </div>
           )}
 
           {/* 当前订阅列表 */}
           <div className='card' style={{ padding: '12px 16px' }}>
             {hasAnySubscription ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 0, maxHeight: 260, overflowY: 'auto' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 0,
+                  maxHeight: 260,
+                  overflowY: 'auto',
+                }}
+              >
                 {allSubscriptions.map((sub, subIndex) => {
                   const isLast = subIndex === allSubscriptions.length - 1;
                   const subscription = sub.subscription;
@@ -332,52 +373,122 @@ const SubscriptionPlansCard = ({
                   const usedAmount = Number(subscription?.amount_used || 0);
                   const remainAmount =
                     totalAmount > 0 ? Math.max(0, totalAmount - usedAmount) : 0;
-                  const planTitle = planTitleMap.get(subscription?.plan_id) || '';
+                  const planTitle =
+                    planTitleMap.get(subscription?.plan_id) || '';
                   const remainDays = getRemainingDays(sub);
                   const usagePercent = getUsagePercent(sub);
                   const now = Date.now() / 1000;
                   const isExpired = (subscription?.end_time || 0) < now;
                   const isCancelled = subscription?.status === 'cancelled';
-                  const isActive = subscription?.status === 'active' && !isExpired;
+                  const isActive =
+                    subscription?.status === 'active' && !isExpired;
 
                   return (
-                    <div key={subscription?.id || subIndex} style={!isLast ? { paddingBottom: 12, marginBottom: 12, borderBottom: '1px solid var(--border-2)' } : {}}>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 13, fontWeight: 500 }}>
+                    <div
+                      key={subscription?.id || subIndex}
+                      style={
+                        !isLast
+                          ? {
+                              paddingBottom: 12,
+                              marginBottom: 12,
+                              borderBottom: '1px solid var(--border-2)',
+                            }
+                          : {}
+                      }
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          marginBottom: 5,
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 7,
+                            fontSize: 13,
+                            fontWeight: 500,
+                          }}
+                        >
                           {planTitle
                             ? `${planTitle} · ${t('订阅')} #${subscription?.id}`
                             : `${t('订阅')} #${subscription?.id}`}
                           {isActive ? (
-                            <span className='pill ok' style={{ height: 20, fontSize: 11 }}>{t('生效')}</span>
+                            <span
+                              className='pill ok'
+                              style={{ height: 20, fontSize: 11 }}
+                            >
+                              {t('生效')}
+                            </span>
                           ) : isCancelled ? (
-                            <span className='tag gray' style={{ height: 20, fontSize: 11 }}>{t('已作废')}</span>
+                            <span
+                              className='tag gray'
+                              style={{ height: 20, fontSize: 11 }}
+                            >
+                              {t('已作废')}
+                            </span>
                           ) : (
-                            <span className='tag gray' style={{ height: 20, fontSize: 11 }}>{t('已过期')}</span>
+                            <span
+                              className='tag gray'
+                              style={{ height: 20, fontSize: 11 }}
+                            >
+                              {t('已过期')}
+                            </span>
                           )}
                         </div>
                         {isActive && (
-                          <span style={{ fontSize: 12, color: 'var(--ink-3)' }} className='tnum'>
+                          <span
+                            style={{ fontSize: 12, color: 'var(--ink-3)' }}
+                            className='tnum'
+                          >
                             {t('剩余')} {remainDays} {t('天')}
                           </span>
                         )}
                       </div>
-                      <div style={{ fontSize: 12, color: 'var(--ink-3)', marginBottom: 5 }}>
-                        {isActive ? t('至') : isCancelled ? t('作废于') : t('过期于')}{' '}
-                        {new Date((subscription?.end_time || 0) * 1000).toLocaleString()}
+                      <div
+                        style={{
+                          fontSize: 12,
+                          color: 'var(--ink-3)',
+                          marginBottom: 5,
+                        }}
+                      >
+                        {isActive
+                          ? t('至')
+                          : isCancelled
+                            ? t('作废于')
+                            : t('过期于')}{' '}
+                        {new Date(
+                          (subscription?.end_time || 0) * 1000,
+                        ).toLocaleString()}
                       </div>
-                      <div style={{ fontSize: 12, color: 'var(--ink-3)', marginBottom: totalAmount > 0 ? 6 : 0 }}>
+                      <div
+                        style={{
+                          fontSize: 12,
+                          color: 'var(--ink-3)',
+                          marginBottom: totalAmount > 0 ? 6 : 0,
+                        }}
+                      >
                         {t('总额度')}:{' '}
                         {totalAmount > 0 ? (
-                          <Tooltip content={`${t('原生额度')}：${usedAmount}/${totalAmount} · ${t('剩余')} ${remainAmount}`}>
+                          <Tooltip
+                            content={`${t('原生额度')}：${usedAmount}/${totalAmount} · ${t('剩余')} ${remainAmount}`}
+                          >
                             <span>
-                              {renderQuota(usedAmount)}/{renderQuota(totalAmount)} · {t('剩余')} {renderQuota(remainAmount)}
+                              {renderQuota(usedAmount)}/
+                              {renderQuota(totalAmount)} · {t('剩余')}{' '}
+                              {renderQuota(remainAmount)}
                             </span>
                           </Tooltip>
                         ) : (
                           t('不限')
                         )}
                         {totalAmount > 0 && (
-                          <span className='tnum' style={{ marginLeft: 8 }}>{t('已用')} {usagePercent}%</span>
+                          <span className='tnum' style={{ marginLeft: 8 }}>
+                            {t('已用')} {usagePercent}%
+                          </span>
                         )}
                       </div>
                       {/* 用量进度条 */}
@@ -386,7 +497,9 @@ const SubscriptionPlansCard = ({
                           <div className='bar'>
                             <span
                               className='fill'
-                              style={{ width: `${Math.min(usagePercent, 100)}%` }}
+                              style={{
+                                width: `${Math.min(usagePercent, 100)}%`,
+                              }}
                             />
                           </div>
                         </div>
@@ -398,7 +511,14 @@ const SubscriptionPlansCard = ({
             ) : (
               <div className='srv-empty' style={{ padding: '28px 0' }}>
                 <span className='ic'>
-                  <svg width='36' height='36' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.4'>
+                  <svg
+                    width='36'
+                    height='36'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    stroke='currentColor'
+                    strokeWidth='1.4'
+                  >
                     <rect x='3' y='8' width='18' height='13' rx='2' />
                     <path d='M3 12h18M12 8v13M8 8a2.5 2.5 0 1 1 4-2c0 1.5-1 2-4 2zM16 8a2.5 2.5 0 1 0-4-2c0 1.5 1 2 4 2z' />
                   </svg>
@@ -412,7 +532,9 @@ const SubscriptionPlansCard = ({
           {/* 可购买套餐 */}
           {plans.length > 0 ? (
             <>
-              <div className='srv-bar' style={{ marginTop: 8 }}>{t('可订阅套餐')}</div>
+              <div className='srv-bar' style={{ marginTop: 8 }}>
+                {t('可订阅套餐')}
+              </div>
               <div className='srv-plans'>
                 {plans.map((p, index) => {
                   const plan = p?.plan;
@@ -461,9 +583,16 @@ const SubscriptionPlansCard = ({
                   const buyBtn = (
                     <button
                       className='btn btn-primary'
-                      style={{ width: '100%', marginTop: 'auto', opacity: reached ? 0.45 : 1, cursor: reached ? 'not-allowed' : 'pointer' }}
+                      style={{
+                        width: '100%',
+                        marginTop: 'auto',
+                        opacity: reached ? 0.45 : 1,
+                        cursor: reached ? 'not-allowed' : 'pointer',
+                      }}
                       disabled={reached}
-                      onClick={() => { if (!reached) openBuy(p); }}
+                      onClick={() => {
+                        if (!reached) openBuy(p);
+                      }}
                     >
                       {reached ? t('已达上限') : t('立即订阅')}
                     </button>
@@ -473,7 +602,14 @@ const SubscriptionPlansCard = ({
                     <div
                       key={plan?.id}
                       className='srv-plan'
-                      style={isPopular ? { borderColor: 'var(--brand-600)', boxShadow: '0 0 0 2px var(--brand-100)' } : {}}
+                      style={
+                        isPopular
+                          ? {
+                              borderColor: 'var(--brand-600)',
+                              boxShadow: '0 0 0 2px var(--brand-100)',
+                            }
+                          : {}
+                      }
                     >
                       {isPopular && (
                         <div style={{ marginBottom: 8 }}>
@@ -488,14 +624,22 @@ const SubscriptionPlansCard = ({
                         <div className='desc'>{plan.subtitle}</div>
                       )}
                       <div className='price tnum'>
-                        <small>{symbol}</small>{displayPrice}
+                        <small>{symbol}</small>
+                        {displayPrice}
                       </div>
                       <ul>
                         {planBenefits.map((item) => {
                           const content = (
                             <li key={item.label}>
                               <span className='ck'>
-                                <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.4'>
+                                <svg
+                                  width='14'
+                                  height='14'
+                                  viewBox='0 0 24 24'
+                                  fill='none'
+                                  stroke='currentColor'
+                                  strokeWidth='2.4'
+                                >
                                   <path d='m5 12 5 5 9-9' />
                                 </svg>
                               </span>
@@ -525,7 +669,14 @@ const SubscriptionPlansCard = ({
               </div>
             </>
           ) : (
-            <div style={{ textAlign: 'center', color: 'var(--ink-3)', fontSize: 13, padding: '20px 0' }}>
+            <div
+              style={{
+                textAlign: 'center',
+                color: 'var(--ink-3)',
+                fontSize: 13,
+                padding: '20px 0',
+              }}
+            >
               {t('暂无可购买套餐')}
             </div>
           )}

@@ -73,8 +73,7 @@ const About = () => {
     <div style={{ textAlign: 'center' }}>
       <p>{t('可在设置页面设置关于内容，支持 HTML & Markdown')}</p>
       <p>
-        {getSystemName()}{' '}
-        {t('© {{currentYear}}', { currentYear })}{' '}
+        {getSystemName()} {t('© {{currentYear}}', { currentYear })}{' '}
         {t('| 基于')}{' '}
         <a
           href='https://github.com/QuantumNous/new-api'

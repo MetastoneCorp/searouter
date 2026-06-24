@@ -1,506 +1,563 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About SeaRouter - The Hybrid AI Gateway</title>
-  <style>
-    :root {
-      --primary: #0066FF;
-      --primary-dark: #0052CC;
-      --secondary: #6366F1;
-      --accent: #22C55E;
-      --bg: #0F172A;
-      --bg-card: #1E293B;
-      --bg-card-hover: #334155;
-      --text: #F8FAFC;
-      --text-muted: #94A3B8;
-      --border: #334155;
-      --gradient-1: linear-gradient(135deg, #0066FF 0%, #6366F1 100%);
-      --gradient-2: linear-gradient(135deg, #22C55E 0%, #10B981 100%);
-    }
-
-    @media (prefers-color-scheme: light) {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About SeaRouter - The Hybrid AI Gateway</title>
+    <style>
       :root {
-        --bg: #F8FAFC;
-        --bg-card: #FFFFFF;
-        --bg-card-hover: #F1F5F9;
-        --text: #0F172A;
-        --text-muted: #64748B;
-        --border: #E2E8F0;
+        --primary: #0066ff;
+        --primary-dark: #0052cc;
+        --secondary: #6366f1;
+        --accent: #22c55e;
+        --bg: #0f172a;
+        --bg-card: #1e293b;
+        --bg-card-hover: #334155;
+        --text: #f8fafc;
+        --text-muted: #94a3b8;
+        --border: #334155;
+        --gradient-1: linear-gradient(135deg, #0066ff 0%, #6366f1 100%);
+        --gradient-2: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
       }
-    }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f8fafc;
+          --bg-card: #ffffff;
+          --bg-card-hover: #f1f5f9;
+          --text: #0f172a;
+          --text-muted: #64748b;
+          --border: #e2e8f0;
+        }
+      }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      min-height: 100vh;
-    }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 40px 24px;
-    }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          'Helvetica Neue', Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+        min-height: 100vh;
+      }
 
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      padding: 60px 0;
-      position: relative;
-    }
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 24px;
+      }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 400px;
-      height: 400px;
-      background: var(--gradient-1);
-      opacity: 0.1;
-      border-radius: 50%;
-      filter: blur(80px);
-      z-index: -1;
-    }
+      /* Hero Section */
+      .hero {
+        text-align: center;
+        padding: 60px 0;
+        position: relative;
+      }
 
-    .logo {
-      font-size: 48px;
-      margin-bottom: 16px;
-    }
+      .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 400px;
+        height: 400px;
+        background: var(--gradient-1);
+        opacity: 0.1;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: -1;
+      }
 
-    .tagline {
-      display: inline-block;
-      background: var(--gradient-1);
-      color: white;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 24px;
-      letter-spacing: 0.5px;
-    }
+      .logo {
+        font-size: 48px;
+        margin-bottom: 16px;
+      }
 
-    h1 {
-      font-size: 42px;
-      font-weight: 800;
-      margin-bottom: 16px;
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+      .tagline {
+        display: inline-block;
+        background: var(--gradient-1);
+        color: white;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 24px;
+        letter-spacing: 0.5px;
+      }
 
-    .subtitle {
-      font-size: 20px;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* Section */
-    section {
-      margin: 60px 0;
-    }
-
-    h2 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    h2 .icon {
-      font-size: 24px;
-    }
-
-    p {
-      color: var(--text-muted);
-      margin-bottom: 16px;
-    }
-
-    /* Feature Cards */
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      margin-top: 32px;
-    }
-
-    .feature-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px;
-      transition: all 0.3s ease;
-    }
-
-    .feature-card:hover {
-      background: var(--bg-card-hover);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    }
-
-    .feature-card h3 {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .feature-card .feature-icon {
-      font-size: 24px;
-    }
-
-    .feature-card p {
-      font-size: 15px;
-      margin-bottom: 0;
-    }
-
-    .feature-card ul {
-      margin-top: 12px;
-      padding-left: 20px;
-    }
-
-    .feature-card li {
-      color: var(--text-muted);
-      font-size: 14px;
-      margin-bottom: 6px;
-    }
-
-    /* Comparison Table */
-    .comparison {
-      overflow-x: auto;
-      margin-top: 24px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--bg-card);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    th, td {
-      padding: 16px 20px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-    }
-
-    th {
-      background: var(--bg-card-hover);
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    th:first-child, td:first-child {
-      text-align: left;
-    }
-
-    td {
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
-    .check {
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .highlight-col {
-      background: rgba(0, 102, 255, 0.05);
-    }
-
-    .highlight-col th {
-      background: var(--gradient-1);
-      color: white;
-    }
-
-    .highlight-col td {
-      color: var(--text);
-      font-weight: 500;
-    }
-
-    /* Mission Quote */
-    .mission {
-      background: var(--bg-card);
-      border-left: 4px solid var(--primary);
-      border-radius: 0 12px 12px 0;
-      padding: 32px;
-      margin: 40px 0;
-    }
-
-    .mission blockquote {
-      font-size: 20px;
-      font-style: italic;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
-
-    .mission cite {
-      color: var(--text-muted);
-      font-size: 14px;
-    }
-
-    /* CTA Buttons */
-    .cta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      justify-content: center;
-      margin: 48px 0;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .btn-primary {
-      background: var(--gradient-1);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
-    }
-
-    .btn-secondary {
-      background: var(--bg-card);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-
-    .btn-secondary:hover {
-      background: var(--bg-card-hover);
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 40px 0;
-      border-top: 1px solid var(--border);
-      margin-top: 60px;
-    }
-
-    footer p {
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
-
-    footer a {
-      color: var(--primary);
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-
-    .footer-links a {
-      color: var(--text-muted);
-      font-size: 13px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
       h1 {
-        font-size: 32px;
+        font-size: 42px;
+        font-weight: 800;
+        margin-bottom: 16px;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
       .subtitle {
-        font-size: 16px;
+        font-size: 20px;
+        color: var(--text-muted);
+        max-width: 600px;
+        margin: 0 auto;
       }
 
-      .hero {
-        padding: 40px 0;
+      /* Section */
+      section {
+        margin: 60px 0;
       }
 
+      h2 {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      h2 .icon {
+        font-size: 24px;
+      }
+
+      p {
+        color: var(--text-muted);
+        margin-bottom: 16px;
+      }
+
+      /* Feature Cards */
       .features {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin-top: 32px;
       }
 
+      .feature-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 28px;
+        transition: all 0.3s ease;
+      }
+
+      .feature-card:hover {
+        background: var(--bg-card-hover);
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-card h3 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .feature-card .feature-icon {
+        font-size: 24px;
+      }
+
+      .feature-card p {
+        font-size: 15px;
+        margin-bottom: 0;
+      }
+
+      .feature-card ul {
+        margin-top: 12px;
+        padding-left: 20px;
+      }
+
+      .feature-card li {
+        color: var(--text-muted);
+        font-size: 14px;
+        margin-bottom: 6px;
+      }
+
+      /* Comparison Table */
+      .comparison {
+        overflow-x: auto;
+        margin-top: 24px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--bg-card);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 16px 20px;
+        text-align: center;
+        border-bottom: 1px solid var(--border);
+      }
+
+      th {
+        background: var(--bg-card-hover);
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      th:first-child,
+      td:first-child {
+        text-align: left;
+      }
+
+      td {
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+
+      .check {
+        color: var(--accent);
+        font-weight: bold;
+      }
+
+      .highlight-col {
+        background: rgba(0, 102, 255, 0.05);
+      }
+
+      .highlight-col th {
+        background: var(--gradient-1);
+        color: white;
+      }
+
+      .highlight-col td {
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      /* Mission Quote */
+      .mission {
+        background: var(--bg-card);
+        border-left: 4px solid var(--primary);
+        border-radius: 0 12px 12px 0;
+        padding: 32px;
+        margin: 40px 0;
+      }
+
+      .mission blockquote {
+        font-size: 20px;
+        font-style: italic;
+        color: var(--text);
+        margin-bottom: 12px;
+      }
+
+      .mission cite {
+        color: var(--text-muted);
+        font-size: 14px;
+      }
+
+      /* CTA Buttons */
       .cta {
-        flex-direction: column;
-        align-items: stretch;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: center;
+        margin: 48px 0;
       }
 
       .btn {
-        justify-content: center;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 28px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
       }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <!-- Hero -->
-    <header class="hero">
-      <div class="logo">🌊</div>
-      <span class="tagline">The Hybrid AI Gateway</span>
-      <h1>SeaRouter</h1>
-      <p class="subtitle"><strong>Unify the Cloud. Secure the Edge. One Standard Interface.</strong></p>
-    </header>
 
-    <!-- What is SeaRouter -->
-    <section>
-      <h2><span class="icon">🌐</span> What is SeaRouter?</h2>
-      <p>
-        <strong>SeaRouter</strong> 是下一代大模型统一接入基础设施。我们不仅仅是一个聚合全球顶尖 LLM（如 OpenAI, Claude, DeepSeek, 智谱 GLM）的高速中转站，更是连接<strong>公有云智能</strong>与<strong>私有化算力</strong>的弹性桥梁。
-      </p>
-      <p>
-        在 AI 落地过程中，开发者往往面临艰难的选择：是使用公有云模型的强大通用能力，还是为了数据安全和成本选择本地部署？
-      </p>
-      <p style="font-size: 18px; color: var(--text); font-weight: 600;">
-        SeaRouter 的答案是：<em>Why not both?</em> 我们为您提供统一的 OpenAI 兼容接口，让您的应用能够在"云端大模型"与"本地私有模型"之间自由切换、混合调用。
-      </p>
-    </section>
+      .btn-primary {
+        background: var(--gradient-1);
+        color: white;
+      }
 
-    <!-- Core Features -->
-    <section>
-      <h2><span class="icon">⚡</span> Core Features</h2>
-      <div class="features">
-        <div class="feature-card">
-          <h3><span class="feature-icon">☁️</span> 全球模型中转</h3>
-          <p>Global Model Relay - 如同 OpenRouter 一样，我们提供标准化的 API 聚合服务。</p>
-          <ul>
-            <li><strong>一站式接入：</strong>一个 API Key 即可调用 GPT-4o, Claude 3.5, Gemini 1.5 Pro 以及 GLM-4, DeepSeek, Llama 3 等开源模型</li>
-            <li><strong>企业级稳定性：</strong>全球多节点加速，智能负载均衡，确保 99.9% 的 API 可用性</li>
-            <li><strong>透明计费：</strong>实时竞价路由，帮助您以最低成本获得最佳效果</li>
-          </ul>
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
+      }
+
+      .btn-secondary {
+        background: var(--bg-card);
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+
+      .btn-secondary:hover {
+        background: var(--bg-card-hover);
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 40px 0;
+        border-top: 1px solid var(--border);
+        margin-top: 60px;
+      }
+
+      footer p {
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+
+      footer a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+
+      .footer-links a {
+        color: var(--text-muted);
+        font-size: 13px;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 32px;
+        }
+
+        .subtitle {
+          font-size: 16px;
+        }
+
+        .hero {
+          padding: 40px 0;
+        }
+
+        .features {
+          grid-template-columns: 1fr;
+        }
+
+        .cta {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .btn {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Hero -->
+      <header class="hero">
+        <div class="logo">🌊</div>
+        <span class="tagline">The Hybrid AI Gateway</span>
+        <h1>SeaRouter</h1>
+        <p class="subtitle">
+          <strong
+            >Unify the Cloud. Secure the Edge. One Standard Interface.</strong
+          >
+        </p>
+      </header>
+
+      <!-- What is SeaRouter -->
+      <section>
+        <h2><span class="icon">🌐</span> What is SeaRouter?</h2>
+        <p>
+          <strong>SeaRouter</strong>
+          是下一代大模型统一接入基础设施。我们不仅仅是一个聚合全球顶尖 LLM（如
+          OpenAI, Claude, DeepSeek, 智谱
+          GLM）的高速中转站，更是连接<strong>公有云智能</strong>与<strong>私有化算力</strong>的弹性桥梁。
+        </p>
+        <p>
+          在 AI
+          落地过程中，开发者往往面临艰难的选择：是使用公有云模型的强大通用能力，还是为了数据安全和成本选择本地部署？
+        </p>
+        <p style="font-size: 18px; color: var(--text); font-weight: 600">
+          SeaRouter 的答案是：<em>Why not both?</em> 我们为您提供统一的 OpenAI
+          兼容接口，让您的应用能够在"云端大模型"与"本地私有模型"之间自由切换、混合调用。
+        </p>
+      </section>
+
+      <!-- Core Features -->
+      <section>
+        <h2><span class="icon">⚡</span> Core Features</h2>
+        <div class="features">
+          <div class="feature-card">
+            <h3><span class="feature-icon">☁️</span> 全球模型中转</h3>
+            <p>
+              Global Model Relay - 如同 OpenRouter 一样，我们提供标准化的 API
+              聚合服务。
+            </p>
+            <ul>
+              <li>
+                <strong>一站式接入：</strong>一个 API Key 即可调用 GPT-4o,
+                Claude 3.5, Gemini 1.5 Pro 以及 GLM-4, DeepSeek, Llama 3
+                等开源模型
+              </li>
+              <li>
+                <strong>企业级稳定性：</strong
+                >全球多节点加速，智能负载均衡，确保 99.9% 的 API 可用性
+              </li>
+              <li>
+                <strong>透明计费：</strong
+                >实时竞价路由，帮助您以最低成本获得最佳效果
+              </li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <h3><span class="feature-icon">🔒</span> 自托管与本地融合</h3>
+            <p>
+              On-Premise Integration - SeaRouter
+              的独特基因，无缝接入您的私有算力。
+            </p>
+            <ul>
+              <li>
+                <strong>BYOC：</strong>本地 NVIDIA 集群或私有云 vLLM
+                实例，都可以注册为后端节点
+              </li>
+              <li>
+                <strong>数据驻留：</strong
+                >通过路由规则引擎，强制将敏感数据仅路由至本地模型
+              </li>
+              <li>
+                <strong>零代码适配：</strong>原生支持 Ollama, TGI, vLLM
+                等主流推理框架
+              </li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <h3><span class="feature-icon">🔀</span> 弹性路由引擎</h3>
+            <p>Smart Flex Routing - 定义您的流量策略，剩下的交给我们。</p>
+            <ul>
+              <li>
+                <strong>混合编排：</strong
+                >简单问题交给本地模型（免费），复杂逻辑交给云端大模型（付费）
+              </li>
+              <li>
+                <strong>故障转移：</strong>当本地 GPU
+                显存占满时，自动溢出至公有云模型
+              </li>
+              <li><strong>负载均衡：</strong>多渠道智能分发，保障服务不中断</li>
+            </ul>
+          </div>
         </div>
+      </section>
 
-        <div class="feature-card">
-          <h3><span class="feature-icon">🔒</span> 自托管与本地融合</h3>
-          <p>On-Premise Integration - SeaRouter 的独特基因，无缝接入您的私有算力。</p>
-          <ul>
-            <li><strong>BYOC：</strong>本地 NVIDIA 集群或私有云 vLLM 实例，都可以注册为后端节点</li>
-            <li><strong>数据驻留：</strong>通过路由规则引擎，强制将敏感数据仅路由至本地模型</li>
-            <li><strong>零代码适配：</strong>原生支持 Ollama, TGI, vLLM 等主流推理框架</li>
-          </ul>
+      <!-- Comparison Table -->
+      <section>
+        <h2><span class="icon">📊</span> 为什么选择 SeaRouter？</h2>
+        <div class="comparison">
+          <table>
+            <thead>
+              <tr>
+                <th>特性对比</th>
+                <th>OpenRouter / 常规聚合站</th>
+                <th class="highlight-col">SeaRouter</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>标准 OpenAI 接口</td>
+                <td><span class="check">✓</span></td>
+                <td class="highlight-col"><span class="check">✓</span></td>
+              </tr>
+              <tr>
+                <td>公网模型聚合</td>
+                <td><span class="check">✓</span></td>
+                <td class="highlight-col"><span class="check">✓</span></td>
+              </tr>
+              <tr>
+                <td>私有/本地模型接入</td>
+                <td>✗</td>
+                <td class="highlight-col">
+                  <span class="check">✓</span> 混合架构
+                </td>
+              </tr>
+              <tr>
+                <td>数据隐私路由</td>
+                <td>弱 (仅依赖厂商承诺)</td>
+                <td class="highlight-col">
+                  <span class="check">✓</span> 强 (物理隔离敏感数据)
+                </td>
+              </tr>
+              <tr>
+                <td>混合算力调度</td>
+                <td>✗</td>
+                <td class="highlight-col">
+                  <span class="check">✓</span> 云+端自动切换
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </section>
 
-        <div class="feature-card">
-          <h3><span class="feature-icon">🔀</span> 弹性路由引擎</h3>
-          <p>Smart Flex Routing - 定义您的流量策略，剩下的交给我们。</p>
-          <ul>
-            <li><strong>混合编排：</strong>简单问题交给本地模型（免费），复杂逻辑交给云端大模型（付费）</li>
-            <li><strong>故障转移：</strong>当本地 GPU 显存占满时，自动溢出至公有云模型</li>
-            <li><strong>负载均衡：</strong>多渠道智能分发，保障服务不中断</li>
-          </ul>
+      <!-- Mission -->
+      <section>
+        <div class="mission">
+          <blockquote>
+            "Democratizing access to intelligence, whether it lives in the cloud
+            or on your desk."
+          </blockquote>
+          <cite
+            >我们的使命是打破算力的物理边界。无论 AI
+            运行在万里的云端数据中心，还是您桌下的工作站里，SeaRouter
+            都将它们抽象为统一的智力资源，供您随时调遣。</cite
+          >
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Comparison Table -->
-    <section>
-      <h2><span class="icon">📊</span> 为什么选择 SeaRouter？</h2>
-      <div class="comparison">
-        <table>
-          <thead>
-            <tr>
-              <th>特性对比</th>
-              <th>OpenRouter / 常规聚合站</th>
-              <th class="highlight-col">SeaRouter</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>标准 OpenAI 接口</td>
-              <td><span class="check">✓</span></td>
-              <td class="highlight-col"><span class="check">✓</span></td>
-            </tr>
-            <tr>
-              <td>公网模型聚合</td>
-              <td><span class="check">✓</span></td>
-              <td class="highlight-col"><span class="check">✓</span></td>
-            </tr>
-            <tr>
-              <td>私有/本地模型接入</td>
-              <td>✗</td>
-              <td class="highlight-col"><span class="check">✓</span> 混合架构</td>
-            </tr>
-            <tr>
-              <td>数据隐私路由</td>
-              <td>弱 (仅依赖厂商承诺)</td>
-              <td class="highlight-col"><span class="check">✓</span> 强 (物理隔离敏感数据)</td>
-            </tr>
-            <tr>
-              <td>混合算力调度</td>
-              <td>✗</td>
-              <td class="highlight-col"><span class="check">✓</span> 云+端自动切换</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+      <!-- CTA -->
+      <section>
+        <h2 style="justify-content: center">
+          <span class="icon">🚀</span> Ready to Start?
+        </h2>
+        <p style="text-align: center">开始构建您的混合 AI 应用。</p>
+        <div class="cta">
+          <a href="/login" class="btn btn-primary">
+            <span>🔑</span> 获取 API Key
+          </a>
+          <a href="/console/channel" class="btn btn-secondary">
+            <span>⚙️</span> 配置渠道
+          </a>
+          <a href="/console/token" class="btn btn-secondary">
+            <span>🎫</span> 管理令牌
+          </a>
+        </div>
+      </section>
 
-    <!-- Mission -->
-    <section>
-      <div class="mission">
-        <blockquote>
-          "Democratizing access to intelligence, whether it lives in the cloud or on your desk."
-        </blockquote>
-        <cite>我们的使命是打破算力的物理边界。无论 AI 运行在万里的云端数据中心，还是您桌下的工作站里，SeaRouter 都将它们抽象为统一的智力资源，供您随时调遣。</cite>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section>
-      <h2 style="justify-content: center;"><span class="icon">🚀</span> Ready to Start?</h2>
-      <p style="text-align: center;">开始构建您的混合 AI 应用。</p>
-      <div class="cta">
-        <a href="/login" class="btn btn-primary">
-          <span>🔑</span> 获取 API Key
-        </a>
-        <a href="/console/channel" class="btn btn-secondary">
-          <span>⚙️</span> 配置渠道
-        </a>
-        <a href="/console/token" class="btn btn-secondary">
-          <span>🎫</span> 管理令牌
-        </a>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-      <p>&copy; 2026 SeaRouter. The Hybrid AI Interface.</p>
-      <div class="footer-links">
-        <a href="/">首页</a>
-        <a href="/console">控制台</a>
-        <a href="/pricing">定价</a>
-        <a href="https://github.com/searouter" target="_blank">GitHub</a>
-      </div>
-    </footer>
-  </div>
-</body>
+      <!-- Footer -->
+      <footer>
+        <p>&copy; 2026 SeaRouter. The Hybrid AI Interface.</p>
+        <div class="footer-links">
+          <a href="/">首页</a>
+          <a href="/console">控制台</a>
+          <a href="/pricing">定价</a>
+          <a href="https://github.com/searouter" target="_blank">GitHub</a>
+        </div>
+      </footer>
+    </div>
+  </body>
 </html>

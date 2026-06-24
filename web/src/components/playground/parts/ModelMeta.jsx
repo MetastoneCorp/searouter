@@ -39,9 +39,7 @@ const ModelMeta = ({ model, createAt }) => {
   if (model) parts.push(model);
   if (time) parts.push(time);
   if (parts.length === 0) return null;
-  return (
-    <span className='mono tnum'>{parts.join(' · ')}</span>
-  );
+  return <span className='mono tnum'>{parts.join(' · ')}</span>;
 };
 
 export default ModelMeta;

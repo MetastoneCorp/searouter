@@ -43,11 +43,7 @@ import Turnstile from 'react-turnstile';
 import { Checkbox, Modal } from '@douyinfe/semi-ui';
 import TelegramLoginButton from 'react-telegram-login';
 
-import {
-  IconGithubLogo,
-  IconLock,
-  IconKey,
-} from '@douyinfe/semi-icons';
+import { IconGithubLogo, IconLock, IconKey } from '@douyinfe/semi-icons';
 import OIDCIcon from '../common/logo/OIDCIcon';
 import WeChatIcon from '../common/logo/WeChatIcon';
 import LinuxDoIcon from '../common/logo/LinuxDoIcon';
@@ -268,8 +264,14 @@ const LoginForm = () => {
       return;
     }
     const fields = [
-      'id', 'first_name', 'last_name', 'username',
-      'photo_url', 'auth_date', 'hash', 'lang',
+      'id',
+      'first_name',
+      'last_name',
+      'username',
+      'photo_url',
+      'auth_date',
+      'hash',
+      'lang',
     ];
     const params = {};
     fields.forEach((field) => {
@@ -398,13 +400,18 @@ const LoginForm = () => {
       const publicKeyOptions = prepareCredentialRequestOptions(
         data?.options || data?.publicKey || data,
       );
-      const assertion = await navigator.credentials.get({ publicKey: publicKeyOptions });
+      const assertion = await navigator.credentials.get({
+        publicKey: publicKeyOptions,
+      });
       const payload = buildAssertionResult(assertion);
       if (!payload) {
         showError('Passkey 验证失败，请重试');
         return;
       }
-      const finishRes = await API.post('/api/user/passkey/login/finish', payload);
+      const finishRes = await API.post(
+        '/api/user/passkey/login/finish',
+        payload,
+      );
       const finish = finishRes.data;
       if (finish.success) {
         userDispatch({ type: 'login', payload: finish.data });
@@ -455,8 +462,21 @@ const LoginForm = () => {
   );
 
   const termsBlock = (hasUserAgreement || hasPrivacyPolicy) && (
-    <div className='lg2-form' style={{ display: 'block', width: 'auto', margin: 0, padding: 0 }}>
-      <div className='agree' style={{ display: 'flex', alignItems: 'flex-start', gap: 9, fontSize: 12.5, color: 'var(--ink-2)', margin: '4px 0 22px' }}>
+    <div
+      className='lg2-form'
+      style={{ display: 'block', width: 'auto', margin: 0, padding: 0 }}
+    >
+      <div
+        className='agree'
+        style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: 9,
+          fontSize: 12.5,
+          color: 'var(--ink-2)',
+          margin: '4px 0 22px',
+        }}
+      >
         <Checkbox
           checked={agreedToTerms}
           onChange={(e) => setAgreedToTerms(e.target.checked)}
@@ -468,17 +488,25 @@ const LoginForm = () => {
         >
           {t('我已阅读并同意')}
           {hasUserAgreement && (
-            <a href='/user-agreement' target='_blank' rel='noopener noreferrer'
+            <a
+              href='/user-agreement'
+              target='_blank'
+              rel='noopener noreferrer'
               onClick={(e) => e.stopPropagation()}
-              style={{ color: 'var(--brand-600)', margin: '0 3px' }}>
+              style={{ color: 'var(--brand-600)', margin: '0 3px' }}
+            >
               {t('用户协议')}
             </a>
           )}
           {hasUserAgreement && hasPrivacyPolicy && t('和')}
           {hasPrivacyPolicy && (
-            <a href='/privacy-policy' target='_blank' rel='noopener noreferrer'
+            <a
+              href='/privacy-policy'
+              target='_blank'
+              rel='noopener noreferrer'
               onClick={(e) => e.stopPropagation()}
-              style={{ color: 'var(--brand-600)', margin: '0 3px' }}>
+              style={{ color: 'var(--brand-600)', margin: '0 3px' }}
+            >
               {t('隐私政策')}
             </a>
           )}
@@ -499,20 +527,37 @@ const LoginForm = () => {
       centered={true}
       okButtonProps={{ loading: wechatCodeSubmitLoading }}
     >
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <img src={status.wechat_qrcode} alt='微信二维码' style={{ marginBottom: 16 }} />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <img
+          src={status.wechat_qrcode}
+          alt='微信二维码'
+          style={{ marginBottom: 16 }}
+        />
       </div>
       <div style={{ textAlign: 'center', marginBottom: 16 }}>
-        <p>{t('微信扫码关注公众号，输入「验证码」获取验证码（三分钟内有效）')}</p>
+        <p>
+          {t('微信扫码关注公众号，输入「验证码」获取验证码（三分钟内有效）')}
+        </p>
       </div>
-      <div className='lg2-form' style={{ width: '100%', padding: 0, margin: 0 }}>
+      <div
+        className='lg2-form'
+        style={{ width: '100%', padding: 0, margin: 0 }}
+      >
         <div className='lg2-ipt-group'>
           <label className='auth-label'>{t('验证码')}</label>
           <div className='auth-ipt'>
             <input
               placeholder={t('验证码')}
               value={inputs.wechat_verification_code}
-              onChange={(e) => handleChange('wechat_verification_code', e.target.value)}
+              onChange={(e) =>
+                handleChange('wechat_verification_code', e.target.value)
+              }
             />
           </div>
         </div>
@@ -542,48 +587,75 @@ const LoginForm = () => {
   const oauthButtons = (
     <div>
       {status.wechat_login && (
-        <button className='lg2-oauth-btn' onClick={onWeChatLoginClicked} disabled={wechatLoading}>
-          <span style={{ color: '#07C160', display: 'flex', alignItems: 'center' }}><WeChatIcon /></span>
+        <button
+          className='lg2-oauth-btn'
+          onClick={onWeChatLoginClicked}
+          disabled={wechatLoading}
+        >
+          <span
+            style={{ color: '#07C160', display: 'flex', alignItems: 'center' }}
+          >
+            <WeChatIcon />
+          </span>
           {t('使用 微信 继续')}
         </button>
       )}
       {status.github_oauth && (
-        <button className='lg2-oauth-btn' onClick={handleGitHubClick} disabled={githubLoading || githubButtonDisabled}>
+        <button
+          className='lg2-oauth-btn'
+          onClick={handleGitHubClick}
+          disabled={githubLoading || githubButtonDisabled}
+        >
           <IconGithubLogo size='large' />
           {githubButtonText}
         </button>
       )}
       {status.discord_oauth && (
-        <button className='lg2-oauth-btn' onClick={handleDiscordClick} disabled={discordLoading}>
+        <button
+          className='lg2-oauth-btn'
+          onClick={handleDiscordClick}
+          disabled={discordLoading}
+        >
           <SiDiscord style={{ color: '#5865F2', width: 20, height: 20 }} />
           {t('使用 Discord 继续')}
         </button>
       )}
       {status.oidc_enabled && (
-        <button className='lg2-oauth-btn' onClick={handleOIDCClick} disabled={oidcLoading}>
+        <button
+          className='lg2-oauth-btn'
+          onClick={handleOIDCClick}
+          disabled={oidcLoading}
+        >
           <OIDCIcon style={{ color: '#1877F2' }} />
           {t('使用 OIDC 继续')}
         </button>
       )}
       {status.linuxdo_oauth && (
-        <button className='lg2-oauth-btn' onClick={handleLinuxDOClick} disabled={linuxdoLoading}>
+        <button
+          className='lg2-oauth-btn'
+          onClick={handleLinuxDOClick}
+          disabled={linuxdoLoading}
+        >
           <LinuxDoIcon style={{ color: '#E95420', width: 20, height: 20 }} />
           {t('使用 LinuxDO 继续')}
         </button>
       )}
-      {status.custom_oauth_providers && status.custom_oauth_providers.map((provider) => (
-        <button
-          key={provider.slug}
-          className='lg2-oauth-btn'
-          onClick={() => handleCustomOAuthClick(provider)}
-          disabled={customOAuthLoading[provider.slug]}
-        >
-          <IconLock size='large' />
-          {t('使用 {{name}} 继续', { name: provider.name })}
-        </button>
-      ))}
+      {status.custom_oauth_providers &&
+        status.custom_oauth_providers.map((provider) => (
+          <button
+            key={provider.slug}
+            className='lg2-oauth-btn'
+            onClick={() => handleCustomOAuthClick(provider)}
+            disabled={customOAuthLoading[provider.slug]}
+          >
+            <IconLock size='large' />
+            {t('使用 {{name}} 继续', { name: provider.name })}
+          </button>
+        ))}
       {status.telegram_oauth && (
-        <div style={{ display: 'flex', justifyContent: 'center', margin: '8px 0' }}>
+        <div
+          style={{ display: 'flex', justifyContent: 'center', margin: '8px 0' }}
+        >
           <TelegramLoginButton
             dataOnauth={onTelegramLoginClicked}
             botName={status.telegram_bot_name}
@@ -591,7 +663,11 @@ const LoginForm = () => {
         </div>
       )}
       {status.passkey_login && passkeySupported && (
-        <button className='lg2-oauth-btn' onClick={handlePasskeyLogin} disabled={passkeyLoading}>
+        <button
+          className='lg2-oauth-btn'
+          onClick={handlePasskeyLogin}
+          disabled={passkeyLoading}
+        >
           <IconKey size='large' />
           {t('使用 Passkey 登录')}
         </button>
@@ -603,8 +679,13 @@ const LoginForm = () => {
   const emailForm = (
     <form onSubmit={handleSubmit}>
       {status.passkey_login && passkeySupported && (
-        <button type='button' className='lg2-oauth-btn' onClick={handlePasskeyLogin} disabled={passkeyLoading}
-          style={{ marginBottom: 16 }}>
+        <button
+          type='button'
+          className='lg2-oauth-btn'
+          onClick={handlePasskeyLogin}
+          disabled={passkeyLoading}
+          style={{ marginBottom: 16 }}
+        >
           <IconKey size='large' />
           {t('使用 Passkey 登录')}
         </button>
@@ -634,13 +715,29 @@ const LoginForm = () => {
           />
           <span className='eye' onClick={() => setShowPassword(!showPassword)}>
             {showPassword ? (
-              <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8'>
-                <path d='M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/>
+              <svg
+                width='18'
+                height='18'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='1.8'
+              >
+                <path d='M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z' />
+                <circle cx='12' cy='12' r='3' />
               </svg>
             ) : (
-              <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8'>
-                <path d='M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/>
-                <path d='m3 3 18 18' strokeWidth='1.6'/>
+              <svg
+                width='18'
+                height='18'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='1.8'
+              >
+                <path d='M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z' />
+                <circle cx='12' cy='12' r='3' />
+                <path d='m3 3 18 18' strokeWidth='1.6' />
               </svg>
             )}
           </span>
@@ -652,7 +749,10 @@ const LoginForm = () => {
       <button
         type='submit'
         className='lg2-submit'
-        disabled={loginLoading || ((hasUserAgreement || hasPrivacyPolicy) && !agreedToTerms)}
+        disabled={
+          loginLoading ||
+          ((hasUserAgreement || hasPrivacyPolicy) && !agreedToTerms)
+        }
         style={{ marginBottom: 10 }}
       >
         {loginLoading ? t('登录中...') : t('登录 / 注册')}
@@ -661,7 +761,12 @@ const LoginForm = () => {
       <button
         type='button'
         className='lg2-link-btn'
-        style={{ display: 'block', width: '100%', textAlign: 'center', marginTop: 10 }}
+        style={{
+          display: 'block',
+          width: '100%',
+          textAlign: 'center',
+          marginTop: 10,
+        }}
         onClick={handleResetPasswordClick}
         disabled={resetPasswordLoading}
       >
@@ -683,8 +788,7 @@ const LoginForm = () => {
 
       {!status.self_use_mode_enabled && (
         <div className='lg2-foot'>
-          {t('没有账户？')}{' '}
-          <Link to='/register'>{t('注册')}</Link>
+          {t('没有账户？')} <Link to='/register'>{t('注册')}</Link>
         </div>
       )}
     </form>
@@ -699,14 +803,18 @@ const LoginForm = () => {
       <button
         className='lg2-oauth-btn'
         onClick={() => setShowEmailLogin(true)}
-        style={{ fontWeight: 600, background: 'var(--ink)', color: '#fff', border: 0 }}
+        style={{
+          fontWeight: 600,
+          background: 'var(--ink)',
+          color: '#fff',
+          border: 0,
+        }}
       >
         {t('使用 邮箱或用户名 登录')}
       </button>
       {!status.self_use_mode_enabled && (
         <div className='lg2-foot'>
-          {t('没有账户？')}{' '}
-          <Link to='/register'>{t('注册')}</Link>
+          {t('没有账户？')} <Link to='/register'>{t('注册')}</Link>
         </div>
       )}
     </div>
@@ -722,12 +830,22 @@ const LoginForm = () => {
         {/* 左上角 logo */}
         <div className='brand'>
           <img src={logo} alt='' className='lg2-brand-logo' />
-          <span style={{ fontSize: 36, fontWeight: 700, color: '#fff' }}>{systemName}</span>
+          <span style={{ fontSize: 36, fontWeight: 700, color: '#fff' }}>
+            {systemName}
+          </span>
         </div>
         {/* 左下角文案 */}
         <div className='lg2-hero-copy'>
-          <h1>{t('统一云端')}<br/>{t('守护边缘')}</h1>
-          <p>{t('企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率')}</p>
+          <h1>
+            {t('统一云端')}
+            <br />
+            {t('守护边缘')}
+          </h1>
+          <p>
+            {t(
+              '企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率',
+            )}
+          </p>
         </div>
       </div>
 
@@ -736,7 +854,11 @@ const LoginForm = () => {
         {/* 右上角：语言/主题切换 */}
         <div className='lg2-topbar'>
           <ThemeToggle theme={theme} onThemeToggle={handleThemeToggle} t={t} />
-          <LanguageSelector currentLang={currentLang} onLanguageChange={handleLanguageChange} t={t} />
+          <LanguageSelector
+            currentLang={currentLang}
+            onLanguageChange={handleLanguageChange}
+            t={t}
+          />
         </div>
 
         <div className='lg2-form'>
@@ -746,13 +868,21 @@ const LoginForm = () => {
             {systemName}
           </div>
 
-          <div className='welc'>{t('欢迎登录')} {systemName}</div>
+          <div className='welc'>
+            {t('欢迎登录')} {systemName}
+          </div>
 
           {showEmailForm ? emailForm : oauthPanel}
         </div>
 
         {turnstileEnabled && (
-          <div style={{ display: 'flex', justifyContent: 'center', padding: '16px 0' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              padding: '16px 0',
+            }}
+          >
             <Turnstile
               sitekey={turnstileSiteKey}
               onVerify={(token) => setTurnstileToken(token)}

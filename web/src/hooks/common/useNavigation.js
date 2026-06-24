@@ -19,7 +19,13 @@ For commercial licensing, please contact support@quantumnous.com
 
 import { useMemo } from 'react';
 
-export const useNavigation = (t, docsLink, headerNavModules, adminDocsLink, isAdminUser) => {
+export const useNavigation = (
+  t,
+  docsLink,
+  headerNavModules,
+  adminDocsLink,
+  isAdminUser,
+) => {
   const mainNavLinks = useMemo(() => {
     // 默认配置，如果没有传入配置则显示所有模块
     const defaultModules = {

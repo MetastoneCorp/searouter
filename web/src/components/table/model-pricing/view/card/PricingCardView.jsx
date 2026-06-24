@@ -26,10 +26,7 @@ import {
   IllustrationNoResult,
   IllustrationNoResultDark,
 } from '@douyinfe/semi-illustrations';
-import {
-  calculateModelPrice,
-  getLobeHubIcon,
-} from '../../../../../helpers';
+import { calculateModelPrice, getLobeHubIcon } from '../../../../../helpers';
 import PricingCardSkeleton from './PricingCardSkeleton';
 import { useMinimumLoadingTime } from '../../../../../hooks/common/useMinimumLoadingTime';
 import { useIsMobile } from '../../../../../hooks/common/useIsMobile';
@@ -61,14 +58,20 @@ const ModelAvatar = ({ model }) => {
   }
   if (model.icon) {
     return (
-      <div className='mavatar' style={{ background: 'var(--brand-50)', padding: 6 }}>
+      <div
+        className='mavatar'
+        style={{ background: 'var(--brand-50)', padding: 6 }}
+      >
         {getLobeHubIcon(model.icon, 28)}
       </div>
     );
   }
   if (model.vendor_icon) {
     return (
-      <div className='mavatar' style={{ background: 'var(--brand-50)', padding: 6 }}>
+      <div
+        className='mavatar'
+        style={{ background: 'var(--brand-50)', padding: 6 }}
+      >
         {getLobeHubIcon(model.vendor_icon, 28)}
       </div>
     );
@@ -102,7 +105,10 @@ const PricingCardView = ({
   const navigate = useNavigate();
   const showSkeleton = useMinimumLoadingTime(loading);
   const startIndex = (currentPage - 1) * pageSize;
-  const paginatedModels = filteredModels.slice(startIndex, startIndex + pageSize);
+  const paginatedModels = filteredModels.slice(
+    startIndex,
+    startIndex + pageSize,
+  );
   const getModelKey = (model) => model.key ?? model.model_name ?? model.id;
   const isMobile = useIsMobile();
 
@@ -152,7 +158,10 @@ const PricingCardView = ({
 
   if (showSkeleton) {
     return (
-      <PricingCardSkeleton rowSelection={!!rowSelection} showRatio={showRatio} />
+      <PricingCardSkeleton
+        rowSelection={!!rowSelection}
+        showRatio={showRatio}
+      />
     );
   }
 
@@ -200,8 +209,7 @@ const PricingCardView = ({
               className='mcard'
               onClick={() =>
                 navigate(
-                  '/pricing/model/' +
-                    encodeURIComponent(model.model_name),
+                  '/pricing/model/' + encodeURIComponent(model.model_name),
                   { state: { modelData: model } },
                 )
               }
@@ -270,7 +278,8 @@ const PricingCardView = ({
                     <div className='prow'>
                       <span className='pl'>{t('输出')}</span>
                       <span className='pv tnum'>
-                        {priceData.completionPrice} / 1{priceData.unitLabel} tokens
+                        {priceData.completionPrice} / 1{priceData.unitLabel}{' '}
+                        tokens
                       </span>
                     </div>
                   </>
@@ -284,7 +293,9 @@ const PricingCardView = ({
 
               {/* 底部：标签 + 箭头 */}
               <div className='mcard-foot'>
-                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', flex: 1 }}>
+                <div
+                  style={{ display: 'flex', gap: 6, flexWrap: 'wrap', flex: 1 }}
+                >
                   {renderTags(model)}
                 </div>
                 <div className='mcard-arrow'>

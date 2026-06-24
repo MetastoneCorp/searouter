@@ -18,12 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState } from 'react';
-import {
-  Input,
-  InputNumber,
-  SideSheet,
-  Switch,
-} from '@douyinfe/semi-ui';
+import { Input, InputNumber, SideSheet, Switch } from '@douyinfe/semi-ui';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ParameterControl from '../ParameterControl';
@@ -31,7 +26,15 @@ import CustomRequestEditor from '../CustomRequestEditor';
 
 // 标签风格与 ParameterControl 保持一致
 const FieldLabel = ({ children }) => (
-  <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--ink-2)', marginBottom: 7 }}>
+  <label
+    style={{
+      display: 'block',
+      fontSize: 12.5,
+      fontWeight: 600,
+      color: 'var(--ink-2)',
+      marginBottom: 7,
+    }}
+  >
     {children}
   </label>
 );
@@ -69,7 +72,9 @@ const SettingsSideSheet = ({
 }) => {
   const { t } = useTranslation();
   const [advancedOpen, setAdvancedOpen] = useState(false);
-  const dimStyle = customRequestMode ? { opacity: 0.5, pointerEvents: 'none' } : {};
+  const dimStyle = customRequestMode
+    ? { opacity: 0.5, pointerEvents: 'none' }
+    : {};
 
   return (
     <SideSheet
@@ -84,7 +89,14 @@ const SettingsSideSheet = ({
       headerStyle={{ borderBottom: '1px solid var(--semi-color-border)' }}
     >
       {/* 5 项核心：System Prompt（满行）/ Temperature / Max Tokens / Context Turns / Stream */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 20px', ...dimStyle }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '16px 20px',
+          ...dimStyle,
+        }}
+      >
         <Field label={t('系统提示')} style={{ gridColumn: '1 / -1' }}>
           <Input
             value={inputs.systemPrompt || ''}
@@ -126,7 +138,17 @@ const SettingsSideSheet = ({
         </Field>
 
         <Field label={t('Stream')}>
-          <div style={{ display: 'flex', height: 36, alignItems: 'center', justifyContent: 'space-between', border: '1px solid var(--border)', borderRadius: 8, padding: '0 12px' }}>
+          <div
+            style={{
+              display: 'flex',
+              height: 36,
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              border: '1px solid var(--border)',
+              borderRadius: 8,
+              padding: '0 12px',
+            }}
+          >
             <span style={{ fontSize: 13.5, color: 'var(--ink-2)' }}>
               {inputs.stream ? t('On') : t('Off')}
             </span>
@@ -140,18 +162,45 @@ const SettingsSideSheet = ({
       </div>
 
       {/* 更多参数：嵌套折叠（top_p / frequency_penalty / 自定义请求体 等） */}
-      <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid var(--border-2)' }}>
+      <div
+        style={{
+          marginTop: 24,
+          paddingTop: 20,
+          borderTop: '1px solid var(--border-2)',
+        }}
+      >
         <button
           type='button'
           onClick={() => setAdvancedOpen((s) => !s)}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13.5, fontWeight: 600, color: 'var(--ink)', background: 'transparent', border: 0, cursor: 'pointer' }}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+            fontSize: 13.5,
+            fontWeight: 600,
+            color: 'var(--ink)',
+            background: 'transparent',
+            border: 0,
+            cursor: 'pointer',
+          }}
         >
-          {advancedOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+          {advancedOpen ? (
+            <ChevronDown size={14} />
+          ) : (
+            <ChevronRight size={14} />
+          )}
           {t('更多参数')}
         </button>
 
         {advancedOpen && (
-          <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div
+            style={{
+              marginTop: 16,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 16,
+            }}
+          >
             <div style={dimStyle}>
               <ParameterControl
                 inputs={inputs}

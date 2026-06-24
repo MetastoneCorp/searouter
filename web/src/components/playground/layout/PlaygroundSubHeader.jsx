@@ -95,7 +95,14 @@ const PlaygroundSubHeader = ({
   return (
     <header className='pgw2-subhd'>
       <div className='pgw2-subhd-inner'>
-        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div
+          style={{
+            marginLeft: 'auto',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
           {isLoggedIn && groups && groups.length > 0 && (
             <Select
               placeholder={t('分组')}

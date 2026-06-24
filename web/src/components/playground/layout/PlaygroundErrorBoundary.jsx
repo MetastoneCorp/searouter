@@ -55,7 +55,8 @@ class PlaygroundErrorBoundary extends React.Component {
               Playground 渲染出错
             </h2>
             <p className='text-sm text-zinc-500 dark:text-zinc-400 text-center mb-4'>
-              请打开浏览器 DevTools 控制台查看完整堆栈，并把错误信息反馈给开发者。
+              请打开浏览器 DevTools
+              控制台查看完整堆栈，并把错误信息反馈给开发者。
             </p>
             <pre className='w-full max-h-48 overflow-auto rounded-lg bg-zinc-900/95 p-3 text-[11px] leading-relaxed text-red-200 whitespace-pre-wrap font-mono'>
               {String(this.state.error?.stack || this.state.error)}

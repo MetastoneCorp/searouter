@@ -61,7 +61,9 @@ const buildRequestHeaders = (isLoggedIn) => {
 
 // 根据登录状态选择 endpoint
 const getChatEndpoint = (isLoggedIn) =>
-  isLoggedIn ? API_ENDPOINTS.CHAT_COMPLETIONS : API_ENDPOINTS.V1_CHAT_COMPLETIONS;
+  isLoggedIn
+    ? API_ENDPOINTS.CHAT_COMPLETIONS
+    : API_ENDPOINTS.V1_CHAT_COMPLETIONS;
 
 export const useApiRequest = (
   setMessage,

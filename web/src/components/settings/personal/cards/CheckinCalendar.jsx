@@ -18,13 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState, useEffect, useMemo } from 'react';
-import {
-  Calendar,
-  Spin,
-  Tooltip,
-  Collapsible,
-  Modal,
-} from '@douyinfe/semi-ui';
+import { Calendar, Spin, Tooltip, Collapsible, Modal } from '@douyinfe/semi-ui';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 import Turnstile from 'react-turnstile';
 import { API, showError, showSuccess, renderQuota } from '../../../../helpers';
@@ -61,7 +55,10 @@ const CheckinCalendar = ({ t, status, turnstileEnabled, turnstileSiteKey }) => {
 
   const monthlyQuota = useMemo(() => {
     const records = checkinData.stats?.records || [];
-    return records.reduce((sum, record) => sum + (record.quota_awarded || 0), 0);
+    return records.reduce(
+      (sum, record) => sum + (record.quota_awarded || 0),
+      0,
+    );
   }, [checkinData.stats?.records]);
 
   const fetchCheckinStatus = async (month) => {
@@ -113,7 +110,9 @@ const CheckinCalendar = ({ t, status, turnstileEnabled, turnstileSiteKey }) => {
       const res = await postCheckin(token);
       const { success, data, message } = res.data;
       if (success) {
-        showSuccess(t('签到成功！获得') + ' ' + renderQuota(data.quota_awarded));
+        showSuccess(
+          t('签到成功！获得') + ' ' + renderQuota(data.quota_awarded),
+        );
         fetchCheckinStatus(currentMonth);
         setTurnstileModalVisible(false);
       } else {
@@ -159,7 +158,10 @@ const CheckinCalendar = ({ t, status, turnstileEnabled, turnstileSiteKey }) => {
 
     if (isCheckedIn) {
       return (
-        <Tooltip content={`${t('获得')} ${renderQuota(quotaAwarded)}`} position='top'>
+        <Tooltip
+          content={`${t('获得')} ${renderQuota(quotaAwarded)}`}
+          position='top'
+        >
           <div className='absolute inset-0 flex flex-col items-center justify-center cursor-pointer'>
             <div className='w-6 h-6 rounded-full bg-green-500 flex items-center justify-center mb-0.5 shadow-sm'>
               <Check size={14} className='text-white' strokeWidth={3} />
@@ -210,14 +212,22 @@ const CheckinCalendar = ({ t, status, turnstileEnabled, turnstileSiteKey }) => {
         >
           <div>
             <div className='row' style={{ gap: '8px' }}>
-              <span style={{ fontSize: '15px', fontWeight: 600 }}>{t('每日签到')}</span>
+              <span style={{ fontSize: '15px', fontWeight: 600 }}>
+                {t('每日签到')}
+              </span>
               {isCollapsed ? (
                 <ChevronDown size={16} style={{ color: 'var(--ink-3)' }} />
               ) : (
                 <ChevronUp size={16} style={{ color: 'var(--ink-3)' }} />
               )}
             </div>
-            <div style={{ fontSize: '12px', color: 'var(--ink-3)', marginTop: '2px' }}>
+            <div
+              style={{
+                fontSize: '12px',
+                color: 'var(--ink-3)',
+                marginTop: '2px',
+              }}
+            >
               {!initialLoaded
                 ? t('正在加载签到状态...')
                 : checkinData.stats?.checked_in_today
@@ -232,7 +242,11 @@ const CheckinCalendar = ({ t, status, turnstileEnabled, turnstileSiteKey }) => {
           className='btn btn-primary'
           style={{ background: 'var(--success,#10B981)', flexShrink: 0 }}
           onClick={() => doCheckin()}
-          disabled={!initialLoaded || checkinLoading || checkinData.stats?.checked_in_today}
+          disabled={
+            !initialLoaded ||
+            checkinLoading ||
+            checkinData.stats?.checked_in_today
+          }
         >
           {!initialLoaded
             ? t('加载中...')
@@ -249,7 +263,11 @@ const CheckinCalendar = ({ t, status, turnstileEnabled, turnstileSiteKey }) => {
         {/* 签到统计 */}
         <div
           className='srv-ovgrid'
-          style={{ gridTemplateColumns: 'repeat(3,1fr)', marginBottom: '16px', marginTop: '16px' }}
+          style={{
+            gridTemplateColumns: 'repeat(3,1fr)',
+            marginBottom: '16px',
+            marginTop: '16px',
+          }}
         >
           <div className='srv-ovcard'>
             <div className='k'>{t('累计签到')}</div>

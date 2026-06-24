@@ -27,13 +27,21 @@ const InvitationCard = ({
   affLink,
   handleAffLinkClick,
 }) => {
-  const hasAffQuota = userState?.user?.aff_quota && userState?.user?.aff_quota > 0;
+  const hasAffQuota =
+    userState?.user?.aff_quota && userState?.user?.aff_quota > 0;
 
   return (
     <div className='card card-pad srv-block' style={{ marginTop: 0 }}>
       {/* 卡片标题 */}
       <div className='srv-sectitle'>
-        <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='var(--ink-2)' strokeWidth='1.8'>
+        <svg
+          width='18'
+          height='18'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='var(--ink-2)'
+          strokeWidth='1.8'
+        >
           <circle cx='9' cy='8' r='3' />
           <path d='M3 20a6 6 0 0 1 12 0M16 5a3 3 0 0 1 0 6M15 20a6 6 0 0 1 6-6' />
         </svg>
@@ -45,11 +53,15 @@ const InvitationCard = ({
       <div className='srv-acctstat'>
         <div>
           <div className='k'>{t('待使用收益')}</div>
-          <div className='v tnum'>{renderQuota(userState?.user?.aff_quota || 0)}</div>
+          <div className='v tnum'>
+            {renderQuota(userState?.user?.aff_quota || 0)}
+          </div>
         </div>
         <div>
           <div className='k'>{t('总收益')}</div>
-          <div className='v tnum'>{renderQuota(userState?.user?.aff_history_quota || 0)}</div>
+          <div className='v tnum'>
+            {renderQuota(userState?.user?.aff_history_quota || 0)}
+          </div>
         </div>
         <div>
           <div className='k'>{t('邀请人数')}</div>
@@ -58,14 +70,23 @@ const InvitationCard = ({
       </div>
 
       {/* 划转按钮 */}
-      <div style={{ marginTop: 14, display: 'flex', justifyContent: 'flex-end' }}>
+      <div
+        style={{ marginTop: 14, display: 'flex', justifyContent: 'flex-end' }}
+      >
         <button
           className='btn btn-ghost btn-sm'
           disabled={!hasAffQuota}
           style={!hasAffQuota ? { opacity: 0.45, cursor: 'not-allowed' } : {}}
           onClick={() => hasAffQuota && setOpenTransfer(true)}
         >
-          <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
+          <svg
+            width='14'
+            height='14'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            strokeWidth='2'
+          >
             <path d='M13 5l7 7-7 7M5 12h14' />
           </svg>
           {t('划转到余额')}
@@ -83,7 +104,14 @@ const InvitationCard = ({
             style={{ flex: 1 }}
           />
           <button className='btn btn-primary' onClick={handleAffLinkClick}>
-            <svg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8'>
+            <svg
+              width='15'
+              height='15'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='1.8'
+            >
               <rect x='9' y='9' width='11' height='11' rx='2' />
               <path d='M5 15V5a2 2 0 0 1 2-2h10' />
             </svg>

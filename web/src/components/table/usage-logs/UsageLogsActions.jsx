@@ -51,7 +51,10 @@ const LogsActions = ({
           style={{ background: 'var(--brand-700)', color: '#fff' }}
         >
           <div className='flex flex-col gap-1'>
-            <span className='text-[12px]' style={{ color: 'rgba(255,255,255,.7)' }}>
+            <span
+              className='text-[12px]'
+              style={{ color: 'rgba(255,255,255,.7)' }}
+            >
               {t('消耗额度')}
             </span>
             <span className='tnum text-[22px] font-bold tracking-tight'>
@@ -65,7 +68,10 @@ const LogsActions = ({
           />
 
           <div className='flex flex-col gap-1'>
-            <span className='text-[12px]' style={{ color: 'rgba(255,255,255,.7)' }}>
+            <span
+              className='text-[12px]'
+              style={{ color: 'rgba(255,255,255,.7)' }}
+            >
               RPM
             </span>
             <span className='tnum text-[22px] font-bold tracking-tight'>
@@ -74,7 +80,10 @@ const LogsActions = ({
           </div>
 
           <div className='flex flex-col gap-1'>
-            <span className='text-[12px]' style={{ color: 'rgba(255,255,255,.7)' }}>
+            <span
+              className='text-[12px]'
+              style={{ color: 'rgba(255,255,255,.7)' }}
+            >
               TPM
             </span>
             <span className='tnum text-[22px] font-bold tracking-tight'>

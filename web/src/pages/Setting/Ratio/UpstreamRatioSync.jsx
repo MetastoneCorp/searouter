@@ -162,7 +162,8 @@ export default function UpstreamRatioSync(props) {
             const isOpenRouter = channelType === 20;
             if (!merged[id]) {
               if (isOfficial) {
-                merged[id] = '/llm-metadata/api/newapi/ratio_config-v1-base.json';
+                merged[id] =
+                  '/llm-metadata/api/newapi/ratio_config-v1-base.json';
               } else if (isOpenRouter) {
                 merged[id] = 'openrouter';
               } else {

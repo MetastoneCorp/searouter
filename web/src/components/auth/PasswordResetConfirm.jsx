@@ -18,13 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState } from 'react';
-import {
-  API,
-  copy,
-  showError,
-  showNotice,
-  getSystemName,
-} from '../../helpers';
+import { API, copy, showError, showNotice, getSystemName } from '../../helpers';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Banner } from '@douyinfe/semi-ui';
 import { useTranslation } from 'react-i18next';
@@ -93,25 +87,112 @@ const PasswordResetConfirm = () => {
       <div className='lg2-hero'>
         <div className='brand'>
           <span className='lg'>
-            <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-              <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
-              <path d='M4 11l8-6 8 6'/>
-              <path d='M6 11v4M18 11v4'/>
+            <svg
+              width='20'
+              height='20'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            >
+              <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2' />
+              <path d='M4 11l8-6 8 6' />
+              <path d='M6 11v4M18 11v4' />
             </svg>
           </span>
           {systemName}
         </div>
 
-        <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
-          <div className='lg2-gtile' style={{ left: '4%', top: '24%', width: 118, height: 118, transform: 'rotate(-12deg)', fontSize: 15, color: '#fff' }}>MiniMax</div>
-          <div className='lg2-gtile' style={{ left: '30%', top: '12%', width: 118, height: 118, transform: 'rotate(8deg)', color: '#E8B84B' }}>Qwen</div>
-          <div className='lg2-gtile' style={{ left: '56%', top: '18%', width: 118, height: 118, transform: 'rotate(-5deg)', color: '#fff' }}>GPT</div>
-          <div className='lg2-gtile' style={{ left: '6%', top: '50%', width: 118, height: 118, transform: 'rotate(6deg)', fontSize: 15, color: '#fff' }}>Claude</div>
-          <div className='lg2-gtile' style={{ left: '58%', top: '48%', width: 118, height: 118, transform: 'rotate(10deg)', fontSize: 14, color: '#fff' }}>DeepSeek</div>
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            overflow: 'hidden',
+            pointerEvents: 'none',
+          }}
+        >
+          <div
+            className='lg2-gtile'
+            style={{
+              left: '4%',
+              top: '24%',
+              width: 118,
+              height: 118,
+              transform: 'rotate(-12deg)',
+              fontSize: 15,
+              color: '#fff',
+            }}
+          >
+            MiniMax
+          </div>
+          <div
+            className='lg2-gtile'
+            style={{
+              left: '30%',
+              top: '12%',
+              width: 118,
+              height: 118,
+              transform: 'rotate(8deg)',
+              color: '#E8B84B',
+            }}
+          >
+            Qwen
+          </div>
+          <div
+            className='lg2-gtile'
+            style={{
+              left: '56%',
+              top: '18%',
+              width: 118,
+              height: 118,
+              transform: 'rotate(-5deg)',
+              color: '#fff',
+            }}
+          >
+            GPT
+          </div>
+          <div
+            className='lg2-gtile'
+            style={{
+              left: '6%',
+              top: '50%',
+              width: 118,
+              height: 118,
+              transform: 'rotate(6deg)',
+              fontSize: 15,
+              color: '#fff',
+            }}
+          >
+            Claude
+          </div>
+          <div
+            className='lg2-gtile'
+            style={{
+              left: '58%',
+              top: '48%',
+              width: 118,
+              height: 118,
+              transform: 'rotate(10deg)',
+              fontSize: 14,
+              color: '#fff',
+            }}
+          >
+            DeepSeek
+          </div>
         </div>
 
-        <h1>{t('统一云端')}<br/>{t('守护边缘')}</h1>
-        <p>{t('企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率')}</p>
+        <h1>
+          {t('统一云端')}
+          <br />
+          {t('守护边缘')}
+        </h1>
+        <p>
+          {t(
+            '企业级 AI 网关，统一管理多云模型资源。通过标准化 OpenAI 兼容协议，无缝集成全球主流大模型与本地部署，兼顾安全合规与成本效率',
+          )}
+        </p>
       </div>
 
       {/* 右侧表单 */}
@@ -119,10 +200,19 @@ const PasswordResetConfirm = () => {
         <div className='lg2-form'>
           <div className='lhead'>
             <span className='lg'>
-              <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-                <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2'/>
-                <path d='M4 11l8-6 8 6'/>
-                <path d='M6 11v4M18 11v4'/>
+              <svg
+                width='22'
+                height='22'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              >
+                <path d='M3 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2' />
+                <path d='M4 11l8-6 8 6' />
+                <path d='M6 11v4M18 11v4' />
               </svg>
             </span>
             {systemName}
@@ -148,7 +238,11 @@ const PasswordResetConfirm = () => {
                   value={email}
                   disabled={true}
                   placeholder={email ? '' : t('等待获取邮箱信息...')}
-                  style={{ background: 'var(--surface-2)', color: 'var(--ink-3)', cursor: 'not-allowed' }}
+                  style={{
+                    background: 'var(--surface-2)',
+                    color: 'var(--ink-3)',
+                    cursor: 'not-allowed',
+                  }}
                 />
               </div>
             </div>
@@ -160,10 +254,21 @@ const PasswordResetConfirm = () => {
                   <input
                     value={newPassword}
                     disabled={true}
-                    style={{ background: 'var(--surface-2)', color: 'var(--ink-3)', cursor: 'not-allowed', paddingRight: 80 }}
+                    style={{
+                      background: 'var(--surface-2)',
+                      color: 'var(--ink-3)',
+                      cursor: 'not-allowed',
+                      paddingRight: 80,
+                    }}
                   />
                   <span
-                    style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}
+                    style={{
+                      position: 'absolute',
+                      right: 10,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      cursor: 'pointer',
+                    }}
                     onClick={async () => {
                       await copy(newPassword);
                       showNotice(`${t('密码已复制到剪贴板：')} ${newPassword}`);
@@ -171,7 +276,16 @@ const PasswordResetConfirm = () => {
                   >
                     <button
                       type='button'
-                      style={{ background: 'transparent', border: 0, cursor: 'pointer', color: 'var(--brand-600)', fontSize: 12, fontWeight: 600, fontFamily: 'inherit', padding: '2px 6px' }}
+                      style={{
+                        background: 'transparent',
+                        border: 0,
+                        cursor: 'pointer',
+                        color: 'var(--brand-600)',
+                        fontSize: 12,
+                        fontWeight: 600,
+                        fontFamily: 'inherit',
+                        padding: '2px 6px',
+                      }}
                     >
                       {t('复制')}
                     </button>
@@ -183,10 +297,16 @@ const PasswordResetConfirm = () => {
             <button
               type='submit'
               className='lg2-submit'
-              disabled={disableButton || !!newPassword || !isValidResetLink || loading}
+              disabled={
+                disableButton || !!newPassword || !isValidResetLink || loading
+              }
               style={{ marginBottom: 10 }}
             >
-              {newPassword ? t('密码重置完成') : loading ? t('重置中...') : t('确认重置密码')}
+              {newPassword
+                ? t('密码重置完成')
+                : loading
+                  ? t('重置中...')
+                  : t('确认重置密码')}
             </button>
           </form>
 

@@ -24,7 +24,7 @@ import {
   Tooltip,
   Popover,
   Typography,
-  Button
+  Button,
 } from '@douyinfe/semi-ui';
 import {
   timestamp2string,
@@ -331,9 +331,7 @@ export const getLogsColumns = ({
                 </Tooltip>
               )}
             </span>
-            {isMultiKey && (
-              <span className='tag gray'>{multiKeyIndex}</span>
-            )}
+            {isMultiKey && <span className='tag gray'>{multiKeyIndex}</span>}
           </Space>
         ) : null;
       },
@@ -608,9 +606,9 @@ export const getLogsColumns = ({
           }
           if (other.admin_info !== undefined) {
             if (
-                other.admin_info.use_channel !== null &&
-                other.admin_info.use_channel !== undefined &&
-                other.admin_info.use_channel !== ''
+              other.admin_info.use_channel !== null &&
+              other.admin_info.use_channel !== undefined &&
+              other.admin_info.use_channel !== ''
             ) {
               let useChannel = other.admin_info.use_channel;
               let useChannelStr = useChannel.join('->');
@@ -718,14 +716,14 @@ export const getLogsColumns = ({
               'openai',
             );
         return (
-            <Typography.Paragraph
-                ellipsis={{
-                  rows: 3,
-                }}
-                style={{ maxWidth: 240, whiteSpace: 'pre-line' }}
-            >
-              {content}
-            </Typography.Paragraph>
+          <Typography.Paragraph
+            ellipsis={{
+              rows: 3,
+            }}
+            style={{ maxWidth: 240, whiteSpace: 'pre-line' }}
+          >
+            {content}
+          </Typography.Paragraph>
         );
       },
     },

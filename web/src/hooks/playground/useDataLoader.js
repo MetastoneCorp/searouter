@@ -70,10 +70,7 @@ export const useDataLoader = (
       setModels(dedup);
 
       // 如果当前选中模型不在列表中，回退到第一个
-      if (
-        dedup.length > 0 &&
-        !dedup.some((m) => m.value === inputs.model)
-      ) {
+      if (dedup.length > 0 && !dedup.some((m) => m.value === inputs.model)) {
         handleInputChange('model', dedup[0].value);
       }
     } catch (error) {

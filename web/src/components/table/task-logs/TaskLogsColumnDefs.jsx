@@ -151,7 +151,9 @@ export const getTaskLogsColumns = ({
       title: t('提交时间'),
       dataIndex: 'submit_time',
       render: (text) => (
-        <span className='mono tnum text-ink-2'>{text ? renderTimestamp(text) : '-'}</span>
+        <span className='mono tnum text-ink-2'>
+          {text ? renderTimestamp(text) : '-'}
+        </span>
       ),
     },
     {
@@ -159,7 +161,9 @@ export const getTaskLogsColumns = ({
       title: t('结束时间'),
       dataIndex: 'finish_time',
       render: (text) => (
-        <span className='mono tnum text-ink-2'>{text ? renderTimestamp(text) : '-'}</span>
+        <span className='mono tnum text-ink-2'>
+          {text ? renderTimestamp(text) : '-'}
+        </span>
       ),
     },
     {
@@ -175,9 +179,7 @@ export const getTaskLogsColumns = ({
       title: t('渠道'),
       dataIndex: 'channel_id',
       render: (text) =>
-        isAdminUser ? (
-          <span className='tag tnum'>{text}</span>
-        ) : null,
+        isAdminUser ? <span className='tag tnum'>{text}</span> : null,
     },
     {
       key: COLUMN_KEYS.USERNAME,
