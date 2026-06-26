@@ -263,10 +263,13 @@ code {
   color: inherit;
 }
 
-/* 导航项（Semi 真实类名） */
+/* 导航项（Semi 真实类名）：宽度自适应父容器并把左右 margin 计入盒模型，
+   避免选中白底因固定宽 + 左 margin 向右溢出被祖先 overflow 裁掉右圆角（四角统一圆角） */
 .sidebar-nav .semi-navigation-item {
-  border-radius: 8px;
-  margin: 2px 10px;
+  border-radius: 10px;
+  width: auto !important;
+  margin: 2px 8px 4px !important;
+  box-sizing: border-box;
   transition: all 0.15s ease;
 }
 /* 收起态：菜单项收紧为与图标贴合的居中圆角方块（选中/悬浮白底随之居中，不再拉宽） */
