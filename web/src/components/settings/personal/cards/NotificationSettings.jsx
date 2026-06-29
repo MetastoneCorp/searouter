@@ -279,7 +279,7 @@ const NotificationSettings = ({
   return (
     <div className='card card-pad srv-block'>
       {/* 其他设置标题 */}
-      <div className='srv-sectitle srv-block'>
+      <div className='srv-sectitle'>
         <svg
           width='18'
           height='18'
@@ -293,9 +293,7 @@ const NotificationSettings = ({
         </svg>
         {t('其他设置')}
       </div>
-      <div className='srv-secsub' style={{ marginBottom: '14px' }}>
-        {t('通知、价格和隐私相关设置')}
-      </div>
+      <div className='srv-secsub'>{t('通知、价格和隐私相关设置')}</div>
 
       {/* 通知配置卡 */}
       <div style={{ marginTop: '28px' }}>
@@ -638,7 +636,7 @@ const NotificationSettings = ({
                           false
                         }
                         onChange={handleModuleChange(section.key, module.key)}
-                        size='small'
+                        size='default'
                         disabled={
                           sidebarModulesUser[section.key]?.enabled === false
                         }

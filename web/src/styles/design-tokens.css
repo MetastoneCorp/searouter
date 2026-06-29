@@ -1764,8 +1764,9 @@ table.tbl {
   content: '';
   position: absolute;
   left: 0;
-  top: 1px;
-  bottom: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 14px;
   width: 3px;
   border-radius: 2px;
   background: var(--brand-600);
@@ -2199,8 +2200,8 @@ table.tbl {
   justify-content: flex-end;
   gap: 10px;
   margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid var(--border-2);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-2);
 }
 
 /* 边栏设置网格 */

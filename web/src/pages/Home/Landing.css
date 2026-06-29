@@ -62,14 +62,12 @@
 .lp-hero {
   position: relative;
   width: 100%;
-  max-width: var(--lp-maxw);
   margin: 0 auto;
   height: 900px;
   overflow: hidden;
-  /* 设计：白底 + 右上/左下淡蓝径向光晕 + 右侧抽象流线插画（锚定居中 1440 设计列右边缘，超宽不放大） */
+  /* 设计：白底 + 右上/左下淡蓝径向光晕 + 右侧抽象流线插画（满宽 section，曲线图铺到视口右边缘） */
   background:
-    url(/home/hero-lines.svg) right calc((100vw - var(--lp-maxw)) / 2) top /
-      auto 100% no-repeat,
+    url(/home/hero-lines.svg) right top / auto 100% no-repeat,
     radial-gradient(
         1200px 900px at 100% 0%,
         rgba(211, 228, 254, 0.4) 0%,
@@ -355,8 +353,9 @@
 .lp-hero-title2 {
   margin: 0;
   display: flex;
-  gap: 24px;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
   font-family: var(--lp-yahei);
   font-size: 84px;
   line-height: 92px;
@@ -378,6 +377,21 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 选中态：渐变文字字形为透明，选中时需用实色填充，否则看不到文字 */
+.lp-hero-title2-a::selection,
+.lp-hero-title2-b::selection {
+  -webkit-text-fill-color: #fff;
+  color: #fff;
+  background-color: #186bc2;
+}
+.lp-hero-title2-a::-moz-selection,
+.lp-hero-title2-b::-moz-selection {
+  -webkit-text-fill-color: #fff;
+  color: #fff;
+  background-color: #186bc2;
 }
 
 .lp-hero-sub2 {
@@ -1299,8 +1313,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 160px;
+  min-width: 160px;
   padding: 8px 24px;
+  white-space: nowrap;
   border-radius: 8px;
   background: linear-gradient(
     99.92deg,
@@ -1325,9 +1340,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 160px;
-  height: 40px;
+  min-width: 160px;
   padding: 7px 25px;
+  white-space: nowrap;
   border-radius: 8px;
   background: #fff;
   border: 1px solid #e5e7eb;

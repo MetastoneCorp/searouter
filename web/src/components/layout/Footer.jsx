@@ -200,12 +200,12 @@ const FooterBar = () => {
               {t('设计与开发由')}{' '}
             </span>
             <a
-              href='https://github.com/metastone-ai/searouter'
+              href='https://www.metastonecorp.com/'
               target='_blank'
               rel='noopener noreferrer'
               className='!text-semi-color-primary font-medium'
             >
-              MetaStone
+              {t('元石智算')}
             </a>
           </div>
         </div>
@@ -229,12 +229,12 @@ const FooterBar = () => {
           <div className='absolute bottom-2 right-4 text-xs !text-semi-color-text-2 opacity-70'>
             <span>{t('设计与开发由')} </span>
             <a
-              href='https://github.com/metastone-ai/searouter'
+              href='https://www.metastonecorp.com/'
               target='_blank'
               rel='noopener noreferrer'
               className='!text-semi-color-primary font-medium'
             >
-              MetaStone
+              {t('元石智算')}
             </a>
           </div>
         </div>
