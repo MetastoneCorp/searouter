@@ -332,6 +332,7 @@
 
 .lp-hero-tag {
   display: inline-flex;
+  align-self: flex-start;
   align-items: center;
   gap: 16px;
   padding: 4px 24px;
@@ -1277,10 +1278,14 @@
   gap: 16px;
   align-items: center;
   text-align: center;
+  width: 100%;
+  max-width: 1440px;
 }
 
 .lp-cta-title {
   margin: 0;
+  width: 100%;
+  text-align: center;
   font-size: 40px;
   line-height: 48px;
   font-weight: 700;

@@ -311,6 +311,9 @@ resp = client.chat.completions.create(
           <Link to='/pricing' className='lp-nav-tab'>
             {t('landing.nav.models')}
           </Link>
+          <Link to='/playground' className='lp-nav-tab'>
+            {t('landing.nav.playground')}
+          </Link>
           <Link to='/about' className='lp-nav-tab'>
             {t('landing.nav.docs')}
           </Link>
