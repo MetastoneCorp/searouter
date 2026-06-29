@@ -146,7 +146,6 @@ resp = client.chat.completions.create(
           className='lp-cfg-tab-icon-img'
         />
       ),
-      iconActive: true,
       code: claudeCodeExample,
     },
     {
@@ -532,15 +531,7 @@ resp = client.chat.completions.create(
                       setCodeCopied(false);
                     }}
                   >
-                    <span
-                      className={`lp-cfg-tab-icon ${
-                        tab.iconActive && activeClient === tab.key
-                          ? 'on-blue'
-                          : ''
-                      }`}
-                    >
-                      {tab.icon}
-                    </span>
+                    <span className='lp-cfg-tab-icon'>{tab.icon}</span>
                     <span className='lp-cfg-tab-label'>{tab.label}</span>
                   </button>
                 ))}
@@ -781,12 +772,12 @@ resp = client.chat.completions.create(
           <Link to='/console'>{t('landing.footer.console')}</Link>
           <Link to='/pricing'>{t('landing.footer.pricing')}</Link>
           <a
-            href='https://github.com/metastone-ai'
+            href='https://www.metastonecorp.com/'
             target='_blank'
             rel='noopener noreferrer'
-            aria-label='GitHub (opens in new tab)'
+            aria-label='MetaStone (opens in new tab)'
           >
-            GitHub
+            MetaStone
           </a>
         </div>
       </footer>

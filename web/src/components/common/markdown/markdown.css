@@ -197,19 +197,19 @@
   transform: translateY(-1px);
 }
 
-/* 代码块样式增强 */
-pre {
+/* 代码块样式增强（限定在 markdown 容器内，避免全局 pre 被污染） */
+.markdown-body pre {
   position: relative;
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   transition: all 0.2s ease;
 }
 
-pre:hover {
+.markdown-body pre:hover {
   border-color: var(--semi-color-primary) !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-pre:hover .copy-code-button {
+.markdown-body pre:hover .copy-code-button {
   opacity: 1 !important;
 }
 
