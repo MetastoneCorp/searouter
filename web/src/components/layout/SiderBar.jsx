@@ -125,12 +125,12 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   const financeItems = useMemo(() => {
     const items = [
       {
-        text: t('钱包管理'),
+        text: t('nav_wallet', { defaultValue: t('钱包管理') }),
         itemKey: 'topup',
         to: '/topup',
       },
       {
-        text: t('个人设置'),
+        text: t('nav_profile', { defaultValue: t('个人设置') }),
         itemKey: 'personal',
         to: '/personal',
       },
@@ -148,43 +148,43 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   const adminItems = useMemo(() => {
     const items = [
       {
-        text: t('渠道管理'),
+        text: t('nav_channels', { defaultValue: t('渠道管理') }),
         itemKey: 'channel',
         to: '/channel',
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('订阅管理'),
+        text: t('nav_subscriptions', { defaultValue: t('订阅管理') }),
         itemKey: 'subscription',
         to: '/subscription',
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('模型管理'),
+        text: t('nav_models', { defaultValue: t('模型管理') }),
         itemKey: 'models',
         to: '/console/models',
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('模型部署'),
+        text: t('nav_deployment', { defaultValue: t('模型部署') }),
         itemKey: 'deployment',
         to: '/deployment',
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('兑换码管理'),
+        text: t('nav_redemption', { defaultValue: t('兑换码管理') }),
         itemKey: 'redemption',
         to: '/redemption',
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('用户管理'),
+        text: t('nav_users', { defaultValue: t('用户管理') }),
         itemKey: 'user',
         to: '/user',
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('系统设置'),
+        text: t('nav_settings', { defaultValue: t('系统设置') }),
         itemKey: 'setting',
         to: '/setting',
         className: isRoot() ? '' : 'tableHiddle',
