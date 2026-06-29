@@ -164,13 +164,25 @@ resp = client.chat.completions.create(
     {
       key: 'cherry',
       label: t('landing.quickstart.clients.cherry'),
-      icon: <span className='lp-cfg-tab-emoji'>🍒</span>,
+      icon: (
+        <img
+          src='/home/cfg-cherry.svg'
+          alt=''
+          className='lp-cfg-tab-icon-img'
+        />
+      ),
       code: cherryCodeExample,
     },
     {
       key: 'sdk',
       label: t('landing.quickstart.clients.sdk'),
-      icon: <span className='lp-cfg-tab-code'>{'</>'}</span>,
+      icon: (
+        <img
+          src='/home/cfg-openai.svg'
+          alt=''
+          className='lp-cfg-tab-icon-img'
+        />
+      ),
       code: sdkCodeExample,
     },
   ];
