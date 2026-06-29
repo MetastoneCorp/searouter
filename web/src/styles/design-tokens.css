@@ -2341,6 +2341,7 @@ table.tbl {
 .lg2-form .lhead {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 11px;
   font-size: 32px;
   font-weight: 700;
