@@ -17,6 +17,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
+// Modified by searouter contributors on 2026-09-08: limit supported interface languages.
+
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -30,6 +32,7 @@ i18n
   .use(initReactI18next)
   .init({
     load: 'currentOnly',
+    supportedLngs: ['zh-CN', 'zh-TW', 'en'],
     resources: {
       en: enTranslation,
       'zh-CN': zhCNTranslation,

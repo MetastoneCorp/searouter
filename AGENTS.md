@@ -159,5 +159,5 @@ Any references to **searouter** or related branding must NOT be modified, delete
 
 ## Internationalization (i18n)
 
-- **Backend** (`i18n/`): `nicksnyder/go-i18n/v2`, languages: en, zh
-- **Frontend** (`web/src/i18n/`): `i18next` + `react-i18next`, languages: zh (fallback), en, fr, ru, ja, vi
+- **Backend** (`i18n/`): `nicksnyder/go-i18n/v2`; supported languages and fallback are defined in `i18n/i18n.go`.
+- **Frontend** (`web/src/i18n/`): `i18next` + `react-i18next`; supported languages and fallback are defined in `web/src/i18n/i18n.js`.

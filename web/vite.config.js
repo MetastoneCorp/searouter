@@ -17,11 +17,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
+// Modified by searouter contributors on 2026-09-08: preserve licensing and attribution.
+
 import react from '@vitejs/plugin-react';
 import { defineConfig, transformWithEsbuild } from 'vite';
 import pkg from '@douyinfe/vite-plugin-semi';
 import path from 'path';
 import { codeInspectorPlugin } from 'code-inspector-plugin';
+import legalNotices from './vite.legal-notices.mjs';
 const { vitePluginSemi } = pkg;
 
 // https://vitejs.dev/config/
@@ -32,6 +35,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    legalNotices(),
     codeInspectorPlugin({
       bundler: 'vite',
     }),
@@ -64,6 +68,10 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
+      input: {
+        app: path.resolve(__dirname, 'index.html'),
+        openSource: path.resolve(__dirname, 'open-source.html'),
+      },
       output: {
         manualChunks: {
           'react-core': ['react', 'react-dom', 'react-router-dom'],

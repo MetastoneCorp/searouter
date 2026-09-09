@@ -17,6 +17,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
+// Modified by searouter contributors on 2026-09-08: preserve licensing and attribution.
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconTickCircle, IconGithubLogo, IconMail } from '@douyinfe/semi-icons';
@@ -166,7 +168,7 @@ const AboutContent = () => {
         </h2>
         <div className='about-connect'>
           <a
-            href='https://github.com/searouter'
+            href='https://github.com/MetastoneCorp/searouter'
             target='_blank'
             rel='noopener noreferrer'
             className='about-connect-link'
@@ -189,7 +191,7 @@ const AboutContent = () => {
           <a href='/console'>{t('about.footer.console')}</a>
           <a href='/pricing'>{t('about.footer.pricing')}</a>
           <a
-            href='https://github.com/searouter'
+            href='https://github.com/MetastoneCorp/searouter'
             target='_blank'
             rel='noopener noreferrer'
           >

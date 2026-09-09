@@ -1,0 +1,68 @@
+searouter — derivative work and copyright notices
+=================================================
+
+searouter is a modified version of New API, developed by QuantumNous and
+contributors: https://github.com/QuantumNous/new-api
+The earlier project lineage includes One API by JustSong and contributors:
+https://github.com/songquanpeng/one-api
+
+Copyright in upstream material remains with its respective copyright holders.
+Copyright (C) 2026 searouter contributors, for their original contributions.
+This fork is maintained independently at https://github.com/MetastoneCorp/searouter.
+It is not an official QuantumNous release and does not imply upstream endorsement.
+
+searouter and its modifications are distributed under the GNU Affero General
+Public License, version 3 or (at your option) any later version
+(SPDX-License-Identifier: AGPL-3.0-or-later). The complete, unchanged version 3
+license text is in LICENSE. Existing file-specific permissions, copyright
+notices, warranty disclaimers and third-party license terms remain applicable.
+This NOTICE does not replace the license or impose a non-commercial restriction.
+
+Modification notice — 2026-09-08
+------------------------------
+This is a separately maintained derivative with searouter branding, interface,
+gateway configuration and packaging changes. This date records the addition of
+these open-source notices, not the date of every earlier modification. The
+available Git history and release notes record changes; the imported snapshot
+does not identify an exact upstream base commit. No upstream base SHA is claimed.
+
+The exact upstream import commit is unproven. Baseline comparison evidence and
+review of accompanying notices are recorded below. Preserve
+existing legal notices and attribution; review the terms of later code imports.
+The interface provides a consolidated page for attribution, license, warranty
+notices and corresponding source access.
+
+Retain this derivative-work notice with source and distributed artifacts, and
+mark further modifications with a relevant date. When a modified version is
+used over a network, offer its users the Corresponding Source for the version
+actually running, free of charge, as required by AGPL section 13. An upstream
+repository link alone does not supply the source of searouter modifications.
+
+Third-party material
+--------------------
+One API's full MIT copyright, permission and warranty notice is reproduced in
+THIRD-PARTY-LICENSES.md. That file also describes inherited notices and
+the dependency checks needed for a particular release. It is not a complete
+third-party license inventory.
+
+Names, logos and sponsorship acknowledgements identify their respective projects
+and owners; they do not grant trademark rights or imply sponsorship of searouter.
+See CONTRIBUTING.md for contributions and acknowledgments, and DEPLOYMENT.md
+for deployment guidance.
+
+Provenance review — recorded 2026-09-08
+-------------------------------------
+The recorded comparison suggests New API v0.10.9-alpha.7 (2026-02-20) as the
+closest baseline: 479 of 492 same-path Go files matched after restoring package
+paths, and the frontend includes that version's dynamic OAuth callbacks.
+The original import chain is unavailable; this is an inferred baseline, not
+a proven import commit:
+https://github.com/QuantumNous/new-api/tree/f289678f8b07ae1dd47cd4a8ac75ed189cbb7e75
+
+That tag predates the upstream NOTICE added on 2026-05-09. This project does
+not treat the later notice as a condition already present in the inferred
+baseline. Existing notices remain applicable; review later imports separately:
+https://github.com/QuantumNous/new-api/commit/543cc64ea380
+
+One API MIT text reviewed at:
+https://github.com/songquanpeng/one-api/blob/8df4a2670b98266bd287c698243fff327d9748cf/LICENSE

@@ -1,0 +1,136 @@
+<!doctype html>
+<!-- Copyright (C) 2026 searouter contributors. SPDX-License-Identifier: AGPL-3.0-or-later -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>开源声明 · searouter</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: system-ui, sans-serif;
+        line-height: 1.8;
+        color: #26364a;
+        background: #f5f7fa;
+      }
+      body {
+        margin: 0;
+      }
+      main {
+        max-width: 720px;
+        margin: 48px auto;
+        padding: 0 24px 40px;
+      }
+      h1 {
+        margin-bottom: 0;
+        font-size: 2rem;
+      }
+      h2 {
+        margin-top: 32px;
+        font-size: 1.2rem;
+      }
+      .subtitle {
+        margin-top: 0;
+        color: #58677b;
+      }
+      a {
+        color: #125fc6;
+        text-underline-offset: 3px;
+        overflow-wrap: anywhere;
+      }
+      a:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 4px;
+      }
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 24px;
+      }
+      .source {
+        padding: 16px 20px;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          color: #e2e8f0;
+          background: #151d29;
+        }
+        .subtitle {
+          color: #a9b7ca;
+        }
+        a {
+          color: #83baff;
+        }
+        .source {
+          border-color: #475569;
+        }
+      }
+      @media (max-width: 480px) {
+        main {
+          margin-top: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a href="./">← searouter 首页</a>
+      <h1>开源声明</h1>
+      <p class="subtitle" lang="en">Open-source notices · searouter</p>
+
+      <h2>项目来源与版权</h2>
+      <p>
+        searouter 是基于
+        <a href="https://github.com/QuantumNous/new-api">New API</a>
+        独立维护的修改版本。感谢 QuantumNous 和 New API
+        贡献者的设计、开发与维护。更早的代码基础来自 JustSong 和贡献者的
+        <a href="https://github.com/songquanpeng/one-api">One API</a>。
+      </p>
+      <p lang="en">
+        Copyright (C) 2025 QuantumNous and contributors.<br />Copyright (c) 2023
+        JustSong, for One API material.<br />Copyright (C) 2026 searouter
+        contributors, for their original contributions.
+      </p>
+      <p>
+        原版权与许可继续保留。searouter
+        的修改由本项目维护，上游不对本版本提供背书。
+      </p>
+
+      <h2>许可与免责</h2>
+      <p>
+        本项目按
+        <a href="./legal/LICENSE.txt"
+          >GNU AGPL 第 3 版或后续版本（AGPL-3.0-or-later）</a
+        >
+        提供。你可以在遵守许可证条款时使用、修改和分发本项目，包括商业使用。
+      </p>
+      <p>
+        软件按许可证规定不提供任何担保，包括适销性或特定用途适用性的担保。第三方材料仍受各自许可证约束。
+      </p>
+      <p lang="en">
+        Licensed under AGPL-3.0-or-later. You may modify and redistribute this
+        work under its license terms. This software comes without warranty,
+        including merchantability or fitness for a particular purpose.
+        Third-party licenses remain applicable.
+      </p>
+
+      <h2 id="source">获取源码</h2>
+      <p class="source">
+        <a href="__SEAROUTER_SOURCE_URL__"
+          >获取 searouter 对应源码 / Get corresponding source</a
+        ><br />源码可免费获取。提供网络服务的修改版本应向用户提供实际运行版本的完整对应源码。
+      </p>
+
+      <h2>许可文件</h2>
+      <nav aria-label="许可文件">
+        <a href="./legal/LICENSE.txt">AGPL 全文</a>
+        <a href="./legal/NOTICE.txt">来源与修改声明</a>
+        <a href="./legal/THIRD-PARTY-LICENSES.md"
+          >第三方声明（含 One API MIT 全文）</a
+        >
+      </nav>
+    </main>
+  </body>
+</html>

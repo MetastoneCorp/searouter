@@ -17,8 +17,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
+// Modified by searouter contributors on 2026-09-08: preserve licensing and attribution.
+
 import React, { useEffect, useState } from 'react';
-import { API, showError, getSystemName } from '../../helpers';
+import { API, showError } from '../../helpers';
 import { marked } from 'marked';
 import { Empty } from '@douyinfe/semi-ui';
 import {
@@ -41,7 +43,6 @@ const About = () => {
   const { t } = useTranslation();
   const [about, setAbout] = useState('');
   const [aboutLoaded, setAboutLoaded] = useState(false);
-  const currentYear = new Date().getFullYear();
 
   const displayAbout = async () => {
     setAbout(localStorage.getItem('about') || '');
@@ -73,38 +74,15 @@ const About = () => {
     <div style={{ textAlign: 'center' }}>
       <p>{t('可在设置页面设置关于内容，支持 HTML & Markdown')}</p>
       <p>
-        {getSystemName()} {t('© {{currentYear}}', { currentYear })}{' '}
-        {t('| 基于')}{' '}
+        searouter —{' '}
         <a
-          href='https://github.com/QuantumNous/new-api'
+          href={`${import.meta.env.BASE_URL}open-source.html`}
           target='_blank'
           rel='noopener noreferrer'
           className='!text-semi-color-primary'
         >
-          New API
-        </a>{' '}
-        {t('开发')}
-      </p>
-      <p>
-        {t('本项目根据')}
-        <a
-          href='https://github.com/songquanpeng/one-api/blob/v0.5.4/LICENSE'
-          target='_blank'
-          rel='noopener noreferrer'
-          className='!text-semi-color-primary'
-        >
-          {t('MIT许可证')}
+          开源声明
         </a>
-        {t('授权，需在遵守')}
-        <a
-          href='https://www.gnu.org/licenses/agpl-3.0.html'
-          target='_blank'
-          rel='noopener noreferrer'
-          className='!text-semi-color-primary'
-        >
-          {t('AGPL v3.0协议')}
-        </a>
-        {t('的前提下使用。')}
       </p>
     </div>
   );

@@ -31,8 +31,10 @@ import ThemeToggle from '../../components/layout/headerbar/ThemeToggle';
 import LanguageSelector from '../../components/layout/headerbar/LanguageSelector';
 import NoticeModal from '../../components/layout/NoticeModal';
 import UserArea from '../../components/layout/headerbar/UserArea';
+import OpenSourceNotice from '../../components/layout/OpenSourceNotice';
 import './Landing.css';
 
+// Modified by searouter contributors on 2026-09-08: expose legal notices and source.
 const Landing = () => {
   const { t, i18n } = useTranslation();
   const [statusState] = useContext(StatusContext);
@@ -784,6 +786,7 @@ resp = client.chat.completions.create(
           </a>
         </div>
       </footer>
+      <OpenSourceNotice />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 {
   "name": "new-api-electron",
   "version": "1.0.0",
+  "license": "AGPL-3.0-or-later",
   "description": "New API - AI Model Gateway Desktop Application",
   "main": "main.js",
   "scripts": {
@@ -21,7 +22,7 @@
   "author": "QuantumNous",
   "repository": {
     "type": "git",
-    "url": "https://github.com/QuantumNous/new-api"
+    "url": "https://github.com/MetastoneCorp/searouter"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
@@ -32,6 +33,20 @@
     "appId": "com.newapi.desktop",
     "productName": "New-API-App",
     "publish": null,
+    "extraFiles": [
+      {
+        "from": "../LICENSE",
+        "to": "licenses/searouter/LICENSE"
+      },
+      {
+        "from": "../NOTICE",
+        "to": "licenses/searouter/NOTICE"
+      },
+      {
+        "from": "../THIRD-PARTY-LICENSES.md",
+        "to": "licenses/searouter/THIRD-PARTY-LICENSES.md"
+      }
+    ],
     "directories": {
       "output": "dist"
     },

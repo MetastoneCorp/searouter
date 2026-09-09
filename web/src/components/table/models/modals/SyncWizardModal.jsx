@@ -17,6 +17,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
+// Modified by searouter contributors on 2026-09-08: remove Japanese sync selection.
+
 import React, { useEffect, useState } from 'react';
 import { Modal, RadioGroup, Radio, Steps, Button } from '@douyinfe/semi-ui';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
@@ -120,9 +122,6 @@ const SyncWizardModal = ({ visible, onClose, onConfirm, loading, t }) => {
               </Radio>
               <Radio value='zh-TW' extra='繁體中文'>
                 zh-TW
-              </Radio>
-              <Radio value='ja' extra='日本語'>
-                ja
               </Radio>
             </RadioGroup>
           </div>

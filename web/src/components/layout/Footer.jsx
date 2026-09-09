@@ -22,6 +22,10 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@douyinfe/semi-ui';
 import { getFooterHTML, getLogo, getSystemName } from '../../helpers';
 import { StatusContext } from '../../context/Status';
+import OpenSourceNotice from './OpenSourceNotice';
+
+// Modified by searouter contributors on 2026-09-08: retain visible legal notices
+// and corresponding-source access even when an administrator sets custom HTML.
 
 const FooterBar = () => {
   const { t } = useTranslation();
@@ -241,6 +245,7 @@ const FooterBar = () => {
       ) : (
         customFooter
       )}
+      <OpenSourceNotice />
     </div>
   );
 };

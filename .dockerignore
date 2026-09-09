@@ -1,6 +1,7 @@
 .github
 .git
 *.md
+!THIRD-PARTY-LICENSES.md
 .vscode
 .gitignore
 Makefile
@@ -13,3 +14,8 @@ data
 logs
 backup_*.sql
 *.sql
+.env
+.env.*
+*.env
+*.local.yaml
+*.local.yml
