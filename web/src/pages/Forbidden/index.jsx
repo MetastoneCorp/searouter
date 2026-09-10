@@ -28,7 +28,7 @@ import { useTranslation } from 'react-i18next';
 const Forbidden = () => {
   const { t } = useTranslation();
   return (
-    <div className='flex justify-center items-center h-screen p-8'>
+    <div className='flex justify-center items-center flex-1 mt-14 p-8'>
       <Empty
         image={<IllustrationNoAccess style={{ width: 250, height: 250 }} />}
         darkModeImage={

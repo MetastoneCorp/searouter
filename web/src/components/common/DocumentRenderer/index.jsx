@@ -153,7 +153,7 @@ const DocumentRenderer = ({ apiEndpoint, title, cacheKey, emptyMessage }) => {
   // 显示加载状态
   if (loading) {
     return (
-      <div className='flex justify-center items-center min-h-screen'>
+      <div className='flex justify-center items-center flex-1 mt-14'>
         <Spin size='large' />
       </div>
     );
@@ -162,7 +162,7 @@ const DocumentRenderer = ({ apiEndpoint, title, cacheKey, emptyMessage }) => {
   // 如果没有内容，显示空状态
   if (!content || content.trim() === '') {
     return (
-      <div className='flex justify-center items-center min-h-screen bg-gray-50'>
+      <div className='flex justify-center items-center flex-1 mt-14 bg-gray-50'>
         <Empty
           title={t('管理员未设置' + title + '内容')}
           image={
@@ -180,7 +180,7 @@ const DocumentRenderer = ({ apiEndpoint, title, cacheKey, emptyMessage }) => {
   // 如果是 URL，显示链接卡片
   if (isUrl(content)) {
     return (
-      <div className='flex justify-center items-center min-h-screen bg-gray-50 p-4'>
+      <div className='flex justify-center items-center flex-1 mt-14 bg-gray-50 p-4'>
         <Card className='max-w-md w-full'>
           <div className='text-center'>
             <Title heading={4} className='mb-4'>
@@ -207,17 +207,8 @@ const DocumentRenderer = ({ apiEndpoint, title, cacheKey, emptyMessage }) => {
 
   // 如果是 HTML 内容，直接渲染
   if (isHtmlContent(content)) {
-    const { content: htmlContent, styles } = sanitizeHtml(content);
-
-    // 设置样式（如果有的话）
-    useEffect(() => {
-      if (styles && styles !== htmlStyles) {
-        setHtmlStyles(styles);
-      }
-    }, [content, styles, htmlStyles]);
-
     return (
-      <div className='min-h-screen bg-gray-50'>
+      <div className='flex-1 mt-14 bg-gray-50'>
         <div className='max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
           <div className='bg-white rounded-lg shadow-sm p-8'>
             <Title heading={2} className='text-center mb-8'>
@@ -225,7 +216,7 @@ const DocumentRenderer = ({ apiEndpoint, title, cacheKey, emptyMessage }) => {
             </Title>
             <div
               className='prose prose-lg max-w-none'
-              dangerouslySetInnerHTML={{ __html: htmlContent }}
+              dangerouslySetInnerHTML={{ __html: processedHtmlContent }}
             />
           </div>
         </div>
@@ -235,7 +226,7 @@ const DocumentRenderer = ({ apiEndpoint, title, cacheKey, emptyMessage }) => {
 
   // 其他内容统一使用 Markdown 渲染器
   return (
-    <div className='min-h-screen bg-gray-50'>
+    <div className='flex-1 mt-14 bg-gray-50'>
       <div className='max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
         <div className='bg-white rounded-lg shadow-sm p-8'>
           <Title heading={2} className='text-center mb-8'>

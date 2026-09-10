@@ -58,7 +58,7 @@ const DeploymentAccessGuard = ({
       <div
         className='mt-[60px] px-4'
         style={{
-          minHeight: 'calc(100vh - 60px)',
+          flex: 1,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -304,7 +304,7 @@ const DeploymentAccessGuard = ({
       <div
         className='mt-[60px] px-4'
         style={{
-          minHeight: 'calc(100vh - 60px)',
+          flex: 1,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

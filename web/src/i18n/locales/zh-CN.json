@@ -1,5 +1,7 @@
 {
   "translation": {
+    "footer.copyright": "© {{year}} 武汉元石智算科技有限公司 版权所有",
+    "footer.credit": "SeaRouter 设计与开发由",
     " + Web搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_other": " + Web搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}",
     " + 图片生成调用 {{symbol}}{{price}} / 1次 * {{ratioType}} {{ratio}}": " + 图片生成调用 {{symbol}}{{price}} / 1次 * {{ratioType}} {{ratio}}",
     " + 文件搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_other": " + 文件搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}",

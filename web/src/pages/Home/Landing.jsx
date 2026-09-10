@@ -31,10 +31,10 @@ import ThemeToggle from '../../components/layout/headerbar/ThemeToggle';
 import LanguageSelector from '../../components/layout/headerbar/LanguageSelector';
 import NoticeModal from '../../components/layout/NoticeModal';
 import UserArea from '../../components/layout/headerbar/UserArea';
-import OpenSourceNotice from '../../components/layout/OpenSourceNotice';
+import FooterBar from '../../components/layout/Footer';
 import './Landing.css';
 
-// Modified by searouter contributors on 2026-09-08: expose legal notices and source.
+// Modified by searouter contributors on 2026-09-10: reuse the global footer.
 const Landing = () => {
   const { t, i18n } = useTranslation();
   const [statusState] = useContext(StatusContext);
@@ -768,25 +768,9 @@ resp = client.chat.completions.create(
       </div>
 
       {/* 11. Footer */}
-      <footer className='lp-footer'>
-        <span className='lp-footer-copy'>
-          © 2026 MetaStone. {t('landing.footer.tagline')}
-        </span>
-        <div className='lp-footer-links'>
-          <Link to='/'>{t('landing.footer.home')}</Link>
-          <Link to='/console'>{t('landing.footer.console')}</Link>
-          <Link to='/pricing'>{t('landing.footer.pricing')}</Link>
-          <a
-            href='https://www.metastonecorp.com/'
-            target='_blank'
-            rel='noopener noreferrer'
-            aria-label='MetaStone (opens in new tab)'
-          >
-            MetaStone
-          </a>
-        </div>
+      <footer>
+        <FooterBar />
       </footer>
-      <OpenSourceNotice />
     </div>
   );
 };

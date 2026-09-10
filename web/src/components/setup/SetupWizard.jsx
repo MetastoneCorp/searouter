@@ -269,7 +269,7 @@ const SetupWizard = () => {
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center px-4'>
+    <div className='flex-1 mt-14 flex items-center justify-center px-4'>
       <div className='w-full max-w-4xl'>
         <Card className='!rounded-2xl shadow-sm border-0'>
           <div className='mb-4'>

@@ -90,11 +90,11 @@ const About = () => {
   // 如果管理员设置了自定义内容或 URL
   if (aboutLoaded && about !== '') {
     return (
-      <div className='mt-[60px] px-2'>
+      <div className='mt-[60px] px-2 flex flex-1 flex-col'>
         {isUrl(about) ? (
           <iframe
             src={about}
-            style={{ width: '100%', height: '100vh', border: 'none' }}
+            style={{ width: '100%', flex: 1, border: 'none' }}
             title='About'
           />
         ) : (
@@ -109,7 +109,11 @@ const About = () => {
 
   // 如果正在加载
   if (!aboutLoaded) {
-    return <div className='mt-[60px] px-2'>{t('加载中...')}</div>;
+    return (
+      <div className='mt-[60px] px-2 flex flex-1 flex-col'>
+        {t('加载中...')}
+      </div>
+    );
   }
 
   // 如果管理员没有设置内容，显示多语言默认内容
@@ -118,8 +122,8 @@ const About = () => {
 
   if (isInIframe) {
     return (
-      <div className='mt-[60px] px-2'>
-        <div className='flex justify-center items-center h-screen p-8'>
+      <div className='mt-[60px] px-2 flex flex-1 flex-col'>
+        <div className='flex justify-center items-center flex-1 p-8'>
           <Empty
             image={
               <IllustrationConstruction style={{ width: 150, height: 150 }} />

@@ -697,8 +697,9 @@
   border: 1px solid #e5e7eb;
   overflow: hidden;
   /* 客户端配置示例：英文用 Roboto，中文回退微软雅黑 */
-  font-family: 'Roboto', 'Microsoft YaHei', 'Microsoft YaHei UI', 'PingFang SC',
-    system-ui, sans-serif;
+  font-family:
+    'Roboto', 'Microsoft YaHei', 'Microsoft YaHei UI', 'PingFang SC', system-ui,
+    sans-serif;
 }
 
 .lp-cfg-head {
@@ -822,8 +823,9 @@
 .lp-cfg-code {
   margin: 0;
   /* 英文 Roboto + 中文微软雅黑（继承自 .lp-cfg）；保留等宽风格做代码兜底对齐 */
-  font-family: 'Roboto', 'Microsoft YaHei', 'Microsoft YaHei UI', 'PingFang SC',
-    system-ui, sans-serif;
+  font-family:
+    'Roboto', 'Microsoft YaHei', 'Microsoft YaHei UI', 'PingFang SC', system-ui,
+    sans-serif;
   font-size: 14px;
   line-height: 25.2px;
   color: #1c1f23;
@@ -1367,45 +1369,6 @@
   background: #f8fafc;
 }
 
-/* ==================== 11. Footer ==================== */
-.lp-footer {
-  width: 100%;
-  max-width: var(--lp-maxw);
-  margin: 0 auto;
-  padding: 16px 128px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-
-.lp-footer-copy {
-  font-size: 12px;
-  line-height: 20px;
-  color: #727477;
-  text-transform: uppercase;
-}
-
-.lp-footer-links {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.lp-footer-links a {
-  font-size: 12px;
-  line-height: 20px;
-  color: #727477;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: color 0.14s;
-}
-
-.lp-footer-links a:hover {
-  color: #015bba;
-}
-
 /* ==================== 响应式（窄屏自适应不破版） ==================== */
 @media (max-width: 1280px) {
   .lp-hero-inner {
@@ -1414,10 +1377,6 @@
   .lp-qs,
   .lp-cfg-wrap,
   .lp-partners {
-    padding-left: 64px;
-    padding-right: 64px;
-  }
-  .lp-footer {
     padding-left: 64px;
     padding-right: 64px;
   }
@@ -1530,10 +1489,6 @@
   .lp-cta-btn-ghost {
     width: 100%;
     max-width: 280px;
-  }
-  .lp-footer {
-    flex-direction: column;
-    text-align: center;
   }
   .lp-cmp-table {
     font-size: 12px;

@@ -67,7 +67,7 @@ const PageLayout = () => {
       location.pathname === route || location.pathname.startsWith(route + '/'),
   );
 
-  // 首页(Landing)自带新设计的页脚；操练场底部为聊天框 —— 均隐藏全局 FooterBar
+  // 首页在 Landing 内复用 FooterBar；操练场底部为聊天框，此处不重复渲染页脚
   const shouldHideFooter =
     isAuthRoute ||
     cardProPages.includes(location.pathname) ||
@@ -192,6 +192,7 @@ const PageLayout = () => {
                 ? 'var(--sidebar-current-width)'
                 : '0',
             flex: '1 1 auto',
+            minWidth: 0,
             display: 'flex',
             flexDirection: 'column',
           }}
@@ -199,6 +200,9 @@ const PageLayout = () => {
           <Content
             style={{
               flex: '1 0 auto',
+              display: shouldHideFooter ? undefined : 'flex',
+              flexDirection: shouldHideFooter ? undefined : 'column',
+              minWidth: 0,
               overflowY: isMobile ? 'visible' : 'hidden',
               WebkitOverflowScrolling: 'touch',
               padding: shouldInnerPadding ? (isMobile ? '5px' : '24px') : '0',
@@ -209,6 +213,7 @@ const PageLayout = () => {
           </Content>
           {!shouldHideFooter && (
             <Layout.Footer
+              className='app-footer'
               style={{
                 flex: '0 0 auto',
                 width: '100%',
